@@ -1,4 +1,4 @@
-package com.kh.AllThatTrip;
+package com.kh.allthattrip;
 
 import java.text.DateFormat;
 import java.util.Date;
