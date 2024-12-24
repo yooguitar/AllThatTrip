@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<h1>왜생겼지?</h1>  
+	<jsp:forward page="/WEB-INF/views/member/join_page.jsp" />
 
 </body>
 </html>
