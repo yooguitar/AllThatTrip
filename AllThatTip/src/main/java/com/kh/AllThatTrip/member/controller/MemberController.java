@@ -24,11 +24,14 @@ public class MemberController {
 	@PostMapping("login.me")
 	public ModelAndView login(Member member, HttpSession session) {
 		
+		System.out.println("로그인 핸들러 호출");
+		System.out.println(member.toString());
 		Member loginMember = memberService.login(member);
 		
 		session.setAttribute("loginUser", loginMember);
 		session.setAttribute("alertMsg", "환영합니다!");
 		
+		System.out.println("포워딩 문제임");
 		return mv.setViewNameAndData("redirect:/index.jsp", null); // 메인화면으로 보내야함!
 		
 	}

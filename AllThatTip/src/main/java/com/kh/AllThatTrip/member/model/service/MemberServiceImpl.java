@@ -2,6 +2,7 @@ package com.kh.AllThatTrip.member.model.service;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.AllThatTrip.exception.UserIdNotFoundException;
 import com.kh.AllThatTrip.member.model.dao.MemberMapper;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
@@ -20,8 +21,9 @@ public class MemberServiceImpl implements MemberService {
 		Member loginMember = mapper.login(member);
 		
 		if(loginMember == null) {
-			throw new method();
+			throw new UserIdNotFoundException("존재하지 않는 아이디 입니다.");
 		}
+		System.out.println("아이디는 있음");
 		
 		return loginMember;
 	}
