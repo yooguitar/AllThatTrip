@@ -3,29 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
   
-  <configuration>
-  
-  	<settings>
-  		<setting name="jdbcTypeForNull" value="NULL" />
-  	</settings>
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.kh.AllThatTrip.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.AllThatTrip.board.model.vo.Board" alias="board" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="/mapper/member-mapper.xml" />
+		<mapper resource="/mapper/board-mapper.xml" />
+	</mappers>
+	
+
+</configuration>
+
   	
-  	<typeAliases>
-  		<typeAlias type="com.kh.AllThatTrip.board.model.vo.Board" alias="board"/>
-  	</typeAliases>
-  	
-  	
-  	<mappers>
-  		<mapper resource="/mapper/board-mapper.xml" />
-  	</mappers>
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  </configuration>

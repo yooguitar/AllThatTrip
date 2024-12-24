@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardServiceImple implements BoardService {
 	
-	@Autowired
 	private BoardMapper mapper;
 	
 
@@ -29,10 +28,10 @@ public class BoardServiceImple implements BoardService {
     public Map<String, Object> selectBoardList(int currentPage) {
         int totalCount = getTotalCount();
 
-        PageInfo pageInfo = Pagination.getPageInfo(totalCount, currentPage, 5, 5);
+        PageInfo pageInfo = Pagination.getPageInfo(totalCount, currentPage, 10, 10);
 
         List<Board> boards = mapper.selectBoardList(pageInfo); 
-        log.info("게시글 목록: {}", boards);
+        // log.info("게시글 목록: {}", boards);
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("boards", boards);
