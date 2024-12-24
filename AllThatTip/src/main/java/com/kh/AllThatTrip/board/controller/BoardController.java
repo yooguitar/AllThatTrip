@@ -29,6 +29,7 @@ public class BoardController {
     public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int currentPage) {
 		Map<String, Object> map = boardService.selectBoardList(currentPage);
 		return mv.setViewNameAndData("board/notice_list", map); 
+		
     }
 	
 	

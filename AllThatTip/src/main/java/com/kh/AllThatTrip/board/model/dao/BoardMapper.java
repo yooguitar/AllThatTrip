@@ -15,12 +15,12 @@ public interface BoardMapper {
 	List<Board> selectBoardList(PageInfo pageInfo);
 	
 	// 조회수증가
-	int increaseCount(Long boardNo);
-	
+	int selectTotalCount(Long boardNo);
+
 	
 	/*
-	// 개수조회 
-	int selectTotalCount();
+	
+	
 
 	
 	// 조회수증가
@@ -42,7 +42,6 @@ public interface BoardMapper {
 	// 작성
 	void insertBoard(Board board);
 
-	int selectTotalCount();
 
 		
 	

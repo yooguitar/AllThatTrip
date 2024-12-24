@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,31 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImple implements BoardService {
 	
 	private BoardMapper mapper;
-	
 
-    @Override
-    public Map<String, Object> selectBoardList(int currentPage) {
-        int totalCount = getTotalCount();
-
-        PageInfo pageInfo = Pagination.getPageInfo(totalCount, currentPage, 10, 10);
-
-        List<Board> boards = mapper.selectBoardList(pageInfo); 
-        // log.info("게시글 목록: {}", boards);
-
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("boards", boards);
-        resultMap.put("pageInfo", pageInfo);
-
-        return resultMap;
-    }
-
-    private int getTotalCount() {
-        return mapper.selectTotalCount(); 
-    }
-	
-		
-		
-	
+	@Override
+	public Map<String, Object> selectBoardList(int currentPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
@@ -71,5 +52,7 @@ public class BoardServiceImple implements BoardService {
 		// TODO Auto-generated method stub
 		
 	}
+	
+
 	
 }
