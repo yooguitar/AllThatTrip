@@ -9,7 +9,7 @@ import com.kh.AllThatTrip.board.model.vo.Board;
 
 @Mapper
 public class BoardMapper {
-
+	/*
 	// 개수조회 
 	int selectTotalCount();
 	
@@ -31,6 +31,6 @@ public class BoardMapper {
 	// 삭제 (성공실패 확인해야해서 int)
 	int deleteBoard(Long boardNo);
 	
-
+	*/
 
 }
