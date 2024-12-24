@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
-	private final PasswordEncryptor passwordEncoder;
+	// 로그인 회원가입 체크 후 암호화 하기
 	
 	@Override
 	public Member login(Member member) {

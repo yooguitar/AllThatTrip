@@ -9,7 +9,7 @@ import com.kh.AllThatTrip.board.model.vo.Board;
 public interface BoardService {
 
 	
-	// 페이징바
+	// 페이징바 리스트
 	Map<String, Object> selectBoardList(int currentPage);
 	
 	

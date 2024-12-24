@@ -8,10 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.kh.AllThatTrip.board.model.vo.Board;
 
 @Mapper
-public class BoardMapper {
-	/*
-	// 개수조회 
-	int selectTotalCount();
+public interface BoardMapper {
 	
 	// 목록조회
 	List<Board> selectBoardList(RowBounds rowBounds);
@@ -19,11 +16,19 @@ public class BoardMapper {
 	// 조회수증가
 	int increaseCount(Long boardNo);
 	
+	
+	/*
+	// 개수조회 
+	int selectTotalCount();
+
+	
+	// 조회수증가
+	int increaseCount(Long boardNo);
+	
 	// 상세조회
 	Board selectById(Long boardNo);
 	
-	// 작성
-	void insertBoard(Board board);
+	
 
 	// 수정
 	int updateBoard(Board board);
@@ -32,5 +37,12 @@ public class BoardMapper {
 	int deleteBoard(Long boardNo);
 	
 	*/
+
+	// 작성
+	void insertBoard(Board board);
+
+	int selectTotalCount();
+		
+	
 
 }
