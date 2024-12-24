@@ -28,7 +28,31 @@
 </select>
 
 
+<insert id="join" parameterType="member">
+	INSERT
+	  INTO
+	  	   MEMBER
+	  	   (
+	  	   USER_ID,
+	  	   USER_PWD,
+	  	   USER_NAME,
+	  	   EMAIL,
+	  	   PHONE,
+	  	   SPAM,
+	  	   STATUS
+	  	   )
+	VALUES
+		   (
+		   #{userId},
+		   #{userPwd},
+		   #{userName},
+		   #{email},
+		   #{phone},
+		   #{spam},
+		   #{status}
+		   )
 
+</insert>
 
 
 

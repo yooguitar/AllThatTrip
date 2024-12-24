@@ -27,7 +27,7 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 		
-	<mybatis-spring:scan base-package="com.kh.AllthatTrip.member.model.dao, com.kh.AllThatTrip.board.model.dao" />
+	<mybatis-spring:scan base-package="com.kh.AllThatTrip.member.model.dao, com.kh.AllThatTrip.board.model.dao" />
 	 
 	 <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
 	 		id="transactionManager" >

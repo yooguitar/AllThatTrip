@@ -22,6 +22,12 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Override
+	public void join(Member member) {
+		
+		Member userInfo = mapper.login(member);
+	}
+
 	
 	
 	

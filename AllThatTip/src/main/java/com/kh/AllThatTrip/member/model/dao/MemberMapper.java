@@ -9,7 +9,7 @@ public interface MemberMapper {
 
 	Member login(Member member);
 	
-	
+	int join(Member member);
 	
 	
 	

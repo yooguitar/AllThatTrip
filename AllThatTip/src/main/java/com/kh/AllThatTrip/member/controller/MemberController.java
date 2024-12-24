@@ -36,7 +36,13 @@ public class MemberController {
 		
 	}
 	
-
+	@PostMapping("join.me")
+	public ModelAndView join(Member member) {
+		
+		memberService.join(member);
+		
+		return null;
+	}
 	
 	  
 	

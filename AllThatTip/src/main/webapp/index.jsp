@@ -9,9 +9,9 @@
 </head>
 <body>
 
-	
-	<a href="/WEB-INF/views/member/join_page.jsp"></a>
-
+	<p>잘 나오니??</p>
+	<a href="login_page.me">로그인 테스트</a>
+	<a href="join_page.me">회원가입 테스트</a>
 
 </body>
 </html>
