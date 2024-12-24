@@ -9,7 +9,11 @@
 </head>
 <body>
 
+	<h1>안녕</h1>
+	
+	<a href="/WEB-INF/views/member/join_page.jsp">회원가입</a>
+	
+	<a href=board/notice_list>게시판</a>
 
-	<a href="/WEB-INF/views/member/join_page.jsp"></a>
 </body>
 </html>
