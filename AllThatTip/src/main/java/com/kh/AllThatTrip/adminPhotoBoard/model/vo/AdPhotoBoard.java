@@ -1,6 +1,8 @@
 package com.kh.AllThatTrip.adminPhotoBoard.model.vo;
 
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ public class AdPhotoBoard {
 	private int ptNo;
 	private String ptTitle;
 	private String ptContent;
-	private String uploadDate;
+	private Date uploadDate;
 	private int ptCount;
 	private String ptWriter;
 	private int ptTierNo;

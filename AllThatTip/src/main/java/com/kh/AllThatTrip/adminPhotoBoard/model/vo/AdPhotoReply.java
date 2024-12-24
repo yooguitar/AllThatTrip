@@ -1,5 +1,7 @@
 package com.kh.AllThatTrip.adminPhotoBoard.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.ToString;
 public class AdPhotoReply {
 	private int ptRepNo;
 	private String ptRepContent;
-	private String ptCreateDate;
+	private Date ptCreateDate;
 	private String ptStatus;
 	private int score;
 	private int ptNo;
