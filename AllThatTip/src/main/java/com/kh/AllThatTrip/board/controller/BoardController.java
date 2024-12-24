@@ -2,17 +2,13 @@ package com.kh.AllThatTrip.board.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
-import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -21,22 +17,25 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/board")
 @Slf4j
 public class BoardController {
-	/*
+	
 
 	private final BoardService boardService;
 	private final ModelAndViewUtil mv;
 	
-	// 페이징바
-	@GetMapping("boards")
-	public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int currentPage) {
-		
+	@GetMapping("/notice_list")
+    public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int currentPage) {
 		Map<String, Object> map = boardService.selectBoardList(currentPage);
-
-		return mv.setViewNameAndData("board/list", map);
-	}
+		return mv.setViewNameAndData("board/notice_list", map); 
+    }
 	
+	
+	
+	
+	
+	/*
 	// 전체 리스트 조회
 	
 	

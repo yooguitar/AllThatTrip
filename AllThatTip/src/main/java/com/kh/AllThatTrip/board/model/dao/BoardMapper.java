@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.board.model.vo.Board;
+import com.kh.AllThatTrip.common.model.vo.PageInfo;
 
 @Mapper
 public interface BoardMapper {
 	
 	// 목록조회
-	List<Board> selectBoardList(RowBounds rowBounds);
+	List<Board> selectBoardList(PageInfo pageInfo);
 	
 	// 조회수증가
 	int increaseCount(Long boardNo);
@@ -42,6 +43,7 @@ public interface BoardMapper {
 	void insertBoard(Board board);
 
 	int selectTotalCount();
+
 		
 	
 

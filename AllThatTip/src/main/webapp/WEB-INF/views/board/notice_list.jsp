@@ -42,9 +42,7 @@
     </style>
 </head>
 <body>
-    <!--  
-    <jsp:include page="../common/menubar.jsp" />
-	-->
+
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
@@ -64,7 +62,6 @@
                         <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
-                        <th>첨부파일</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,8 +135,6 @@
         <br><br>
 
     </div>
-	<!--  
-    <jsp:include page="../common/footer.jsp" />
-	-->
+
 </body>
 </html>
