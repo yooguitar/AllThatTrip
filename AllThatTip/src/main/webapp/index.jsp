@@ -9,7 +9,9 @@
 </head>
 <body>
 
-	<jsp:forward page="/WEB-INF/views/member/join_page.jsp" />
+	
+	<a href="/WEB-INF/views/member/join_page.jsp"></a>
+
 
 </body>
 </html>
