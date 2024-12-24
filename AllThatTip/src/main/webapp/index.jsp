@@ -9,9 +9,11 @@
 </head>
 <body>
 
-	<p>잘 나오니??</p>
-	<a href="login_page.me">로그인 테스트</a>
-	<a href="join_page.me">회원가입 테스트</a>
+	<jsp:include page="WEB-INF/views/member/join.jsp" />
+	<hr>
+	<jsp:include page="WEB-INF/views/member/login_page.jsp" />
+	<hr>
 
 </body>
 </html>
+

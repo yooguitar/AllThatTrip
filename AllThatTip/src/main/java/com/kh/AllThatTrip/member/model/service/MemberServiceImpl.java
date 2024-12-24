@@ -19,7 +19,11 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member loginMember = mapper.login(member);
 		
-		return null;
+		if(loginMember == null) {
+			throw new method();
+		}
+		
+		return loginMember;
 	}
 
 	@Override
