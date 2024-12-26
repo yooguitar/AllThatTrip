@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,59 +26,74 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/board")
 @Slf4j
 public class BoardController {
-	
+
 
 	private final BoardService boardService;
 	private final ModelAndViewUtil mv;
-	
+
+
+	// 전체 리스트 조회
 	@GetMapping("/notice_list")
-    public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int currentPage) {
+	public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int currentPage) {
 		Map<String, Object> map = boardService.selectBoardList(currentPage);
+
 		return mv.setViewNameAndData("board/notice_list", map); 
-		
-    }
-	
-	
+
+	}
+
+	// 글쓰기 
 	@GetMapping("insertForm")
 	public String insertForm() {
 		return "board/insert_form";
 	}
-	
-	
-	// 등록
-	@PostMapping("boards")
+
+
+	// 공지사항 등록
+	@PostMapping("/notice_list")
 	public ModelAndView insertBoard(Board board, MultipartFile upfile, HttpSession session) {
-		
+
 		boardService.insertBoard(board, upfile);
 		session.setAttribute("alertMsg", "게시글 등록 성공");
 		return mv.setViewNameAndData("redirect:boards", null);
+
+	}
+
+
+	// 상세 조회
+	@GetMapping("/boards/{id}")
+	public ModelAndView selectByOne(@PathVariable(name="id") Long id) {
+		log.info("{}", id);
+		Map<String, Object> responseData = boardService.selectByOne(id);
+		
+		return mv.setViewNameAndData("board/detail", responseData);
 		
 	}
-	
+
+
 	/*
-	// 전체 리스트 조회
-	
-	
-	// 조회수 증가
-	
-	// 상세 조회
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// 수정
-	
+
 	// 삭제
-	
+
 	// 검색창(필터)
-	
+
 	// 썸네일
-	
+
 	// 첨부파일
-	
+
 	// 댓글ㄴ
-	
-	
-	*/
-	
-	
+
+
+	 */
+
+
 }
