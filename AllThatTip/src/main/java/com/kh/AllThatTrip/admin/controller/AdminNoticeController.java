@@ -28,6 +28,15 @@ public class AdminNoticeController {
 		Map<String, Object> map = adService.selectAdNoticeList(page);
 		return mv.setViewNameAndData("AdNotice/list", map);
 	}
-
+	
+	@GetMapping("insertForm")
+	public String insertForm() {
+		return "adNotice/insert_form";
+	}
+	
+	@GetMapping("map")
+	public String mapForward() {
+		return "common/map";
+	}
 	
 }

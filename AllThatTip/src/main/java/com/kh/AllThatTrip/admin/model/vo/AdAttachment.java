@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @Setter
 @Getter
-public class Ad_Attachment {
+public class AdAttachment {
 	private int adFileNo;
 	private String adOriName;
 	private String adChaName;
