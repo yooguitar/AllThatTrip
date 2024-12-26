@@ -10,9 +10,9 @@
 			USER_NO userNo,
 			BOARD_CONTENT boardContent,
 			COUNT,
-			TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as createDate,
-			ORIGIN_NAME originName,
-	 		CHANGE_NAME changeName
+			TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
+			
+
 	 FROM
 	 		BOARD
     WHERE
@@ -40,8 +40,8 @@
     	<include refid="boardColumn"></include>
     
     
-    	   AND
-    	 		BOARD_TYPE = 10
+ 	     AND 
+ 	   			BOARD_TYPE = 10
   	 		
     
     </select>
@@ -62,33 +62,8 @@
 	</update>
 	
 	    
-    <!-- 게시글 등록 -->
-    <insert id="insertBoard" parameterType="board">
-    
-    	INSERT
-    	  INTO
-    	  		BOARD
-    	  		(
-    	  		BOARD_NO,
-    	  		BOARD_TYPE,
-    	  		BOARD_TITLE,
-    	  		BOARD_CONTENT,
-    	  		USER_NO
-    	  		ORIGIN_NAME,
-    	  		CHANGE_NAME
-    	  		)
-    	VALUES
-    			(
-    			SEQ_BOARD_NO.NEXTVAL,
-    			10,
-    			#{boardTitle},
-    			#{boardContent},
-    			#{boardWriter}
-    			#{originName},
-    			#{changeName}
-    			)
-    </insert>
-    
+   
+   
     
     
     

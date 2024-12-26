@@ -22,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardServiceImple implements BoardService {
 	
-	private BoardMapper mapper;
+	private final BoardMapper mapper;
+	
 	
 	private int getTotalCount() {
 		int totalCount = mapper.selectTotalCount();
@@ -46,7 +47,6 @@ public class BoardServiceImple implements BoardService {
 		
 		return mapper.selectBoardList(rowBounds);
 	}
-	
 	
 	
 	
@@ -81,7 +81,7 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	@Override
-	public Map<String, Object> selectById(long boardNo) {
+	public Map<String, Object> selectByOne(long boardNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

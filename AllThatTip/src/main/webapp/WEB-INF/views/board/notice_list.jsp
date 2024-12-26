@@ -46,12 +46,14 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>게시판</h2>
+            <h2>공지사항</h2>
             <br>
-            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 
             <c:if test="${ not empty sessionScope.loginUser}">
             	<a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
             </c:if>
+            -->
+            <a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
             <br>
             <br>
             <table id="boardList" class="table table-hover" align="center">
@@ -70,14 +72,9 @@
 	                    <tr onclick="detail('${board.boardNo}')">
 	                        <td>${ board.boardNo }</td>
 	                        <td>${ board.boardTitle }</td>
-	                        <td>${ board.boardWriter }</td>
+	                        <td>${ board.userNo }</td>
 	                        <td>${ board.count }</td>
-	                        <td>${ board.createDate}</td>
-	                        <td>
-	                        	<c:if test="${ not empty board.originName }">
-	                        		💌
-	                        	</c:if>
-	                        </td>
+	                        <td>${ board.createDate} </td>
 	                    </tr>
                     </c:forEach>
                     
