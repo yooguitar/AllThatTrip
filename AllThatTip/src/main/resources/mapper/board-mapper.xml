@@ -3,25 +3,91 @@
 
 <mapper namespace="com.kh.AllThatTrip.board.model.dao.BoardMapper">
     
-
-    
+	<sql id="boardColumn">
+	SELECT
+			BOARD_NO boardNo,
+			BOARD_TITLE boardTitle,
+			USER_NO userNo,
+			BOARD_CONTENT boardContent,
+			COUNT,
+			TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as createDate,
+			ORIGIN_NAME originName,
+	 		CHANGE_NAME changeName
+	 FROM
+	 		BOARD
+    WHERE
+       		STATUS = 'Y'
+	</sql>
+	
+	
+	
+    <!-- 페이징 공지사항 게시글 개수 조회 -->
 	<select id="selectTotalCount" resultType="_int">
 	
 		SELECT 
 				COUNT(*)
-		FROM	
+		  FROM	
 				BOARD
-		WHERE
+		 WHERE
+				BOARD_TYPE = 10
+		   AND
 				STATUS ='Y'
-			
 	
 	</select>
     
+	<!-- 공지사항 전체 게시글 조회 -->    
+    <select id="selectBoardList" resultType="board">
+    	<include refid="boardColumn"></include>
     
     
+    	   AND
+    	 		BOARD_TYPE = 10
+  	 		
     
+    </select>
     
+    <!-- 조회수 증가 -->
+	
+	<update id="increaseCount" parameterType="long">
+		UPDATE
+				BOARD
+		   SET
+		   		COUNT = COUNT + 1
+		 WHERE
+		 		BORAD_TYPE = 10
+		   AND
+		   		STATUS = 'Y'
+		   AND
+		   		BOARD_NO = #{boardNo}
+	</update>
+	
+	    
+    <!-- 게시글 등록 -->
+    <insert id="insertBoard" parameterType="board">
     
+    	INSERT
+    	  INTO
+    	  		BOARD
+    	  		(
+    	  		BOARD_NO,
+    	  		BOARD_TYPE,
+    	  		BOARD_TITLE,
+    	  		BOARD_CONTENT,
+    	  		USER_NO
+    	  		ORIGIN_NAME,
+    	  		CHANGE_NAME
+    	  		)
+    	VALUES
+    			(
+    			SEQ_BOARD_NO.NEXTVAL,
+    			10,
+    			#{boardTitle},
+    			#{boardContent},
+    			#{boardWriter}
+    			#{originName},
+    			#{changeName}
+    			)
+    </insert>
     
     
     

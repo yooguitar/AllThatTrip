@@ -1,5 +1,9 @@
 package com.kh.AllThatTrip.admin.model.service;
 
-public class AdService {
+import java.util.Map;
+
+public interface AdService {
+	
+	Map<String, Object> selectAdNoticeList(int currentPage);
 
 }
