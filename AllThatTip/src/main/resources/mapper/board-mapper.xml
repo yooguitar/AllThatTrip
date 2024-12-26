@@ -27,34 +27,21 @@
     <!-- 페이징 공지사항 게시글 개수 조회 -->
 	<select id="selectTotalCount" resultType="_int">
 	
-		SELECT 
-				COUNT(*)
-		  FROM	
-				BOARD
-		 WHERE
-				BOARD_TYPE = 10
-		   AND
-				STATUS ='Y'
+	SELECT 
+			COUNT(*)
+	FROM	
+			BOARD
+	WHERE
+			BOARD_TYPE = 10
+	AND
+			STATUS ='Y'
 	
 	</select>
     
 	<!-- 공지사항 전체 게시글 조회 -->    
 	<select id="selectBoardList" resultType="board">
-	SELECT
-			B.BOARD_NO AS boardNo,
-			B.BOARD_TYPE AS boardType,
-			B.BOARD_TITLE AS boardTitle,
-			B.USER_NO AS userNo,
-			M.USER_ID AS boardWriter, 
-			B.BOARD_CONTENT AS boardContent,
-			B.COUNT AS count,
-			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
-	FROM
-			BOARD B
-	JOIN
-			MEMBER M
-	ON
-			B.USER_NO = M.USER_NO
+	<include refid="boardColumn"></include>
+
 	WHERE	B.BOARD_TYPE = 10
 	AND		B.STATUS = 'Y'
 			
@@ -63,21 +50,8 @@
   	<!-- 공지사항 상세 조회 -->
   	
   	<select id="selectByNum" parameterType="long" resultType="board">
-	SELECT
-			B.BOARD_NO AS boardNo,
-			B.BOARD_TYPE AS boardType,
-			B.BOARD_TITLE AS boardTitle,
-			B.USER_NO AS userNo,
-			M.USER_ID AS boardWriter, 
-			B.BOARD_CONTENT AS boardContent,
-			B.COUNT AS count,
-			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
-	FROM
-			BOARD B
-	JOIN
-			MEMBER M
-	ON
-			B.USER_NO = M.USER_NO
+	<include refid="boardColumn"></include>
+	
 	WHERE	B.BOARD_TYPE = 10
 	AND		B.STATUS = 'Y'
 	AND		BOARD_NO = #{boardNo}
@@ -89,20 +63,40 @@
     <!-- 조회수 증가 -->
 	
 	<update id="increaseCount" parameterType="long">
-		UPDATE
-				BOARD
-		   SET
-		   		COUNT = COUNT + 1
-		 WHERE
-		 		BOARD_TYPE = 10
-		   AND
-		   		STATUS = 'Y'
-		   AND
-		   		BOARD_NO = #{boardNo}
+	UPDATE
+			BOARD
+	SET
+			COUNT = COUNT + 1
+	WHERE
+		 	BOARD_TYPE = 10
+	AND
+			STATUS = 'Y'
+	AND
+			BOARD_NO = #{boardNo}
 	</update>
 	
-	    
-   
+	
+	<!-- 공지사항 등록 -->
+	<insert id="insertBoard" parameterType="board">
+	<include refid="boardColumn"></include>
+	INSERT 
+	INTO BOARD 
+			(
+			BOARD_NO, 
+			BOARD_TYPE, 
+			USER_NO, 
+			BOARD_TITLE, 
+			BOARD_CONTENT, 
+			)
+    VALUES (
+    		BOARD_SEQ.NEXTVAL, 
+    		10, 
+    		#{userNo}, 
+    		#{boardTitle}, 
+    		#{boardContent}
+    		)	
+			
+	</insert>
    
     
     

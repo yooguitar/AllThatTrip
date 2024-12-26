@@ -76,13 +76,16 @@ public class BoardController {
 		return mv.setViewNameAndData("board/update", responseData);
 	}
 	
-	// 수정
-	//@PostMapping("notice_list/update")
-	//public ModelAndView update(Board board, MultipartFile upfile) {
-	
-	//boardService.updateBoard(board, upfile);
-	// retrun mv.setViewName
+
+	@PostMapping("notice_list/update")
+	public ModelAndView update(Board board, MultipartFile upfile) {
+		
+		boardService.updateBoard(board, upfile);
+		log.info("{}:{}",board,upfile);
+		return mv.setViewNameAndData("redirect:/boards", null);
+		
 	}
+}
 	/*
 
 

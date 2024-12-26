@@ -1,8 +1,14 @@
 package com.kh.AllThatTrip.board.model.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -14,6 +20,7 @@ import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
+import com.kh.AllThatTrip.exception.FailToFileUploadException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImple implements BoardService {
 	
 	private final BoardMapper mapper;
+	private final ServletContext context;
 	
 	
 	private int getTotalCount() {
@@ -99,7 +107,29 @@ public class BoardServiceImple implements BoardService {
 		return board;
 	}
 	
-	
+	private void handlerFileUpload(Board board, MultipartFile upfile) {
+		
+		String fileName = upfile.getOriginalFilename();
+		String ext = fileName.substring(fileName.lastIndexOf("."));
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		int randomNum = (int)Math.random() * 90000 + 10000;
+		String changeName = currentTime + randomNum + ext;
+		
+		
+		String savePath = context.getRealPath("/resources/upload_files/");
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch(IllegalStateException | IOException e) {
+			throw new FailToFileUploadException("파일 이상해");
+		}
+		
+		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
+		board.setOriginName(fileName);
+		board.setChangeName("/hyper/resources/upload_files/" + changeName);
+		
+		
+	}	
 	
 	// 페이징처리
 	@Override
@@ -125,8 +155,12 @@ public class BoardServiceImple implements BoardService {
 		// 유효성 검증
 		validateBoard(board);
 		// 파일 유무
+		if(!("".equals(upfile.getOriginalFilename()))) {
+			handlerFileUpload(board,upfile);
+		}
 		// 인서트 진행
-		
+		mapper.insertBoard(board);
+		 	
 	}
 	
 	// 상세조회
