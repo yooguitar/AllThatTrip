@@ -1,0 +1,76 @@
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 1200px;
+    max-width: 95%;
+}
+
+/* 왼쪽 카드 스타일 */
+.info-section {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.section-title {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.main-info {
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.phone-number {
+    color: #326044;
+    font-weight: bold;
+}
+
+.time-info {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.menu-section {
+    display: flex;
+    gap: 10px;
+}
+
+.menu-btn {
+    background-color: #326044;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-btn:hover {
+    background-color: #60B557;
+}
+
+/* 오른쪽 이미지 섹션 */
+.right-banner {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-image {
+    max-width: 90%;
+    height: auto;
+    border-radius: 8px;
+}

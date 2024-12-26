@@ -1,0 +1,225 @@
+
+#area{
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+#area>div{
+    width: 1200px;
+    margin: auto;
+}
+
+.header{
+    height: 70px;
+}
+
+.content{
+    width: 100%;
+    height: auto;
+}
+
+.content>div{
+    width: 100%;
+    height: auto;
+}
+
+#camping-map{
+    width: 100%;
+    height: 650px;
+    margin-top: 100px;
+}
+
+.campinfo_wrap{
+    width: 100%;
+    height: 650px;
+}
+
+.campinfo_wrap>div{
+    float: left;
+}
+
+.kmap{
+    width: 200px;
+    height: 650px;
+    border-right: 1px #e0e0e0 solid;
+}
+
+.kmap>h2{
+    margin: 0px;
+    padding: 0px;
+    font-size: 26px;
+    text-align: center;
+    letter-spacing: -0.5mm;
+}
+
+.kmap>h2>span{
+    color: #60B557;
+}
+
+.kmap>p{
+    margin: 3px 0 20px;
+    text-align: center;
+    font-size: 15px;;
+}
+
+.campinfo{
+    width: 990px;
+    height: 650px;
+}
+
+.campinfo>.head{
+    width: 930px;
+    height: 40px;
+}
+
+.campinfo>.head>div{
+    float: left;
+}
+
+.count_box{
+    background-color: #60B557;
+    color: #ffffff;
+    height: 40px;
+    line-height: 38px;
+    width: 66px;
+    font-size: 15px;
+    text-align: center;
+    margin-left: 30px;
+}
+
+.page_ui{
+    border: 1px #cccccc solid;
+    width: 140px;
+    height: 38px;   
+    line-height: 34px;
+    margin: 0px 10px;
+}
+
+.page_ui>div{
+    display: inline-block;
+}
+
+.select_sido{
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    width: 83px;
+    height: 40px;
+}
+
+.select_sido>.searchselect{
+    width: 83px;
+    height: 40px;
+    display: inline-block;
+}
+
+.mapwrap>img{
+    width: 100%;   
+}
+
+.camp_right_content:after {
+    content: "";
+    clear: both;
+    display: block;
+    float: none;
+}
+
+.items {
+    width: 283px;
+    margin: 10px 20px 10px 30px;
+    float: left;
+}
+
+.items.nomargin {
+    margin-right: 0
+}
+
+.items .photo {
+    width: 283px;
+    height: 168px;
+    position: relative;
+    overflow: hidden;
+    background: #f6f6f6 url(./image/nothumb.svg) no-repeat center center;
+    border-radius: 10px;
+}
+
+.photo:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.3) 100%);
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 60%,rgba(0,0,0,0.3) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 60%,rgba(0,0,0,0.3) 100%);
+}
+
+.items img.tm {
+    transition: transform .2s;
+    width: 100%;
+    height: 100%
+}
+
+.items:hover img.tm {
+    transform: scale(1.15)
+}
+
+.items .photo .tm {
+    object-fit: cover;
+    width: 283px;
+    transition: transform .2s;
+}
+
+.items .photo span.distance {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: inline-block;
+    background: #000;
+    background: rgba(0,0,0,.1);
+    padding: 4px 5px;
+    color: #efe03e;
+    z-index: 10;
+    font-size: 11px;
+}
+
+.items .photo span.cat {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: inline-block;
+    background: #000;
+    background: rgba(0,0,0,.1);
+    padding: 4px 5px;
+    color: #efe03e;
+    z-index: 10;
+    font-size: 11px;
+}
+
+.items .cont {
+    padding-top: 7px
+}
+
+.items .cont .tt {
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 5px 0
+}
+
+.items .cont .mcont {
+    color: #008ab8;
+    font-size: 12px;
+    font-weight: 400
+}
+
+.footer{
+    width: 100%;
+    height: 265px;
+}

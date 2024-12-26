@@ -3,6 +3,7 @@ package com.kh.AllThatTrip.member.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,29 +24,27 @@ public class MemberController {
 	
 	@PostMapping("login.me")
 	public ModelAndView login(Member member, HttpSession session) {
-		
-		//log.info("핸들러에 어떤값이 요청됨? {}", member);
 		Member loginMember = memberService.login(member);
-		
 		session.setAttribute("loginUser", loginMember);
 		session.setAttribute("alertMsg", "환영합니다!");
-		
-		return mv.setViewNameAndData("redirect:/", null); // 메인화면으로 보내야함!
+		System.out.println("일단 로그인 성공!");
+		return mv.setViewNameAndData("redirect:/main", null); // 메인화면으로 보내야함!
 		
 	}
-	
 	@PostMapping("join.me")
 	public ModelAndView join(Member member) {
-		
-		log.info("회원가입 정보 잘 오나?? {}", member);
 		memberService.join(member);
-		
 		return null;
 	}
-	
-	  
-	
-	
+	@GetMapping("loginPage.me")
+	public String loginPage() {
+		return "member/login_page";
+		
+	}
+	@GetMapping("joinPage.me")
+	public String joinPage() {
+		return "member/join_page";
+	}
 	
 	
 	
