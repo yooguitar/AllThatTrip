@@ -16,7 +16,7 @@
 	<a href=board/notice_list>게시판</a>
 
 	<p>잘 나오니??</p>
-	<!--<jsp:forward page="WEB-INF/views/member/join_page.jsp" />-->
+	<jsp:forward page="WEB-INF/views/member/join_page.jsp" />
 
 
 

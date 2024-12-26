@@ -33,23 +33,27 @@
 	  INTO
 	  	   MEMBER
 	  	   (
+	  	   USER_NO,
 	  	   USER_ID,
 	  	   USER_PWD,
 	  	   USER_NAME,
 	  	   EMAIL,
 	  	   PHONE,
 	  	   SPAM,
-	  	   STATUS
+	  	   STATUS,
+	  	   ENROLL_DATE
 	  	   )
 	VALUES
 		   (
+		   SEQ_UNO.NEXTVAL,
 		   #{userId},
 		   #{userPwd},
 		   #{userName},
 		   #{email},
 		   #{phone},
 		   #{spam},
-		   #{status}
+		   DEFAULT,
+		   DEFAULT
 		   )
 
 </insert>

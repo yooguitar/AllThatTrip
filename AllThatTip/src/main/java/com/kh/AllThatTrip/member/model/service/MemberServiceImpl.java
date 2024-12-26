@@ -7,7 +7,9 @@ import com.kh.AllThatTrip.member.model.dao.MemberMapper;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -30,7 +32,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void join(Member member) {
 		
-		Member userInfo = mapper.login(member);
+		int userInfo = mapper.join(member);
+		log.info("트랜잭션 발생?{}", userInfo);
 	}
 
 	

@@ -30,7 +30,7 @@ public class MemberController {
 		session.setAttribute("loginUser", loginMember);
 		session.setAttribute("alertMsg", "환영합니다!");
 		
-		return mv.setViewNameAndData("redirect:/index.jsp", null); // 메인화면으로 보내야함!
+		return mv.setViewNameAndData("redirect:/", null); // 메인화면으로 보내야함!
 		
 	}
 	
