@@ -5,18 +5,21 @@
     
 	<sql id="boardColumn">
 	SELECT
-			BOARD_NO boardNo,
-			BOARD_TITLE boardTitle,
-			USER_NO userNo,
-			BOARD_CONTENT boardContent,
-			COUNT,
-			TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
+			B.BOARD_NO AS boardNo,
+			B.BOARD_TYPE AS boardType,
+			B.BOARD_TITLE AS boardTitle,
+			B.USER_NO AS userNo,
+			M.USER_ID AS boardWriter, 
+			B.BOARD_CONTENT AS boardContent,
+			B.COUNT AS count,
+			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+	FROM
+			BOARD B
+	JOIN
+			MEMBER M
+	ON
+			B.USER_NO = M.USER_NO
 			
-
-	 FROM
-	 		BOARD
-    WHERE
-       		STATUS = 'Y'
 	</sql>
 	
 	
@@ -36,15 +39,52 @@
 	</select>
     
 	<!-- 공지사항 전체 게시글 조회 -->    
-    <select id="selectBoardList" resultType="board">
-    	<include refid="boardColumn"></include>
-    
-    
- 	     AND 
- 	   			BOARD_TYPE = 10
+	<select id="selectBoardList" resultType="board">
+	SELECT
+			B.BOARD_NO AS boardNo,
+			B.BOARD_TYPE AS boardType,
+			B.BOARD_TITLE AS boardTitle,
+			B.USER_NO AS userNo,
+			M.USER_ID AS boardWriter, 
+			B.BOARD_CONTENT AS boardContent,
+			B.COUNT AS count,
+			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+	FROM
+			BOARD B
+	JOIN
+			MEMBER M
+	ON
+			B.USER_NO = M.USER_NO
+	WHERE	B.BOARD_TYPE = 10
+	AND		B.STATUS = 'Y'
+			
+	</select>
   	 		
+  	<!-- 공지사항 상세 조회 -->
+  	
+  	<select id="selectByNum" parameterType="long" resultType="board">
+	SELECT
+			B.BOARD_NO AS boardNo,
+			B.BOARD_TYPE AS boardType,
+			B.BOARD_TITLE AS boardTitle,
+			B.USER_NO AS userNo,
+			M.USER_ID AS boardWriter, 
+			B.BOARD_CONTENT AS boardContent,
+			B.COUNT AS count,
+			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+	FROM
+			BOARD B
+	JOIN
+			MEMBER M
+	ON
+			B.USER_NO = M.USER_NO
+	WHERE	B.BOARD_TYPE = 10
+	AND		B.STATUS = 'Y'
+	AND		BOARD_NO = #{boardNo}
+	
+	</select>
     
-    </select>
+ 
     
     <!-- 조회수 증가 -->
 	
@@ -54,7 +94,7 @@
 		   SET
 		   		COUNT = COUNT + 1
 		 WHERE
-		 		BORAD_TYPE = 10
+		 		BOARD_TYPE = 10
 		   AND
 		   		STATUS = 'Y'
 		   AND

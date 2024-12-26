@@ -17,7 +17,7 @@ public interface BoardService {
 	void insertBoard(Board board, MultipartFile upfile);
 
 	// 상세 조회
-	Map<String, Object> selectByOne(long boardNo);
+	Map<String, Object> selectByNum(long boardNo);
 	
 	// 수정
 	void updateBoard(Board boardNo, MultipartFile upfile);

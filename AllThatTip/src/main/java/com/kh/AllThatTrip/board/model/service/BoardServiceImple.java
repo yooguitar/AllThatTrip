@@ -12,6 +12,7 @@ import com.kh.AllThatTrip.board.model.dao.BoardMapper;
 import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
+import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,54 @@ public class BoardServiceImple implements BoardService {
 	}
 	
 	
+	private void validateBoard(Board board) {
+		if(board == null 
+			|| board.getBoardTitle() 	== null || board.getBoardTitle().trim().isEmpty()
+			|| board.getBoardContent()	== null || board.getBoardContent().trim().isEmpty()
+			|| board.getBoardWriter() 	== null || board.getBoardWriter().trim().isEmpty()) {
+			throw new BoardNoValueException("부적합한 입력값");
+		}
+		
+		
+		// 개행문자를 br요소로
+		String boardTitle = escapeHtml(board.getBoardTitle());
+		String boardContent = escapeHtml(board.getBoardContent());
+		board.setBoardTitle(convertNewlineToBr(boardTitle));
+		board.setBoardContent(convertNewlineToBr(boardContent));
+	}
 	
+	
+	private String escapeHtml(String value) {
+		return value.replaceAll("<", "&lt;").replaceAll(">", "&lt;");
+	}
+	
+	
+	private String convertNewlineToBr(String value) {
+		return value.replaceAll("\n", "<br>");
+	}
+	
+	
+	private void validateBoardNo(Long boardNo) {
+		if(boardNo == null || boardNo <= 0) {
+			throw new BoardNotFoundException("유효하지 않는 게시글 번호입니다.");
+		}
+	}
+	
+	private void incrementViewCount(Long boardNo) {
+		int result = mapper.increaseCount(boardNo);
+		if(result < 1) {
+			throw new BoardNotFoundException("게시글이 존재하지 않습니다");
+		}
+	}
+	
+	
+	private Board findBoardByNum(Long boardNo) {
+		Board board = mapper.selectByNum(boardNo);
+		if(board == null) {
+			throw new BoardNotFoundException("게시글을 찾을 수 없습니다.");
+		}
+		return board;
+	}
 	
 	
 	
@@ -75,15 +123,26 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
 		// 유효성 검증
+		validateBoard(board);
 		// 파일 유무
 		// 인서트 진행
 		
 	}
-
+	
+	// 상세조회
 	@Override
-	public Map<String, Object> selectByOne(long boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> selectByNum(long boardNo) {
+		
+		validateBoardNo(boardNo);
+		incrementViewCount(boardNo);
+		Board board = findBoardByNum(boardNo);
+		
+		// 있으면 보드 VO에 필드에 담겨져온 데이터를 다시 반환해줌
+		Map<String, Object> responseData = new HashMap();
+		responseData.put("board", board);
+		
+		return responseData;
+
 	}
 
 	@Override
