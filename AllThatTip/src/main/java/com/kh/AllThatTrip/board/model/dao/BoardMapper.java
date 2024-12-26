@@ -21,7 +21,7 @@ public interface BoardMapper {
 	
 	
 	// 상세조회
-	Board selectById(Long boardNo);
+	Board selectByNum(Long boardNo);
 	
 	// 작성
 	void insertBoard(Board board);

@@ -60,16 +60,29 @@ public class BoardController {
 
 
 	// 상세 조회
-	@GetMapping("/boards/{id}")
+	@GetMapping("notice_list/{id}")
 	public ModelAndView selectByOne(@PathVariable(name="id") Long id) {
-		log.info("{}", id);
-		Map<String, Object> responseData = boardService.selectByOne(id);
+		Map<String, Object> responseData = boardService.selectByNum(id);
 		
+		log.info("{}", id);
 		return mv.setViewNameAndData("board/detail", responseData);
 		
 	}
 
-
+	// 수정 양식
+	@PostMapping("/notice_list/update-form")
+	public ModelAndView updateForm(Long boardNo) {
+		Map<String, Object> responseData = boardService.selectByNum(boardNo);
+		return mv.setViewNameAndData("board/update", responseData);
+	}
+	
+	// 수정
+	//@PostMapping("notice_list/update")
+	//public ModelAndView update(Board board, MultipartFile upfile) {
+	
+	//boardService.updateBoard(board, upfile);
+	// retrun mv.setViewName
+	}
 	/*
 
 
@@ -80,7 +93,7 @@ public class BoardController {
 
 
 
-	// 수정
+	
 
 	// 삭제
 
@@ -96,4 +109,4 @@ public class BoardController {
 	 */
 
 
-}
+

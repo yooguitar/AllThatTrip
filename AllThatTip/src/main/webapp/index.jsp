@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<<<<<<< HEAD
 
 	<h1>안녕</h1>
 	
@@ -18,7 +19,7 @@
 	
 
 	<p>잘 나오니??</p>
-	<jsp:forward page="WEB-INF/views/member/join_page.jsp" />
+	<jsp:forward page="WEB-INF/views/common/main.jsp" />
 
 
 

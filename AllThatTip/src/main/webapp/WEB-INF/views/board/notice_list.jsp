@@ -72,7 +72,7 @@
 	                    <tr onclick="detail('${board.boardNo}')">
 	                        <td>${ board.boardNo }</td>
 	                        <td>${ board.boardTitle }</td>
-	                        <td>${ board.userNo }</td>
+	                        <td>${ board.boardWriter }</td>
 	                        <td>${ board.count }</td>
 	                        <td>${ board.createDate} </td>
 	                    </tr>
@@ -84,7 +84,7 @@
 			<script>
 				function detail(num) {
 					//console.log(num);
-					location.href = `boards/\${num}`;
+					location.href = `notice_list/\${num}`;
 				}
 			
 			</script>
