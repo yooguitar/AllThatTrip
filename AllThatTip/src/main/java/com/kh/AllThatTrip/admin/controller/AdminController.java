@@ -9,7 +9,6 @@ import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
 @Controller
 @RequiredArgsConstructor

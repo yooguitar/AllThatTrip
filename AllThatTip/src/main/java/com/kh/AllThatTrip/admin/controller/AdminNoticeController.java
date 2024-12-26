@@ -29,4 +29,5 @@ public class AdminNoticeController {
 		return mv.setViewNameAndData("AdNotice/list", map);
 	}
 
+	
 }

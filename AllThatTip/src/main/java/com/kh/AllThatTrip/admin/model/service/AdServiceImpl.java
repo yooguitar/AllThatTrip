@@ -1,6 +1,17 @@
 package com.kh.AllThatTrip.admin.model.service;
 
-public class AdServiceImpl {
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
+import com.kh.AllThatTrip.exception.BoardNotFoundException;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AdServiceImpl implements AdService{
 
 	private final AdminMapper mapper;
 
@@ -12,5 +23,11 @@ public class AdServiceImpl {
 			throw new BoardNotFoundException("게시글이 없습니다");
 		}
 		return totalCount;
+	}
+
+
+	@Override
+	public Map<String, Object> selectAdNoticeList(int currentPage) {
+		return null;
 	}
 }

@@ -1,5 +1,9 @@
 package com.kh.AllThatTrip.admin.model.dao;
 
-public class AdminMapper {
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
+public interface AdminMapper {
+	
+	int selectTotalCount();
 }
