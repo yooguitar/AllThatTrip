@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +47,14 @@ public class AdminNoticeController {
 		session.setAttribute("alertMsg","게시글 등록에 성공했습니다.");
 		return mv.setViewNameAndData("redirect:boards", null);
 	}
+	
+	@GetMapping("adNotices/{id}")
+	public ModelAndView selectById(@PathVariable(name="id")Long id) {
+		Map<String, Object> responseData = adService.selectById(id);
+		return mv.setViewNameAndData("adNotice/detail", responseData);
+	}
+	
+	
 	@GetMapping("map")
 	public String mapForward() {
 		return "common/map";

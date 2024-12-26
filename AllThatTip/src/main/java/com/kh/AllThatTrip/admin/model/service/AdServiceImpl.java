@@ -2,6 +2,7 @@ package com.kh.AllThatTrip.admin.model.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -81,9 +82,9 @@ public class AdServiceImpl implements AdService{
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		int randomNum = (int)(Math.random() * 90000) + 10000;
 		String changeName = currentTime + randomNum + ext;
-		
+
 		String savePath = context.getRealPath("/resources/upload_files/");
-		
+
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
@@ -93,38 +94,111 @@ public class AdServiceImpl implements AdService{
 		adNotice.setAdOriName(fileName);
 		adNotice.setAdChaName("/hyper/resources/upload_files/" + changeName);
 	}
-	
+
 	private void validateAdNotice(AdNotice adNotice ) {
 		if(adNotice == null ||
-		   adNotice.getAdNoticeTitle() == null || adNotice.getAdNoticeTitle().trim().isEmpty() ||	
-		   adNotice.getAdNoticeContent() == null || adNotice.getAdNoticeContent().trim().isEmpty() ||	
-		   adNotice.getAdWriter() == null || adNotice.getAdWriter().trim().isEmpty()) {
+				adNotice.getAdNoticeTitle() == null || adNotice.getAdNoticeTitle().trim().isEmpty() ||	
+				adNotice.getAdNoticeContent() == null || adNotice.getAdNoticeContent().trim().isEmpty() ||	
+				adNotice.getAdWriter() == null || adNotice.getAdWriter().trim().isEmpty()) {
 			throw new BoardNoValueException("입력값이 부적절합니다.");
 		}
-		
 
-		
+
+
 		String adNoticeTitle = escapeHtml(adNotice.getAdNoticeTitle());
 		String adNoticeContent = escapeHtml(adNotice.getAdNoticeContent());
 		adNotice.setAdNoticeTitle(convertNewlineToBr(adNoticeTitle));
 		adNotice.setAdNoticeContent(convertNewlineToBr(adNoticeContent));
 	}
-	
+
 	private String escapeHtml(String value) {
 		return value.replaceAll("<", "&lt")
-				    .replaceAll(">", "&gt");
+				.replaceAll(">", "&gt");
 	}
-	
+
 	private String convertNewlineToBr(String value) {
 		return value.replaceAll("\n","<br>");
-		
-				
+
+
 	}
-	
-	private void incrementViewCount(Long ptNo) {
-		int result = mapper.increaseCount(ptNo);
+
+	private void incrementViewCount(Long  adNoticeNo) {
+		int result = mapper.increaseCount( adNoticeNo);
 		if(result < 1) {
 			throw new BoardNotFoundException("게시글이 존재하지 않습니다.");
 		}
 	}
+
+	private AdNotice findAdNoticeById(Long  adNoticeNo) {
+		AdNotice adNotice = mapper.selectById( adNoticeNo);
+		if(adNotice == null) {
+			throw new BoardNotFoundException("게시글을 찾을 수 없습니다.");
+		}
+		return adNotice;
+	}
+
+	private void validateAdNoticeNo(Long adNoticeNo) {
+		// 번호가 0보다 큰 수 안자
+		if(adNoticeNo == null ||  adNoticeNo <= 0) {
+			throw new InvalidParameterException("유효하지 않은 게시글 번호입니다.");	
+		}
+	}
+
+	@Override
+	public Map<String, Object> selectById(Long adNoticeNo) {
+		validateAdNoticeNo(adNoticeNo);
+		incrementViewCount(adNoticeNo);
+
+		AdNotice adNotice = findAdNoticeById(adNoticeNo);
+		Map<String, Object> responseData = new HashMap();
+		responseData.put("adNotice", adNotice);
+
+		return responseData;
+
+	}
+
+	@Override
+	public void updateAdNotice(AdNotice adNotice, MultipartFile upfile) {
+
+		validateAdNoticeNo(adNotice.getAdNoticeNo());
+		findAdNoticeById(adNotice.getAdNoticeNo());
+
+		// 새 파일을 첨부했는지
+		if(!upfile.getOriginalFilename().equals("")) {
+
+			if(adNotice.getAdChaName() != null) {
+				new File(context.getRealPath(adNotice.getAdChaName())).delete();
+			}
+
+			handleFileUpload(adNotice, upfile);
+		}
+		int result = mapper.updateAdNotice(adNotice);
+
+		if(result < 1) {
+			throw new BoardNotFoundException("업데이트 실패");
+		}
+	}
+
+	@Override
+	public void deleteAdNotice(Long adNoticeNo, String adChaName) {
+		validateAdNoticeNo(adNoticeNo);
+	    findAdNoticeById(adNoticeNo);
+	    
+	    int result = mapper.deleteAdNotice(adNoticeNo);
+	    
+	    if(result <= 0) {
+	    	throw new BoardNotFoundException("게시글 삭제 실패");
+	    }
+	    
+	    // 파일 삭제 
+	    if(!("".equals(adChaName))) {
+	    	try {
+	    	new File(context.getRealPath(adChaName)).delete();
+	    	} catch(RuntimeException e) {
+	    		throw new BoardNotFoundException("파일을 찾을 수 없습니다");
+	    	}
+	    }
+	}
+
+
 }

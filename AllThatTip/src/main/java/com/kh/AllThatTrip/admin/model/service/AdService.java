@@ -12,5 +12,9 @@ public interface AdService {
 	
 	void insertAdNotice(AdNotice adNotice, MultipartFile upfile);
 
-
+	Map<String, Object> selectById(Long id);
+	
+	void updateAdNotice(AdNotice adNotice, MultipartFile upfile);
+	
+	void deleteAdNotice(Long adNoticeNo, String adChaName);
 }

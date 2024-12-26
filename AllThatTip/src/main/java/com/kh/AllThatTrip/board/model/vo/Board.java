@@ -1,7 +1,5 @@
 package com.kh.AllThatTrip.board.model.vo;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +17,12 @@ public class Board {
 	private Long boardNo;
 	private int boardType;
 	private int userNo;
+	private String boardWriter;
 	private String boardTitle;
 	private String boardContent;
-	private Date createDate;
+	private String originName;
+	private String changeName;
+	private String createDate;
 	private int count;
 	private String status;
 
