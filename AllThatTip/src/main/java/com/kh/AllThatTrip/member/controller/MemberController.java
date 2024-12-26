@@ -24,14 +24,12 @@ public class MemberController {
 	@PostMapping("login.me")
 	public ModelAndView login(Member member, HttpSession session) {
 		
-		System.out.println("로그인 핸들러 호출");
-		System.out.println(member.toString());
+		//log.info("핸들러에 어떤값이 요청됨? {}", member);
 		Member loginMember = memberService.login(member);
 		
 		session.setAttribute("loginUser", loginMember);
 		session.setAttribute("alertMsg", "환영합니다!");
 		
-		System.out.println("포워딩 문제임");
 		return mv.setViewNameAndData("redirect:/index.jsp", null); // 메인화면으로 보내야함!
 		
 	}
@@ -39,6 +37,7 @@ public class MemberController {
 	@PostMapping("join.me")
 	public ModelAndView join(Member member) {
 		
+		log.info("회원가입 정보 잘 오나?? {}", member);
 		memberService.join(member);
 		
 		return null;
