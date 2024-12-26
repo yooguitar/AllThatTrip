@@ -20,6 +20,8 @@ public class AdPhotoBoard {
 	private String ptContent;
 	private Date uploadDate;
 	private int ptCount;
+	private String ptOriName;
+	private String ptChaName;
 	private String ptWriter;
 	private int ptTierNo;
 	

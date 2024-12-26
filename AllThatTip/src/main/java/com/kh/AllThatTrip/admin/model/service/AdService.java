@@ -12,4 +12,5 @@ public interface AdService {
 	
 	void insertAdNotice(AdNotice adNotice, MultipartFile upfile);
 
+
 }

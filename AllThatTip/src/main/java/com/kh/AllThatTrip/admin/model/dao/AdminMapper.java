@@ -15,5 +15,7 @@ public interface AdminMapper {
 	List<AdNotice> selectAdNoticeList(RowBounds rowBounds);
 
 	void insertAdNotice(AdNotice adNotice);
+
+	int increaseCount(Long ptNo);
 	
 }

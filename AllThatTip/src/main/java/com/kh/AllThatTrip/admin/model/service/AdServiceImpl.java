@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
-import com.kh.AllThatTrip.admin.model.vo.AdAttachment;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class AdServiceImpl implements AdService{
 
 	private final AdminMapper mapper;
+	private final ServletContext context;
 
 
 	private int getTotalCount() {
@@ -64,7 +66,7 @@ public class AdServiceImpl implements AdService{
 
 	@Override
 	public void insertAdNotice(AdNotice adNotice, MultipartFile upfile) {
-
+		validateAdNotice(adNotice);
 
 		if(!("".equals(upfile.getOriginalFilename())))	{
 			handleFileUpload(adNotice,upfile);
@@ -85,14 +87,14 @@ public class AdServiceImpl implements AdService{
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
-			throw new FailToFileUploadException("파일이 이상해용~");
+			throw new FailToFileUploadException("파일이 업로드 되지 않았습니다.");
 		}
 		// 첨부파일이 존재했다 => 업로드 + Board객체에 originName + changeName
 		adNotice.setAdOriName(fileName);
 		adNotice.setAdChaName("/hyper/resources/upload_files/" + changeName);
 	}
 	
-	private void validateBoard(AdNotice adNotice ) {
+	private void validateAdNotice(AdNotice adNotice ) {
 		if(adNotice == null ||
 		   adNotice.getAdNoticeTitle() == null || adNotice.getAdNoticeTitle().trim().isEmpty() ||	
 		   adNotice.getAdNoticeContent() == null || adNotice.getAdNoticeContent().trim().isEmpty() ||	
@@ -117,5 +119,12 @@ public class AdServiceImpl implements AdService{
 		return value.replaceAll("\n","<br>");
 		
 				
+	}
+	
+	private void incrementViewCount(Long ptNo) {
+		int result = mapper.increaseCount(ptNo);
+		if(result < 1) {
+			throw new BoardNotFoundException("게시글이 존재하지 않습니다.");
+		}
 	}
 }

@@ -19,6 +19,8 @@ public class AdNotice {
 	private String importent;
 	private String adNoticeTitle;
 	private String adNoticeContent;
+	private String adOriName;
+	private String adChaName;
 	private int adNoticeCount;
 	private Date adUploadDate;
 	private String adWriter;
