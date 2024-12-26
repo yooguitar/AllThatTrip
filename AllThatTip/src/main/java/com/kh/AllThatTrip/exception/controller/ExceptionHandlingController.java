@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.UserIdNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,10 @@ public class ExceptionHandlingController {
 		return createErrorResponse("아이디가 존재하지 않습니다.", e);
 	}
 	
+	// 게시글이 없을 때
+	protected ModelAndView NoSuchBoardEroor(BoardNotFoundException e) {
+		return createErrorResponse("게시글이 존재하지 않습니다.", e);
+	}
 	
 	
 	
