@@ -28,18 +28,21 @@
     </style>
 </head>
 <body>
+	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" />-->
+	<!-- include 아직 하면 안됩니다. 스타일 겹쳐요 -->
+	
     <div class="container" id="wrap">
         <br>
         <h2 class="title-join-biz">로그인</h2>
         <br>
-        <form action="#" method="post">
+        <form action="login.me" method="post">
             <div class="form-group">
-                <label for="email">ID:</label>
-                <input type="email" class="form-control" id="userId" placeholder="아이디 입력" name="user-id">
+                <label>ID:</label>
+                <input type="id" class="form-control" id="userId" placeholder="아이디 입력" name="userId">
             </div>
             <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" id="userPwd" placeholder="비밀번호 입력" name="user-pwd">
+                <label>Password:</label>
+                <input type="password" class="form-control" id="userPwd" placeholder="비밀번호 입력" name="userPwd">
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -52,7 +55,7 @@
 
         <br>
         <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="#">회원가입</a><br>
+        <a href="/AllThatTrip/joinPage.me">회원가입</a><br>
         </label>
         <br><br>
         <p class="title-join-biz" style="font-size: 12px;">비회원 예약도 가능합니다.</p><br>
@@ -63,6 +66,8 @@
     <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#">사업자 회원가입</a>
     </label>
+    
+    <!--<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
 
 </body>
 </html>

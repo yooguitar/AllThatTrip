@@ -7,13 +7,15 @@ import com.kh.AllThatTrip.member.model.dao.MemberMapper;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
-	// 로그인 회원가입 체크 후 암호화 하기
+	private final PasswordEncryptor passwordEncoder;
 	
 	@Override
 	public Member login(Member member) {
@@ -23,7 +25,6 @@ public class MemberServiceImpl implements MemberService {
 		if(loginMember == null) {
 			throw new UserIdNotFoundException("존재하지 않는 아이디 입니다.");
 		}
-		System.out.println("아이디는 있음");
 		
 		return loginMember;
 	}
@@ -31,7 +32,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void join(Member member) {
 		
-		Member userInfo = mapper.login(member);
+		int userInfo = mapper.join(member);
+		//log.info("트랜잭션 발생?{}", userInfo);
 	}
 
 	
