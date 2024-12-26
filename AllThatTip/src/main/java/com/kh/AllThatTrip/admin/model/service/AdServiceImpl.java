@@ -73,7 +73,7 @@ public class AdServiceImpl implements AdService{
 
 	}
 
-	private void handleFileUpload(AdAttachment adAttachment, MultipartFile upfile) {
+	private void handleFileUpload(AdNotice adNotice, MultipartFile upfile) {
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -88,8 +88,8 @@ public class AdServiceImpl implements AdService{
 			throw new FailToFileUploadException("파일이 이상해용~");
 		}
 		// 첨부파일이 존재했다 => 업로드 + Board객체에 originName + changeName
-		adAttachment.setAdOriName(fileName);
-		adAttachment.setAdChaName("/hyper/resources/upload_files/" + changeName);
+		adNotice.setAdOriName(fileName);
+		adNotice.setAdChaName("/hyper/resources/upload_files/" + changeName);
 	}
 	
 	private void validateBoard(AdNotice adNotice ) {

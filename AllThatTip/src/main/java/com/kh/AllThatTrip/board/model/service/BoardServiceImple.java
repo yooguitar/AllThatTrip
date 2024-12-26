@@ -74,7 +74,9 @@ public class BoardServiceImple implements BoardService {
 
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
-		// TODO Auto-generated method stub
+		// 유효성 검증
+		// 파일 유무
+		// 인서트 진행
 		
 	}
 
