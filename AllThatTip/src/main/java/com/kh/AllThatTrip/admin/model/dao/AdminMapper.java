@@ -16,6 +16,14 @@ public interface AdminMapper {
 
 	void insertAdNotice(AdNotice adNotice);
 
-	int increaseCount(Long ptNo);
+	int increaseCount(Long adNoticeNo);
+
+	AdNotice selectById(Long adNoticeNo);
+
+	int updateAdNotice(AdNotice adNotice);
+
+	int deleteAdNotice(Long adNoticeNo);
+
+	
 	
 }
