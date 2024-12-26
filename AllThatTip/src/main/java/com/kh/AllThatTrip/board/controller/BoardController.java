@@ -2,13 +2,18 @@ package com.kh.AllThatTrip.board.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
+import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -33,16 +38,11 @@ public class BoardController {
     }
 	
 	
+	@GetMapping("insertForm")
+	public String insertForm() {
+		return "board/insert_form";
+	}
 	
-	
-	
-	/*
-	// 전체 리스트 조회
-	
-	
-	// 조회수 증가
-	
-	// 상세 조회
 	
 	// 등록
 	@PostMapping("boards")
@@ -53,6 +53,16 @@ public class BoardController {
 		return mv.setViewNameAndData("redirect:boards", null);
 		
 	}
+	
+	/*
+	// 전체 리스트 조회
+	
+	
+	// 조회수 증가
+	
+	// 상세 조회
+	
+	
 	
 	// 수정
 	
