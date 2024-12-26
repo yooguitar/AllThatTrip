@@ -9,7 +9,19 @@
 </head>
 <body>
 
-	<jsp:forward page="/WEB-INF/views/member/join_page.jsp" />
+
+	<h1>안녕</h1>
+	
+	<a href="/WEB-INF/views/member/join_page.jsp">회원가입</a>
+	
+	<a href=board/notice_list>게시판</a>
+
+	<p>잘 나오니??</p>
+	<a href="login_page.me">로그인 테스트</a>
+	<a href="join_page.me">회원가입 테스트</a>
+
+
 
 </body>
 </html>
+

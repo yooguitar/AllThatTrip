@@ -9,14 +9,9 @@ import com.kh.AllThatTrip.board.model.vo.Board;
 public interface BoardService {
 
 	
-	// 페이징바
-	public Map<String, Object> selectBoardList(int currentPage);
+	// 페이징바 리스트
+	Map<String, Object> selectBoardList(int currentPage);
 	
-	
-	// 전체 리스트 조회
-	
-	// 조회수 증가 
-	int increaseCount(Board board);
 	
 	// 등록
 	void insertBoard(Board board, MultipartFile upfile);
@@ -25,10 +20,10 @@ public interface BoardService {
 	Map<String, Object> selectById(long boardNo);
 	
 	// 수정
-	void updateBoard();
+	void updateBoard(Board boardNo, MultipartFile upfile);
 	
 	// 삭제
-	void deleteBoard();
+	void deleteBoard(Board boardNo, String changeName);
 	// 검색창(필터)
 	
 	// 썸네일

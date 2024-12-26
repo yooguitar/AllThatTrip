@@ -4,55 +4,55 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.AllThatTrip.board.model.dao.BoardMapper;
 import com.kh.AllThatTrip.board.model.vo.Board;
+import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
 public class BoardServiceImple implements BoardService {
+	
+	private BoardMapper mapper;
 
 	@Override
 	public Map<String, Object> selectBoardList(int currentPage) {
-		
-		int totalCount = getTotalCount();
-		
-		PageInfo pi = getPageInfo(totalCount, currentPage);
-		
-		List<Board> boards = getBoardList(pi);
-		
-		log.info("게시글목록:{}", boards);
-		
-		Map<String, Object> map = new HashMap();
-		map.put("boards", boards);
-		map.put("pageInfo", pi);
-		
-		
-		return map;
-	}
-
-	@Override
-	public int increaseCount(Board board) {
-		return 0;
-	}
-
-	@Override
-	public void insertBoard(Board board, MultipartFile upfile) {
-
-	}
-
-	@Override
-	public Map<String, Object> selectById(long boardNo) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void updateBoard() {
-
+	public void insertBoard(Board board, MultipartFile upfile) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void deleteBoard() {
-
+	public Map<String, Object> selectById(long boardNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
+	public void updateBoard(Board boardNo, MultipartFile upfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteBoard(Board boardNo, String changeName) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+	
 }

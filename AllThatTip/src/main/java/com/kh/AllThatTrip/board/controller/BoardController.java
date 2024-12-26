@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,29 +16,43 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
-@RequiredArgsConstructor // 생성자 주입으로하는게 좋음!롬복이 알아서 해준다
+@RequiredArgsConstructor
+@RequestMapping("/board")
 @Slf4j
 public class BoardController {
+	
 
 	private final BoardService boardService;
 	private final ModelAndViewUtil mv;
 	
-	// 페이징바
-	@GetMapping("boards")
-	public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int page) {
+	@GetMapping("/notice_list")
+    public ModelAndView selectBoardList(@RequestParam(value="page", defaultValue="1") int currentPage) {
+		Map<String, Object> map = boardService.selectBoardList(currentPage);
+		return mv.setViewNameAndData("board/notice_list", map); 
 		
-		Map<String, Object> map = boardService.selectBoardList(page);
-
-		return mv.setViewNameAndData("board/list", map);
-	}
+    }
 	
+	
+	
+	
+	
+	/*
 	// 전체 리스트 조회
+	
 	
 	// 조회수 증가
 	
 	// 상세 조회
 	
 	// 등록
+	@PostMapping("boards")
+	public ModelAndView insertBoard(Board board, MultipartFile upfile, HttpSession session) {
+		
+		boardService.insertBoard(board, upfile);
+		session.setAttribute("alertMsg", "게시글 등록 성공");
+		return mv.setViewNameAndData("redirect:boards", null);
+		
+	}
 	
 	// 수정
 	
@@ -52,7 +67,7 @@ public class BoardController {
 	// 댓글ㄴ
 	
 	
-	
+	*/
 	
 	
 }
