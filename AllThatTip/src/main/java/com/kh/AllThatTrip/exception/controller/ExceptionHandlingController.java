@@ -31,8 +31,14 @@ public class ExceptionHandlingController {
 	
 	// 게시글이 없을 때
 	@ExceptionHandler(BoardNotFoundException.class)
-	protected ModelAndView NoSuchBoardEroor(BoardNotFoundException e) {
+	protected ModelAndView NoSuchBoardError(BoardNotFoundException e) {
 		return createErrorResponse("게시글이 존재하지 않습니다.", e);
+	}
+	
+	// 필수 입력사항 누락
+	@ExceptionHandler(BoardNoValueException.class)
+	protected ModelAndView BoardNoValueError(BoardNoValueException e) {
+		return createErrorResponse("필수 사항을 입력해주세요.", e);
 	}
 	
 	// 처리중 오류 발생 시
@@ -47,17 +53,10 @@ public class ExceptionHandlingController {
 		return createErrorResponse("파일 업로드에 실패했습니다." ,e);
 	}
 	
-	// 필수 입력사항 누락
-	@ExceptionHandler(BoardNoValueException.class)
-	protected ModelAndView noValueError(BoardNoValueException e) {
-		return createErrorResponse("필수 입력사항을 모두 입력해주세요", e);
-	}
 	
+
 	
-	
-	
-	
-	
+
 	
 	
 	

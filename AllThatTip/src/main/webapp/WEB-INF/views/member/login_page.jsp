@@ -4,31 +4,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>로그인 페이지 입니다.</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 페이지 입니다.</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        #wrap{
+            border : 1px solid rgba(0,0,0,0.2);
+            border-radius: 5px;
+            width: 500px;
+            height: 520px;
+            margin: auto;
+            margin-top: 50px;
+        }
+        .title-join-biz{
+            text-align: center;
+        }
+
+    </style>
 </head>
-    
-    <form action="login.me" method="post">
-        <label>ID*
-            <input type="text" placeholder="아이디 입력" id="userId"><br>
-        </label>
-        <label>Password*
-            <input type="text" placeholder="비밀번호 입력" id="userPwd"><br>
-        </label>
-        <input type="checkbox" checked>
-        <a href="#">아이디 / 비밀번호 찾기</a><br>
-        <button>로그인</button>
-        
-    </form>
+<body>
+    <div class="container" id="wrap">
+        <br>
+        <h2 class="title-join-biz">로그인</h2>
+        <br>
+        <form action="login.me" method="post">
+            <div class="form-group">
+                <label>ID:</label>
+                <input type="id" class="form-control" id="userId" placeholder="아이디 입력" name="userId">
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" class="form-control" id="userPwd" placeholder="비밀번호 입력" name="userPwd">
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="remember" checked> 아이디 저장
+                </label>
+                    <a href="#" style="color: rgb(33, 37, 41); float:right;">아이디 / 비밀번호 찾기</a>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 470px; height: 50px;">로그인</button>
+        </form>
 
-    <label>아직 회원이 아니신가요?
+        <br>
+        <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#">회원가입</a><br>
-    </label>
+        </label>
+        <br><br>
+        <p class="title-join-biz" style="font-size: 12px;">비회원 예약도 가능합니다.</p><br>
 
-    <p>비회원으로도 이용 가능합니다.</p><br>
+    </div>
 
-    <label>사장님 이신가요?
+    <br>
+    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#">사업자 회원가입</a>
     </label>
 
