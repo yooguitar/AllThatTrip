@@ -16,7 +16,9 @@
     <nav class="navbar">
 
       <div class="navbar__logo">
+
         <a class=aTag href="#" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
+
       </div>
       <div id=navi>
         <ul id="navbar">
@@ -63,20 +65,22 @@
         <li><i class="fab fa-google"></i></li>
         <li><i class="fab fa-slack"></i></li>
       </ul>
-      
+
+
       <c:choose>
       	<c:when test="${ sessionScope.loginUser eq null }">
 	      <div class="login">
-	        <a class=aTag  href="/AllThatTrip/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	        <a href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 	      </div>
 	    </c:when>
 	    <c:otherwise>
 	      <div class="login">
 	        <label style="color:white; font-size:15px;">💡<label>
-	        <a class=aTag onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	        <a onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 	      </div>
 	    </c:otherwise>  
       </c:choose>
+
 
     </nav>
   </body>

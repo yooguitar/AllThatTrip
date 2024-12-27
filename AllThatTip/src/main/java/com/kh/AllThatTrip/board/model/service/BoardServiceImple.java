@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.board.model.dao.BoardMapper;
@@ -126,8 +127,8 @@ public class BoardServiceImple implements BoardService {
 		
 		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
 		board.setOriginName(fileName);
-		board.setChangeName("/hyper/resources/upload_files/" + changeName);
-		
+		board.setChangeName("/resources/upload_files/" + changeName);
+		log.info("File save path: {}", savePath);
 		
 	}	
 	
@@ -168,6 +169,7 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	// 등록
+	@Transactional
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
 		// 유효성 검증
@@ -178,6 +180,7 @@ public class BoardServiceImple implements BoardService {
 		}
 		// 인서트 진행
 		mapper.insertBoard(board);
+		mapper.insertBoardFile(board);
 		 	
 	}
 	

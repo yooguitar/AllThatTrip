@@ -77,11 +77,12 @@ public class BoardController {
 	}
 	
 
+	
 	@PostMapping("/notice_list/update")
 	public ModelAndView updateBoard(Board board, MultipartFile upfile) {
 		
+		log.info("{}:{}",board,upfile);
 		boardService.updateBoard(board, upfile);
-		//log.info("{}:{}",board,upfile);
 		return mv.setViewNameAndData("redirect:/board/notice_list", null);
 		
 	}

@@ -35,7 +35,7 @@
         <div class="innerOuter">
             <h2>게시글 상세보기</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="/AllThatTrip/board/notice_list">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="/att/board/notice_list">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -87,9 +87,9 @@
             	function postSubmit(num) {
 			
             		if(num == 1){
-            			$('#postForm').attr('action', '/AllThatTrip/board/notice_list/update-form').submit();
+            			$('#postForm').attr('action', '/att/board/notice_list/update-form').submit();
             		} else {
-            			$('#postForm').attr('action', '/AllThatTrip/board/notice_list/delete').submit();
+            			$('#postForm').attr('action', '/att/board/notice_list/delete').submit();
             		}
 				}
             </script>

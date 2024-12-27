@@ -51,9 +51,22 @@
   	<!-- 공지사항 상세 조회 -->
   	
   	<select id="selectByNum" parameterType="long" resultType="board">
-	<include refid="boardColumn"></include>
-	
-	WHERE	B.BOARD_TYPE = 10
+	SELECT
+			BOARD_NO AS boardNo,
+			BOARD_TYPE AS boardType,
+			BOARD_TITLE AS boardTitle,
+			USER_NO AS userNo,
+			USER_ID AS boardWriter, 
+			BOARD_CONTENT AS boardContent,
+			COUNT AS count,
+			ORIGIN_NAME originName,
+			CHANGE_NAME changeName,
+			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+	FROM
+			BOARD B
+	JOIN	MEMBER M	USING	(USER_NO)
+	JOIN	BD_ATTACHMENT	USING	(BOARD_NO)
+	WHERE	BOARD_TYPE = 10
 	AND		B.STATUS = 'Y'
 	AND		BOARD_NO = #{boardNo}
 	
@@ -90,7 +103,7 @@
 			BOARD_CONTENT
 			)
     VALUES (
-    		SEQ_BFNO.NEXTVAL, 
+    		SEQ_BUNO.NEXTVAL, 
     		10, 
     		#{userNo}, 
     		#{boardTitle}, 
@@ -99,6 +112,25 @@
 			
 	</insert>
 	
+	<!-- 공지사항 첨부파일 등록 -->
+	<insert id="insertBoardFile" parameterType="board">
+	INSERT 
+    INTO 	BD_ATTACHMENT (
+            FILE_NO, 
+            BOARD_NO, 
+            ORIGIN_NAME, 
+            CHANGE_NAME
+        	)
+	VALUES 
+			(
+            SEQ_BFNO.NEXTVAL, 
+            SEQ_BUNO.CURRVAL, 
+            #{originName}, 
+            #{changeName}
+        	)
+	
+	
+	</insert>
 	
 	<!-- 공지사항 수정 -->
 	<update id="updateBoard" parameterType="board">
