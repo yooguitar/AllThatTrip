@@ -24,7 +24,9 @@ import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService{
@@ -35,7 +37,6 @@ public class AdServiceImpl implements AdService{
 
 	private int getTotalCount() {
 		int totalCount = mapper.selectTotalCount();
-
 		if(totalCount == 0) {
 			throw new BoardNotFoundException("게시글이 없습니다");
 		}

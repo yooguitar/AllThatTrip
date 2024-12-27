@@ -4,5 +4,107 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.kh.AllThatTrip.admin.model.dao.AdminMapper">
+	
+	<sql id="adNoticeColumn">
+		SELECT
+			   AD_NOTICE_NO adNoticeNo,
+			   AD_NOTICE_TITLE adNoticeTitle,
+			   AD_NOTICE_CONTENT adNoticeContent,
+			   AD_ORI_NAME adOriName,
+			   AD_CHA_NAME adChaName,
+			   AD_WRITER adWriter,
+			   AD_NOTICE_COUNT adNoticeCount,
+			   IMPORTENT,
+			   TO_CHAR(AD_UPLOAD_DATE, 'YYYY-MM-DD') as adUploadDate
+		  FROM
+		       TB_AD_NOTICE
+		 WHERE
+		       AD_STATUS = 'N'      			   
+	</sql>
+	
+	
+	
+	<select id="selectTotalCount" resultType="_int">
+		SELECT 
+			   COUNT(*) 
+		  FROM 
+			   TB_AD_NOTICE 
+		 WHERE 
+			   AD_STATUS = 'N'
+
+	</select>
+	
+	<select id="selectAdNoticeList" resultType="adNotice">
+		<include refid="adNoticeColumn"/>
+		ORDER
+		   BY
+		      AD_NOTICE_NO DESC
+	</select>
+	
+	<insert id="insertAdNotice" parameterType="adNotice">
+		INSERT
+		  INTO
+		       TB_AD_NOTICE
+			   (
+			   AD_NOTICE_NO,
+			   AD_NOTICE_TITLE,
+			   AD_NOTICE_CONTENT,
+			   AD_ORI_NAME,
+			   AD_CHA_NAME,
+			   AD_WRITER,
+			   IMPORTENT
+			   )
+		VALUES			   
+			   (
+			   SEQ_AD_NNO.NEXTVAL,
+			   #{adNoticeTitle},
+			   #{adNoticeContent},
+			   #{adOriName},
+			   #{adChaName},
+			   #{adWriter},
+			   #{importent}
+			   )		       
+	</insert>
+	
+	<update id="increaseCount" parameterType="long">
+		UPDATE
+		       TB_AD_NOTICE
+		   SET
+		       COUNT = COUNT + 1
+		 WHERE
+		       STATUS ='Y'
+		   AND
+		       AD_NOTICE_NO = #{adNoticeNo}              
+	</update>
+	<select id="selectById" parameterType="long" resultType="adNotice">
+		<include refid="adNoticeColumn"/>
+		AND
+		    AD_NOTICE_NO = #{adNoticeNo}
+	</select>
+	
+	<update id="deleteAdNotice" parameterType="adNotice">
+		UPDATE
+		       TB_AD_NOTICE
+		   SET
+		       AD_STATUS ='N'
+		 WHERE
+		       AD_STATUS ='Y'          
+		   AND
+		       AD_NOTICE_NO = #{adNoticeNo}
+	</update>
+	
+	<update id="updateAdNotice" parameterType="adNotice">
+		UPDATE
+		       TB_AD_NOTICE
+		   SET
+		       AD_NOTICE_TITLE = #{adNoticeTitle},
+		       AD_NOTICE_CONTENT = #{adNoticeContent},
+		       AD_ORI_NAME = #{adOriName},
+		       AD_CHA_NAME = #{adChaName}
+		 WHERE
+		       AD_NOTICE_NO = #{adNoticeNo}
+		   AND
+		       STATUS = 'Y'          
+	</update>
 
 </mapper> 
