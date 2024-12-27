@@ -23,14 +23,14 @@ public class MemberController {
 	private final ModelAndViewUtil mv;
 	
 	@PostMapping("login.me")
-	public ModelAndView login(Member member, HttpSession session) {
+	public String login(Member member, HttpSession session) {
 		Member loginMember = memberService.login(member);
-		session.setAttribute("loginUser", loginMember);
-		session.setAttribute("alertMsg", "환영합니다!");
-		System.out.println("일단 로그인 성공!");
-		return mv.setViewNameAndData("redirect:/main", null); // 메인화면으로 보내야함!
 		
+		session.setAttribute("loginUser", loginMember);
+		session.setAttribute("alertMsg", "로그인 성공");
+		return "redirect:/";
 	}
+	
 	@PostMapping("join.me")
 	public ModelAndView join(Member member) {
 		memberService.join(member);

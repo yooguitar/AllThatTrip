@@ -34,12 +34,12 @@ public class AdminNoticeController {
 	@GetMapping("admin_notice")
 	public ModelAndView selectAdNoticeList(@RequestParam(value="page", defaultValue="1")int page) {
 		Map<String, Object> map = adService.selectAdNoticeList(page);
-		return mv.setViewNameAndData("admin/admin_notice", null);
+		return mv.setViewNameAndData("admin/admin_notice", map);
 	}
 	
-	@GetMapping("adInsertForm")
+	@GetMapping("ad_insert_form")
 	public String insertForm() {
-		return "adNotice/ad_insert_form";
+		return "admin/ad_insert_form";
 	}
 	
 	@PostMapping("admin_notice")                   
@@ -47,7 +47,7 @@ public class AdminNoticeController {
 		
 		adService.insertAdNotice(adNotice, upfile);
 		session.setAttribute("alertMsg","게시글 등록에 성공했습니다.");
-		return mv.setViewNameAndData("redirect:boards", null);
+		return mv.setViewNameAndData("redirect:/admin_notice", null);
 	}
 	
 	@GetMapping("admin_notice/{id}")
@@ -59,7 +59,7 @@ public class AdminNoticeController {
 	@PostMapping("admin_notice/delete")
 	public ModelAndView deleteBoard(Long adNoticeNo, String adChaName) {
 		adService.deleteAdNotice(adNoticeNo, adChaName);
-		return  mv.setViewNameAndData("redirect:/boards", null);		
+		return  mv.setViewNameAndData("redirect:/admin_notice", null);		
 	}
 	
 	@PostMapping("admin_notice/update-form")

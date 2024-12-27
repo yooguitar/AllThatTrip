@@ -22,10 +22,6 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member loginMember = mapper.login(member);
 		
-		if(loginMember == null) {
-			throw new UserIdNotFoundException("존재하지 않는 아이디 입니다.");
-		}
-		
 		return loginMember;
 	}
 
