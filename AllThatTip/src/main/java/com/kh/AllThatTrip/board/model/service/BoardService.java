@@ -23,7 +23,7 @@ public interface BoardService {
 	void updateBoard(Board boardNo, MultipartFile upfile);
 	
 	// 삭제
-	void deleteBoard(Board boardNo, String changeName);
+	void deleteBoard(Long boardNo, String changeName);
 	// 검색창(필터)
 	
 	// 썸네일

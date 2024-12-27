@@ -1,0 +1,152 @@
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--background-color);
+    padding: 8px 12px;
+    width: 1200px;
+    height: 70px;
+    animation: Bottom 1s forwards;
+    margin : auto;
+  }
+
+  .navbar__logo{
+    width: 200px;
+  }
+
+  .navbar__logo img {
+    color: var(--accent-color);
+    padding-left: 0;
+  }
+  a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 800;
+  }
+  .navbar__menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding-left: 0;
+  }
+  
+  .navbar__menu li {
+    padding: 8px 30px;
+  }
+  .navbar__icons {
+    list-style: none;
+    display: flex;
+    color: var(--icons-color);
+    margin: 0;
+    padding-left: 0;
+  }
+  
+  .navbar__icons li {
+    padding: 8px 12px;
+    margin: 0;
+  }
+  :root {
+    --text-color: #f0f4f5;
+    --background-color: rgb(50, 96, 68);
+    --accent-color: #60B557;
+    --icons-color: rgb(152, 187, 201);
+
+  }
+
+
+#h-logo > img{
+    width : 100px;
+    height: 100px;
+    margin-top : 20px;
+    margin-left: 60px;
+}
+
+.login{
+    margin-right: 20px;
+
+}
+
+#navbar{
+  margin : 0; 
+  padding : 0;
+  list-style : none;
+  height : 100%;
+  border-radius:  10px;
+  align-items: center;
+  z-index: 999;
+  animation: Bottom 1s forwards;
+}
+
+#navbar > li {
+  float : left;
+  height : 100%;
+  width : 14%;
+  text-align : center;
+  margin-left : 20px;
+  margin-top : 2px;
+ 
+}
+
+#navbar a{
+  text-decoration : none;
+  color : white;
+  font-weight : 800;
+  height : 66px; 
+  display : block; 
+  line-height : 40px;
+  font-size : 20px;
+  z-index: 5;
+ 
+  position : relative;
+}
+
+#navbar > li > ul {
+  list-style : none;
+  padding : 0;
+  margin-bottom : 0px;
+  
+  display : none;
+  background-color: rgba(50,96,68,0.8);
+  border-radius: 0px 0px 10px 50px;
+  position : relative;
+
+  z-index: 5;
+  
+ 
+}
+
+#navbar > li > a:hover + ul {
+  
+  display : block;
+  animation: Bottom 1s forwards;
+}
+
+#navbar > li > ul:hover{
+  
+  display : block;
+  animation: Bottom 1s forwards;
+}
+
+#navbar > li > ul a{font-size : 15px;}
+#navbar > li > ul a:hover{font-size : 14px;}
+
+#navi{
+  height : 70px;
+  width : 1000px;
+  margin-top : 20px;
+}
+
+@keyframes Bottom {
+  0% {
+    transform: translateY(-70%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+

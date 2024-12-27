@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
-	// 로그인 회원가입 체크 후 암호화 하기
+	private final PasswordEncryptor passwordEncoder;
 	
 	@Override
 	public Member login(Member member) {
@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 	public void join(Member member) {
 		
 		int userInfo = mapper.join(member);
-		log.info("트랜잭션 발생?{}", userInfo);
+		//log.info("트랜잭션 발생?{}", userInfo);
 	}
 
 	

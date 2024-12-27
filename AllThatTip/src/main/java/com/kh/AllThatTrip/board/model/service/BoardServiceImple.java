@@ -150,18 +150,6 @@ public class BoardServiceImple implements BoardService {
 		return map;
 	}
 
-	@Override
-	public void insertBoard(Board board, MultipartFile upfile) {
-		// 유효성 검증
-		validateBoard(board);
-		// 파일 유무
-		if(!("".equals(upfile.getOriginalFilename()))) {
-			handlerFileUpload(board,upfile);
-		}
-		// 인서트 진행
-		mapper.insertBoard(board);
-		 	
-	}
 	
 	// 상세조회
 	@Override
@@ -179,15 +167,58 @@ public class BoardServiceImple implements BoardService {
 
 	}
 
+	// 등록
 	@Override
-	public void updateBoard(Board boardNo, MultipartFile upfile) {
-		// TODO Auto-generated method stub
-		
+	public void insertBoard(Board board, MultipartFile upfile) {
+		// 유효성 검증
+		validateBoard(board);
+		// 파일 유무
+		if(!("".equals(upfile.getOriginalFilename()))) {
+			handlerFileUpload(board,upfile);
+		}
+		// 인서트 진행
+		mapper.insertBoard(board);
+		 	
 	}
+	
+	@Override
+	public void updateBoard(Board board, MultipartFile upfile) {
+		validateBoardNo(board.getBoardNo());
+		findBoardByNum(board.getBoardNo());
+		
+		if(!(upfile.getOriginalFilename() != null)) {
+			new File(context.getRealPath(board.getChangeName())).delete();
+		}
+		
+		handlerFileUpload(board, upfile);
+		
+		int result = mapper.updateBoard(board);
+		
+		if(result < 1) {
+			throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
+		}
+	}
+	
+	
 
 	@Override
-	public void deleteBoard(Board boardNo, String changeName) {
-		// TODO Auto-generated method stub
+	public void deleteBoard(Long boardNo, String changeName) {
+		validateBoardNo(boardNo);
+		findBoardByNum(boardNo);
+		
+		int result = mapper.deleteBoard(boardNo);
+		
+		if(result <= 0) {
+			throw new BoardNotFoundException("게시글 삭제에 실패했습니다");
+		} 
+		
+		if(!("".equals(changeName))) {
+			try {
+				new File(context.getRealPath(changeName)).delete();
+			} catch(RuntimeException e) {
+				throw new BoardNotFoundException("파일을 찾을 수 없습니다");
+			}
+		}
 		
 	}
 	

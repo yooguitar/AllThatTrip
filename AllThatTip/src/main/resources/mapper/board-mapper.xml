@@ -44,6 +44,7 @@
 
 	WHERE	B.BOARD_TYPE = 10
 	AND		B.STATUS = 'Y'
+	ORDER BY BOARD_NO DESC
 			
 	</select>
   	 		
@@ -78,7 +79,7 @@
 	
 	<!-- 공지사항 등록 -->
 	<insert id="insertBoard" parameterType="board">
-	<include refid="boardColumn"></include>
+	
 	INSERT 
 	INTO BOARD 
 			(
@@ -86,10 +87,10 @@
 			BOARD_TYPE, 
 			USER_NO, 
 			BOARD_TITLE, 
-			BOARD_CONTENT, 
+			BOARD_CONTENT
 			)
     VALUES (
-    		BOARD_SEQ.NEXTVAL, 
+    		SEQ_BFNO.NEXTVAL, 
     		10, 
     		#{userNo}, 
     		#{boardTitle}, 
@@ -97,10 +98,41 @@
     		)	
 			
 	</insert>
-   
+	
+	
+	<!-- 공지사항 수정 -->
+	<update id="updateBoard" parameterType="board">
+	
+	UPDATE
+			BOARD
+	SET
+			BOARD_TITLE = ${boardTitle},
+			BOARD_CONTENT = ${boardContent}, 
+			ORIGIN_NAME = #{originName},
+	 		CHANGE_NAME = #{changeName}
+	WHERE
+			BOARD_NO = #{boardNo}
+	AND
+			STATUS = 'Y'
+	
+	</update>
+	   
     
+    <!-- 공지사항 삭제 -->
+    <update id="deleteBoard" parameterType="board">
+    UPDATE
+    		BOARD
+    SET
+    		BOARD_TITLE = #{boardTitle},
+			BOARD_CONTENT = #{boardContent},
+			ORIGIN_NAME = #{originName},
+		 	CHANGE_NAME = #{changeName}
+	WHERE
+			BOARD_NO = #{boardNo}
+	AND
+			STATUS = 'Y'
     
-    
+    </update>
     
     
     
