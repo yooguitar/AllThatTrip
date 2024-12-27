@@ -64,11 +64,11 @@
         <li><i class="fab fa-slack"></i></li>
       </ul>
       
-<<<<<<< Updated upstream
+
       <div class="login">
         <a href="/AllThatTrip/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
     </div>
-=======
+
       <c:choose>
       	<c:when test="${ sessionScope.loginUser eq null }">
 	      <div class="login">
@@ -82,7 +82,7 @@
 	      </div>
 	    </c:otherwise>  
       </c:choose>
->>>>>>> Stashed changes
+
 
     </nav>
   </body>
