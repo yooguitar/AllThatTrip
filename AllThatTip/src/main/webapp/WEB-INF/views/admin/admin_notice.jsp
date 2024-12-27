@@ -60,6 +60,7 @@
                         <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
+                        <th>첨부파일</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,6 +73,11 @@
 	                        <td>${ adNotice.adWriter }</td>
 	                        <td>${ adNotice.adNoticeCount }</td>
 	                        <td>${ adNoitce.adUploadDate} </td>
+	                         <td>
+	                        	<c:if test="${ not empty adNotice.adOriName }">
+	                       		   💌
+	                        	</c:if>
+	                        </td>
 	                    </tr>
                     </c:forEach>
                     
@@ -81,7 +87,7 @@
 			<script>
 				function detail(num) {
 					//console.log(num);
-					location.href = `adNotices/\${num}`;
+					location.href = `admin_notice/\${num}`;
 				}
 			
 			</script>
