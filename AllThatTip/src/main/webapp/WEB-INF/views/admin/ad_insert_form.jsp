@@ -11,12 +11,12 @@
     <style>
         .content {
             background-color:rgb(247, 245, 245); 
-            width:80%;
+            width:1200px;
             margin:auto;
         }
         .innerOuter {
             border:1px solid lightgray;
-            width:80%;
+            width:1200px;
             margin:auto;
             padding:5% 10%;
             background-color:white;
@@ -75,7 +75,7 @@
 
     </div>
     
-    <jsp:include page="../common/include/header.jsp" />
+    <jsp:include page="../common/include/footer.jsp" />
     
 </body>
 </html>
