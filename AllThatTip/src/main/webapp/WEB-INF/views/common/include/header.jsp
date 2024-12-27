@@ -64,9 +64,19 @@
         <li><i class="fab fa-slack"></i></li>
       </ul>
       
-      <div class="login">
-        <a href="/AllThatTrip/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
-    </div>
+      <c:choose>
+      	<c:when test="${ sessionScope.loginUser eq null }">
+	      <div class="login">
+	        <a href="/AllThatTrip/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+	      </div>
+	    </c:when>
+	    <c:otherwise>
+	      <div class="login">
+	        <label style="color:white; font-size:15px;">💡<label>
+	        <a onclick="" href="redirect:/" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+	      </div>
+	    </c:otherwise>  
+      </c:choose>
 
     </nav>
   </body>
