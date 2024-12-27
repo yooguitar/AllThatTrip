@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="resources/css/style_header.css">
+    <link rel="stylesheet" href="/att/resources/css/style_header.css">
     <title>Nav Bar</title>
   </head>
 
@@ -16,7 +16,7 @@
     <nav class="navbar">
 
       <div class="navbar__logo">
-        <a href="#" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
+        <a href="#" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
       </div>
       <div id=navi>
         <ul id="navbar">
@@ -64,9 +64,25 @@
         <li><i class="fab fa-slack"></i></li>
       </ul>
       
+<<<<<<< Updated upstream
       <div class="login">
         <a href="/AllThatTrip/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
     </div>
+=======
+      <c:choose>
+      	<c:when test="${ sessionScope.loginUser eq null }">
+	      <div class="login">
+	        <a href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	      </div>
+	    </c:when>
+	    <c:otherwise>
+	      <div class="login">
+	        <label style="color:white; font-size:15px;">💡<label>
+	        <a onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	      </div>
+	    </c:otherwise>  
+      </c:choose>
+>>>>>>> Stashed changes
 
     </nav>
   </body>

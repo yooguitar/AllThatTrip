@@ -43,7 +43,7 @@
             <h2>게시글 작성하기</h2>
             <br>
 
-            <form id="enrollForm" method="post" action="/AllThatTrip/board/notice_list/insert" enctype="multipart/form-data">
+            <form id="enrollForm" method="post" action="/att/board/notice_list/insert" enctype="multipart/form-data">
                 <input type="hidden" name="userNo" value=1>
                 <table align="center">
                     <tr>

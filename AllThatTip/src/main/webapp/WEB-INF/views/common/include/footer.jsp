@@ -7,16 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="resources/css/style_footer.css">
+    <link rel="stylesheet" href="/att/resources/css/style_footer.css">
 </head>
 <body>
     
     <a href="#" id="top" class="floating_button">
-        <img src="resources/img/logo/caret-up-white-icon.png" alt="">
+        <img src="/att/resources/img/logo/caret-up-white-icon.png" alt="">
     </a>
     <div id="footer">
         <div class="footer__logo">
-            <a href="#" id="f-logo"><img src="resources/img/logo/ATTP.png"></a>
+            <a href="#" id="f-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
           </div>
         <div id="footer_1" style="color: white;">
             <a href="#">이용약관</a> |
@@ -36,6 +36,6 @@
         </div>
 
     </div>
-</div>
+
 </body>
 </html>
