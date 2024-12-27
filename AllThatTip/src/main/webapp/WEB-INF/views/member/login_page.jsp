@@ -35,7 +35,7 @@
     </style>
 </head>
 <body>
-	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" />-->
+	<!-- <jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
 	<!-- include 아직 하면 안됩니다. 스타일 겹쳐요 -->
 	
     <div class="container" id="wrap">
@@ -60,7 +60,7 @@
             <button type="submit" class="btn btn-primary" style="width: 470px; height: 50px;">로그인</button>
         </form>
         
-        <c:if test="${ session.getAttribute(loginValue) eq 0 }">
+        <c:if test="${ sessionScope.loginValue eq 1 }">
 	        <script>
 		        alertify
 		        .alert("아이디, 비밀번호를 확인해주세요.", function(){
@@ -84,7 +84,7 @@
         <a href="#">사업자 회원가입</a>
     </label>
     
-    <!--<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
+    <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
 
 </body>
 
