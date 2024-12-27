@@ -7,7 +7,7 @@ public interface MemberService {
 	
 	Member login(Member member);
 	
-	void join(Member member);
+	int join(Member member);
 	
 	
 	

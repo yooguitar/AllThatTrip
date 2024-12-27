@@ -22,6 +22,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final ModelAndViewUtil mv;
 	
+	// 로그인 핸들러
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session) {
 		Member loginMember = memberService.login(member);
@@ -35,24 +36,41 @@ public class MemberController {
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		}
-		
+	}
+	// 회원가입 핸들러
+	@PostMapping("join.me")
+	public ModelAndView join(Member member, HttpSession session) {
+		memberService.join(member);
+		session.setAttribute("alertMsg", "가입성공");
+		return mv.setViewNameAndData("redirect:/", null);
 	}
 	
-	@PostMapping("join.me")
-	public ModelAndView join(Member member) {
-		memberService.join(member);
-		return null;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 로그인 페이지 포워딩
 	@GetMapping("loginPage.me")
 	public String loginPage() {
 		return "member/login_page";
-		
 	}
+	// 회원가입 페이지 포워딩
 	@GetMapping("joinPage.me")
 	public String joinPage() {
 		return "member/join_page";
 	}
-	
+	// 로그아웃 핸들러
 	@GetMapping("logout.me")
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginUser");

@@ -92,7 +92,7 @@
 
     <button onclick="submitBtn();" type="submit" class="btn btn-primary" style="width: 770px; height: 60px;">회원가입 완료</button>
   </form>
-
+  
 </div>
 
 </body>
@@ -116,11 +116,11 @@
         const emailId = document.getElementById('email-id').value;
         const domain = document.getElementById('domain').value;
         var email = document.getElementById('email').value = emailId + domain;
-        
-        // 2. 작성하지 않은 항목 있는지 체크
 
-
-  
+        alertify
+        .alert("회원가입 성공. 환영합니다!", function(){
+          alertify.message('확인');
+        });
     }
 
 
