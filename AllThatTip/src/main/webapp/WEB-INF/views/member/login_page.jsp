@@ -60,6 +60,15 @@
             <button type="submit" class="btn btn-primary" style="width: 470px; height: 50px;">로그인</button>
         </form>
         
+        <c:if test="${ session.getAttribute(loginValue) eq 0 }">
+	        <script>
+		        alertify
+		        .alert("아이디, 비밀번호를 확인해주세요.", function(){
+		          alertify.message('확인');
+		        });        
+	        </script>	
+	        <c:remove var="loginValue" scope="session" />
+        </c:if>
 
         <br>
         <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

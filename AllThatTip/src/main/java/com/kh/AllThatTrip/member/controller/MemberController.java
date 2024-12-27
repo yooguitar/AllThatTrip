@@ -26,9 +26,16 @@ public class MemberController {
 	public String login(Member member, HttpSession session) {
 		Member loginMember = memberService.login(member);
 		
-		session.setAttribute("loginUser", loginMember);
-		session.setAttribute("alertMsg", "로그인 성공");
-		return "redirect:/";
+		if(loginMember != null) {
+			session.setAttribute("loginUser", loginMember);
+			session.setAttribute("alertMsg", "로그인 성공");
+			return "redirect:/";
+		} else {
+			int loginValue = 0;
+			session.setAttribute("loginValue", loginValue);
+			return "member/login_page";
+		}
+		
 	}
 	
 	@PostMapping("join.me")

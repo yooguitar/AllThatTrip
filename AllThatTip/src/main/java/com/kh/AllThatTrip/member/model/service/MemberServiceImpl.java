@@ -21,11 +21,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member login(Member member) {
 		Member loginMember = mapper.login(member);
-		
-		if(loginMember == null) {
-			throw new UserIdNotFoundException("존재하지 않는 아이디로 접속 요청");
-		}
-				
+//		if(loginMember == null) {
+//			throw new UserIdNotFoundException("존재하지 않는 아이디로 접속 요청");
+//		}
 		return loginMember;
 	}
 

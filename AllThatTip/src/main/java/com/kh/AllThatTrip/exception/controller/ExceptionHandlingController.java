@@ -24,13 +24,13 @@ public class ExceptionHandlingController {
 	}
 	
 	
-	@ExceptionHandler(UserIdNotFoundException.class)
-	protected ModelAndView NoSuchUserIdError(UserIdNotFoundException e) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("member/login_page");
-		return mv;
-		//return createErrorResponse("아이디가 존재하지 않습니다.", e);
-	}
+//	@ExceptionHandler(UserIdNotFoundException.class)
+//	protected ModelAndView NoSuchUserIdError(UserIdNotFoundException e) {
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("member/login_page");
+//		return mv;
+//		//return createErrorResponse("아이디가 존재하지 않습니다.", e);
+//	}
 	
 	// 게시글이 없을 때
 	@ExceptionHandler(BoardNotFoundException.class)
