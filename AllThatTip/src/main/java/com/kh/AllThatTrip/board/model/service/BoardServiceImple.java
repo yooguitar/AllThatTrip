@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.board.model.dao.BoardMapper;
@@ -126,8 +127,8 @@ public class BoardServiceImple implements BoardService {
 		
 		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
 		board.setOriginName(fileName);
-		board.setChangeName("/hyper/resources/upload_files/" + changeName);
-		
+		board.setChangeName("/resources/upload_files/" + changeName);
+		log.info("File save path: {}", savePath);
 		
 	}	
 	
@@ -150,18 +151,6 @@ public class BoardServiceImple implements BoardService {
 		return map;
 	}
 
-	@Override
-	public void insertBoard(Board board, MultipartFile upfile) {
-		// 유효성 검증
-		validateBoard(board);
-		// 파일 유무
-		if(!("".equals(upfile.getOriginalFilename()))) {
-			handlerFileUpload(board,upfile);
-		}
-		// 인서트 진행
-		mapper.insertBoard(board);
-		 	
-	}
 	
 	// 상세조회
 	@Override
@@ -179,15 +168,60 @@ public class BoardServiceImple implements BoardService {
 
 	}
 
+	// 등록
+	@Transactional
 	@Override
-	public void updateBoard(Board boardNo, MultipartFile upfile) {
-		// TODO Auto-generated method stub
-		
+	public void insertBoard(Board board, MultipartFile upfile) {
+		// 유효성 검증
+		validateBoard(board);
+		// 파일 유무
+		if(!("".equals(upfile.getOriginalFilename()))) {
+			handlerFileUpload(board,upfile);
+		}
+		// 인서트 진행
+		mapper.insertBoard(board);
+		mapper.insertBoardFile(board);
+		 	
 	}
+	
+	@Override
+	public void updateBoard(Board board, MultipartFile upfile) {
+		validateBoardNo(board.getBoardNo());
+		findBoardByNum(board.getBoardNo());
+		
+		if(!(upfile.getOriginalFilename() != null)) {
+			new File(context.getRealPath(board.getChangeName())).delete();
+		}
+		
+		handlerFileUpload(board, upfile);
+		
+		int result = mapper.updateBoard(board);
+		
+		if(result < 1) {
+			throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
+		}
+	}
+	
+	
 
 	@Override
-	public void deleteBoard(Board boardNo, String changeName) {
-		// TODO Auto-generated method stub
+	public void deleteBoard(Long boardNo, String changeName) {
+		validateBoardNo(boardNo);
+		findBoardByNum(boardNo);
+		
+		int result = mapper.deleteBoard(boardNo);
+		
+		if(result <= 0) {
+			throw new BoardNotFoundException("게시글 삭제에 실패했습니다");
+		} 
+		
+		if(!("".equals(changeName))) {
+			try {
+				new File(context.getRealPath(changeName)).delete();
+			} catch(RuntimeException e) {
+				throw new BoardNotFoundException("파일을 찾을 수 없습니다");
+			}
+		}
 		
 	}
 	

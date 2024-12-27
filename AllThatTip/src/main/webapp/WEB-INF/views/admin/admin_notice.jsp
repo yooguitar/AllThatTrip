@@ -42,18 +42,16 @@
     </style>
 </head>
 <body>
-
+	
+	<jsp:include page="../common/include/header.jsp" />
+	
+	
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
             <h2>공지사항</h2>
-            <br>
-            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 
-            <c:if test="${ not empty sessionScope.loginUser}">
-            	<a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
-            </c:if>
-            -->
-            <a class="btn btn-secondary" style="float:right;" href="adInsertForm">글쓰기</a>
+          	<br>
+            <a class="btn btn-secondary" style="float:right;" href="ad_insert_form">글쓰기</a>
             <br>
             <br>
             <table id="boardList" class="table table-hover" align="center">
@@ -65,18 +63,24 @@
                         <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
+                        <th>첨부파일</th>
                     </tr>
                 </thead>
                 <tbody>
                 	
-                	<c:forEach items="${ admin_notice }" var="adNotice">
+                	<c:forEach items="${ adNotices }" var="adNotice">
 	                    <tr onclick="detail('${adNotice.adNoticeNo}')">
 	                        <td>${ adNotice.adNoticeNo }</td>
 	                        <td>${ adNotice.importent }
 	                        <td>${ adNotice.adNoticeTitle }</td>
 	                        <td>${ adNotice.adWriter }</td>
 	                        <td>${ adNotice.adNoticeCount }</td>
-	                        <td>${ adNoitce.adUploadDate} </td>
+	                        <td>${ adNotice.adUploadDate } </td>
+	                         <td>
+	                        	<c:if test="${ not empty adNotice.adOriName }">
+	                       		   💌
+	                        	</c:if>
+	                        </td>
 	                    </tr>
                     </c:forEach>
                     
@@ -86,7 +90,7 @@
 			<script>
 				function detail(num) {
 					//console.log(num);
-					location.href = `adNotices/\${num}`;
+					location.href = `admin_notice/\${num}`;
 				}
 			
 			</script>
@@ -134,6 +138,8 @@
         <br><br>
 
     </div>
-
+	
+	<jsp:include page="../common/include/footer.jsp" />
+	
 </body>
 </html>

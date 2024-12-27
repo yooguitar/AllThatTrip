@@ -12,7 +12,7 @@
     <style>
         .content {
             background-color:rgb(247, 245, 245);
-            width:80%;
+            width:1200px;
             margin:auto;
         }
         .innerOuter {
@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-
+	<jsp:include page="../common/include/header.jsp" />
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
@@ -93,7 +93,7 @@
                 	
 					<c:choose>
 						<c:when test="${ pageInfo.currentPage ne 1 }">
-		                    <li class="page-item"><a class="page-link" href="boards?page=${pageInfo.currentPage - 1 }">이전</a></li>
+		                    <li class="page-item"><a class="page-link" href="board/notice/?page=${pageInfo.currentPage - 1 }">이전</a></li>
 						</c:when>
 						<c:otherwise>                	
             		        <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
@@ -101,7 +101,7 @@
                     </c:choose>	
                     
                     <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" var ="num">
-                    	<li class="page-item"><a class="page-link" href="boards?page=${ num }">${ num }</a></li>
+                    	<li class="page-item"><a class="page-link" href="board/notice/?page=${ num }">${ num }</a></li>
                     </c:forEach>
                     
                     
@@ -132,6 +132,6 @@
         <br><br>
 
     </div>
-
+	<jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>

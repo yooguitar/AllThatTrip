@@ -49,12 +49,12 @@ public class BoardController {
 
 
 	// 공지사항 등록
-	@PostMapping("/notice_list")
+	@PostMapping("notice_list/insert")
 	public ModelAndView insertBoard(Board board, MultipartFile upfile, HttpSession session) {
-
+		log.info("board : {}, upfile : {}",board, upfile);
 		boardService.insertBoard(board, upfile);
 		session.setAttribute("alertMsg", "게시글 등록 성공");
-		return mv.setViewNameAndData("redirect:boards", null);
+		return mv.setViewNameAndData("redirect:/board/notice_list", null);
 
 	}
 
@@ -64,7 +64,7 @@ public class BoardController {
 	public ModelAndView selectByOne(@PathVariable(name="id") Long id) {
 		Map<String, Object> responseData = boardService.selectByNum(id);
 		
-		log.info("{}", id);
+		//log.info("{}", id);
 		return mv.setViewNameAndData("board/detail", responseData);
 		
 	}
@@ -77,14 +77,27 @@ public class BoardController {
 	}
 	
 
-	@PostMapping("notice_list/update")
-	public ModelAndView update(Board board, MultipartFile upfile) {
+	
+	@PostMapping("/notice_list/update")
+	public ModelAndView updateBoard(Board board, MultipartFile upfile) {
 		
-		boardService.updateBoard(board, upfile);
 		log.info("{}:{}",board,upfile);
-		return mv.setViewNameAndData("redirect:/boards", null);
+		boardService.updateBoard(board, upfile);
+		return mv.setViewNameAndData("redirect:/board/notice_list", null);
 		
 	}
+	
+	
+	// 삭제
+	@PostMapping("/notice_list/delete")
+	public ModelAndView deleteBoard(Long boardNo, String changeName) {
+		
+		boardService.deleteBoard(boardNo, changeName);
+		return mv.setViewNameAndData("redirect:/boards", null);
+	}
+	
+	
+	
 }
 	/*
 

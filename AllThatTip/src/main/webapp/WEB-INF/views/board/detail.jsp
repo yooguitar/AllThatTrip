@@ -35,7 +35,7 @@
         <div class="innerOuter">
             <h2>게시글 상세보기</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="/hyper/boards">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="/att/board/notice_list">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -77,19 +77,19 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-                <c:if test="${ sessionScope.loginUser.userId eq requestScope.board.boardWriter }">
+               
                 <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
                 <a class="btn btn-danger" onclick="postSubmit(2);">삭제하기</a>
-                </c:if>
+             
             </div>
             
             <script>
             	function postSubmit(num) {
 			
             		if(num == 1){
-            			$('#postForm').attr('action', '/hyper/boards/update-form').submit();
+            			$('#postForm').attr('action', '/att/board/notice_list/update-form').submit();
             		} else {
-            			$('#postForm').attr('action', '/hyper/boards/delete').submit();
+            			$('#postForm').attr('action', '/att/board/notice_list/delete').submit();
             		}
 				}
             </script>
