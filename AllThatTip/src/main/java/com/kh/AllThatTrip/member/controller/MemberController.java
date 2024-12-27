@@ -46,6 +46,11 @@ public class MemberController {
 		return "member/join_page";
 	}
 	
+	@GetMapping("logout.me")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginUser");
+		return "common/main";
+	}
 	
 	
 	

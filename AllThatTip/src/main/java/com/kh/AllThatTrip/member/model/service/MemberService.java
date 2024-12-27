@@ -1,6 +1,5 @@
 package com.kh.AllThatTrip.member.model.service;
 
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.member.model.vo.Member;
 

@@ -9,6 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="resources/css/style_header.css">
+    
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/semantic.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
+    
     <title>Nav Bar</title>
   </head>
 
@@ -16,7 +23,7 @@
     <nav class="navbar">
 
       <div class="navbar__logo">
-        <a href="#" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
+        <a href="redirect:/" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
       </div>
       <div id=navi>
         <ul id="navbar">
@@ -67,17 +74,44 @@
       <c:choose>
       	<c:when test="${ sessionScope.loginUser eq null }">
 	      <div class="login">
-	        <a href="/AllThatTrip/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+	        <a href="/att/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
 	      </div>
 	    </c:when>
 	    <c:otherwise>
 	      <div class="login">
-	        <label style="color:white; font-size:15px;">💡<label>
-	        <a onclick="" href="redirect:/" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+	        <label style="color:white; font-size:15px;">💡</label>
+	        <a onclick="logout();" href="#" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
 	      </div>
 	    </c:otherwise>  
       </c:choose>
 
     </nav>
   </body>
+  
+
+<script>
+function logout(){
+	const logoutLink = document.getElementById('logoutLink');
+	
+	alertify.confirm("로그아웃 하시겠어요?",
+			  function(){
+			    alertify.success('예');
+			    location.href = "/att/logout.me";
+			  },
+			  function(){
+			    alertify.error('아니오');
+			  });
+}
+
+
+</script>  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </html>

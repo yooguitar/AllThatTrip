@@ -1,5 +1,6 @@
 package com.kh.AllThatTrip.member.model.service;
 
+
 import org.springframework.stereotype.Service;
 
 import com.kh.AllThatTrip.exception.UserIdNotFoundException;
@@ -19,9 +20,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member login(Member member) {
-		
 		Member loginMember = mapper.login(member);
 		
+		if(loginMember == null) {
+			throw new UserIdNotFoundException("존재하지 않는 아이디로 접속 요청");
+		}
+				
 		return loginMember;
 	}
 
@@ -32,8 +36,6 @@ public class MemberServiceImpl implements MemberService {
 		//log.info("트랜잭션 발생?{}", userInfo);
 	}
 
-	
-	
 	
 	
 	
