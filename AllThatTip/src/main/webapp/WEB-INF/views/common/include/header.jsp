@@ -30,7 +30,7 @@
 
               <li><a style = color:#ebebeb; href="#">펜션</a></li>
 
-          </ul></li>
+          </ul>
           </li>
           <li><a href="#">테마검색</a></li>
               
