@@ -41,8 +41,7 @@ public class MemberController {
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
 		memberService.join(member);
-		session.setAttribute("alertMsg", "가입성공");
-		return mv.setViewNameAndData("redirect:/", null);
+		return mv.setViewNameAndData("member/join_success_page", null);
 	}
 	
 	
@@ -60,23 +59,24 @@ public class MemberController {
 	
 	
 	
-	// 로그인 페이지 포워딩
 	@GetMapping("loginPage.me")
 	public String loginPage() {
 		return "member/login_page";
 	}
-	// 회원가입 페이지 포워딩
 	@GetMapping("joinPage.me")
 	public String joinPage() {
 		return "member/join_page";
 	}
-	// 로그아웃 핸들러
+	
 	@GetMapping("logout.me")
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginUser");
 		return "common/main";
 	}
-	
+	@GetMapping("attHome.me")
+	public String attHome() {
+		return "common/main";
+	}
 	
 	
 	

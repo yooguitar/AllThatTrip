@@ -98,18 +98,7 @@
 </body>
 </html>
 
-<script>
-    function sendCkNum(){
-        const phoneValue = document.getElementById('phone').value;
-
-        if(phoneValue.trim() != ""){
-            document.getElementById('phone-ck-div').style.display = "";
-        } else{
-            alert("전화번호를 입력해주세요!")
-        }
-
-    }
-    
+<script> 
     function submitBtn(){
         // **submit-btn onclick 시 수행할 내용들
         // 1. #email에 #email-id, #domain 내용 합쳐서 전송
