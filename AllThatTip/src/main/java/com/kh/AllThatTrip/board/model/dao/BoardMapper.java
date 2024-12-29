@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.AllThatTrip.board.model.vo.BdAttachment;
 import com.kh.AllThatTrip.board.model.vo.Board;
 
 @Mapper
@@ -21,6 +22,9 @@ public interface BoardMapper {
 	
 	// 상세조회
 	Board selectByNum(Long boardNo);
+	
+	// 첨부파일 리스트 조회
+	List<BdAttachment> selectFileList(Long boardNo);
 	
 	// 작성
 	void insertBoard(Board board);

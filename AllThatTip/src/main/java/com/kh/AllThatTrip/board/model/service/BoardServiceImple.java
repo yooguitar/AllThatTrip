@@ -51,11 +51,13 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	
-	private List<Board> getBoardList(PageInfo pi) {
+	private List<Board> getBoardList(PageInfo pi, Board board) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return mapper.selectBoardList(rowBounds);
+		board.setRowBounds(rowBounds);
+		
+		return mapper.selectBoardList(board);
 	}
 	
 	
@@ -134,17 +136,16 @@ public class BoardServiceImple implements BoardService {
 	
 	// 페이징처리
 	@Override
-	public Map<String, Object> selectBoardList(int currentPage) {
-		
+	public Map<String, Object> selectBoardList(Board board) {
 		
 		int totalCount = getTotalCount();
 		
-		PageInfo pi = getPageInfo(totalCount, currentPage);
+		PageInfo pi = getPageInfo(totalCount, board.getPage());
 		
-		List<Board> boards = getBoardList(pi);
+		List<Board> boards = getBoardList(pi, board);
 		log.info("게시글목록 {}", boards);
 		
-		Map<String, Object> map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("boards", boards);
 		map.put("pageInfo", pi);
 		
@@ -160,9 +161,11 @@ public class BoardServiceImple implements BoardService {
 		incrementViewCount(boardNo);
 		Board board = findBoardByNum(boardNo);
 		
-		// 있으면 보드 VO에 필드에 담겨져온 데이터를 다시 반환해줌
+		board.setFileList(mapper.selectFileList(boardNo));
+		
 		Map<String, Object> responseData = new HashMap();
 		responseData.put("board", board);
+		
 		
 		return responseData;
 
@@ -188,6 +191,12 @@ public class BoardServiceImple implements BoardService {
 	public void updateBoard(Board board, MultipartFile upfile) {
 		validateBoardNo(board.getBoardNo());
 		findBoardByNum(board.getBoardNo());
+		
+		Board model = mapper.selectByNum(board.getBoardNo());
+		
+//		if(model.getUserNo() == session.getUserNo) {
+//			throw new BoardNotFoundException("작성자와 로그인한 사람이 다릅니다.");
+//		}
 		
 		if(!(upfile.getOriginalFilename() != null)) {
 			new File(context.getRealPath(board.getChangeName())).delete();

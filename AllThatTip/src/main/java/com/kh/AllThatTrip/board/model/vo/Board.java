@@ -25,6 +25,10 @@ public class Board {
 	private String createDate;
 	private int count;
 	private String status;
+	//private List setFileList;
+	//private	List BdAttachment;
+		
+	
 
 	
 	

@@ -25,6 +25,15 @@ public interface BoardService {
 	// 삭제
 	void deleteBoard(Long boardNo, String changeName);
 	// 검색창(필터)
+
+	
+	
+
+	// 첨부파일
+	
+	
+
+
 	
 	// 썸네일
 	
