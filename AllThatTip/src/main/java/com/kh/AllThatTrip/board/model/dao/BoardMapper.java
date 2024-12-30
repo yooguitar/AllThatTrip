@@ -12,10 +12,10 @@ import com.kh.AllThatTrip.board.model.vo.Board;
 public interface BoardMapper {
 	
 	// 개수 조회
-	int selectTotalCount();
+	int selectTotalCount(String boardType);
 	
 	// 목록조회
-	List<Board> selectBoardList(RowBounds rowBounds);
+	List<Board> selectBoardList(Board board);
 	
 	// 조회수증가
 	int increaseCount(Long boardNo);
@@ -36,6 +36,7 @@ public interface BoardMapper {
 	
 	// 삭제 (성공실패 확인해야해서 int)
 	int deleteBoard(Long boardNo);
+
 	
 	
 

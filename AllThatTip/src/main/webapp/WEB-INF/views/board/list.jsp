@@ -68,15 +68,15 @@
                 </thead>
                 <tbody>
                 	
-                	<c:forEach items="${ boards }" var="board">
-	                    <tr onclick="detail('${board.boardNo}')">
-	                        <td>${ board.boardNo }</td>
-	                        <td>${ board.boardTitle }</td>
-	                        <td>${ board.boardWriter }</td>
-	                        <td>${ board.count }</td>
-	                        <td>${ board.createDate} </td>
-	                    </tr>
-                    </c:forEach>
+                	<c:forEach items="${boards}" var="board">
+					    <tr onclick="detail('${board.boardNo}')"> 
+					        <td>${board.boardNo}</td>
+					        <td>${board.boardTitle}</td>
+					        <td>${board.boardWriter}</td>
+					        <td>${board.count}</td>
+					        <td>${board.createDate}</td>
+					    </tr>
+					</c:forEach>
                     
                 </tbody>
             </table>
@@ -84,16 +84,19 @@
 			<script>
 				function detail(num) {
 					//console.log(num);
-					location.href = `notice_list/\${num}`;
+					
+					const boardType = '${param.boardType}';
+					console.log("boardNo:", num, "boardType:", boardType); 
+					window.location.href = '/att/board/list/'+num+'?boardType=${boardType}';
 				}
-			
+				
 			</script>
             <div id="pagingArea">
                 <ul class="pagination">
                 	
 					<c:choose>
 						<c:when test="${ pageInfo.currentPage ne 1 }">
-		                    <li class="page-item"><a class="page-link" href="board/notice/?page=${pageInfo.currentPage - 1 }">이전</a></li>
+		                    <li class="page-item"><a class="page-link" href="board/list/?page=${pageInfo.currentPage - 1 }">이전</a></li>
 						</c:when>
 						<c:otherwise>                	
             		        <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
@@ -101,7 +104,7 @@
                     </c:choose>	
                     
                     <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" var ="num">
-                    	<li class="page-item"><a class="page-link" href="board/notice/?page=${ num }">${ num }</a></li>
+                    	<li class="page-item"><a class="page-link" href="board/list/?page=${ num }">${ num }</a></li>
                     </c:forEach>
                     
                     

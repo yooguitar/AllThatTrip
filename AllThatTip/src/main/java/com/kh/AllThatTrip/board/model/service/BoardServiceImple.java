@@ -35,8 +35,8 @@ public class BoardServiceImple implements BoardService {
 	private final ServletContext context;
 	
 	
-	private int getTotalCount() {
-		int totalCount = mapper.selectTotalCount();
+	private int getTotalCount(String boardType) {
+		int totalCount = mapper.selectTotalCount(boardType);
 		
 		if(totalCount == 0) {
 			throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
@@ -130,26 +130,33 @@ public class BoardServiceImple implements BoardService {
 		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
 		board.setOriginName(fileName);
 		board.setChangeName("/resources/upload_files/" + changeName);
-		log.info("File save path: {}", savePath);
+		//log.info("File save path: {}", savePath);
 		
 	}	
 	
 	// 페이징처리
 	@Override
-	public Map<String, Object> selectBoardList(Board board) {
+	public Map<String, Object> selectBoardList(Board board) { 
 		
-		int totalCount = getTotalCount();
+		int totalCount = getTotalCount(board.getBoardType());
+		
+		// log.info("게시글개수: {}", totalCount);
+		// log.info("요청페이지: {}", currentPage);
 		
 		PageInfo pi = getPageInfo(totalCount, board.getPage());
-		
+	
 		List<Board> boards = getBoardList(pi, board);
-		log.info("게시글목록 {}", boards);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		log.info("게시글목록:{}", boards);
+		
+		Map<String, Object> map = new HashMap();
+		
 		map.put("boards", boards);
 		map.put("pageInfo", pi);
 		
+		
 		return map;
+	
 	}
 
 	
@@ -163,8 +170,8 @@ public class BoardServiceImple implements BoardService {
 		
 		board.setFileList(mapper.selectFileList(boardNo));
 		
-		Map<String, Object> responseData = new HashMap();
-		responseData.put("board", board);
+		Map<String, Object> responseData = new HashMap<>();
+        responseData.put("board", board);
 		
 		
 		return responseData;
@@ -178,15 +185,20 @@ public class BoardServiceImple implements BoardService {
 		// 유효성 검증
 		validateBoard(board);
 		// 파일 유무
-		if(!("".equals(upfile.getOriginalFilename()))) {
-			handlerFileUpload(board,upfile);
-		}
+		if (upfile != null && !upfile.isEmpty()) {
+            handlerFileUpload(board, upfile);
+        }
 		// 인서트 진행
 		mapper.insertBoard(board);
-		mapper.insertBoardFile(board);
+		
+		if (board.getOriginName() != null && !board.getOriginName().isEmpty()) {
+            mapper.insertBoardFile(board);
+        }
 		 	
 	}
 	
+	
+	// 수정
 	@Override
 	public void updateBoard(Board board, MultipartFile upfile) {
 		validateBoardNo(board.getBoardNo());

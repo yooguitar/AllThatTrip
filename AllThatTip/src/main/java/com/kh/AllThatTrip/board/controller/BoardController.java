@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,42 +34,54 @@ public class BoardController {
 
 	// 전체 리스트 조회
 	@GetMapping("/list")
-	public ModelAndView selectBoardList(Board param) {
+	public ModelAndView selectBoardList(@RequestParam(defaultValue = "10") String boardType,  // 공지사항 기본값 10
+	                                    @RequestParam(defaultValue = "1") int page,           // 기본 페이지 번호 1
+	                                    Board param) {
+	    
+	    param.setBoardType(boardType);
+	    param.setPage(page);
+	    //  log.info("Board List Param :: {}", param);
+	    // 서비스 호출
+	    Map<String, Object> map = boardService.selectBoardList(param);
+	    map.put("boardType", boardType);
+	    map.put("page", page);
+	    map.put("param", param);
+//		if(param.getBoardType().equals("20")) {
+//		return mv.setViewNameAndData("board/phttoReView", map); 
+//	} else {
+//		return mv.setViewNameAndData("board/list", map); 
+//	}
+    return mv.setViewNameAndData("board/list", map);
 		
-		log.info("board :: {}", param);
-		/*
-		if(param.getBoardType() == null || param.getBoardType().equals("")) {
-			param.setBoardType("10"); // null일 경우 데이터 디폴트 데이터 삽입 나중에 바꾸셈
-		}
-		*/
-		Map<String, Object> map = boardService.selectBoardList(param);
-		
-		map.put("param", param);
-		
-//		if(param.getBoardType().equals("30")) {
-//			return mv.setViewNameAndData("board/phttoReView", map); 
-//		} else {
-//			return mv.setViewNameAndData("board/notice_list", map); 
-//		}
-		
-		return mv.setViewNameAndData("board/notice_list", map); 
+
 	}
 
+	
+
+	
+	
+	
 	// 글쓰기 
 	@GetMapping("insertForm")
-	public ModelAndView insertForm(Board param) {
-		
-		log.info("param :: {}", param);
-		Map<String, Object> map = boardService.selectBoardList(param);
-		
-		map.put("param", param);
-		
-		return mv.setViewNameAndData("board/insert_form", map);
-	}
+    public ModelAndView insertForm(
+            @RequestParam(defaultValue = "10") String boardType,
+            @RequestParam(defaultValue = "1") int page,
+            Board param
+    ) {
+        // 작성 폼 진입 시에도 boardType, page 세팅
+        param.setBoardType(boardType);
+        param.setPage(page);
+
+        // 필요시 목록을 불러올 수도 있음
+        Map<String, Object> map = boardService.selectBoardList(param);
+        map.put("param", param);
+
+        return mv.setViewNameAndData("board/insert_form", map);
+    }
 
 
 	// 공지사항 등록
-	@PostMapping("notice_list/insert")
+	@PostMapping("list/insert")
 	public ModelAndView insertBoard(Board board, MultipartFile upfile, HttpSession session) {
 		log.info("board : {}, upfile : {}",board, upfile);
 		boardService.insertBoard(board, upfile);
@@ -79,7 +92,7 @@ public class BoardController {
 
 
 	// 상세 조회
-	@GetMapping("notice_list/{id}")
+	@GetMapping("list/{id}")
 	public ModelAndView selectByOne(@PathVariable(name="id") Long id) {
 		Map<String, Object> responseData = boardService.selectByNum(id);
 		
@@ -91,6 +104,7 @@ public class BoardController {
 	// 수정 양식
 	@PostMapping("/list/update-form")
 	public ModelAndView updateForm(Long boardNo) {
+		//log.info("수정할 게시글 번호: {}", boardNo);
 		Map<String, Object> responseData = boardService.selectByNum(boardNo);
 		return mv.setViewNameAndData("board/update", responseData);
 	}
@@ -108,40 +122,16 @@ public class BoardController {
 	
 	
 	// 삭제
-	@PostMapping("/notice_list/delete")
+	@PostMapping("/list/delete")
 	public ModelAndView deleteBoard(Long boardNo, String changeName) {
 		
 		boardService.deleteBoard(boardNo, changeName);
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
-	
-	
-	
 }
-	/*
-
-
-
-
-
-
-
-
-
 	
 
-	// 삭제
-
-	// 검색창(필터)
-
-	// 썸네일
-
-	// 첨부파일
-
-	// 댓글ㄴ
-
-
-	 */
+	
 
 
 

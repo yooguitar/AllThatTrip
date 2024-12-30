@@ -35,7 +35,7 @@
         <div class="innerOuter">
             <h2>게시글 상세보기</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="/att/board/list">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list?boardType=${param.boardType}">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -83,17 +83,6 @@
              
             </div>
             
-            <script>
-            	function postSubmit(num) {
-				
-            		if(num == 1){
-            			$('#postForm').attr('action', '/att/board/list/update-form').submit();
-            		} else {
-            			$('#postForm').attr('action', '/att/board/list/delete').submit();
-            		}
-				}
-            </script>
-            
             <form action="" method="post" id="postForm">
             	<input type="hidden" name="boardNo" value="${ board.boardNo }" />
             	<input type="hidden" name="changeName" value="${ board.changeName }" />
@@ -103,6 +92,19 @@
             	 -->
             </form>
 		
+            <script>
+            	function postSubmit(num) {
+            		const boardNo = $('input[name="boardNo"]').val(); 
+            		const boardType = $('input[name="boardType"]').val();
+				
+            		if(num == 1){
+            			$('#postForm').attr('action', '/att/board/list/update-form/${boardNo}?boardType=${boardType}').submit();
+            		} else {
+            			$('#postForm').attr('action', '/att/board/list/delete').submit();
+            		}
+				}
+            </script>
+            
             
             <!-- 
             	case 1: 수정하기 누르면 수정할 수 있는 입력 양식이 있어야함
