@@ -51,8 +51,26 @@
                 </tr>
                 <tr>
                     <th>첨부파일</th>
-                    
                     <c:choose>
+	 					<c:when test="${ empty board.fileList }">                   
+		                    <td colspan="3">
+		                    	첨부파일이 존재하지 않습니다.
+		                    </td>
+	 					</c:when>
+	 					<c:otherwise>
+	 						<c:forEach items="${ board.fileList }" var="file">
+							    <td colspan="3">
+			                        <a href="${ file.changeName }" download="${ file.originName }">${file.originName}</a>
+			                    </td>
+							</c:forEach>
+		                   
+	                    </c:otherwise>
+ 					</c:choose>
+                    
+                    
+                    
+                    
+                   <%--  <c:choose>
 	 					<c:when test="${ empty board.originName }">                   
 		                    <td colspan="3">
 		                    	첨부파일이 존재하지 않습니다.
@@ -63,7 +81,7 @@
 		                        <a href="${ board.changeName }" download="${ board.originName }">${board.originName}</a>
 		                    </td>
 	                    </c:otherwise>
- 					</c:choose>	
+ 					</c:choose> --%>
                 </tr>
                 <tr>
                     <th>내용</th>

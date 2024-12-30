@@ -52,21 +52,23 @@
             	<a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
             </c:if>
             -->
+            <div>sam :: ${param.boardType }</div>
+            
             <c:choose>
-                <c:when test="${boardType == 10}">
+                <c:when test="${board.boardType == 10}">
                     <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=10">글쓰기</a>
                 </c:when>
-                <c:when test="${boardType == 20}">
+                <c:when test="${board.boardType == 20}">
                     <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
                 </c:when>
-                <c:when test="${boardType == 30}">
+                <c:when test="${board.boardType == 30}">
                     <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
                 </c:when>
-                <c:when test="${boardType == 40}">
-                    <a class="btn btn-secondary" style="float:right;" href="/att/board/list?boardType=40/insertForm">글쓰기</a>
+                <c:when test="${board.boardType == 40}">
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=40">글쓰기</a>
                 </c:when>
                 <c:otherwise>
-                    <a class="btn btn-secondary" style="float:right;" href="/att/board/list?boardType=50/insertForm">글쓰기</a>
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=50">글쓰기</a>
                 </c:otherwise>
             </c:choose>
             
@@ -102,7 +104,7 @@
 				function detail(num) {
 					//console.log(num);
 					
-					const boardType = '${param.boardType}';
+					const boardType = '${board.boardType}';
 					console.log("boardNo:", num, "boardType:", boardType); 
 					window.location.href = '/att/board/list/'+num+'?boardType=${boardType}';
 				}

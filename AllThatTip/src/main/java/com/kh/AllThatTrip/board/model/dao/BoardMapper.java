@@ -3,6 +3,7 @@ package com.kh.AllThatTrip.board.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.board.model.vo.BdAttachment;
 import com.kh.AllThatTrip.board.model.vo.Board;
@@ -14,7 +15,7 @@ public interface BoardMapper {
 	int selectTotalCount(String boardType);
 	
 	// 목록조회
-	List<Board> selectBoardList(Board board);
+	List<Board> selectBoardList(Board board, RowBounds rowBounds);
 	
 	// 조회수증가
 	int increaseCount(Long boardNo);

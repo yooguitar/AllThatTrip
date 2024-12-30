@@ -31,10 +31,9 @@ public class Board {
 	private String status;
 	private List<BdAttachment> fileList;
 	private int page;
-	private RowBounds rowBounds;
   
 		
-	} 
+} 
 		
 	
 

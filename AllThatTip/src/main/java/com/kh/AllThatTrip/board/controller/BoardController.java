@@ -37,34 +37,37 @@ public class BoardController {
 	// 20	FAQ
 	// 30	fna
 	// 40	중고거래
-	
+
 	
 	// 전체 리스트 조회
 	@GetMapping("/list")
 	public ModelAndView selectBoardList(@RequestParam(defaultValue = "10") String boardType,  // 공지사항 기본값 10
 	                                    @RequestParam(defaultValue = "1") int page,           // 기본 페이지 번호 1
-	                                    Board param) {
+	                                    Board board) {
 	    
-	    param.setBoardType(boardType);
-	    param.setPage(page);
-	    //  log.info("Board List Param :: {}", param);
+		log.info("boardType :: {}", boardType);
+		log.info("page :: {}", page);
+		
+		board.setBoardType(boardType);
+		board.setPage(page);
+	    
+	    log.info("Board List Param :: {}", board);
 	    // 서비스 호출
-	    Map<String, Object> map = boardService.selectBoardList(param);
-	    map.put("boardType", boardType);
-	    map.put("page", page);
-	    map.put("param", param);
+	    Map<String, Object> map = boardService.selectBoardList(board);
 	    
-	    	if(param.getBoardType().equals("10")) {
-	    		return mv.setViewNameAndData("board/list", map);
-	    	} else if (param.getBoardType().equals("20")) {
-	    		return mv.setViewNameAndData("board/faq", map); 
-	    	} else if (param.getBoardType().equals("30")) {
-	    		return mv.setViewNameAndData("board/qna", map); 
-	    	} else if (param.getBoardType().equals("40")) {
-	    		return mv.setViewNameAndData("board/userd", map); 
-	    	} else {
-	    		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
-	    	}
+	    map.put("board", board);
+	    
+    	if(board.getBoardType().equals("10")) {
+    		return mv.setViewNameAndData("board/list", map);
+    	} else if (board.getBoardType().equals("20")) {
+    		return mv.setViewNameAndData("board/faq", map); 
+    	} else if (board.getBoardType().equals("30")) {
+    		return mv.setViewNameAndData("board/qna", map); 
+    	} else if (board.getBoardType().equals("40")) {
+    		return mv.setViewNameAndData("board/userd", map); 
+    	} else {
+    		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
+    	}
 	    		
 
 	}
@@ -113,6 +116,8 @@ public class BoardController {
 	}
 
 	// 수정 양식
+	// boardNo 파라미터만 보내도 상세조회를 하기 때문에 boardType을 알수있어 숙진아 ^^ 
+	// 그니깐 그걸로 뷰페이지 제어해!! 화이팅!♥
 	@PostMapping("/list/update-form")
 	public ModelAndView updateForm(Long boardNo) {
 		//log.info("수정할 게시글 번호: {}", boardNo);

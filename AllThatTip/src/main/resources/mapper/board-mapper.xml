@@ -107,15 +107,15 @@
 	</select>
     
     <!-- 공통게시판 첨부파일리스트 조회 -->
-    <select id="selectFileList" parameterType="long">
+    <select id="selectFileList" parameterType="long" resultType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
     	SELECT  
-    			FILE_NO,
-		        BOARD_NO,
-		        ORIGIN_NAME,
-		        CHANGE_NAME,
-		        FILE_PATH,
-		        UPLOAD_DATE,
-		        STATUS
+    			FILE_NO AS fileNo,
+		        BOARD_NO AS boardNo,
+		        ORIGIN_NAME AS originName,
+		        CHANGE_NAME AS changeName,
+		        FILE_PATH AS filePath,
+		        UPLOAD_DATE AS uploadDate,
+		        STATUS AS status
 		FROM 	
 				BD_ATTACHMENT
 		WHERE 	
@@ -173,8 +173,8 @@
 		UPDATE
 				BOARD
 		SET
-				BOARD_TITLE = ${boardTitle},
-				BOARD_CONTENT = ${boardContent}
+				BOARD_TITLE = #{boardTitle},
+				BOARD_CONTENT = #{boardContent}
 				
 		WHERE
 				BOARD_NO = #{boardNo}

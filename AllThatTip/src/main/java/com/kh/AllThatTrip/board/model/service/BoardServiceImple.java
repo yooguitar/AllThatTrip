@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.board.model.dao.BoardMapper;
+import com.kh.AllThatTrip.board.model.vo.BdAttachment;
 import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
@@ -55,9 +56,7 @@ public class BoardServiceImple implements BoardService {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		board.setRowBounds(rowBounds);
-		
-		return mapper.selectBoardList(board);
+		return mapper.selectBoardList(board, rowBounds);
 	}
 	
 	
@@ -109,8 +108,10 @@ public class BoardServiceImple implements BoardService {
 		}
 		return board;
 	}
-	
-	private void handlerFileUpload(Board board, MultipartFile upfile) {
+	// 다중 파일 업로드 구글형한테 물어봐서 수정하기
+	// 리뷰게시판은 여러개 첨부파일가능하다고 숙진아^^
+	// 오늘은 안알려줄거야 숙진이가 고생해봐
+	private Board handlerFileUpload(Board board, MultipartFile upfile) {
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));
@@ -132,6 +133,7 @@ public class BoardServiceImple implements BoardService {
 		board.setChangeName("/resources/upload_files/" + changeName);
 		//log.info("File save path: {}", savePath);
 		
+		return board;
 	}	
 	
 	// 페이징처리
@@ -168,11 +170,16 @@ public class BoardServiceImple implements BoardService {
 		incrementViewCount(boardNo);
 		Board board = findBoardByNum(boardNo);
 		
-		board.setFileList(mapper.selectFileList(boardNo));
+		// board 객체에 List<fileList> 객체 생성 후 객체안에서 파일은 List 타입으로 처리
+		// 사유 : 상세페이지는 한개의 로우 파일은 리스트형태로 조회가 가능하기에 fileList 는 list타입으로 처리
+		// (상세 게시글 데이터 로우 : 상세 게시글 첨부파일 로우) == (1:n)
+		List<BdAttachment> fileList = mapper.selectFileList(boardNo);
+		
+		board.setFileList(fileList); // 파일리스트 할당
 		
 		Map<String, Object> responseData = new HashMap<>();
-        responseData.put("board", board);
 		
+        responseData.put("board", board);
 		
 		return responseData;
 
@@ -182,14 +189,18 @@ public class BoardServiceImple implements BoardService {
 	@Transactional
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
+		
+		Board fileBoard = new Board();
+		
 		// 유효성 검증
 		validateBoard(board);
 		// 파일 유무
 		if (upfile != null && !upfile.isEmpty()) {
-            handlerFileUpload(board, upfile);
+			fileBoard = handlerFileUpload(board, upfile);
         }
 		// 인서트 진행
 		mapper.insertBoard(board);
+		board.setOriginName(fileBoard.getOriginName());
 		
 		if (board.getOriginName() != null && !board.getOriginName().isEmpty()) {
             mapper.insertBoardFile(board);
@@ -210,11 +221,13 @@ public class BoardServiceImple implements BoardService {
 //			throw new BoardNotFoundException("작성자와 로그인한 사람이 다릅니다.");
 //		}
 		
-		if(!(upfile.getOriginalFilename() != null)) {
+		if(upfile.getOriginalFilename() != null && !upfile.getOriginalFilename().isEmpty()) {
 			new File(context.getRealPath(board.getChangeName())).delete();
 		}
-		
-		handlerFileUpload(board, upfile);
+		// 파일업로드시 업로드하는 파일을 체크 후 없다면 파일업로드 메소드는 호출하면 안됨
+		if (upfile != null && !upfile.isEmpty()) {
+			handlerFileUpload(board, upfile);
+		}
 		
 		int result = mapper.updateBoard(board);
 		
