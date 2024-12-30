@@ -29,6 +29,13 @@
     </style>
 </head>
 <body>
+		<c:if test="${ not empty sessionScope.alertMsg }">
+		<script>
+			alertify.alert('alertMsg', '${alertMsg}', function(){alertify.success('띠용')});
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+
         <div id="area">
             <div id="back"></div>
 			<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
