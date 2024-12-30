@@ -21,7 +21,7 @@
     <style>
     	#upper-div{
     		width:1200px;
-    		height:100px;
+    		height:150px;
     		margin:auto;
     	}
     	#lower-div{
@@ -94,7 +94,7 @@
 	
 	    <br>
 	    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	        <a href="#">사업자 회원가입</a>
+	        <a href="/att/bizJoinPage.me">사업자 회원가입</a>
 	    </label>
     
     </div>

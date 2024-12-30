@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.AllThatTrip.exception.UserIdNotFoundException;
 import com.kh.AllThatTrip.member.model.dao.MemberMapper;
+import com.kh.AllThatTrip.member.model.vo.BusinessUser;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -29,11 +30,19 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.join(member);
 	}
 
-	
 	@Override
 	public int checkId(String userId) {
 		return mapper.checkId(userId); 
 		
+	}
+	
+
+	@Override
+	public Member bizJoin(Member member) {
+		return null;
+	}
+	@Override
+	public void bizFile(BusinessUser bUser) {
 	}
 
 	

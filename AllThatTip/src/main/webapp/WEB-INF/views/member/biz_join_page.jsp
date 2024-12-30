@@ -27,17 +27,9 @@
 <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 
 <div class="container" id="wrap">
-  <h2>회원가입</h2><br><br>
+  <h2>사업자 회원가입</h2><br><br>
 
 	<script>
-	/*
-	function checks() {
-        const getMail = RegExp(/^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+.[A-Za-z0-9-]+/);
-    	const getId= RegExp(/^[a-zA-Z0-9]{5,19}$/);
-    	const getPw= RegExp(/^(?=.[a-zA-Z])(?=.[^a-zA-Z0-9]|.*[0-9]).{4,12}$/);
-    	const getName= RegExp(/^[가-힣]+$/);
-	*/
-	
 		// Ajax ID 중복체크 
 		$(function(){
 			const $idInput = $('#userId');
@@ -95,7 +87,7 @@
 	
 	</script>
 
-  <form action="join.me" method="post" id="join-form">
+  <form action="biz-join.me" method="post" id="join-form">
     <div class="form-group">
       <label>사용하실 아이디를 입력 해주세요 / 반드시 모든 항목을 작성하셔야 합니다.</label>
       <input type="id" class="form-control" id="userId" placeholder="6 - 20자 영문, 숫자 입력" value="" name="userId" required>
@@ -150,8 +142,22 @@
         <button type="button" class="btn btn-primary" id="phone-ck-btn2">확인</button>
     </div>
 
+    <br><hr style="border: 1px dotted; color:rgba(0,0,0,0.2);"><br>
 
-    <div class="form-group form-check">
+    <div class="form-group">
+        <label>상호명을 입력해주세요</label>
+        <input type="text" class="form-control" id="bizName" placeholder="입력" required>
+    </div>
+    <p>사업자 등록증을 첨부해주세요 <span style="font-weight: 700; color: orangered;">(필수)</span></p>
+    <div class="custom-file mb-3">
+        <input type="file" class="custom-file-input" id="customFile" name="filename">
+        <label class="custom-file-label" for="customFile">이미지 첨부</label>
+      </div>
+    
+      <br><br><br>
+
+
+    <div class="form-group form-check" style="display: none;">
         <br>
       <label class="form-check-label" style="margin-left: 100px;">
         <input onclick="getSpamCk" type="checkbox" id="spam" name="spam" value="1" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -187,6 +193,11 @@
 
     }
 
+    $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>
 
 
 

@@ -58,6 +58,44 @@
 
 </insert>
 
+<insert id="bizJoin" parameterType="bUser">
+	INSERT
+	  INTO	
+	       BUSINESS_USER
+	       (
+	       BIZ_NO,
+		   BIZ_NAME,
+		   BIZ_FILENO,
+		   ORIGIN_NAME,
+		   CHANGE_NAME,
+		   FILE_PATH,
+		   UPLOAD_DATE,
+		   FILE_STATUS,
+		   USER_NO
+	       )
+	VALUES
+		   (
+		   SEQ_BUNO.NEXTVAL,
+		   #{bizName},
+		   #{bizFileNo},
+		   #{originName},
+		   #{changeName},
+		   #{filePath},
+		   DEFAULT,
+	       DEFAULT,
+		   #{userNo}
+		   )
+</insert>
+
+
+
+
+
+
+
+
+
+
 
 
 <select id="checkId" resultType="_int">

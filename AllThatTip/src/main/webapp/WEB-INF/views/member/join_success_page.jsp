@@ -35,7 +35,7 @@
     </style>
 </head>
 <body>
-	<!-- <jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+	<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 
     <div id="wrap">
 
@@ -52,7 +52,12 @@
         </div>
         
     </div>
-    <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
+    
+    <div style="margin-left:360px">
+	<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
+	</div>
+    
+    
 
 </body>
 

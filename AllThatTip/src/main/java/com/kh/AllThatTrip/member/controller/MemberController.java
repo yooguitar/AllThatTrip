@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.member.model.service.MemberService;
+import com.kh.AllThatTrip.member.model.vo.BusinessUser;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,20 @@ public class MemberController {
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
-	
+	// 사업자 회원가입 핸들러
+	@PostMapping("biz-join.me")
+	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
+		if(bUser.getOriginName() != null) {
+			Member result = memberService.bizJoin(member);
+			Long userNum = result.getUserNo();
+			bUser.setUserNo(userNum);
+			memberService.bizFile(bUser);
+		} else {
+			// 예외클래스 만들기
+		}
+		
+		
+	}
 	
 	
 	
@@ -84,8 +98,10 @@ public class MemberController {
 	public String attHome() {
 		return "common/main";
 	}
-	
-	
+	@GetMapping("bizJoinPage.me")
+	public String bizJoinPage() {
+		return "member/biz_join_page";
+	}
 	
 	
 	
