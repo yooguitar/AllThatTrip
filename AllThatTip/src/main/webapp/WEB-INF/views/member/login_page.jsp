@@ -63,7 +63,7 @@
 
         <br>
         <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/AllThatTrip/joinPage.me">회원가입</a><br>
+        <a href="/att/joinPage.me">회원가입</a><br>
         </label>
         <br><br>
         <p class="title-join-biz" style="font-size: 12px;">비회원 예약도 가능합니다.</p><br>
