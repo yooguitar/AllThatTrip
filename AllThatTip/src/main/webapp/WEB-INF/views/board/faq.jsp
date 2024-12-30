@@ -16,7 +16,8 @@
     body{
         font-family: Arial, Helvetica, sans-serif;
         line-height: 1.6;
-        margin: 0;
+        width:1200px;
+        margin: 0 auto;
         padding: 0;
     }
 

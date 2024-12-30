@@ -17,7 +17,8 @@
    
     body {
         font-family: Arial, sans-serif;
-        margin: 0;
+        width:1500px;
+        margin: 0 auto;
         padding: 0;
 
     }

@@ -11,13 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
             width:1200px;
-            margin:auto;
+            margin: 0 auto;
         }
         .innerOuter {
             border:1px solid lightgray;
-            width:80%;
+            width:100%;
             margin:auto;
             padding:5% 10%;
             background-color:white;
