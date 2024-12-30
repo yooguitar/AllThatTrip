@@ -49,22 +49,8 @@
     </style>
 </head>
 <body>
-	<!-- <jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
-	<!-- include 아직 하면 안됩니다. 스타일 겹쳐요 -->
+	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
 	
-	        <br>
-	        <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	        <a href="/att/joinPage.me">회원가입</a><br>
-	        </label>
-	        <br><br>
-	        <p class="title-join-biz" style="font-size: 12px;">비회원 예약도 가능합니다.</p><br>
-	
-	    </div>
-	
-	    <br>
-	    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	        <a href="/att/bizJoinPage.me">사업자 회원가입</a>
-	    </label>
     <div class="container" id="wrap">
         <br>
         <h2 class="title-join-biz">로그인</h2>
