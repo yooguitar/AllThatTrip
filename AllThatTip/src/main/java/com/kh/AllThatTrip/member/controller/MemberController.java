@@ -46,19 +46,19 @@ public class MemberController {
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
 	// 사업자 회원가입 핸들러
-	@PostMapping("biz-join.me")
-	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
-		if(bUser.getOriginName() != null) {
-			Member result = memberService.bizJoin(member);
-			Long userNum = result.getUserNo();
-			bUser.setUserNo(userNum);
-			memberService.bizFile(bUser);
-		} else {
-			// 예외클래스 만들기
-		}
+//	@PostMapping("biz-join.me")
+//	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
+//		if(bUser.getOriginName() != null) {
+//			Member result = memberService.bizJoin(member);
+//			Long userNum = result.getUserNo();
+//			bUser.setUserNo(userNum);
+//			memberService.bizFile(bUser);
+//		} else {
+//			// 예외클래스 만들기
+//		}
+//	}
 		
 		
-	}
 	
 	
 	

@@ -37,13 +37,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 
-	@Override
-	public Member bizJoin(Member member) {
-		return null;
-	}
-	@Override
-	public void bizFile(BusinessUser bUser) {
-	}
+
 
 	
 	

@@ -10,8 +10,6 @@ public interface MemberService {
 	
 	int join(Member member);
 	
-	Member bizJoin(Member member);
-	void bizFile(BusinessUser bUser);
 	
 	int checkId(String userId);
 	

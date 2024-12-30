@@ -58,6 +58,22 @@
 
 </insert>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <insert id="bizJoin" parameterType="bUser">
 	INSERT
 	  INTO	
@@ -86,7 +102,7 @@
 		   #{userNo}
 		   )
 </insert>
-
+-->
 
 
 

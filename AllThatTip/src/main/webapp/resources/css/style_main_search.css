@@ -6,7 +6,7 @@
 }
 #wrap{
     width: 1200px;
-    height: 1000px;
+    height: 100%;
     /* background: lightcyan; */
     margin: auto;
 }
@@ -16,7 +16,7 @@
 
 #main-search{
     width: 800px;
-    height: 700px;
+    height: 400px;
     /* background: blueviolet; */
     margin: auto;
     padding-top: 250px;

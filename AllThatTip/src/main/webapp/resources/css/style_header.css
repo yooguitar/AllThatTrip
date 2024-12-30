@@ -1,5 +1,5 @@
 
-.navbar-1 {
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +19,7 @@
     color: var(--accent-color);
     padding-left: 0;
   }
-  a {
+  .aTag {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 800;
