@@ -58,8 +58,16 @@
 
 </insert>
 
-
-
+<select id="checkId" resultType="_int">
+	SELECT
+		   COUNT(*)
+      FROM	
+           MEMBER
+     WHERE
+     	   USER_ID = #{userId}
+       AND	
+           STATUS = 'Y'
+</select>
 
 
 
@@ -114,16 +122,6 @@
 
 
 
-<select id="checkId" resultType="_int">
-	SELECT
-		   COUNT(*)
-      FROM	
-           MEMBER
-     WHERE
-     	   USER_ID = #{userId}
-       AND	
-           STATUS = 'Y'
-</select>
 
 
 

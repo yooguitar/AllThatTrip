@@ -94,7 +94,7 @@
 
     <br>
     <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="#">사업자 회원가입</a>
+        <a href="/att/bizJoinPage.me">사업자 회원가입</a>
     </label>
     
     <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->

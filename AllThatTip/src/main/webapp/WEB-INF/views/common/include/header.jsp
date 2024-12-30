@@ -25,7 +25,7 @@
   <body>
     <nav class="navbar">
       <div class="navbar__logo">
-        <a class=aTag href="common/main" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
+        <a class=aTag href="#" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
       </div>
       <div id=navi>
         <ul id="navbar">

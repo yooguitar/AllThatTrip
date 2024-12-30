@@ -12,8 +12,6 @@ public interface MemberMapper {
 	
 	int join(Member member);
 	
-	//Member join(Member member);
-	
 	Member bizJoin(Member member);
 	
 	int checkId(String userId);

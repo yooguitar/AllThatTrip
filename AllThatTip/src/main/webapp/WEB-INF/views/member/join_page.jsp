@@ -30,22 +30,14 @@
   <h2>회원가입</h2><br><br>
 
 	<script>
-	/*
-	function checks() {
-        const getMail = RegExp(/^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+.[A-Za-z0-9-]+/);
-    	const getId= RegExp(/^[a-zA-Z0-9]{5,19}$/);
-    	const getPw= RegExp(/^(?=.[a-zA-Z])(?=.[^a-zA-Z0-9]|.*[0-9]).{4,12}$/);
-    	const getName= RegExp(/^[가-힣]+$/);
-	*/
 	
-		// Ajax ID 중복체크 
+		// Ajax ID 중복체크
 		$(function(){
 			const $idInput = $('#userId');
 			const $checkResult = $('#check-result');
 			$idInput.keyup(function(){
-				if(
-					$idInput.val().length > 5 && $idInput.val().length < 21
-					){
+				console.log($idInput);
+				if($idInput.val().length > 5 && $idInput.val().length < 21){
 					$.ajax({
 						url : 'idcheck',
 						type : 'get',
