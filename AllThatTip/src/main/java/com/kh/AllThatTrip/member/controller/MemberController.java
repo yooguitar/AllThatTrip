@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
@@ -53,11 +54,17 @@ public class MemberController {
 	
 	
 	
+	/* ajax */
+	
+	@ResponseBody
+	@GetMapping("idcheck")
+	public int checkId(String userId) {
+		return memberService.checkId(userId);
+	}
 	
 	
 	
-	
-	
+	/* 포워딩 */
 	
 	@GetMapping("loginPage.me")
 	public String loginPage() {

@@ -11,7 +11,7 @@ public interface MemberService {
 	
 	
 	
-	
+	int checkId(String userId);
 	
 	
 	

@@ -13,7 +13,7 @@ public interface MemberMapper {
 	
 	
 	
-	
+	int checkId(String userId);
 	
 	
 	

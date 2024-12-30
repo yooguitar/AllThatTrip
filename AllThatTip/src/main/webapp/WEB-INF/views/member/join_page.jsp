@@ -11,6 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <style>
     #wrap{
@@ -26,18 +27,87 @@
 <div class="container" id="wrap">
   <h2>회원가입</h2><br><br>
 
-  <form action="join.me" method="post">
+	<script>
+	/*
+	function checks() {
+        const getMail = RegExp(/^[A-Za-z0-9_.-]+@[A-Za-z0-9-]+.[A-Za-z0-9-]+/);
+    	const getId= RegExp(/^[a-zA-Z0-9]{5,19}$/);
+    	const getPw= RegExp(/^(?=.[a-zA-Z])(?=.[^a-zA-Z0-9]|.*[0-9]).{4,12}$/);
+    	const getName= RegExp(/^[가-힣]+$/);
+	*/
+	
+		// Ajax ID 중복체크 
+		$(function(){
+			const $idInput = $('#userId');
+			const $checkResult = $('#check-result');
+			$idInput.keyup(function(){
+				if(
+					$idInput.val().length > 5 && $idInput.val().length < 21
+					){
+					$.ajax({
+						url : 'idcheck',
+						type : 'get',
+						data :{
+							userId : $idInput.val()
+						},
+						success : function(result){
+							if(result > 0){
+								$checkResult.show().css('color', 'crimson').text('중복된 아이디입니다.');
+							} else {
+								$checkResult.show().css('color', 'green').text('사용 가능한 아이디입니다.');
+							}
+						}
+					});
+				} else {
+					$checkResult.show().css('color', 'crimson').text('아이디는 6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
+				}
+			});
+		})
+	
+		
+		// 비밀번호 입력 확인
+		$(function(){
+			const $userPwd = $('#userPwd');
+			const $userPwdCk = $('#userPwdCk');
+			const $pwdCheckResult = $('#pwd-check-result');
+			const $pwdCheckResult2 = $('#pwd-check-result2');
+			
+			$pwdCheckResult.keyup(function(){
+				if($userPwd.val().length < 6 || $userPwd.val().length > 20){
+					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요');
+					
+					
+				}
+				
+				
+				/*
+				if($userPwd === $userPwdCk){
+					$pwdCheckResult.show().css('color', 'green').text('확인되었습니다.');	
+				} else {
+					$pwdCheckResult.show().css('color', 'crimson').text('똑같은 비밀번호를 입력해주세요.');	
+				}
+				*/
+			});
+		})
+	 
+	
+	</script>
+
+  <form action="join.me" method="post" id="join-form">
     <div class="form-group">
       <label>사용하실 아이디를 입력 해주세요 / 반드시 모든 항목을 작성하셔야 합니다.</label>
       <input type="id" class="form-control" id="userId" placeholder="6 - 20자 영문, 숫자 입력" value="" name="userId" required>
+      <div id="check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
       <label>사용하실 비밀번호를 입력 해주세요</label>
       <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자, 특수문자 입력" name="userPwd" required>
+      <div id="pwd-check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
         <label>비밀번호 확인</label>
         <input type="password" class="form-control" id="userPwdCk" placeholder="비밀번호를 똑같이 입력해주세요" >
+        <div id="pwd-check-result2" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
         <label>이름을 입력 해주세요</label>
@@ -68,10 +138,10 @@
         <label>휴대폰 번호를 입력 해주세요</label>
         <input type="phone" class="form-control" placeholder="- 없이 입력" id="phone" name="phone" required>
         <br>
-        <button onclick="sendCkNum();" type="button" class="btn btn-primary">인증번호 전송</button>
+        <button onclick="showCheckDiv();" type="button" class="btn btn-primary">인증번호 전송</button>
     </div>
     
-    <div class="form-group" style="display: none;" id="phone-ck-div">
+    <div class="form-group" style="display:none" id="phone-ck-div">
         <label>인증번호를 입력 해주세요</label>
         <input type="text" class="form-control" id="phone-ck" placeholder="인증번호 입력 / 아무 숫자나 입력하면 인증 됩니다">
         <br>
@@ -99,17 +169,17 @@
 </html>
 
 <script> 
+    function showCheckDiv(){
+    	document.getElementById('phone-ck-div').removeAttribute('style');
+    	
+    }
+    
     function submitBtn(){
-        // **submit-btn onclick 시 수행할 내용들
         // 1. #email에 #email-id, #domain 내용 합쳐서 전송
         const emailId = document.getElementById('email-id').value;
         const domain = document.getElementById('domain').value;
         var email = document.getElementById('email').value = emailId + domain;
 
-        alertify
-        .alert("회원가입 성공. 환영합니다!", function(){
-          alertify.message('확인');
-        });
     }
 
 
