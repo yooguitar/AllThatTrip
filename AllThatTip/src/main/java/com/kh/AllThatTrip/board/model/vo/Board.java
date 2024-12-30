@@ -29,9 +29,10 @@ public class Board {
 	private String createDate;
 	private int count;
 	private String status;
-	private List<?> fileList;
-	private int page;    
+	private List<BdAttachment> fileList;
+	private int page;
 	private RowBounds rowBounds;
+  
 		
 	} 
 		

@@ -53,7 +53,25 @@
             	<a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
             </c:if>
             -->
-            <a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
+            <c:choose>
+                <c:when test="${boardType == 10}">
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=10">글쓰기</a>
+                </c:when>
+                <c:when test="${boardType == 20}">
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
+                </c:when>
+                <c:when test="${boardType == 30}">
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
+                </c:when>
+                <c:when test="${boardType == 40}">
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/list?boardType=40/insertForm">글쓰기</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-secondary" style="float:right;" href="/att/board/list?boardType=50/insertForm">글쓰기</a>
+                </c:otherwise>
+            </c:choose>
+            
+         
             <br>
             <br>
             <table id="boardList" class="table table-hover" align="center">

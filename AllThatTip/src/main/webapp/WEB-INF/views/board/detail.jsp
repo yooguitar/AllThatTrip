@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-        
+    <jsp:include page="../common/include/header.jsp" />    
 
     <div class="content">
         <br><br>
@@ -83,7 +83,8 @@
              
             </div>
             
-            <form action="" method="post" id="postForm">
+            <form action="/att/board/list/update" method="post" id="postForm">
+            	<input type="hidden" name="boardType" value="${param.boardType}">
             	<input type="hidden" name="boardNo" value="${ board.boardNo }" />
             	<input type="hidden" name="changeName" value="${ board.changeName }" />
             	<input type="hidden" name="boardWriter" value="${ board.boardWriter }" />
@@ -98,8 +99,8 @@
             		const boardType = $('input[name="boardType"]').val();
 				
             		if(num == 1){
-            			$('#postForm').attr('action', '/att/board/list/update-form/${boardNo}?boardType=${boardType}').submit();
-            		} else {
+            			$('#postForm').attr('action', '/att/board/list/update-form').submit();
+            		} else { 
             			$('#postForm').attr('action', '/att/board/list/delete').submit();
             		}
 				}
@@ -227,6 +228,6 @@
     
     
     
-    
+    <jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>

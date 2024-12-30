@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.AllThatTrip.board.model.service.BoardService;
 import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
+import com.kh.AllThatTrip.exception.BoardNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("board")
 @Slf4j
 public class BoardController {
 
@@ -31,7 +32,13 @@ public class BoardController {
 	private final BoardService boardService;
 	private final ModelAndViewUtil mv;
 
-
+	
+	// 10	공지사항
+	// 20	FAQ
+	// 30	fna
+	// 40	중고거래
+	
+	
 	// 전체 리스트 조회
 	@GetMapping("/list")
 	public ModelAndView selectBoardList(@RequestParam(defaultValue = "10") String boardType,  // 공지사항 기본값 10
@@ -46,18 +53,21 @@ public class BoardController {
 	    map.put("boardType", boardType);
 	    map.put("page", page);
 	    map.put("param", param);
-//		if(param.getBoardType().equals("20")) {
-//		return mv.setViewNameAndData("board/phttoReView", map); 
-//	} else {
-//		return mv.setViewNameAndData("board/list", map); 
-//	}
-    return mv.setViewNameAndData("board/list", map);
-		
+	    
+	    	if(param.getBoardType().equals("10")) {
+	    		return mv.setViewNameAndData("board/list", map);
+	    	} else if (param.getBoardType().equals("20")) {
+	    		return mv.setViewNameAndData("board/faq", map); 
+	    	} else if (param.getBoardType().equals("30")) {
+	    		return mv.setViewNameAndData("board/qna", map); 
+	    	} else if (param.getBoardType().equals("40")) {
+	    		return mv.setViewNameAndData("board/userd", map); 
+	    	} else {
+	    		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
+	    	}
+	    		
 
 	}
-
-	
-
 	
 	
 	
@@ -66,13 +76,12 @@ public class BoardController {
     public ModelAndView insertForm(
             @RequestParam(defaultValue = "10") String boardType,
             @RequestParam(defaultValue = "1") int page,
-            Board param
-    ) {
-        // 작성 폼 진입 시에도 boardType, page 세팅
+            Board param) {
+        
         param.setBoardType(boardType);
         param.setPage(page);
 
-        // 필요시 목록을 불러올 수도 있음
+      
         Map<String, Object> map = boardService.selectBoardList(param);
         map.put("param", param);
 
@@ -82,8 +91,10 @@ public class BoardController {
 
 	// 공지사항 등록
 	@PostMapping("list/insert")
-	public ModelAndView insertBoard(Board board, MultipartFile upfile, HttpSession session) {
-		log.info("board : {}, upfile : {}",board, upfile);
+	public ModelAndView insertBoard(Board board, MultipartFile upfile, String boardType, HttpSession session) {
+		
+		board.setBoardType(boardType);
+		// log.info("board : {}, upfile : {}",board, upfile);
 		boardService.insertBoard(board, upfile);
 		session.setAttribute("alertMsg", "게시글 등록 성공");
 		return mv.setViewNameAndData("redirect:/board/list", null);
@@ -106,17 +117,20 @@ public class BoardController {
 	public ModelAndView updateForm(Long boardNo) {
 		//log.info("수정할 게시글 번호: {}", boardNo);
 		Map<String, Object> responseData = boardService.selectByNum(boardNo);
+		
 		return mv.setViewNameAndData("board/update", responseData);
 	}
 	
 
 	
 	@PostMapping("/list/update")
-	public ModelAndView updateBoard(Board board, MultipartFile upfile) {
+	public ModelAndView updateBoard(Board board, MultipartFile upfile, HttpSession session) {
 		
 		log.info("{}:{}",board,upfile);
 		boardService.updateBoard(board, upfile);
+		
 		return mv.setViewNameAndData("redirect:/board/list", null);
+		
 		
 	}
 	
