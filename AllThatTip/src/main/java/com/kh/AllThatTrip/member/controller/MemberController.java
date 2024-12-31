@@ -101,12 +101,7 @@ public class MemberController {
 //			
 //		}
 		
-		
-	/*				 ㄴㄴㄴㄴㄴㄴ							*/	
-		
-		
-		
-	
+
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
