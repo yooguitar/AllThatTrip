@@ -8,7 +8,9 @@ import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.DuplicateKeyException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
-import com.kh.AllThatTrip.exception.UserIdNotFoundException;
+import com.kh.AllThatTrip.exception.InValidLengthException;
+import com.kh.AllThatTrip.exception.InvalidDomainTypeException;
+import com.kh.AllThatTrip.exception.UserFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,12 +49,23 @@ public class ExceptionHandlingController {
 		return createErrorResponse("파일 업로드에 실패했습니다." ,e);
 	}
 	
-	
+	// 중복 아이디 회원 가입
+	@ExceptionHandler(UserFoundException.class)
+	protected ModelAndView UserExistError(UserFoundException e) {
+		return createErrorResponse("이미 존재하는 아이디입니다.", e);
+	}
 
-	
+	// 입력 제한 미달/초과
+	@ExceptionHandler(InValidLengthException.class)
+	protected ModelAndView InValidLengthException(InValidLengthException e) {
+		return createErrorResponse("유효하지 않은 값을 입력하셨습니다.", e);
+	}
 
-	
-	
+	// 이메일 입력 형식 오류
+	@ExceptionHandler(InvalidDomainTypeException.class)
+	protected ModelAndView InvalidDomainTypeException(InvalidDomainTypeException e) {
+		return createErrorResponse("올바른 이메일 형식으로 입력해주세요", e);
+	}
 	
 	
 }

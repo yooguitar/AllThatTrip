@@ -39,24 +39,23 @@ public class MemberController {
 			return "member/login_page";
 		}
 	}
+	
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
-	// 사업자 회원가입 핸들러
-//	@PostMapping("biz-join.me")
-//	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
-//		if(bUser.getOriginName() != null) {
-//			Member result = memberService.bizJoin(member);
-//			Long userNum = result.getUserNo();
-//			bUser.setUserNo(userNum);
-//			memberService.bizFile(bUser);
-//		} else {
-//			// 예외클래스 만들기
-//		}
-//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 		
 	
@@ -73,11 +72,8 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping("idcheck")
 	public int checkId(String userId) {
-		System.out.println("요청 잘 온다");
 		return memberService.checkId(userId);
 	}
-	
-	
 	
 	/* 포워딩 */
 	
@@ -104,9 +100,16 @@ public class MemberController {
 		return "member/biz_join_page";
 	}
 	
-	
-	
-	
-	
-	
 }
+// 사업자 회원가입 핸들러
+//	@PostMapping("biz-join.me")
+//	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
+//		if(bUser.getOriginName() != null) {
+//			Member result = memberService.bizJoin(member);
+//			Long userNum = result.getUserNo();
+//			bUser.setUserNo(userNum);
+//			memberService.bizFile(bUser);
+//		} else {
+//			// 예외클래스 만들기
+//		}
+//	}

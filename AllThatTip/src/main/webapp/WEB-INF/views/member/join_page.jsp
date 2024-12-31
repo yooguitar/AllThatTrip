@@ -35,7 +35,6 @@
 		$(function(){
 			const $idInput = $('#userId');
 			const $checkResult = $('#check-result');
-				console.log($idInput);
 			$idInput.keyup(function(){
 				if($idInput.val().length > 5 && $idInput.val().length < 21){
 					$.ajax({
@@ -47,6 +46,8 @@
 						success : function(result){
 							if(result > 0){
 								$checkResult.show().css('color', 'crimson').text('중복된 아이디입니다.');
+							} else if($idInput.val().includes('admin')){
+								$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.')
 							} else {
 								$checkResult.show().css('color', 'green').text('사용 가능한 아이디입니다.');
 							}
