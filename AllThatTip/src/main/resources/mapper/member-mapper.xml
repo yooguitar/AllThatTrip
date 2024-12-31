@@ -76,6 +76,7 @@
 
 
 
+</mapper> 
 
 
 
@@ -102,32 +103,12 @@
 		   SEQ_BUNO.NEXTVAL,
 		   #{bizName},
 		   #{bizFileNo},
-		   #{originName},
+		   #{originName},1``
 		   #{changeName},
 		   #{filePath},
-		   DEFAULT,
+		   DEFAULT,                                                                                                         
 	       DEFAULT,
 		   #{userNo}
 		   )
 </insert>
 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</mapper> 
