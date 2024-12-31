@@ -75,13 +75,7 @@
 				}
 				
 				
-				/*
-				if($userPwd === $userPwdCk){
-					$pwdCheckResult.show().css('color', 'green').text('확인되었습니다.');	
-				} else {
-					$pwdCheckResult.show().css('color', 'crimson').text('똑같은 비밀번호를 입력해주세요.');	
-				}
-				*/
+	
 			});
 		})
 	 
@@ -167,20 +161,35 @@
 </html>
 
 <script> 
+	// 인증번호 입력칸 표시
     function showCheckDiv(){
     	document.getElementById('phone-ck-div').removeAttribute('style');
-    	
     }
-    
+	
+	// form요청 제출 시
     function submitBtn(){
-        // 1. #email에 #email-id, #domain 내용 합쳐서 전송
+		// 이메일 제출양식 완성
         const emailId = document.getElementById('email-id').value;
         const domain = document.getElementById('domain').value;
         var email = document.getElementById('email').value = emailId + domain;
-
     }
 
-
+	<!--
+	// 핸드폰 입력칸 '-'표시
+	$(function(){
+		$('phone').keyup(function(){
+			let phone = $('phone').val()
+			
+			let phone1 = phone.substr(0, 3);
+			let phone2 = phone.substr(4, 4);
+			let phone3 = phone.substr(7, 4);
+			let phone4 = phone1 + '-' + phone2 + '-' phone3
+			console.log(phone4);
+		
+		})
+		
+	})
+	-->
 
 
 </script>
