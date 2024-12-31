@@ -51,7 +51,7 @@ public class BoardController {
 		board.setBoardType(boardType);
 		board.setPage(page);
 	    
-	    log.info("Board List Param :: {}", board);
+	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
 	    
@@ -116,8 +116,8 @@ public class BoardController {
 	}
 
 	// 수정 양식
-	// boardNo 파라미터만 보내도 상세조회를 하기 때문에 boardType을 알수있어 숙진아 ^^ 
-	// 그니깐 그걸로 뷰페이지 제어해!! 화이팅!♥
+	// boardNo 파라미터만 보내도 상세조회를 하기 때문에 boardType을 알수있음 → 뷰 페이지 제어 필요
+
 	@PostMapping("/list/update-form")
 	public ModelAndView updateForm(Long boardNo) {
 		//log.info("수정할 게시글 번호: {}", boardNo);

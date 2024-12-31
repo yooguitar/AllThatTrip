@@ -108,9 +108,9 @@ public class BoardServiceImple implements BoardService {
 		}
 		return board;
 	}
-	// 다중 파일 업로드 구글형한테 물어봐서 수정하기
-	// 리뷰게시판은 여러개 첨부파일가능하다고 숙진아^^
-	// 오늘은 안알려줄거야 숙진이가 고생해봐
+	
+	
+	// 다중 파일 업로드 수정하기
 	private Board handlerFileUpload(Board board, MultipartFile upfile) {
 		
 		String fileName = upfile.getOriginalFilename();
@@ -131,7 +131,7 @@ public class BoardServiceImple implements BoardService {
 		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
 		board.setOriginName(fileName);
 		board.setChangeName("/resources/upload_files/" + changeName);
-		//log.info("File save path: {}", savePath);
+		//log.info("File save path: {}", savePath)/;
 		
 		return board;
 	}	
@@ -149,7 +149,7 @@ public class BoardServiceImple implements BoardService {
 	
 		List<Board> boards = getBoardList(pi, board);
 		
-		log.info("게시글목록:{}", boards);
+		//log.info("게시글목록:{}", boards);
 		
 		Map<String, Object> map = new HashMap();
 		

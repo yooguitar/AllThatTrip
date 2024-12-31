@@ -41,13 +41,13 @@
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${board.boardTitle}</td> 	<!-- Map에 담은 key값 기재. board. -->
+                    <td colspan="6">${board.boardTitle}</td> 	<!-- Map에 담은 key값 기재. board. -->
                 </tr>
                 <tr>
-                    <th>작성자</th>
+                    <th>작성자</th><td colspan="1"></td>
                     <td>${board.userNo}</td>
                     <th>작성일</th>
-                    <td>${board.createDate}</td>
+                    <td colspan="3">${board.createDate}</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -59,36 +59,23 @@
 	 					</c:when>
 	 					<c:otherwise>
 	 						<c:forEach items="${ board.fileList }" var="file">
-							    <td colspan="3">
+							    <td colspan="5">
 			                        <a href="${ file.changeName }" download="${ file.originName }">${file.originName}</a>
 			                    </td>
 							</c:forEach>
-		                   
 	                    </c:otherwise>
  					</c:choose>
                     
+               
                     
-                    
-                    
-                   <%--  <c:choose>
-	 					<c:when test="${ empty board.originName }">                   
-		                    <td colspan="3">
-		                    	첨부파일이 존재하지 않습니다.
-		                    </td>
-	 					</c:when>
-	 					<c:otherwise>
-		                    <td colspan="3">
-		                        <a href="${ board.changeName }" download="${ board.originName }">${board.originName}</a>
-		                    </td>
-	                    </c:otherwise>
- 					</c:choose> --%>
+                   
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ board.boardContent }</p></td>
+                    <td colspan="10"><p style="height:150px;">${ board.boardContent }</p></td>
                 </tr>
             </table>
             <br>
