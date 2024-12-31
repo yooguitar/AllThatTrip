@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/semantic.min.css"/>
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
     
+    <link rel="stylesheet" href="/att/resources/css/style_header.css">
     <title>Nav Bar</title>
   </head>
 
@@ -26,6 +27,7 @@
     <nav class="navbar">
       <div class="navbar__logo">
         <a class=aTag href="#" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
+
       </div>
       <div id=navi>
         <ul id="navbar">
@@ -39,7 +41,7 @@
 
               <li><a class=aTag style = color:#ebebeb; href="#">펜션</a></li>
 
-          </ul></li>
+          </ul>
           </li>
           <li><a class=aTag href="#">테마검색</a></li>
               
@@ -72,11 +74,14 @@
         <li><i class="fab fa-google"></i></li>
         <li><i class="fab fa-slack"></i></li>
       </ul>
-      
+
+
       <c:choose>
       	<c:when test="${ sessionScope.loginUser eq null }">
 	      <div class="login">
 	        <a href="/att/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+	        <a href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	        <a class=aTag  href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 	      </div>
 	    </c:when>
 	    <c:otherwise>
@@ -86,6 +91,7 @@
 	      </div>
 	    </c:otherwise>  
       </c:choose>
+
 
     </nav>
   </body>

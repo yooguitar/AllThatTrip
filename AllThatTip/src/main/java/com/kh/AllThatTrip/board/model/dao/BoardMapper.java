@@ -19,12 +19,13 @@ public interface BoardMapper {
 	// 조회수증가
 	int increaseCount(Long boardNo);
 	
-	
 	// 상세조회
 	Board selectByNum(Long boardNo);
 	
 	// 작성
 	void insertBoard(Board board);
+	
+	void insertBoardFile(Board board);
 
 	// 수정
 	int updateBoard(Board board);

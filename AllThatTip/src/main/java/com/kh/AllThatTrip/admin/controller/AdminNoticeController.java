@@ -37,9 +37,9 @@ public class AdminNoticeController {
 		return mv.setViewNameAndData("admin/admin_notice", map);
 	}
 	
-	@GetMapping("adInsertForm")
+	@GetMapping("ad_insert_form")
 	public String insertForm() {
-		return "adNotice/ad_insert_form";
+		return "admin/ad_insert_form";
 	}
 	
 	@PostMapping("admin_notice")                   

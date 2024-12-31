@@ -42,13 +42,16 @@
     </style>
 </head>
 <body>
-
+	
+	<jsp:include page="../common/include/header.jsp" />
+	
+	
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
             <h2>공지사항</h2>
           	<br>
-            <a class="btn btn-secondary" style="float:right;" href="adInsertForm">글쓰기</a>
+            <a class="btn btn-secondary" style="float:right;" href="ad_insert_form">글쓰기</a>
             <br>
             <br>
             <table id="boardList" class="table table-hover" align="center">
@@ -65,14 +68,14 @@
                 </thead>
                 <tbody>
                 	
-                	<c:forEach items="${ admin_notice }" var="adNotice">
+                	<c:forEach items="${ adNotices }" var="adNotice">
 	                    <tr onclick="detail('${adNotice.adNoticeNo}')">
 	                        <td>${ adNotice.adNoticeNo }</td>
 	                        <td>${ adNotice.importent }
 	                        <td>${ adNotice.adNoticeTitle }</td>
 	                        <td>${ adNotice.adWriter }</td>
 	                        <td>${ adNotice.adNoticeCount }</td>
-	                        <td>${ adNoitce.adUploadDate} </td>
+	                        <td>${ adNotice.adUploadDate } </td>
 	                         <td>
 	                        	<c:if test="${ not empty adNotice.adOriName }">
 	                       		   💌
@@ -135,6 +138,8 @@
         <br><br>
 
     </div>
-
+	
+	<jsp:include page="../common/include/footer.jsp" />
+	
 </body>
 </html>
