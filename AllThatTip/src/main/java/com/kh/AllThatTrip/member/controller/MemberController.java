@@ -73,6 +73,7 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping("idcheck")
 	public int checkId(String userId) {
+		System.out.println("요청 잘 온다");
 		return memberService.checkId(userId);
 	}
 	
