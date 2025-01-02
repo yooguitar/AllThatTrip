@@ -51,6 +51,18 @@
 <body>
 	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
 	
+	<!-- 
+	<c:if test="${ sessionScope.loginCount ne null};">
+		<script>
+		        alertify
+		        .alert("ID,PW를 찾은 뒤 이용해주세요.", function(){
+		          alertify.message('확인');
+		        });        
+	    </script>	
+	    <c:remove var="loginCount" scope="session" />
+	</c:if>
+	-->
+	
     <div class="container" id="wrap">
         <br>
         <h2 class="title-join-biz">로그인</h2>

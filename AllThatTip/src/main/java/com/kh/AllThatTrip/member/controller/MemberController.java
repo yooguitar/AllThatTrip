@@ -28,6 +28,7 @@ public class MemberController {
 	// 로그인 핸들러
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session){
+
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
 			int loginValue = 1;

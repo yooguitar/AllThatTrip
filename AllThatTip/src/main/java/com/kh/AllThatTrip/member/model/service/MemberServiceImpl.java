@@ -20,7 +20,13 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member login(Member member) {
+		// 로그인 카운트!
+		/*
+		 * 
+		 */
+	
 		return mapper.login(member);
+		
 	}
 	@Override
 	public int join(Member member) {
