@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,29 +30,29 @@
 
 <div class="container" id="wrap">
   <h2>내 정보</h2>
-  <br><label>가입일: ${ sessionScope.loginUser.enrollDate }</label>
+  <br><label>가입일: <fmt:formatDate value="${ sessionScope.loginUser.enrollDate }" pattern="yyyy-MM-dd" /></label>
   <br><br>
 
   <form action="join.me" method="post" id="join-form">
     <div class="form-group">
       <label>ID:</label>
-      <input type="id" class="form-control" id="userId" placeholder="user1111" value="" name="userId" required>
+      <input type="id" class="form-control" id="userId" placeholder="6 - 20자 영문, 숫자 입력" value="${ sessionScope.loginUser.userId }" name="userId" readonly>
       <div id="check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
       <label>Password:</label>
-      <input type="password" class="form-control" id="userPwd" placeholder="******" name="userPwd" required>
+      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자, 특수문자 입력" value="${ sessionScope.loginUser.userPwd }" name="userPwd" required>
       <div id="pwd-check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
 
     <div class="form-group">
-        <label>이름</label>
-        <input type="name" class="form-control" id="userName" placeholder="홍길동" name="userName" required>
+        <label>이름 (변경은 전화문의 바랍니다.)</label>
+        <input type="name" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }" name="userName" readonly>
     </div>
 
     <div class="form-group">
         <label style="display: block;">Email</label>
-        <input type="text" class="form-control" id="email-id" placeholder="user1111" style="width: 377px; display: inline;" required>
+        <input type="text" class="form-control" id="email-id" placeholder="영문, 숫자 입력" style="width: 377px; display: inline;" required>
 
         <p style="display: inline;">&nbsp;@&nbsp;</p>
 
@@ -70,7 +72,7 @@
 
     <div class="form-group">
         <label>휴대폰 번호를 입력 해주세요</label>
-        <input type="phone" class="form-control" placeholder="010-1234-4567" id="phone" name="phone" required>
+        <input type="phone" class="form-control" placeholder="010-1234-4567" id="phone" name="phone" value="${ sessionScope.loginUser.phone }" required>
         <br>
         <button onclick="showCheckDiv();" type="button" class="btn btn-primary">인증번호 전송</button>
     </div>
