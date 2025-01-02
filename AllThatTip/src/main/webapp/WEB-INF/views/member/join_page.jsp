@@ -30,6 +30,7 @@
 
 	<script>
 		$(function(){
+
 			// Ajax ID 중복체크
 			$(function(){
 				const $idInput = $('#userId');
@@ -58,6 +59,7 @@
 					}
 				});
 			})
+
 			// 비밀번호 입력 확인
 			const $userPwd = $('#userPwd');
 			const $pwdCheckResult = $('#pwd-check-result');
@@ -79,7 +81,39 @@
 					$pwdCheckResult2.show().css('color', 'crimson').text('똑같은 비밀번호를 입력해주세요.');
 				}
 			});
-			// 
+
+			// 도메인 직접입력 선택
+      const $domain = $('#domain');
+      const $selectDomainSelf = $('#select-domain-self');
+      const $email = $('#email');
+      
+      $domain.change(function(){
+        if($domain.val() == $selectDomainSelf.val()){
+          $email.css('display', '');
+        } else{
+          $email.css('display', 'none');
+        }
+      });
+
+      // 휴대폰번호 '-' 자동추가
+      const $phone = ('#phone');
+      $phone.indexOf(function(){
+        
+      })
+	
+	
+
+
+
+
+
+	    
+
+
+
+
+
+
 			const $formControl = $('.form-control'); 
 			const $submitBtnFin = $('#submit-btn-fin');
 	 		
@@ -116,16 +150,15 @@
         <p style="display: inline;">&nbsp;@&nbsp;</p>
 
         <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain" required>
-            <option value="" selected>선택</option>
-            <option value="">직접 입력</option>
-            <option value="@kh.com">kh.com</option>
+            <option value="" id="select-domain-self">직접 입력</option>
+            <option value="@kh.com" selected>kh.com</option>
             <option value="@google.com">google.com</option>
             <option value="@naver.com">naver.com</option>
             <option value="@daum.net">daum.net</option>
         </select>
         
         <!-- 진짜 양식이 전송 될 input -->
-        <input type="text" id="email" style="display: none;" name="email">
+        <input type="text" id="email" style="display: none; width: 360px; margin-left: 410px;" name="email" placeholder="@를 꼭 입력해주세요.">
 
     </div>
 
@@ -142,6 +175,13 @@
         <br>
         <button type="button" class="btn btn-primary" id="phone-ck-btn2" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">확인</button>
     </div>
+    <script>
+      // 인증번호 입력칸 표시
+      function showCheckDiv(){
+          document.getElementById('phone-ck-div').removeAttribute('style');
+      }
+
+    </script>
 
 
     <div class="form-group form-check">
@@ -165,25 +205,12 @@
 
 </body>
 </html>
-
-<script> 
-	// 인증번호 입력칸 표시
-    function showCheckDiv(){
-    	document.getElementById('phone-ck-div').removeAttribute('style');
-    }
-	
-	// form요청 제출 시
-	
-    function submitBtn(){
-		let emailId = document.getElementById('email-id').value;
-	    let domain = document.getElementById('domain').value;
-	    let email = emailId + domain;
-	    document.getElementById('email').value = email; 
-    }
-	
-	
-
-
-
-
+<script>
+  // form요청 제출 시
+  function submitBtn(){
+      const emailId = document.getElementById('email-id').value;
+      const domain = document.getElementById('domain').value;
+      const email = emailId + domain;
+      document.getElementById('email').value = email; 
+  }
 </script>
