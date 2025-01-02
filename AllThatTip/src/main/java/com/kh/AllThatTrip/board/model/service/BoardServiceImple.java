@@ -3,6 +3,7 @@ package com.kh.AllThatTrip.board.model.service;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -113,6 +114,12 @@ public class BoardServiceImple implements BoardService {
 	// 다중 파일 업로드 수정하기
 	private Board handlerFileUpload(Board board, MultipartFile upfile) {
 		
+		if(upfile == null) {
+			log.info("파일이 존재하지 않습니다.");
+
+			return board;
+		}
+		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -173,15 +180,14 @@ public class BoardServiceImple implements BoardService {
 		// board 객체에 List<fileList> 객체 생성 후 객체안에서 파일은 List 타입으로 처리
 		// 사유 : 상세페이지는 한개의 로우 파일은 리스트형태로 조회가 가능하기에 fileList 는 list타입으로 처리
 		// (상세 게시글 데이터 로우 : 상세 게시글 첨부파일 로우) == (1:n)
-		List<BdAttachment> fileList = mapper.selectFileList(boardNo);
+		List<BdAttachment> fileList = mapper.selectFileList(boardNo); //게시글 번호를 기준으로 첨부파일 목록을 조회, 첨부파일 데이터를 리스트 형태로 반환
 		
-		board.setFileList(fileList); // 파일리스트 할당
+		board.setFileList(fileList); // board객체에 fileList 다중 파일을 하나의 객체로 관리
 		
 		Map<String, Object> responseData = new HashMap<>();
+        responseData.put("board", board); // 응답데이터 지정
 		
-        responseData.put("board", board);
-		
-		return responseData;
+		return responseData;	// 사용자에게 반환
 
 	}
 
@@ -197,43 +203,59 @@ public class BoardServiceImple implements BoardService {
 		// 파일 유무
 		if (upfile != null && !upfile.isEmpty()) {
 			fileBoard = handlerFileUpload(board, upfile);
-        }
+	    }
 		// 인서트 진행
 		mapper.insertBoard(board);
 		board.setOriginName(fileBoard.getOriginName());
 		
 		if (board.getOriginName() != null && !board.getOriginName().isEmpty()) {
-            mapper.insertBoardFile(board);
-        }
-		 	
+	        mapper.insertBoardFile(board);
+	    }
+				 	
 	}
 	
 	
 	// 수정
 	@Override
-	public void updateBoard(Board board, MultipartFile upfile) {
+	public void updateBoard(Board board, List<MultipartFile> upfiles) {
+		// 유효성 검증
 		validateBoardNo(board.getBoardNo());
 		findBoardByNum(board.getBoardNo());
 		
-		Board model = mapper.selectByNum(board.getBoardNo());
+		Board model = mapper.selectByNum(board.getBoardNo()); // 기존 게시글 조회
 		
 //		if(model.getUserNo() == session.getUserNo) {
 //			throw new BoardNotFoundException("작성자와 로그인한 사람이 다릅니다.");
 //		}
+		// 1. 기존 파일 삭제 (업데이트 경로에서)
+		if(model.getFileList() != null && model.getFileList().isEmpty()) {
+			for(BdAttachment file : model.getFileList()) {
+				File existingFile = new File(context.getRealPath(file.getChangeName()));
+				if (existingFile.exists()) {
+	                existingFile.delete(); // 기존 파일 삭제
+		       }
+			}
+    	}
+		// 2. DB에서 기존 파일 데이터 삭제
+		mapper.deleteFileByBoardNo(board.getBoardNo());
 		
-		if(upfile.getOriginalFilename() != null && !upfile.getOriginalFilename().isEmpty()) {
-			new File(context.getRealPath(board.getChangeName())).delete();
-		}
-		// 파일업로드시 업로드하는 파일을 체크 후 없다면 파일업로드 메소드는 호출하면 안됨
-		if (upfile != null && !upfile.isEmpty()) {
-			handlerFileUpload(board, upfile);
-		}
-		
-		int result = mapper.updateBoard(board);
-		
-		if(result < 1) {
-			throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
-		}
+		// 3. 새 파일 업로드 및 데이터 삽입
+	    if (upfiles != null && !upfiles.isEmpty()) {
+	        for (MultipartFile upfile : upfiles) {
+	            if (upfile != null && !upfile.isEmpty()) {
+	            	log.info("{}:{}",board,upfiles);
+	                // 파일 업로드 처리
+	                handlerFileUpload(board, upfile);
+	            }
+	        }
+	    }
+
+	    // 게시글 업데이트
+	    int result = mapper.updateBoard(board);
+
+	    if (result < 1) {
+	        throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
+	    }
 	}
 	
 	
@@ -259,6 +281,42 @@ public class BoardServiceImple implements BoardService {
 		
 	}
 	
-
 	
+	
+	// 다중 파일 메소드
+	
+	
+	/*
+	// 첨부파일 다중 등록
+	@Transactional
+	@Override
+	public Map<String, Object> saveAll(Board board, List<MultipartFile> upfiles) {
+
+	    // 유효성 검증
+	    validateBoard(board);
+	    List<Board> fileBoards = new ArrayList<>();
+
+	    // 파일 유무 확인 및 처리
+	    if (upfiles != null && !upfiles.isEmpty()) {
+	        for (MultipartFile upfile : upfiles) {
+	            if (!upfile.isEmpty()) {
+	                Board fileBoard = handlerFileUpload(board, upfile);
+	                fileBoards.add(fileBoard);
+	            }
+	        }
+	    }
+
+	    // 게시글 정보 저장
+	    mapper.insertBoard(board);
+
+	    // 파일 정보가 있으면 파일 정보 저장
+	    if (!fileBoards.isEmpty()) {
+	        for (Board fileBoard : fileBoards) {
+	            fileBoard.setBoardNo(board.getBoardNo()); 
+	            mapper.insertBoardFile(fileBoard);
+	        }
+	    }
+		return null;
+	}
+	*/
 }

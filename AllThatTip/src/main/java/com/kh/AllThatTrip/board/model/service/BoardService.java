@@ -1,5 +1,6 @@
 package com.kh.AllThatTrip.board.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +12,6 @@ public interface BoardService {
 	
 	 // 페이징 + 목록
     Map<String, Object> selectBoardList(Board board);
-
     // 등록
     void insertBoard(Board board, MultipartFile upfile);
 
@@ -20,12 +20,12 @@ public interface BoardService {
     
     
     // 수정
-    void updateBoard(Board board, MultipartFile upfile);
+    void updateBoard(Board board, List<MultipartFile> upfiles);
 
     // 삭제
     void deleteBoard(Long boardNo, String changeName);
+    
 }
-	
 	
 
 	// 첨부파일

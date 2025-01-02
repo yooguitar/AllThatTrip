@@ -3,6 +3,7 @@ package com.kh.AllThatTrip.board.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.board.model.vo.BdAttachment;
@@ -23,9 +24,6 @@ public interface BoardMapper {
 	// 상세조회
 	Board selectByNum(Long boardNo);
 	
-	// 첨부파일 리스트 조회
-	List<BdAttachment> selectFileList(Long boardNo);
-	
 	// 작성
 	void insertBoard(Board board);
 	
@@ -40,6 +38,11 @@ public interface BoardMapper {
 	
 	
 
+	// 첨부파일 리스트 조회
+	List<BdAttachment> selectFileList(Long boardNo);
+	
+	// 첨부파일 리스트 진짜 삭제
+	void deleteFileByBoardNo(Long boardNo);
 	
 
 

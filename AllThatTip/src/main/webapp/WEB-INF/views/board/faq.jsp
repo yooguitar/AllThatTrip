@@ -146,7 +146,7 @@
 		</div>
 		<button type="submit" class="searchBtn btn btn-secondary">검색</button>
 		<c:if test="${ not empty sessionScope.loginUser}">
-			<a class="btn btn-secondary" style="float:right;" href="http://localhost/att/board/insertForm?boardType=10">글쓰기</a>
+			<a class="btn btn-secondary" style="float:right;" href="http://localhost/att/board/insertForm?boardType=20">글쓰기</a>
 		</c:if>
 	</form>
 	

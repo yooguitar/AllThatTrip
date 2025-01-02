@@ -148,7 +148,7 @@
 	
 	
 	<!-- 공통게시판 첨부파일 등록 -->
-	<insert id="insertBoardFile" parameterType="board">
+	<insert id="insertBoardFile" parameterType="java.util.List">
 		INSERT 
 	    INTO 	BD_ATTACHMENT (
 	            FILE_NO, 
@@ -159,13 +159,15 @@
 		VALUES 
 				(
 	            SEQ_BFNO.NEXTVAL, 
-	            SEQ_BUNO.CURRVAL, 
-	            #{originName}, 
-	            #{changeName}
+	            #{file.boardNo}, 
+	            #{file.originName}, 
+            	#{file.changeName}
 	        	)
 		
 	
 	</insert>
+	
+	
 	
 	<!-- 공통게시판 수정 -->
 	<update id="updateBoard" parameterType="board">
@@ -194,6 +196,16 @@
 				BOARD_NO = #{boardNo}
 	
 	</update>
+	
+	<!-- 사진게시판 첨부파일 진짜 삭제 -->
+	<delete id="deleteFileByBoardNo" parameterType="long">
+	    DELETE 
+	    FROM 
+	    		BD_ATTACHMENT
+	    WHERE 
+	    		board_no = #{boardNo}
+	</delete>
+	
 	
     
     <!-- 공통게시판 글삭제(업데이트처리) -->

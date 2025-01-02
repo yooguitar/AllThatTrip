@@ -1,5 +1,6 @@
 package com.kh.AllThatTrip.board.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -45,8 +46,8 @@ public class BoardController {
 	                                    @RequestParam(defaultValue = "1") int page,           // 기본 페이지 번호 1
 	                                    Board board) {
 	    
-		log.info("boardType :: {}", boardType);
-		log.info("page :: {}", page);
+		//log.info("boardType :: {}", boardType);
+		//log.info("page :: {}", page);
 		
 		board.setBoardType(boardType);
 		board.setPage(page);
@@ -64,7 +65,7 @@ public class BoardController {
     	} else if (board.getBoardType().equals("30")) {
     		return mv.setViewNameAndData("board/qna", map); 
     	} else if (board.getBoardType().equals("40")) {
-    		return mv.setViewNameAndData("board/userd", map); 
+    		return mv.setViewNameAndData("board/photo", map); 
     	} else {
     		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
     	}
@@ -92,7 +93,7 @@ public class BoardController {
     }
 
 
-	// 공지사항 등록
+	// 공통게시판 등록
 	@PostMapping("list/insert")
 	public ModelAndView insertBoard(Board board, MultipartFile upfile, String boardType, HttpSession session) {
 		
@@ -101,9 +102,8 @@ public class BoardController {
 		boardService.insertBoard(board, upfile);
 		session.setAttribute("alertMsg", "게시글 등록 성공");
 		return mv.setViewNameAndData("redirect:/board/list", null);
-
+	
 	}
-
 
 	// 상세 조회
 	@GetMapping("list/{id}")
@@ -127,16 +127,14 @@ public class BoardController {
 	}
 	
 
-	
+	// 공통 게시판 수정
 	@PostMapping("/list/update")
-	public ModelAndView updateBoard(Board board, MultipartFile upfile, HttpSession session) {
+	public ModelAndView updateBoard(Board board, List<MultipartFile> upfiles, HttpSession session) {
 		
-		log.info("{}:{}",board,upfile);
-		boardService.updateBoard(board, upfile);
+		//log.info("{}:{}",board,upfiles);
+		boardService.updateBoard(board, upfiles);
 		
 		return mv.setViewNameAndData("redirect:/board/list", null);
-		
-		
 	}
 	
 	
@@ -147,6 +145,30 @@ public class BoardController {
 		boardService.deleteBoard(boardNo, changeName);
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
+
+	/*
+	// 첨부파일 다중저장
+	@PostMapping("photo")
+	public ModelAndView saveAll(Board board, 
+	                            @RequestParam("upfile") List<MultipartFile> upfiles, 
+	                            String boardType, 
+	                            HttpSession session) {
+	    try {
+	        board.setBoardType(boardType);
+	        boardService.saveAll(board, upfiles);
+	        session.setAttribute("alertMsg", "게시글 등록 성공");
+	    } catch (Exception e) {
+	        session.setAttribute("alertMsg", "게시글 등록 실패: " + e.getMessage());
+	        log.error("게시글 등록 실패", e);
+	    }
+	    return mv.setViewNameAndData("redirect:/board/list", null);
+	}
+	*/
+
+
+	
+	
+
 }
 	
 

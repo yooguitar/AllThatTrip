@@ -50,7 +50,8 @@
                     <td colspan="3">${board.createDate}</td>
                 </tr>
                 <tr>
-                    <th>첨부파일</th>
+                    <th scope="row">첨부파일</th>
+                    <td id="files" colspan="1">
                     <c:choose>
 	 					<c:when test="${ empty board.fileList }">                   
 		                    <td colspan="3">
@@ -65,11 +66,9 @@
 							</c:forEach>
 	                    </c:otherwise>
  					</c:choose>
-                    
-               
-                    
-                   
                 </tr>
+                
+                
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
@@ -163,6 +162,27 @@
     </div>
     
     <script>
+    
+    	function findAllFile() {
+    		
+    		const 
+    	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
         
     	function addReply() {
 			
