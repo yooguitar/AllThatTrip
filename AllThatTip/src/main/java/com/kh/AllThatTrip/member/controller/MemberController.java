@@ -39,6 +39,7 @@ public class MemberController {
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		} else {
+			log.info("조회된 회원 정보 {}", loginMember);
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  
 			return "redirect:/";

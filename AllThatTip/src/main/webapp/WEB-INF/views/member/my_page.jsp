@@ -28,7 +28,7 @@
 
 <div class="container" id="wrap">
   <h2>내 정보</h2>
-  <br><label>가입일 : 2024/12/31</label>
+  <br><label>가입일: ${ sessionScope.loginUser.enrollDate }</label>
   <br><br>
 
   <form action="join.me" method="post" id="join-form">
