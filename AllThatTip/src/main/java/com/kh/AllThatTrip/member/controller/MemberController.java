@@ -28,9 +28,7 @@ public class MemberController {
 	// 로그인 핸들러
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session){
-		
 		Member loginMember = memberService.login(member);
-		
 		if(loginMember == null){ 
 			int loginValue = 1;
 			session.setAttribute("loginValue", loginValue);
@@ -45,31 +43,8 @@ public class MemberController {
 			session.setAttribute("alertMsg", "로그인 성공");  
 			return "redirect:/";
 		}
-		
-		
-		
-		
-//		if(loginMember != null) {
-//			session.setAttribute("loginUser", loginMember);
-//			session.setAttribute("alertMsg", "로그인 성공");  
-//			return "redirect:/";
-//		} else {
-//			int loginValue = 1;
-//			session.setAttribute("loginValue", loginValue);
-//			return "member/login_page";
-//		}
-		
-		//return null;
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-
+	
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
@@ -78,7 +53,6 @@ public class MemberController {
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
 	
-	
 	/* ajax */
 	
 	@ResponseBody
@@ -86,6 +60,10 @@ public class MemberController {
 	public int checkId(String userId) {
 		return memberService.checkId(userId);
 	}
+	
+	
+	
+	
 	
 	/* 포워딩 */
 	
@@ -97,7 +75,10 @@ public class MemberController {
 	public String joinPage() {
 		return "member/join_page";
 	}
-	
+	@GetMapping("myPage.me")
+	public String myPage() {
+		return "member/my_page";
+	}
 	@GetMapping("logout.me")
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginUser");
