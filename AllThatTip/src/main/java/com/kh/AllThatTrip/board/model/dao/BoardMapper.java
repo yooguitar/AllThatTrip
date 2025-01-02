@@ -27,7 +27,6 @@ public interface BoardMapper {
 	// 작성
 	void insertBoard(Board board);
 	
-	void insertBoardFile(Board board);
 
 	// 수정
 	int updateBoard(Board board);
@@ -43,6 +42,12 @@ public interface BoardMapper {
 	
 	// 첨부파일 리스트 진짜 삭제
 	void deleteFileByBoardNo(Long boardNo);
+
+	void insertBoardFile(List<BdAttachment> asList);
+
+
+
+
 	
 
 

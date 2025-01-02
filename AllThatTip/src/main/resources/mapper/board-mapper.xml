@@ -157,13 +157,14 @@
 	            CHANGE_NAME
 	        	)
 		VALUES 
+		<foreach collection="list" item="file" separator=",">
 				(
 	            SEQ_BFNO.NEXTVAL, 
 	            #{file.boardNo}, 
 	            #{file.originName}, 
             	#{file.changeName}
 	        	)
-		
+		</foreach>
 	
 	</insert>
 	

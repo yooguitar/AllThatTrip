@@ -51,8 +51,7 @@
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="upfile">
-                            
+                            <input type="file" id="upfiles" class="form-control-file border" name="upfiles" multiple>
                             <c:if test="${ not empty board.originName }">
                             
                             	현재 업로드된 파일 : 

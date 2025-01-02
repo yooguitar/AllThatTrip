@@ -1,6 +1,6 @@
 package com.kh.AllThatTrip.board.controller;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -129,9 +129,8 @@ public class BoardController {
 
 	// 공통 게시판 수정
 	@PostMapping("/list/update")
-	public ModelAndView updateBoard(Board board, List<MultipartFile> upfiles, HttpSession session) {
+	public ModelAndView updateBoard(Board board, @RequestParam(value = "upfiles", required = false)MultipartFile[] upfiles, HttpSession session) {
 		
-		//log.info("{}:{}",board,upfiles);
 		boardService.updateBoard(board, upfiles);
 		
 		return mv.setViewNameAndData("redirect:/board/list", null);
