@@ -105,6 +105,7 @@ public class MemberController {
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
+		log.info("member입력값 {}", member);
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}

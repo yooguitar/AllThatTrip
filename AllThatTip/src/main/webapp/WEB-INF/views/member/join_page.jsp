@@ -104,7 +104,7 @@
     </div>
 
     <div class="form-group">
-        <label style="display: block;">Email을 입력 해주세요</label>
+        <label style="display:block;">Email을 입력 해주세요</label>
         <input type="text" class="form-control" id="email-id" placeholder="영문, 숫자 입력" style="width: 377px; display: inline;" required>
 
         <p style="display: inline;">&nbsp;@&nbsp;</p>
@@ -125,7 +125,7 @@
 
     <div class="form-group">
         <label>휴대폰 번호를 입력 해주세요</label>
-        <input type="phone" class="form-control" placeholder="- 없이 입력" id="phone" name="phone" required>
+        <input type="text" class="form-control" placeholder="- 없이 입력" id="phone" name="phone" required>
         <br>
         <button onclick="showCheckDiv();" type="button" class="btn btn-primary">인증번호 전송</button>
     </div>
@@ -167,29 +167,20 @@
     }
 	
 	// form요청 제출 시
+	
     function submitBtn(){
-		// 이메일 제출양식 완성
-        const emailId = document.getElementById('email-id').value;
-        const domain = document.getElementById('domain').value;
-        var email = document.getElementById('email').value = emailId + domain;
+		let emailId = document.getElementById('email-id').value;
+	    let domain = document.getElementById('domain').value;
+	    let email = emailId + domain;
+	    document.getElementById('email').value = email; 
+	    console.log(emailId);
+	    console.log(domain);
+		console.log(email);
     }
+	
+	
 
-	<!--
-	// 핸드폰 입력칸 '-'표시
-	$(function(){
-		$('phone').keyup(function(){
-			let phone = $('phone').val()
-			
-			let phone1 = phone.substr(0, 3);
-			let phone2 = phone.substr(4, 4);
-			let phone3 = phone.substr(7, 4);
-			let phone4 = phone1 + '-' + phone2 + '-' phone3
-			console.log(phone4);
-		
-		})
-		
-	})
-	-->
+
 
 
 </script>
