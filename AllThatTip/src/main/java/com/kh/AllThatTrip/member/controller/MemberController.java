@@ -28,16 +28,38 @@ public class MemberController {
 	// 로그인 핸들러
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session){
+		
 		Member loginMember = memberService.login(member);
-		if(loginMember != null) {
-			session.setAttribute("loginUser", loginMember);
-			session.setAttribute("alertMsg", "로그인 성공");  
-			return "redirect:/";
-		} else {
+		
+		if(loginMember == null){ 
 			int loginValue = 1;
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		}
+		if(!(passwordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd()))) {
+			int loginValue = 1;
+			session.setAttribute("loginValue", loginValue);
+			return "member/login_page";
+		} else {
+			session.setAttribute("loginUser", loginMember);
+			session.setAttribute("alertMsg", "로그인 성공");  
+			return "redirect:/";
+		}
+		
+		
+		
+		
+//		if(loginMember != null) {
+//			session.setAttribute("loginUser", loginMember);
+//			session.setAttribute("alertMsg", "로그인 성공");  
+//			return "redirect:/";
+//		} else {
+//			int loginValue = 1;
+//			session.setAttribute("loginValue", loginValue);
+//			return "member/login_page";
+//		}
+		
+		//return null;
 	}
 		
 		
@@ -46,60 +68,6 @@ public class MemberController {
 		
 		
 		
-		/*	
-		Member loginMember = memberService.login(member);
-		
-		if(loginMember != null) {
-			
-			if(passwordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())){
-				session.setAttribute("loginUser", loginMember);
-				session.setAttribute("alertMsg", "로그인 성공");  
-				return "redirect:/";
-			} else {
-				int loginValue = 1;
-				session.setAttribute("loginValue", loginValue);
-				return "member/login_page";
-			
-			}
-			
-		} else {
-			int loginValue = 1;
-			session.setAttribute("loginValue", loginValue);
-			return "member/login_page";
-		}
-		 */
-		
-		
-		
-//		Member loginMember = member;
-//		String loginPass = loginMember.getUserPwd();
-//		loginMember.setUserPwd();
-//		passwordEncoder.encode(loginPass);
-//		log.info("loginMember {}", loginMember);
-//		
-//		Member result = memberService.login(loginMember);
-//		log.info("result {}", result);
-//		
-//		if(result == null) {
-//			System.out.println("null결과 1");
-//			int loginValue = 1;
-//			session.setAttribute("loginValue", loginValue);
-//			return "member/login_page";
-//		} 
-//		
-//		boolean matchResult = passwordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd());
-//		
-//		if(matchResult == false) {
-//			System.out.println("null결과 2");
-//			int loginValue = 1;
-//			session.setAttribute("loginValue", loginValue);
-//			return "member/login_page";
-//		} else {
-//			session.setAttribute("loginUser", loginMember);
-//			session.setAttribute("alertMsg", "로그인 성공");  
-//			return "redirect:/";
-//			
-//		}
 		
 
 	// 회원가입 핸들러
@@ -109,22 +77,6 @@ public class MemberController {
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
-	
-	
-	
-	
-	
-	
-	
-		
-		
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	/* ajax */

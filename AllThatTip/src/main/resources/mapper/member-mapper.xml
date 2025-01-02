@@ -22,9 +22,6 @@
 	 	   STATUS = 'Y'
 	   AND
 	   	   USER_ID = #{userId}
-	   AND
-	   	   USER_PWD = #{userPwd}
-	  	   
 </select>
 
 

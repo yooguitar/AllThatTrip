@@ -24,7 +24,6 @@
 </head>
 <body>
 
-<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
 
 <div class="container" id="wrap">
   <h2>회원가입</h2><br><br>
@@ -173,9 +172,6 @@
 	    let domain = document.getElementById('domain').value;
 	    let email = emailId + domain;
 	    document.getElementById('email').value = email; 
-	    console.log(emailId);
-	    console.log(domain);
-		console.log(email);
     }
 	
 	
