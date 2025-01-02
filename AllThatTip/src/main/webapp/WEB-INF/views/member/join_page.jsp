@@ -29,56 +29,63 @@
   <h2>회원가입</h2><br><br>
 
 	<script>
-	
-		// Ajax ID 중복체크
 		$(function(){
-			const $idInput = $('#userId');
-			const $checkResult = $('#check-result');
-			$idInput.keyup(function(){
-				if($idInput.val().length > 5 && $idInput.val().length < 21){
-					$.ajax({
-						url : 'idcheck',
-						type : 'get',
-						data : {
-							userId : $idInput.val()
-						},
-						success : function(result){
-							if(result > 0){
-								$checkResult.show().css('color', 'crimson').text('중복된 아이디입니다.');
-							} else if($idInput.val().includes('admin')){
-								$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.')
-							} else {
-								$checkResult.show().css('color', 'green').text('사용 가능한 아이디입니다.');
+			// Ajax ID 중복체크
+			$(function(){
+				const $idInput = $('#userId');
+				const $checkResult = $('#check-result');
+				
+				$idInput.keyup(function(){
+					if($idInput.val().length > 5 && $idInput.val().length < 21){
+						$.ajax({
+							url : 'idcheck',
+							type : 'get',
+							data : {
+								userId : $idInput.val()
+							},
+							success : function(result){
+								if(result > 0){
+									$checkResult.show().css('color', 'crimson').text('중복된 아이디입니다.');
+								} else if($idInput.val().includes('admin')){
+									$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.')
+								} else {
+									$checkResult.show().css('color', 'green').text('사용 가능한 아이디입니다.');
+								}
 							}
-						}
-					});
-				} else {
-					$checkResult.show().css('color', 'crimson').text('아이디는 6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
-				}
-			});
-		})
-	
-		
-		// 비밀번호 입력 확인
-		$(function(){
+						});
+					} else {
+						$checkResult.show().css('color', 'crimson').text('아이디는 6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
+					}
+				});
+			})
+			// 비밀번호 입력 확인
 			const $userPwd = $('#userPwd');
-			const $userPwdCk = $('#userPwdCk');
 			const $pwdCheckResult = $('#pwd-check-result');
-			const $pwdCheckResult2 = $('#pwd-check-result2');
+			const $userPwdCk = $('#userPwdCk');
+			const $pwdCheckResult2 = $('#pwd-check-result-2');
 			
-			$pwdCheckResult.keyup(function(){
+			$userPwd.keyup(function(){
 				if($userPwd.val().length < 6 || $userPwd.val().length > 20){
-					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요');
-					
-					
+					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요.');
+				} else {
+					$pwdCheckResult.show().css('color', 'green').text('사용 가능한 비밀번호입니다.');
 				}
-				
-				
-	
 			});
-		})
-	 
+					
+			$userPwdCk.keyup(function(){
+				if($userPwd.val() === $userPwdCk.val() && $userPwd.val().length > 0){
+					$pwdCheckResult2.show().css('color', 'green').text('비밀번호가 일치합니다.');
+				} else {
+					$pwdCheckResult2.show().css('color', 'crimson').text('똑같은 비밀번호를 입력해주세요.');
+				}
+			});
+			// 
+			const $formControl = $('.form-control'); 
+			const $submitBtnFin = $('#submit-btn-fin');
+	 		
+			
 	
+		})
 	</script>
 
   <form action="join.me" method="post" id="join-form">
@@ -95,7 +102,7 @@
     <div class="form-group">
         <label>비밀번호 확인</label>
         <input type="password" class="form-control" id="userPwdCk" placeholder="비밀번호를 똑같이 입력해주세요" >
-        <div id="pwd-check-result2" style="font-size:0.9em; display:none; margin:10px;"></div>
+        <div id="pwd-check-result-2" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
         <label>이름을 입력 해주세요</label>
@@ -109,7 +116,7 @@
         <p style="display: inline;">&nbsp;@&nbsp;</p>
 
         <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain" required>
-            <option selected>선택</option>
+            <option value="" selected>선택</option>
             <option value="">직접 입력</option>
             <option value="@kh.com">kh.com</option>
             <option value="@google.com">google.com</option>
@@ -126,29 +133,29 @@
         <label>휴대폰 번호를 입력 해주세요</label>
         <input type="text" class="form-control" placeholder="- 없이 입력" id="phone" name="phone" required>
         <br>
-        <button onclick="showCheckDiv();" type="button" class="btn btn-primary">인증번호 전송</button>
+        <button onclick="showCheckDiv();" type="button" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">인증번호 전송</button>
     </div>
     
     <div class="form-group" style="display:none" id="phone-ck-div">
         <label>인증번호를 입력 해주세요</label>
         <input type="text" class="form-control" id="phone-ck" placeholder="인증번호 입력 / 아무 숫자나 입력하면 인증 됩니다">
         <br>
-        <button type="button" class="btn btn-primary" id="phone-ck-btn2">확인</button>
+        <button type="button" class="btn btn-primary" id="phone-ck-btn2" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">확인</button>
     </div>
 
 
     <div class="form-group form-check">
         <br>
       <label class="form-check-label" style="margin-left: 100px;">
-        <input onclick="getSpamCk" type="checkbox" id="spam" name="spam" value="1" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input onclick="getSpamCk" type="checkbox" id="spam" name="spam" value="1" style="accent-color:rgb(50, 96, 68);" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </label>
       <label class="form-check-label">
-        <input type="checkbox" required> 14세 이상입니다
+        <input type="checkbox" style="accent-color:rgb(50, 96, 68);" required> 14세 이상입니다
       </label>
       <br><br>
     </div>
 
-    <button onclick="submitBtn();" type="submit" class="btn btn-primary" style="width: 770px; height: 60px;">회원가입 완료</button>
+    <button onclick="submitBtn();" id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
   </form>
   
 </div>
