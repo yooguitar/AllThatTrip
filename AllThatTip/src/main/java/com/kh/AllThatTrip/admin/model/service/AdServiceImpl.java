@@ -24,6 +24,7 @@ import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
 import com.kh.AllThatTrip.member.model.service.MemberValidator;
+import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,12 +91,12 @@ public class AdServiceImpl implements AdService{
 
 		try {
 			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException | IOException e) {
+		} catch (IOException e) {
 			throw new FailToFileUploadException("파일이 업로드 되지 않았습니다.");
 		}
 		// 첨부파일이 존재했다 => 업로드 + Board객체에 originName + changeName
 		adNotice.setAdOriName(fileName);
-		adNotice.setAdChaName("/hyper/resources/upload_files/" + changeName);
+		adNotice.setAdChaName("/att/resources/upload_files/" + changeName);
 	}
 
 	private void validateAdNotice(AdNotice adNotice ) {
@@ -127,6 +128,7 @@ public class AdServiceImpl implements AdService{
 
 	private void incrementViewCount(Long  adNoticeNo) {
 		int result = mapper.increaseCount( adNoticeNo);
+		log.info("{}", result);
 		if(result < 1) {
 			throw new BoardNotFoundException("게시글이 존재하지 않습니다.");
 		}
@@ -141,7 +143,6 @@ public class AdServiceImpl implements AdService{
 	}
 
 	private void validateAdNoticeNo(Long adNoticeNo) {
-		// 번호가 0보다 큰 수 안자
 		if(adNoticeNo == null ||  adNoticeNo <= 0) {
 			throw new InvalidParameterException("유효하지 않은 게시글 번호입니다.");	
 		}
@@ -166,7 +167,6 @@ public class AdServiceImpl implements AdService{
 		validateAdNoticeNo(adNotice.getAdNoticeNo());
 		findAdNoticeById(adNotice.getAdNoticeNo());
 
-		// 새 파일을 첨부했는지
 		if(!upfile.getOriginalFilename().equals("")) {
 
 			if(adNotice.getAdChaName() != null) {
@@ -193,7 +193,6 @@ public class AdServiceImpl implements AdService{
 	    	throw new BoardNotFoundException("게시글 삭제 실패");
 	    }
 	    
-	    // 파일 삭제 
 	    if(!("".equals(adChaName))) {
 	    	try {
 	    	new File(context.getRealPath(adChaName)).delete();
@@ -204,11 +203,11 @@ public class AdServiceImpl implements AdService{
 	}
 
 	@Override
-	public Admin login(Admin admin) {
+	public Admin adLogin(Admin admin) {
 		
-
+		Admin loginAdmin = mapper.adLogin(admin);
 		
-		return null;
+		return loginAdmin;
 	}
 
 

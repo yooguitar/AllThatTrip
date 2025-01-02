@@ -70,9 +70,9 @@
 		UPDATE
 		       TB_AD_NOTICE
 		   SET
-		       COUNT = COUNT + 1
+		       AD_NOTICE_COUNT = AD_NOTICE_COUNT + 1
 		 WHERE
-		       STATUS ='Y'
+		       AD_STATUS ='N'
 		   AND
 		       AD_NOTICE_NO = #{adNoticeNo}              
 	</update>
@@ -86,9 +86,9 @@
 		UPDATE
 		       TB_AD_NOTICE
 		   SET
-		       AD_STATUS ='N'
+		       AD_STATUS ='Y'
 		 WHERE
-		       AD_STATUS ='Y'          
+		       AD_STATUS ='N'          
 		   AND
 		       AD_NOTICE_NO = #{adNoticeNo}
 	</update>
@@ -104,7 +104,24 @@
 		 WHERE
 		       AD_NOTICE_NO = #{adNoticeNo}
 		   AND
-		       STATUS = 'Y'          
+		       AD_STATUS = 'N'          
 	</update>
-
+	<select id="adLogin" parameterType="admin" resultType="admin">
+	SELECT
+		   AD_ID	adId,
+		   AD_PWD 	adPwd,
+		   AD_NAME  adName,
+		   LEAVE,
+		   ADD_AD_DATE addAdDate,
+		   AD_LEVEL adLevel
+	  FROM
+	  	   TB_ADMIN
+	 WHERE
+	 	   LEAVE = 'N'
+	   AND
+	   	   AD_ID = #{adId}
+	   AND
+	   	   AD_PWD = #{adPwd}
+	  	   
+</select>
 </mapper> 

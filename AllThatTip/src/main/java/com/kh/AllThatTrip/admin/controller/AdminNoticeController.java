@@ -21,7 +21,7 @@ import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -47,13 +47,14 @@ public class AdminNoticeController {
 		
 		adService.insertAdNotice(adNotice, upfile);
 		session.setAttribute("alertMsg","게시글 등록에 성공했습니다.");
-		return mv.setViewNameAndData("redirect:/admin_notice", null);
+		return mv.setViewNameAndData("redirect:/admin/admin_notice", null);
 	}
 	
 	@GetMapping("admin_notice/{id}")
 	public ModelAndView selectById(@PathVariable(name="id")Long id) {
+		//log.info("{}", id);
 		Map<String, Object> responseData = adService.selectById(id);
-		return mv.setViewNameAndData("admin_notice/detail", responseData);
+		return mv.setViewNameAndData("/admin/detail_adNotice", responseData);
 	}
 	
 	@PostMapping("admin_notice/delete")
@@ -62,13 +63,14 @@ public class AdminNoticeController {
 		return  mv.setViewNameAndData("redirect:/admin_notice", null);		
 	}
 	
-	@PostMapping("admin_notice/update-form")
+	@PostMapping("ad_update_form")
 	public ModelAndView updateForm(Long adNoticeNo) {
+		log.info("{}", adNoticeNo );
 		Map<String, Object> responseData = adService.selectById(adNoticeNo);
-		return mv.setViewNameAndData("admin_notice/update", responseData);
+		return mv.setViewNameAndData("admin/ad_update", responseData);
 	}
-	
-	@PostMapping("boards/update")
+	 
+	@PostMapping("1ad_update_form")
 	public ModelAndView update(AdNotice adNotice, MultipartFile upfile) {
 		adService.updateAdNotice(adNotice, upfile);
 		

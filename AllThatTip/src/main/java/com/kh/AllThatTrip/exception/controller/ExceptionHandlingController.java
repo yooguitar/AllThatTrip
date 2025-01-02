@@ -8,6 +8,7 @@ import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.DuplicateKeyException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
+import com.kh.AllThatTrip.exception.InvalidParameterException;
 import com.kh.AllThatTrip.exception.UserIdNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,10 @@ public class ExceptionHandlingController {
 		return createErrorResponse("파일 업로드에 실패했습니다." ,e);
 	}
 	
-	
+	@ExceptionHandler(InvalidParameterException.class)
+	protected ModelAndView invalidParameter(InvalidParameterException e) {
+		return createErrorResponse("유효하지 않은 게시글 번호입니다.", e);
+	}
 
 	
 

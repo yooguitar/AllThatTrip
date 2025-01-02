@@ -14,11 +14,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class NonUser {
-
+  
 	private Long rsvNo;
 	private String nonUserName;
 	private String phone;
 	private Date rsvDate;
 	
 	
-}
+} 
+ 

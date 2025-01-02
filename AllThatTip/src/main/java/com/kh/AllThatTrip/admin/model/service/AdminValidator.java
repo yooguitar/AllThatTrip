@@ -15,7 +15,7 @@ public class AdminValidator {
 	
 	
 	public Admin validateAdminExists(Admin admin) {
-		Admin existingAdmin = mapper.login(admin);
+		Admin existingAdmin = mapper.adLogin(admin);
 		if(existingAdmin != null) {
 			return existingAdmin;
 		}
