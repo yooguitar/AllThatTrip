@@ -37,7 +37,7 @@
             <h2>게시글 수정하기</h2>
             <br>
 
-            <form id="updateForm" method="post" action="/AllThatTrip/board/notice_list/update-form" enctype="multipart/form-data">
+            <form id="updateForm" method="post" action="/att/board/notice_list/update" enctype="multipart/form-data">
                 <input type="hidden" name="boardNo" value="${ board.boardNo }" />
                 <table align="center">
                     <tr>

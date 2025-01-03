@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="resources/css/style_header.css">
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -19,13 +19,20 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/semantic.min.css"/>
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
     
+
+    <link rel="stylesheet" href="/att/resources/css/style_header.css">
+
     <title>Nav Bar</title>
   </head>
 
   <body>
     <nav class="navbar">
       <div class="navbar__logo">
-        <a class=aTag href="#" id="h-logo"><img src="resources/img/logo/ATTP.png"></a>
+
+
+        <a class=aTag href="#" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
+
+
       </div>
       <div id=navi>
         <ul id="navbar">
@@ -39,7 +46,7 @@
 
               <li><a class=aTag style = color:#ebebeb; href="#">펜션</a></li>
 
-          </ul></li>
+          </ul>
           </li>
           <li><a class=aTag href="#">테마검색</a></li>
               
@@ -52,6 +59,7 @@
                   <li><a class=aTag style = color:#ebebeb; href="#">다운로드</a></li>
               </ul>
           </li>
+
           
           <c:choose>
           <c:when test="${ sessionScope.loginUser eq null }">
@@ -76,6 +84,7 @@
 	      </c:otherwise>
           </c:choose>
           
+
           <li><a class=aTag  href="#">추천맛집</a></li>
 
       </ul>
@@ -84,20 +93,29 @@
         <li><i class="fab fa-google"></i></li>
         <li><i class="fab fa-slack"></i></li>
       </ul>
-      
+
+
       <c:choose>
       	<c:when test="${ sessionScope.loginUser eq null }">
 	      <div class="login">
-	        <a href="/att/loginPage.me" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+
+
+	        <a href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	        <a class=aTag  href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+
 	      </div>
 	    </c:when>
 	    <c:otherwise>
 	      <div class="login">
-	        <label style="color:white; font-size:15px;">💡</label>
-	        <a onclick="logout();" href="#" id="login_icon"><img src="resources/img/logo/ico_user_white.svg"></a>
+
+
+	        <label style="color:white; font-size:15px;">💡<label>
+	        <a onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+
 	      </div>
 	    </c:otherwise>  
       </c:choose>
+
 
     </nav>
   </body>

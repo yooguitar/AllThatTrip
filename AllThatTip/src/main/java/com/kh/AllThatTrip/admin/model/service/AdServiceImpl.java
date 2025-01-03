@@ -17,11 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
+import com.kh.AllThatTrip.admin.model.vo.Admin;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
+import com.kh.AllThatTrip.member.model.service.MemberValidator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -199,6 +201,14 @@ public class AdServiceImpl implements AdService{
 	    		throw new BoardNotFoundException("파일을 찾을 수 없습니다");
 	    	}
 	    }
+	}
+
+	@Override
+	public Admin login(Admin admin) {
+		
+
+		
+		return null;
 	}
 
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
+import com.kh.AllThatTrip.admin.model.vo.Admin;
 
 public interface AdService {
 	
@@ -17,4 +18,6 @@ public interface AdService {
 	void updateAdNotice(AdNotice adNotice, MultipartFile upfile);
 	
 	void deleteAdNotice(Long adNoticeNo, String adChaName);
+
+	Admin login(Admin admin);
 }

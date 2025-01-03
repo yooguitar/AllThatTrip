@@ -18,7 +18,6 @@ public class Admin {
 	private String adId;
 	private String adPwd;
 	private String adName;
-	private String adPhone;
 	private String leave;
 	private Date addAdDate;
 	private String adLevel;
