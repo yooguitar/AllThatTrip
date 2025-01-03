@@ -8,10 +8,13 @@ import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.DuplicateKeyException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
+import com.kh.AllThatTrip.exception.InvalidParameterException;
+import com.kh.AllThatTrip.exception.UserIdNotFoundException;
 import com.kh.AllThatTrip.exception.InValidLengthException;
 import com.kh.AllThatTrip.exception.InvalidDomainTypeException;
 import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.exception.UserFoundException;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,10 +53,16 @@ public class ExceptionHandlingController {
 		return createErrorResponse("파일 업로드에 실패했습니다." ,e);
 	}
 	
+
+	@ExceptionHandler(InvalidParameterException.class)
+	protected ModelAndView invalidParameter(InvalidParameterException e) {
+		return createErrorResponse("유효하지 않은 게시글 번호입니다.", e);
+
 	// 중복 아이디 회원 가입
 	@ExceptionHandler(UserFoundException.class)
 	protected ModelAndView UserExistError(UserFoundException e) {
 		return createErrorResponse("이미 존재하는 아이디입니다.", e);
+
 	}
 
 	// 입력 제한 미달/초과

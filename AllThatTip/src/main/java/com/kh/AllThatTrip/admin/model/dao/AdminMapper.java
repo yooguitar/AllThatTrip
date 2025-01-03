@@ -25,8 +25,8 @@ public interface AdminMapper {
 
 	int deleteAdNotice(Long adNoticeNo);
 
-	Admin login(Admin admin);
-
+	Admin adLogin(Admin admin);
+	
 	
 	
 }

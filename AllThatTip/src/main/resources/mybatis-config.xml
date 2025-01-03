@@ -13,6 +13,8 @@
 		<typeAlias type="com.kh.AllThatTrip.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.kh.AllThatTrip.board.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.AllThatTrip.admin.model.vo.AdNotice" alias="adNotice" />
+		<typeAlias type="com.kh.AllThatTrip.admin.model.vo.Admin" alias="admin" />
+		
 	</typeAliases>
 
 	<mappers>

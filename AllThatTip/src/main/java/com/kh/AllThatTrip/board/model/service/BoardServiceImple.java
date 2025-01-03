@@ -121,7 +121,7 @@ public class BoardServiceImple implements BoardService {
 		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
-		} catch(IllegalStateException | IOException e) {
+		} catch(IOException e) {
 			throw new FailToFileUploadException("파일 이상해");
 		}
 		

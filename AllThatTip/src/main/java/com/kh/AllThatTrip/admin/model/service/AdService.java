@@ -19,5 +19,5 @@ public interface AdService {
 	
 	void deleteAdNotice(Long adNoticeNo, String adChaName);
 
-	Admin login(Admin admin);
+	Admin adLogin(Admin admin);
 }

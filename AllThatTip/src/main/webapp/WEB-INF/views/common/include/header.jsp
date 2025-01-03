@@ -32,7 +32,6 @@
 
         <a class=aTag href="#" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
 
-
       </div>
       <div id=navi>
         <ul id="navbar">
@@ -108,8 +107,8 @@
 	    <c:otherwise>
 	      <div class="login">
 
-
 	        <label style="color:white; font-size:15px;">💡<label>
+
 	        <a onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 
 	      </div>
