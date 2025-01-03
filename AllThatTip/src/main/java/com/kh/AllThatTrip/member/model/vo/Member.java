@@ -23,8 +23,7 @@ public class Member {
 	private String phone; 	// DB에서 NUMBER로 받아요 숫자만 넣어야 합니다!
 	private String spam;	// 1 || 0 
 	private String status;	// Y || N
-	private Date enroll_date;
-	
+	private Date enrollDate;
 	
 	
 	

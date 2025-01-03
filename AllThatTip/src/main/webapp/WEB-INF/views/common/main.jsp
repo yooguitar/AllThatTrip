@@ -29,7 +29,6 @@
     </style>
 </head>
 <body>
-
         <div id="area">
             <div id="back"></div>
 			<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
@@ -45,12 +44,12 @@
             
                             <div id="bar">
                                 <div id="bar-1">
-                                    <button id="loc-btn">지역별</button> <!-- onclick <a href="캠핑지도"> -->
+                                    <button type="button" id="loc-btn">지역별</button> <!-- onclick <a href="캠핑지도"> -->
                                 </div>
                                 <div id="bar-2">
                                     <form action="검색하기~" method="get">
                                         <input type="text" placeholder="캠핑장 검색" id="loc-search">
-                                        <button id="search-btn">찾기</button>
+                                        <button type="submit" id="search-btn">찾기</button>
                                     </form>
                                 </div>   
                             </div>
@@ -73,7 +72,7 @@
                                 <ul id="li-mom">
                                     <li>
                                         <div id="list-1" class="list-baby" img=""></div>
-                                        <h4 id="">좋은캠핑장</h4>   <!--제발 한글 12글자 까지만 넣어주세요 제발요-->
+                                        <h4 id="">좋은캠핑장</h4>  
                                         <p id="">ㅎㅇ</p>
                                     </li>
                                     <li>
