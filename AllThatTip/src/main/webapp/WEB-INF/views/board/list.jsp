@@ -108,7 +108,7 @@
 				
 				const boardType = '${board.boardType}';
 				console.log("boardNo:", num, "boardType:", boardType); 
-				window.location.href = '/att/board/list/'+num+'?boardType=${boardType}';
+				window.location.href = '/att/board/list/'+num+'?boardType=' + boardType;
 			}
 			
 		</script>

@@ -28,8 +28,7 @@
     </style>
 </head>
 <body>
-    <jsp:include page="../common/include/header.jsp" />    
-
+<jsp:include page="../common/include/header.jsp" />
     <div class="content">
         <br><br>
         <div class="innerOuter">
@@ -219,6 +218,7 @@
     	
     	function selectComment(){
     		
+    		
     		$.ajax({
     			url: '/att/comment',
     			type: 'get',
@@ -278,7 +278,6 @@
     	
     	
     </script>
-    
     
     
     <jsp:include page="../common/include/footer.jsp" />
