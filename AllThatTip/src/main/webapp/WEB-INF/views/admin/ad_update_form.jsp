@@ -51,7 +51,7 @@
             <h2>게시글 작성하기</h2>
             <br>
 
-            <form id="enrollForm" method="post" action="admin_notice" enctype="multipart/form-data">
+            <form id="enrollForm" method="post" action="1ad_update_form" enctype="multipart/form-data">
                 <input type="hidden" name="adNoticeNo" value="${ adNotice.adNoticeNo }"/>
                 <table align="center">
                     <tr>
@@ -60,7 +60,7 @@
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.loginAdmin.adId }" name="adWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.adNotice.adWriter }" name="adWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
@@ -76,8 +76,8 @@
                     </tr>
                     <tr>
                     	<th><label for="importent">중요도</label></th>
-                    	<td><p>중요</p><input type="radio" id="adRadio" name="importent" value="${requestScope.adNotice.importent }"></td>
-                    	<td><p>비중요</p><input type="radio" id="adRadio" name="importent" value="${requestScope.adNotice.importent }" checked="checked"></td>
+                    	<td><p>중요</p><input type="radio" id="adRadio" name="importent" value="Y"></td>
+                    	<td><p>비중요</p><input type="radio" id="adRadio" name="importent" value="N"></td>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>

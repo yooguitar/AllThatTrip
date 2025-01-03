@@ -57,24 +57,24 @@ public class AdminNoticeController {
 		return mv.setViewNameAndData("/admin/detail_adNotice", responseData);
 	}
 	
-	@PostMapping("admin_notice/delete")
+	@PostMapping("ad_delete")
 	public ModelAndView deleteBoard(Long adNoticeNo, String adChaName) {
 		adService.deleteAdNotice(adNoticeNo, adChaName);
-		return  mv.setViewNameAndData("redirect:/admin_notice", null);		
+		return  mv.setViewNameAndData("redirect:/admin/admin_notice", null);		
 	}
 	
-	@PostMapping("ad_update_form")
+	@GetMapping("ad_update_form")
 	public ModelAndView updateForm(Long adNoticeNo) {
 		log.info("{}", adNoticeNo );
 		Map<String, Object> responseData = adService.selectById(adNoticeNo);
-		return mv.setViewNameAndData("admin/ad_update", responseData);
+		return mv.setViewNameAndData("admin/ad_update_form", responseData);
 	}
 	 
 	@PostMapping("1ad_update_form")
 	public ModelAndView update(AdNotice adNotice, MultipartFile upfile) {
 		adService.updateAdNotice(adNotice, upfile);
 		
-		return mv.setViewNameAndData("redirect:/admin_notice", null);
+		return mv.setViewNameAndData("redirect:/admin/admin_notice", null);
 	}
 	
 	@GetMapping("map")

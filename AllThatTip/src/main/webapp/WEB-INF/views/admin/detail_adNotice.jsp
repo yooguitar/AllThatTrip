@@ -92,30 +92,26 @@ table {
 					<a class="btn btn-danger" href="/att/admin/delete">삭제하기</a>
 					 -->
 				  	
-					<a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
-					<a class="btn btn-danger" onclick="postSubmit(2);">삭제하기</a>
+					<a class="btn btn-primary" onclick="postSubmit();">수정하기</a>
+					<a class="btn btn-danger" onclick="postDelete();">삭제하기</a>
 				
 				</c:if>
 			</div>
 
 			<script>
-	    		function postSubmit(num){
-	    			
-	    			if(num == 1){
-	    				$('#postForm').attr('action', '/att/admin/ad_update_form').submit();
-	    
-	    			} else {
-	    				$('#postForm').attr('action', '/att/admin/delete').submit();
-	    			}
+	    		function postSubmit(){
+	    				location.href = '/att/admin/ad_update_form?adNoticeNo=${adNotice.adNoticeNo}';
+	    		}
+	    		
+	    		function postDelete() {
+	    			$('#postForm').attr('action', '/att/admin/ad_delete').submit();
 	    		}
 	    	</script>
-
-			<form action="" method="post" id="postForm">
-				<input type="hidden" name="boardNo" value="${ board.boardNo }" /> <input
-					type="hidden" name="changeName" value="${ board.changeName }" /> <input
-					type="hidden" name="boardWriter" value="${ board.boardWriter }" />
+				<form action="" method="post" id="postForm">
+				<input type="hidden" name="adNoticeNo" value="${ adNotice.adNoticeNo }" />
+				<input type="hidden" name="adChaName" value="${ adNotice.adChaName }" /> 
+				<input type="hidden" name="adWriter" value="${ adNotice.adWriter }" />
 			</form>
-			
 			<br>
 			<br>
 
@@ -198,7 +194,7 @@ table {
     	function selectReply(){
     		
     		$.ajax({
-    			url : '/att/admin/reply',
+    			url : '/att/admin/adreply',
     			type : 'get',
     			data : {
     				adNoticeNo : ${adNotice.adNoticeNo}
