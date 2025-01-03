@@ -10,6 +10,7 @@ import com.kh.AllThatTrip.exception.DuplicateKeyException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
 import com.kh.AllThatTrip.exception.InValidLengthException;
 import com.kh.AllThatTrip.exception.InvalidDomainTypeException;
+import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.exception.UserFoundException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +68,11 @@ public class ExceptionHandlingController {
 		return createErrorResponse("올바른 이메일 형식으로 입력해주세요", e);
 	}
 	
+	// 매칭되는 로그인 정보 없음
+	@ExceptionHandler(LoginFailedException.class)
+	protected ModelAndView LoginFailedException(LoginFailedException e) {
+		return createErrorResponse("올바르지 않은 정보 입력", e);
+	}
 	
 }
 	

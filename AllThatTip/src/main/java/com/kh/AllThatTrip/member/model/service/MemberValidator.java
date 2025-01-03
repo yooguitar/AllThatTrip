@@ -15,9 +15,24 @@ import lombok.RequiredArgsConstructor;
 public class MemberValidator {
 	
 	private final MemberMapper mapper;
+
+	// 정보 검증 메소드
+	public void validateJoinMember(Member member) {
+		validateDeletedMember(member);
+		validateDuplicateMember(member);
+		validateLength(member);
+		validateMail(member);
+	}
 	
 	public void validateDuplicateMember(Member member) {
 		Member exMember = mapper.login(member);
+		if(exMember != null && member.getUserId().equals(exMember.getUserId())) {
+			throw new UserFoundException("이미 존재하는 회원입니다.");
+		}
+	}
+	
+	public void validateDeletedMember(Member member) {
+		Member exMember = mapper.deletedUser(member);
 		if(exMember != null && member.getUserId().equals(exMember.getUserId())) {
 			throw new UserFoundException("이미 존재하는 회원입니다.");
 		}
@@ -38,12 +53,6 @@ public class MemberValidator {
 		}
 	}
 	
-	// 정보 검증 메소드
-	public void validateJoinMember(Member member) {
-		validateDuplicateMember(member);
-		validateLength(member);
-		validateMail(member);
-	}
 	
 	
 	

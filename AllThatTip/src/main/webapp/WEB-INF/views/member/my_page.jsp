@@ -26,6 +26,13 @@
 </head>
 <body>
 
+  <c:if test="${ not empty alertMsg }">
+    <script>
+			alertify.alert('AllThatTrip', '${alertMsg}', function(){alertify.success('확인')});
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+  </c:if>
+
 <!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
 
 <div class="container" id="wrap">
@@ -41,59 +48,35 @@
     </div>
     <div class="form-group">
       <label>Password:</label>
-      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자, 특수문자 입력" value="${ sessionScope.loginUser.userPwd }" name="userPwd" required>
+      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자, 특수문자 입력" value="${ sessionScope.loginUser.userPwd }" name="userPwd" readonly>
       <div id="pwd-check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
 
     <div class="form-group">
-        <label>이름 (변경은 전화문의 바랍니다.)</label>
+        <label>이름:</label>
         <input type="name" class="form-control" id="userName" value="${ sessionScope.loginUser.userName }" name="userName" readonly>
     </div>
 
     <div class="form-group">
-        <label style="display: block;">Email</label>
-        <input type="text" class="form-control" id="email-id" placeholder="영문, 숫자 입력" style="width: 377px; display: inline;" required>
-
-        <p style="display: inline;">&nbsp;@&nbsp;</p>
-
-        <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain" required>
-            <option selected>선택</option>
-            <option value="">직접 입력</option>
-            <option value="@kh.com">kh.com</option>
-            <option value="@google.com">google.com</option>
-            <option value="@naver.com">naver.com</option>
-            <option value="@daum.net">daum.net</option>
-        </select>
-        
-        <!-- 진짜 양식이 전송 될 input -->
-        <input type="text" id="email" style="display: none;" name="email">
-
+        <label style="display: block;">Email:</label>
+        <input type="text" class="form-control" id="email-id" value="${ sessionScope.loginUser.email }" readonly>
     </div>
 
     <div class="form-group">
-        <label>휴대폰 번호를 입력 해주세요</label>
-        <input type="phone" class="form-control" placeholder="010-1234-4567" id="phone" name="phone" value="${ sessionScope.loginUser.phone }" required>
-        <br>
-        <button onclick="showCheckDiv();" type="button" class="btn btn-primary">인증번호 전송</button>
+        <label>휴대폰 번호:</label>
+        <input type="phone" class="form-control" placeholder="010-1234-4567" id="phone" name="phone" value="${ sessionScope.loginUser.phone }" readonly>
+      
     </div>
-    
-    <div class="form-group" style="display:none" id="phone-ck-div">
-        <label>인증번호를 입력 해주세요</label>
-        <input type="text" class="form-control" id="phone-ck" placeholder="인증번호 입력 / 아무 숫자나 입력하면 인증 됩니다">
-        <br>
-        <button type="button" class="btn btn-primary" id="phone-ck-btn2">확인</button>
-    </div>
-
-
     <div class="form-group form-check">
         <br>
-      <label class="form-check-label" style="margin-left: 200px;">
-        <input onclick="getSpamCk" type="checkbox" id="spam" name="spam" value="1" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label class="form-check-label" style="margin-left: 310px;">
+        <input onclick="getSpamCk" type="checkbox" style="accent-color:rgb(50, 96, 68);" id="spam" name="spam" value="1" checked> SMS 수신여부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </label>
       <br><br>
     </div>
 
-    <button onclick="submitBtn();" type="submit" class="btn btn-primary" style="width: 770px; height: 60px;">수정 완료</button>
+    <button onclick="updatePage();" type="button" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); width: 380px; height: 60px;">정보 수정</button>
+    <button onclick="deletePage();" type="button" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); width: 380px; height: 60px;">회원 탈퇴</button>
   </form>
   
 </div>
@@ -109,20 +92,11 @@
 </html>
 
 <script> 
-    function showCheckDiv(){
-    	document.getElementById('phone-ck-div').removeAttribute('style');
-    	
+    function updatePage(){
+      location.href = "updatePage.me";
     }
-    
-    function submitBtn(){
-        // 1. #email에 #email-id, #domain 내용 합쳐서 전송
-        const emailId = document.getElementById('email-id').value;
-        const domain = document.getElementById('domain').value;
-        var email = document.getElementById('email').value = emailId + domain;
-
+    function deletePage(){
+      location.href = "deletePage.me";
     }
-
-
-
 
 </script>

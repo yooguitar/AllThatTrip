@@ -1,5 +1,7 @@
 package com.kh.AllThatTrip.member.model.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 public interface MemberService {
@@ -10,9 +12,9 @@ public interface MemberService {
 	
 	int checkId(String userId);
 	
+	void memberUpdate(Member member, HttpSession session);
 	
-	
-	
+	void memberDelete(String userPwd, HttpSession session);
 	
 	
 
