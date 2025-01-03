@@ -62,7 +62,7 @@
 	    <c:remove var="loginCount" scope="session" />
 	</c:if>
 	-->
-	
+	<a href="adLoginPage.me" style="margin-left: 1870px;">관리자</a>
     <div class="container" id="wrap">
         <br>
         <h2 class="title-join-biz">로그인</h2>
