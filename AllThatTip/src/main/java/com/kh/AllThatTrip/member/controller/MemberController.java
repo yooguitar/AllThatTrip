@@ -60,15 +60,14 @@ public class MemberController {
 	public ModelAndView memberUpdate(Member member, HttpSession session) {
 		memberService.memberUpdate(member, session);
 		session.setAttribute("alertMsg", "정보수정 성공");
-		return mv.setViewNameAndData("redirect:mypage.me", null);
+		return mv.setViewNameAndData("member/my_page", null);
 	}
 	
 	// 회원탈퇴 핸들러
 	@PostMapping("memberDelete.me")
 	public ModelAndView memberDelete(String userPwd, HttpSession session) {
 		memberService.memberDelete(userPwd, session);
-		
-		return null;
+		return mv.setViewNameAndData("common/main", null);
 	}
 	
 	
