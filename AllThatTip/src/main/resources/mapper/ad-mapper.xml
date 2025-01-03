@@ -100,7 +100,8 @@
 		       AD_NOTICE_TITLE = #{adNoticeTitle},
 		       AD_NOTICE_CONTENT = #{adNoticeContent},
 		       AD_ORI_NAME = #{adOriName},
-		       AD_CHA_NAME = #{adChaName}
+		       AD_CHA_NAME = #{adChaName},
+		       IMPORTENT = #{importent}
 		 WHERE
 		       AD_NOTICE_NO = #{adNoticeNo}
 		   AND

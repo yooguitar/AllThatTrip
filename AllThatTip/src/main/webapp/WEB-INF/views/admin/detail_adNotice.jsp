@@ -185,7 +185,7 @@ table {
     	}
     	
     	$(function(){
-    		alert(${adNotice.adNoticeNo})
+    		
     		selectReply();
     	})
     	

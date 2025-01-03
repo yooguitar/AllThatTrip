@@ -67,23 +67,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                	
-                	<c:forEach items="${ adNotices }" var="adNotice">
-	                    <tr onclick="detail('${adNotice.adNoticeNo}')">
-	                        <td>${ adNotice.adNoticeNo }</td>
-	                        <td>${ adNotice.importent }
-	                        <td>${ adNotice.adNoticeTitle }</td>
-	                        <td>${ adNotice.adWriter }</td>
-	                        <td>${ adNotice.adNoticeCount }</td>
-	                        <td>${ adNotice.adUploadDate } </td>
-	                         <td>
-	                        	<c:if test="${ not empty adNotice.adOriName }">
-	                       		   💌
-	                        	</c:if>
-	                        </td>
-	                    </tr>
-                    </c:forEach>
-                    
+                	<c:choose>
+	                	<c:when test="${ not empty adNotices }">
+		                	<c:forEach items="${ adNotices }" var="adNotice">
+			                    <tr onclick="detail('${adNotice.adNoticeNo}')">
+			                        <td>${ adNotice.adNoticeNo }</td>
+			                        <td>${ adNotice.importent }
+			                        <td>${ adNotice.adNoticeTitle }</td>
+			                        <td>${ adNotice.adWriter }</td>
+			                        <td>${ adNotice.adNoticeCount }</td>
+			                        <td>${ adNotice.adUploadDate } </td>
+			                         <td>
+			                        	<c:if test="${ not empty adNotice.adOriName }">
+			                       		   💌
+			                        	</c:if>
+			                        </td>
+			                    </tr>
+		                    </c:forEach>
+	                	</c:when>
+	                    <c:otherwise>
+	                    	<tr><td>게시글이 없습니다.</td></tr>
+	                    </c:otherwise>
+                	</c:choose>
                 </tbody>
             </table>
             <br>

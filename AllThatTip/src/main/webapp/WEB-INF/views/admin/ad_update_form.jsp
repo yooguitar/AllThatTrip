@@ -76,8 +76,8 @@
                     </tr>
                     <tr>
                     	<th><label for="importent">중요도</label></th>
-                    	<td><p>중요</p><input type="radio" id="adRadio" name="importent" value="Y"></td>
-                    	<td><p>비중요</p><input type="radio" id="adRadio" name="importent" value="N"></td>
+                    	<td><p>중요</p><input type="radio" id="adRadio1" name="importent" value="Y"></td>
+                    	<td><p>비중요</p><input type="radio" id="adRadio2" name="importent" value="N"></td>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
@@ -95,7 +95,19 @@
         <br><br>
 
     </div>
+    <script>
+    	
+		    window.onload = function() {
+			
+					
+			$('input[value="${adNotice.importent}"]').attr('checked',true);
+			
+				
+			}    	
+		    
     
+    
+    </script>
     <jsp:include page="../common/include/footer.jsp" />
     
 </body>

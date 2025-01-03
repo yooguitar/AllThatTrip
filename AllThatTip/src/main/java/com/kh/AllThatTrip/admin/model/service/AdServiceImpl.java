@@ -41,7 +41,7 @@ public class AdServiceImpl implements AdService{
 	private int getTotalCount() {
 		int totalCount = mapper.selectTotalCount();
 		if(totalCount == 0) {
-			throw new BoardNotFoundException("게시글이 없습니다");
+			// throw new BoardNotFoundException("게시글이 없습니다");
 		}
 		return totalCount;
 	}
@@ -74,6 +74,7 @@ public class AdServiceImpl implements AdService{
 		validateAdNotice(adNotice);
 
 		if(!("".equals(upfile.getOriginalFilename())))	{
+			log.info("{}", upfile);
 			handleFileUpload(adNotice,upfile);
 		}
 		mapper.insertAdNotice(adNotice);
@@ -88,12 +89,14 @@ public class AdServiceImpl implements AdService{
 		String changeName = currentTime + randomNum + ext;
 
 		String savePath = context.getRealPath("/resources/upload_files/");
-
+		log.info("{}", savePath);
+		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
-		} catch (IOException e) {
+		} catch (IllegalStateException | IOException e) {
 			throw new FailToFileUploadException("파일이 업로드 되지 않았습니다.");
 		}
+		
 		// 첨부파일이 존재했다 => 업로드 + Board객체에 originName + changeName
 		adNotice.setAdOriName(fileName);
 		adNotice.setAdChaName("/att/resources/upload_files/" + changeName);
