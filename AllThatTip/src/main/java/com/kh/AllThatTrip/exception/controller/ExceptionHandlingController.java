@@ -9,11 +9,10 @@ import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.DuplicateKeyException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
 import com.kh.AllThatTrip.exception.InvalidParameterException;
-import com.kh.AllThatTrip.exception.UserIdNotFoundException;
+import com.kh.AllThatTrip.exception.UserFoundException;
 import com.kh.AllThatTrip.exception.InValidLengthException;
 import com.kh.AllThatTrip.exception.InvalidDomainTypeException;
 import com.kh.AllThatTrip.exception.LoginFailedException;
-import com.kh.AllThatTrip.exception.UserFoundException;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +56,7 @@ public class ExceptionHandlingController {
 	@ExceptionHandler(InvalidParameterException.class)
 	protected ModelAndView invalidParameter(InvalidParameterException e) {
 		return createErrorResponse("유효하지 않은 게시글 번호입니다.", e);
-
+	}
 	// 중복 아이디 회원 가입
 	@ExceptionHandler(UserFoundException.class)
 	protected ModelAndView UserExistError(UserFoundException e) {

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
 import com.kh.AllThatTrip.admin.model.vo.Admin;
-import com.kh.AllThatTrip.exception.UserIdNotFoundException;
+import com.kh.AllThatTrip.exception.UserFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +19,6 @@ public class AdminValidator {
 		if(existingAdmin != null) {
 			return existingAdmin;
 		}
-		throw new UserIdNotFoundException("존재하지 않는 사용자입니다.");
+		throw new UserFoundException("존재하지 않는 사용자입니다.");
 	}
 }
