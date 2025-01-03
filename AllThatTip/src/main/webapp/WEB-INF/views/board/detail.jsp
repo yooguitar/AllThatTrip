@@ -28,49 +28,53 @@
     </style>
 </head>
 <body>
-        
+    <jsp:include page="../common/include/header.jsp" />    
 
     <div class="content">
         <br><br>
         <div class="innerOuter">
             <h2>게시글 상세보기</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="/att/board/notice_list">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list?boardType=${param.boardType}">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${board.boardTitle}</td> 	<!-- Map에 담은 key값 기재. board. -->
+                    <td colspan="6">${board.boardTitle}</td> 	<!-- Map에 담은 key값 기재. board. -->
                 </tr>
                 <tr>
-                    <th>작성자</th>
+                    <th>작성자</th><td colspan="1"></td>
                     <td>${board.userNo}</td>
                     <th>작성일</th>
-                    <td>${board.createDate}</td>
+                    <td colspan="3">${board.createDate}</td>
                 </tr>
                 <tr>
-                    <th>첨부파일</th>
-                    
+                    <th scope="row">첨부파일</th>
+                    <td id="files" colspan="1">
                     <c:choose>
-	 					<c:when test="${ empty board.originName }">                   
+	 					<c:when test="${ empty board.fileList }">                   
 		                    <td colspan="3">
 		                    	첨부파일이 존재하지 않습니다.
 		                    </td>
 	 					</c:when>
 	 					<c:otherwise>
-		                    <td colspan="3">
-		                        <a href="${ board.changeName }" download="${ board.originName }">${board.originName}</a>
-		                    </td>
+	 						<c:forEach items="${ board.fileList }" var="file">
+							    <td colspan="5">
+			                        <a href="${ file.changeName }" download="${ file.originName }">${file.originName}</a>
+			                    </td>
+							</c:forEach>
 	                    </c:otherwise>
- 					</c:choose>	
+ 					</c:choose>
                 </tr>
+                
+                
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ board.boardContent }</p></td>
+                    <td colspan="10"><p style="height:150px;">${ board.boardContent }</p></td>
                 </tr>
             </table>
             <br>
@@ -83,18 +87,8 @@
              
             </div>
             
-            <script>
-            	function postSubmit(num) {
-			
-            		if(num == 1){
-            			$('#postForm').attr('action', '/att/board/notice_list/update-form').submit();
-            		} else {
-            			$('#postForm').attr('action', '/att/board/notice_list/delete').submit();
-            		}
-				}
-            </script>
-            
-            <form action="" method="post" id="postForm">
+            <form action="/att/board/list/update" method="post" id="postForm">
+            	<input type="hidden" name="boardType" value="${param.boardType}">
             	<input type="hidden" name="boardNo" value="${ board.boardNo }" />
             	<input type="hidden" name="changeName" value="${ board.changeName }" />
             	<input type="hidden" name="boardWriter" value="${ board.boardWriter }" />
@@ -103,6 +97,19 @@
             	 -->
             </form>
 		
+            <script>
+            	function postSubmit(num) {
+            		const boardNo = $('input[name="boardNo"]').val(); 
+            		const boardType = $('input[name="boardType"]').val();
+				
+            		if(num == 1){
+            			$('#postForm').attr('action', '/att/board/list/update-form').submit();
+            		} else { 
+            			$('#postForm').attr('action', '/att/board/list/delete').submit();
+            		}
+				}
+            </script>
+            
             
             <!-- 
             	case 1: 수정하기 누르면 수정할 수 있는 입력 양식이 있어야함
@@ -116,12 +123,13 @@
             <br><br>
 
             <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
-            <table id="replyArea" class="table" align="center">
+            <table id="CommentArea" class="table" align="center">
                 <thead>
                 
-                	<!-- 비회원 노출 영역 -->
+                	<!-- 비회원 노출 영역 
                 	<c:choose>
 	                	<c:when test="${ empty sessionScope.loginUser }">
+	                	
 	                    <tr>
 	                        <th colspan="2">
 	                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
@@ -134,16 +142,33 @@
 	                     <th colspan="2">
 	                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
 	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th> 
+	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
 	                    </tr>
 	                    </c:otherwise>
                     </c:choose>
+                    비회원으로 일단하자..--> 
+                    
+                    
+                    <tr>
+					    <th colspan="2">
+					        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+					    </th>
+					    <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
+					</tr>
+                    
+                    
+                    
                     
                     
                     <tr>
                         <td colspan="3">댓글(<span id="rcount">0</span>)</td>
                     </tr>
                 </thead>
+                
+                
+                
+                
+                
                 <tbody>
                    
                    
@@ -155,43 +180,47 @@
     </div>
     
     <script>
-        
-    	function addReply() {
+    
+    	
+    	// 댓글 리스트 호출
+    	$(function(){
+    		// alert(${board.boardNo})
+    		selectComment();
+    	})
+    	
+    	function addComment() {
 			
     		if($('#content').val().trim() != ''){
     			
     			$.ajax({
-    				url: '/hyper/reply',
-    				data: {
-    					refBoardNo: ${board.boardNo},
-    					replyContent : $('#content').val(),
-    					replyWriter: '${sessionScope.loginUser.userId}'
-    				},
+    				url: '/att/comment',
     				type: 'post',
+    				data: {
+    					 	boardNo: ${board.boardNo}, 
+    		                commentContent: $('#content').val(),
+    		                userNo: '1' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
+    		        },
     				success: function(result) {
 						
-    					// console.log(result);
+    					console.log(result);
     					
-    					if(result === 1){
-    						$('#content').val('');
+    					if(result.data === 1){
+    						$('#content').val(''); 
     					}
+    						selectComment();
+    						$('html, body').animate({ scrollTop: $('#CommentArea').offset().top }, 'slow');
 					}
     				
     			});
     		}
 		}
+		
+
     	
-    	
-    	$(function(){
-    		// alert(${board.boardNo})
-    		selectReply();
-    	})
-    	
-    	
-    	function selectReply(){
+    	function selectComment(){
     		
     		$.ajax({
-    			url: '/hyper/reply',
+    			url: '/att/comment',
     			type: 'get',
     			data: {
     				boardNo : ${board.boardNo}
@@ -205,19 +234,46 @@
     				
     				const resultStr = replies.map(e => 
 								    					`<tr>
-								    					<td>\${e.replyWriter}</td>
-								    					<td>\${e.replyContent}</td>
+								    					<td>\${e.userId}</td>
+								    					<td>\${e.commentContent}</td>
 								    					<td>\${e.createDate}</td>
+								    					<td>
+							                            <button class="comment-delete-btn " onclick="deleteByComment(${e.commentNo});">삭제</button>
+							                        	</td>
 														</tr>`    					
 								    				).join('');
     				
-    				$('#replyArea tbody').html(resultStr);
+    				$('#CommentArea tbody').html(resultStr);
     				$('#rcount').text(result.data.length);
     			}
     		});
     		
     	}
     	
+    	function deleteByComment(commentNo) {
+    		if(confirm('댓글을 삭제하시겠습니까?')){
+    			$.ajax({
+    				url: `/att/comment/${commentNo}`,
+    				type: 'post',
+    				data:{
+    					_method: 'DELETE'
+    				},
+    				success: function(result){
+    					console.log(result);
+    					if(result.data === 1){
+	   						 alert('댓글이 삭제되었습니다.');
+	   		                    selectComment(); // 삭제 후 댓글 목록 갱신
+	   		                } else {
+	   		                    alert('댓글 삭제에 실패했습니다.');
+	   		                }
+	   		            },
+	   		            error: function(xhr, status, error) {
+	   		                console.error('댓글 삭제 오류:', error);
+	   		                alert('댓글 삭제 중 오류가 발생했습니다.');
+	   		            }
+	   		        });
+	   		    }
+	   		}
     	
     	
     	
@@ -225,6 +281,6 @@
     
     
     
-    
+    <jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>

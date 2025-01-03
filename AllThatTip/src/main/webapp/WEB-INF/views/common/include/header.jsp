@@ -49,13 +49,17 @@
           </li>
           <li><a class=aTag href="#">테마검색</a></li>
               
-          <li><a class=aTag href="#">커뮤니티</a>
+          <li><a class=aTag href="http://localhost/att/board/list?boardType=10">커뮤니티</a>
               <ul>
-                  <li><a class=aTag style = color:#ebebeb; href="#">블록시스템</a></li>
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=10">공지사항</a></li>
                   
-                  <li><a class=aTag style = color:#ebebeb; href="#">프로젝트관리</a></li>
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=20">FAQ</a></li>
                   
-                  <li><a class=aTag style = color:#ebebeb; href="#">다운로드</a></li>
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=30">자주묻는질문</a></li>
+                
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=40">중고거래</a></li>
+                
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=50">리뷰게시판</a></li>
               </ul>
           </li>
 

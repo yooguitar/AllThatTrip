@@ -1,5 +1,9 @@
 package com.kh.AllThatTrip.board.model.vo;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +19,7 @@ import lombok.ToString;
 public class Board {
 
 	private Long boardNo;
-	private int boardType;
+	private String  boardType;
 	private int userNo;
 	private String boardWriter;
 	private String boardTitle;
@@ -25,10 +29,16 @@ public class Board {
 	private String createDate;
 	private int count;
 	private String status;
+	private List<BdAttachment> fileList;
+	private int page;
+  
+		
+} 
+		
+	
 
 	
 	
-}
 
 
 

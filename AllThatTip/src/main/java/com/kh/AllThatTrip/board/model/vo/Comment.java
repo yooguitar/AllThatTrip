@@ -1,6 +1,6 @@
 package com.kh.AllThatTrip.board.model.vo;
 
-import java.util.Date;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,9 +15,10 @@ import lombok.ToString;
 @ToString
 public class Comment {
 
-	private int commentNo; 
+	private long commentNo; 
+	private long boardNo;
     private int userNo; 
-    private String comment; 
-    private Date createDate; 
+    private String commentContent; 
+    private String createDate; 
     private String status; 
 }

@@ -3,6 +3,7 @@ package com.kh.AllThatTrip.board.model.service;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.board.model.dao.BoardMapper;
+import com.kh.AllThatTrip.board.model.vo.BdAttachment;
 import com.kh.AllThatTrip.board.model.vo.Board;
+import com.kh.AllThatTrip.board.model.vo.Comment;
+import com.kh.AllThatTrip.board.model.vo.Reply;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
@@ -35,8 +39,8 @@ public class BoardServiceImple implements BoardService {
 	private final ServletContext context;
 	
 	
-	private int getTotalCount() {
-		int totalCount = mapper.selectTotalCount();
+	private int getTotalCount(String boardType) {
+		int totalCount = mapper.selectTotalCount(boardType);
 		
 		if(totalCount == 0) {
 			throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
@@ -47,15 +51,17 @@ public class BoardServiceImple implements BoardService {
 	
 	
 	private PageInfo getPageInfo(int totalCount, int page) {
+		
 		return Pagination.getPageInfo(totalCount, page, 10, 10);
+		
 	}
 
 	
-	private List<Board> getBoardList(PageInfo pi) {
+	private List<Board> getBoardList(PageInfo pi, Board board) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return mapper.selectBoardList(rowBounds);
+		return mapper.selectBoardList(board, rowBounds);
 	}
 	
 	
@@ -108,7 +114,15 @@ public class BoardServiceImple implements BoardService {
 		return board;
 	}
 	
-	private void handlerFileUpload(Board board, MultipartFile upfile) {
+	
+	// 파일업로드
+	private Board handlerFileUpload(Board board, MultipartFile upfile) {
+		
+		if(upfile == null) {
+			log.info("파일이 존재하지 않습니다.");
+
+			return board;
+		}
 		
 		String fileName = upfile.getOriginalFilename();
 		String ext = fileName.substring(fileName.lastIndexOf("."));
@@ -128,27 +142,48 @@ public class BoardServiceImple implements BoardService {
 		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
 		board.setOriginName(fileName);
 		board.setChangeName("/resources/upload_files/" + changeName);
-		log.info("File save path: {}", savePath);
+		//log.info("File save path: {}", savePath)/;
 		
+		return board;
 	}	
+	
+	// 다중파일
+	private BdAttachment createAttachment(Board board, MultipartFile upfile) {
+	    
+	    Board updatedBoard = handlerFileUpload(board, upfile);
+
+	    // BdAttachment 객체 생성
+	    BdAttachment attachment = new BdAttachment();
+	    attachment.setBoardNo(updatedBoard.getBoardNo()); // 게시글 번호
+	    attachment.setOriginName(updatedBoard.getOriginName()); // 원본 파일명
+	    attachment.setChangeName(updatedBoard.getChangeName()); // 변경된 파일명
+
+	    return attachment;
+	}
 	
 	// 페이징처리
 	@Override
-	public Map<String, Object> selectBoardList(int currentPage) {
+	public Map<String, Object> selectBoardList(Board board) { 
 		
+		int totalCount = getTotalCount(board.getBoardType());
 		
-		int totalCount = getTotalCount();
+		// log.info("게시글개수: {}", totalCount);
+		// log.info("요청페이지: {}", currentPage);
 		
-		PageInfo pi = getPageInfo(totalCount, currentPage);
+		PageInfo pi = getPageInfo(totalCount, board.getPage());
+	
+		List<Board> boards = getBoardList(pi, board);
 		
-		List<Board> boards = getBoardList(pi);
-		log.info("게시글목록 {}", boards);
+		//log.info("게시글목록:{}", boards);
 		
 		Map<String, Object> map = new HashMap();
+		
 		map.put("boards", boards);
 		map.put("pageInfo", pi);
 		
+		
 		return map;
+	
 	}
 
 	
@@ -160,11 +195,17 @@ public class BoardServiceImple implements BoardService {
 		incrementViewCount(boardNo);
 		Board board = findBoardByNum(boardNo);
 		
-		// 있으면 보드 VO에 필드에 담겨져온 데이터를 다시 반환해줌
-		Map<String, Object> responseData = new HashMap();
-		responseData.put("board", board);
+		// board 객체에 List<fileList> 객체 생성 후 객체안에서 파일은 List 타입으로 처리
+		// 사유 : 상세페이지는 한개의 로우 파일은 리스트형태로 조회가 가능하기에 fileList 는 list타입으로 처리
+		// (상세 게시글 데이터 로우 : 상세 게시글 첨부파일 로우) == (1:n)
+		List<BdAttachment> fileList = mapper.selectFileList(boardNo); //게시글 번호를 기준으로 첨부파일 목록을 조회, 첨부파일 데이터를 리스트 형태로 반환
 		
-		return responseData;
+		board.setFileList(fileList); // board객체에 fileList 다중 파일을 하나의 객체로 관리
+		
+		Map<String, Object> responseData = new HashMap<>();
+        responseData.put("board", board); // 응답데이터 지정
+		
+		return responseData;	// 사용자에게 반환
 
 	}
 
@@ -172,37 +213,74 @@ public class BoardServiceImple implements BoardService {
 	@Transactional
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
+		
+		Board fileBoard = new Board();
+		
 		// 유효성 검증
 		validateBoard(board);
 		// 파일 유무
-		if(!("".equals(upfile.getOriginalFilename()))) {
-			handlerFileUpload(board,upfile);
-		}
+		if (upfile != null && !upfile.isEmpty()) {
+			fileBoard = handlerFileUpload(board, upfile);
+	    }
 		// 인서트 진행
 		mapper.insertBoard(board);
-		mapper.insertBoardFile(board);
-		 	
+		board.setOriginName(fileBoard.getOriginName());
+		
+		if (board.getOriginName() != null && !board.getOriginName().isEmpty()) {
+	       mapper.insertBoard(board);
+	    }
+				 	
 	}
 	
+	
+	// 수정
 	@Override
-	public void updateBoard(Board board, MultipartFile upfile) {
+	public void updateBoard(Board board, MultipartFile[] upfiles) {
+		// 유효성 검증
 		validateBoardNo(board.getBoardNo());
 		findBoardByNum(board.getBoardNo());
+		Board model = mapper.selectByNum(board.getBoardNo()); // 기존 게시글 조회
 		
-		if(!(upfile.getOriginalFilename() != null)) {
-			new File(context.getRealPath(board.getChangeName())).delete();
-		}
+//		if(model.getUserNo() == session.getUserNo) {
+//			throw new BoardNotFoundException("작성자와 로그인한 사람이 다릅니다.");
+//		}
+		// 1. 기존 파일 삭제 (업데이트 경로에서)
+		if(model.getFileList() != null && model.getFileList().isEmpty()) {
+			for(BdAttachment file : model.getFileList()) {
+				File existingFile = new File(context.getRealPath(file.getChangeName()));
+				if (existingFile.exists()) {
+	                existingFile.delete(); // 기존 파일 삭제
+		       }
+			}
+    	}
+		// 2. DB에서 기존 파일 데이터 삭제
+		mapper.deleteFileByBoardNo(board.getBoardNo());
 		
-		handlerFileUpload(board, upfile);
-		
-		int result = mapper.updateBoard(board);
-		
-		if(result < 1) {
-			throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
-		}
+		// 3. 새 파일 업로드 및 데이터 삽입
+		BdAttachment[] fileArray = null; // 배열 초기화
+		if (upfiles != null && upfiles.length > 0) {
+	        fileArray = new BdAttachment[upfiles.length]; // 배열 크기 설정
+	        int index = 0;
+	        for (MultipartFile upfile : upfiles) {
+	            if (upfile != null && !upfile.isEmpty()) {
+	                // 파일 업로드 처리
+	            	 fileArray[index++] = createAttachment(board, upfile);
+	            }
+	        }
+	    }
+
+	    // DB에 첨부파일 데이터 삽입
+	    if (fileArray != null && fileArray.length > 0) {
+	        mapper.insertBoardFile(Arrays.asList(fileArray)); // 배열을 리스트로 변환하여 전달
+	    }
+
+	    // 게시글 업데이트
+	    int result = mapper.updateBoard(board);
+	    if (result < 1) {
+	        throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
+	    }
 	}
-	
-	
+
 
 	@Override
 	public void deleteBoard(Long boardNo, String changeName) {
@@ -225,6 +303,70 @@ public class BoardServiceImple implements BoardService {
 		
 	}
 	
+	
+	
+	// 다중 파일 메소드
+	
+	
+	/*
+	// 첨부파일 다중 등록
+	@Transactional
+	@Override
+	public Map<String, Object> saveAll(Board board, List<MultipartFile> upfiles) {
 
+	    // 유효성 검증
+	    validateBoard(board);
+	    List<Board> fileBoards = new ArrayList<>();
+
+	    // 파일 유무 확인 및 처리
+	    if (upfiles != null && !upfiles.isEmpty()) {
+	        for (MultipartFile upfile : upfiles) {
+	            if (!upfile.isEmpty()) {
+	                Board fileBoard = handlerFileUpload(board, upfile);
+	                fileBoards.add(fileBoard);
+	            }
+	        }
+	    }
+
+	    // 게시글 정보 저장
+	    mapper.insertBoard(board);
+
+	    // 파일 정보가 있으면 파일 정보 저장
+	    if (!fileBoards.isEmpty()) {
+	        for (Board fileBoard : fileBoards) {
+	            fileBoard.setBoardNo(board.getBoardNo()); 
+	            mapper.insertBoardFile(fileBoard);
+	        }
+	    }
+		return null;
+	}
+	*/
+	
+	
+	
+	
+	// 댓글등록
+	@Override
+	public int insertComment(Comment comment) {
+		return mapper.insertComment(comment);
+	}
+	
+	// 댓글목록
+	public List<Comment> commentList(long boardNo) {
+		return mapper.commentList(boardNo);
+	}
+	
+	// 댓글삭제
+	/*
+	public int deleteComment(Long commentNo) {
+		return mapper.deleteComment(commentNo);
+	}
+	*/
+	
+	// 대댓글 작성
+	//public int insertReply(Reply reply) {
+	//	return 0;
+	//}
+	
 	
 }

@@ -16,7 +16,7 @@ import lombok.ToString;
 public class BdAttachment {
 
 	private int fileNo; 
-    private int boardNo; 
+    private Long boardNo; 
     private String originName; 
     private String changeName; 
     private String filePath; 

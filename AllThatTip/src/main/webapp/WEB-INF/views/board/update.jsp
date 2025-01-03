@@ -37,7 +37,7 @@
             <h2>게시글 수정하기</h2>
             <br>
 
-            <form id="updateForm" method="post" action="/att/board/notice_list/update" enctype="multipart/form-data">
+            <form id="updateForm" method="post" action="/att/board/list/update" enctype="multipart/form-data">
                 <input type="hidden" name="boardNo" value="${ board.boardNo }" />
                 <table align="center">
                     <tr>
@@ -51,8 +51,7 @@
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="upfile">
-                            
+                            <input type="file" id="upfiles" class="form-control-file border" name="upfiles" multiple>
                             <c:if test="${ not empty board.originName }">
                             
                             	현재 업로드된 파일 : 
