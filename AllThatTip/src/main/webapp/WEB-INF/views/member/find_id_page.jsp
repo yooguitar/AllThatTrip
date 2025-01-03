@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>로그인 페이지 입니다.</title>
+    <title>아이디 찾기</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,26 +62,23 @@
 	    <c:remove var="loginCount" scope="session" />
 	</c:if>
 	-->
+
     <div class="container" id="wrap">
         <br>
-        <h2 class="title-join-biz">로그인</h2>
+        <h2 class="title-join-biz">아이디 찾기</h2>
         <br>
-        <form action="login.me" method="post">
-            <div class="form-group">
-                <label>ID:</label>
-                <input type="id" class="form-control" id="userId" placeholder="아이디 입력" name="userId" required>
+        <form action="findId.me" method="post">
+            <div class="form-group" style="margin-top: 50px;">
+                <label>이름을 입력해주세요.</label>
+                <input type="id" class="form-control" id="userId" placeholder="이름은 회원정보와 일치해야 합니다." name="userName" required>
             </div>
             <div class="form-group">
-                <label>Password:</label>
-                <input type="password" class="form-control" id="userPwd" placeholder="비밀번호 입력" name="userPwd" required>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" name="remember" style="accent-color:rgb(50, 96, 68);" checked> 아이디 저장
-                </label>
-                <a href="findIdPage.me" style="color: rgb(33, 37, 41); float:right;">아이디 / 비밀번호 찾기</a>
-            </div>
-            <button type="submit" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); width: 470px; height: 50px;">로그인</button>
+                <label>조회결과:</label>
+                <input type="id" class="form-control" id="idResult"  placeholder="조회 결과가 표시됩니다." value="${ sessionScope.findUser }" readonly>
+                <c:remove var="findUser" scope="session" />
+            </div> 
+           
+            <button type="submit" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); width: 470px; height: 50px; margin-top: 10px;">조회하기</button>
         </form>
         
         <c:if test="${ sessionScope.loginValue eq 1 }">
@@ -95,21 +92,21 @@
         </c:if>
         
         <br>
-        <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            
-            <a href="/att/joinPage.me" style="color:rgb(50, 96, 68);">회원가입</a><br>
-            
+        <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">비밀번호를 잊으셨나요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" style="color:rgb(50, 96, 68);">비밀번호 찾기</a><br>
         </label>
-        <br><br>
-        <a href="adLoginPage.me" style="margin-left: 215px; color:rgb(50, 96, 68);">admin</a>
+        <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/att/joinPage.me" style="color:rgb(50, 96, 68);">회원가입</a><br>
+        </label>
+        
+        <br>
+    
         <p class="title-join-biz" style="font-size: 12px;">비회원 예약도 가능합니다.</p><br>
         
     </div>
     
     <br>
-    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/att/bizJoinPage.me" style="color:rgb(50, 96, 68);">사업자 회원가입</a>
-    </label>
+   
     
     <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
     

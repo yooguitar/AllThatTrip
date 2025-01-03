@@ -70,6 +70,12 @@ public class MemberServiceImpl implements MemberService {
 		}
 		mapper.memberDelete(userInfo);
 	}
+
+	@Override
+	public String findId(String userName) {
+		return mapper.findId(userName);
+		
+	}
 	
 
 

@@ -19,4 +19,6 @@ public interface MemberMapper {
 	
 	int memberDelete(Member member);
 	
+	String findId(String userName);
+	
 }

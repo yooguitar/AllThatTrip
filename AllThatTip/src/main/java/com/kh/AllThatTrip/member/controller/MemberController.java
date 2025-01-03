@@ -1,5 +1,7 @@
 package com.kh.AllThatTrip.member.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -46,7 +48,6 @@ public class MemberController {
 			return "redirect:/";
 		}
 	}
-	
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
@@ -54,7 +55,6 @@ public class MemberController {
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
-	
 	// 회원정보수정 핸들러
 	@PostMapping("memberUpdate.me")
 	public ModelAndView memberUpdate(Member member, HttpSession session) {
@@ -62,15 +62,23 @@ public class MemberController {
 		session.setAttribute("alertMsg", "정보수정 성공");
 		return mv.setViewNameAndData("member/my_page", null);
 	}
-	
 	// 회원탈퇴 핸들러
 	@PostMapping("memberDelete.me")
 	public ModelAndView memberDelete(String userPwd, HttpSession session) {
 		memberService.memberDelete(userPwd, session);
 		return mv.setViewNameAndData("common/main", null);
 	}
-	
-	
+	// id찾기 핸들러
+	@PostMapping("findId.me")
+	public String findId(String userName, HttpSession session) {
+		String findUser = memberService.findId(userName);
+		if(findUser != null) {
+		session.setAttribute("findUser", findUser);
+		} else {
+			session.setAttribute("findUser", "없는 유저입니다.");
+		}
+		return "redirect:findIdPage.me";
+	}
 	
 	
 	
@@ -124,6 +132,11 @@ public class MemberController {
 	public String deletePage() {
 		return "member/delete_page";
 	}
+	@GetMapping("findIdPage.me")
+	public String findIdPage() {
+		return "member/find_id_page";
+	}
+	
 }
 
 // 짬통

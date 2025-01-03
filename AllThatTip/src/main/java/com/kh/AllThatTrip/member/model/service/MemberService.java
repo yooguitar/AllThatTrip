@@ -16,6 +16,6 @@ public interface MemberService {
 	
 	void memberDelete(String userPwd, HttpSession session);
 	
-	
+	String findId(String userName);
 
 }
