@@ -4,177 +4,288 @@
 <mapper namespace="com.kh.AllThatTrip.board.model.dao.BoardMapper">
     
 	<sql id="boardColumn">
-	SELECT
-			B.BOARD_NO AS boardNo,
-			B.BOARD_TYPE AS boardType,
-			B.BOARD_TITLE AS boardTitle,
-			B.USER_NO AS userNo,
-			M.USER_ID AS boardWriter, 
-			B.BOARD_CONTENT AS boardContent,
-			B.COUNT AS count,
-			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
-	FROM
-			BOARD B
-	JOIN
-			MEMBER M
-	ON
-			B.USER_NO = M.USER_NO
-			
+		SELECT	B.BOARD_NO AS boardNo
+				,B.BOARD_TYPE AS boardType
+				,B.BOARD_TITLE AS boardTitle
+				,B.USER_NO AS userNo
+				,M.USER_ID AS boardWriter 
+				,B.BOARD_CONTENT AS boardContent
+				,B.COUNT AS count
+				,TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+		FROM
+				BOARD B
+		JOIN
+				MEMBER M
+		ON
+				B.USER_NO = M.USER_NO
+				
 	</sql>
 	
 	
 	
-    <!-- 페이징 공지사항 게시글 개수 조회 -->
-	<select id="selectTotalCount" resultType="_int">
+    <!-- 페이징 게시글 개수 조회 -->
+	<select id="selectTotalCount" parameterType="string" resultType="_int">
 	
-	SELECT 
-			COUNT(*)
-	FROM	
-			BOARD
-	WHERE
-			BOARD_TYPE = 10
-	AND
-			STATUS ='Y'
-	
+		SELECT 
+				COUNT(*)
+		FROM	
+				BOARD
+		WHERE	
+				BOARD_TYPE = #{boardType}
+		AND		
+				STATUS ='Y'
+		
 	</select>
-    
-	<!-- 공지사항 전체 게시글 조회 -->    
-	<select id="selectBoardList" resultType="board">
-	<include refid="boardColumn"></include>
-
-	WHERE	B.BOARD_TYPE = 10
-	AND		B.STATUS = 'Y'
-	ORDER BY BOARD_NO DESC
-			
-	</select>
-  	 		
-  	<!-- 공지사항 상세 조회 -->
-  	
-  	<select id="selectByNum" parameterType="long" resultType="board">
-	SELECT
-			BOARD_NO AS boardNo,
-			BOARD_TYPE AS boardType,
-			BOARD_TITLE AS boardTitle,
-			USER_NO AS userNo,
-			USER_ID AS boardWriter, 
-			BOARD_CONTENT AS boardContent,
-			COUNT AS count,
-			ORIGIN_NAME originName,
-			CHANGE_NAME changeName,
-			TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
-	FROM
-			BOARD B
-	JOIN	MEMBER M	USING	(USER_NO)
-	JOIN	BD_ATTACHMENT	USING	(BOARD_NO)
-	WHERE	BOARD_TYPE = 10
-	AND		B.STATUS = 'Y'
-	AND		BOARD_NO = #{boardNo}
-	
-	</select>
-    
- 
     
     <!-- 조회수 증가 -->
-	
 	<update id="increaseCount" parameterType="long">
-	UPDATE
-			BOARD
-	SET
-			COUNT = COUNT + 1
-	WHERE
-		 	BOARD_TYPE = 10
-	AND
-			STATUS = 'Y'
-	AND
-			BOARD_NO = #{boardNo}
+		UPDATE
+				BOARD
+		SET
+				COUNT = COUNT + 1
+		WHERE
+
+				STATUS = 'Y'
+		AND
+				BOARD_NO = #{boardNo}
 	</update>
 	
 	
-	<!-- 공지사항 등록 -->
+	<!-- 공통게시판 전체 게시글 조회 -->    
+	<select id="selectBoardList" parameterType="board" resultType="board">
+	<include refid="boardColumn"></include>
+	
+		WHERE	
+				B.BOARD_TYPE = #{boardType}
+		AND		
+				B.STATUS = 'Y'
+		ORDER 
+		BY 		
+				B.BOARD_NO DESC
+				
+	</select>
+
+  	 		
+  	<!-- 공통게시판 상세 조회 -->
+  	<select id="selectByNum" parameterType="long" resultType="board">
+	
+		<!-- SELECT
+				BOARD_NO AS boardNo,
+				BOARD_TYPE AS boardType,
+				BOARD_TITLE AS boardTitle,
+				USER_NO AS userNo,
+				USER_ID AS boardWriter, 
+				BOARD_CONTENT AS boardContent,
+				COUNT AS count,
+				ORIGIN_NAME originName,
+				CHANGE_NAME changeName,
+				TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+		FROM
+				BOARD B
+		JOIN	MEMBER M	USING	(USER_NO)
+		JOIN	BD_ATTACHMENT	USING	(BOARD_NO)
+		WHERE	BOARD_TYPE = 10
+		AND		B.STATUS = 'Y'
+		AND		BOARD_NO = #{boardNo} -->
+		SELECT
+			    BOARD_NO AS boardNo
+			    ,BOARD_TYPE AS boardType
+			    ,BOARD_TITLE AS boardTitle
+			    ,USER_NO AS userNo
+			    ,USER_ID AS boardWriter 
+			    ,BOARD_CONTENT AS boardContent
+			    ,COUNT AS count
+			    ,TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+		FROM
+		 		BOARD B
+		JOIN	
+				MEMBER M	USING	(USER_NO)
+		WHERE	
+				B.STATUS = 'Y'
+		AND		
+				BOARD_NO = #{boardNo}
+	</select>
+    
+    <!-- 공통게시판 첨부파일리스트 조회 -->
+    <select id="selectFileList" parameterType="long" resultType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
+    	SELECT  
+    			FILE_NO AS fileNo
+		        ,BOARD_NO AS boardNo
+		        ,ORIGIN_NAME AS originName
+		        ,CHANGE_NAME AS changeName
+		        ,FILE_PATH AS filePath
+		        ,UPLOAD_DATE AS uploadDate
+		        ,STATUS AS status
+		FROM 	
+				BD_ATTACHMENT
+		WHERE 	
+				BOARD_NO = #{boardNo}
+    </select>
+ 
+    
+	
+	<!-- 공통게시판 등록 -->
 	<insert id="insertBoard" parameterType="board">
 	
-	INSERT 
-	INTO BOARD 
-			(
-			BOARD_NO, 
-			BOARD_TYPE, 
-			USER_NO, 
-			BOARD_TITLE, 
-			BOARD_CONTENT
-			)
-    VALUES (
-    		SEQ_BUNO.NEXTVAL, 
-    		10, 
-    		#{userNo}, 
-    		#{boardTitle}, 
-    		#{boardContent}
-    		)	
-			
+		INSERT 
+		INTO BOARD 
+				(
+				BOARD_NO 
+				,BOARD_TYPE 
+				,USER_NO 
+				,BOARD_TITLE 
+				,BOARD_CONTENT
+				)
+	    VALUES (
+	    		SEQ_BUNO.NEXTVAL
+	    		,#{boardType}
+	    		,#{userNo}
+	    		,#{boardTitle}
+	    		,#{boardContent}
+	    		)	
+				
 	</insert>
 	
-	<!-- 공지사항 첨부파일 등록 -->
-	<insert id="insertBoardFile" parameterType="board">
-	INSERT 
-    INTO 	BD_ATTACHMENT (
-            FILE_NO, 
-            BOARD_NO, 
-            ORIGIN_NAME, 
-            CHANGE_NAME
-        	)
-	VALUES 
-			(
-            SEQ_BFNO.NEXTVAL, 
-            SEQ_BUNO.CURRVAL, 
-            #{originName}, 
-            #{changeName}
-        	)
 	
+	<!-- 공통게시판 첨부파일 등록 -->
+	<insert id="insertBoardFile" parameterType="java.util.List">
+		INSERT 
+	    INTO 	BD_ATTACHMENT (
+	            FILE_NO 
+	            ,BOARD_NO 
+	            ,ORIGIN_NAME 
+	            ,CHANGE_NAME
+	        	)
+		VALUES 
+		<foreach collection="list" item="file" separator=",">
+				(
+	            SEQ_BFNO.NEXTVAL 
+	            ,#{file.boardNo} 
+	            ,#{file.originName} 
+            	,#{file.changeName}
+	        	)
+		</foreach>
 	
 	</insert>
 	
-	<!-- 공지사항 수정 -->
+	
+	
+	<!-- 공통게시판 수정 -->
 	<update id="updateBoard" parameterType="board">
 	
-	UPDATE
-			BOARD
-	SET
-			BOARD_TITLE = ${boardTitle},
-			BOARD_CONTENT = ${boardContent}, 
-			ORIGIN_NAME = #{originName},
-	 		CHANGE_NAME = #{changeName}
-	WHERE
-			BOARD_NO = #{boardNo}
-	AND
-			STATUS = 'Y'
+		UPDATE
+				BOARD
+		SET
+				BOARD_TITLE = #{boardTitle}
+				,BOARD_CONTENT = #{boardContent}
+				
+		WHERE
+				BOARD_NO = #{boardNo}
+		AND
+				STATUS = 'Y'
+		
+	</update>
+	
+	<!-- 공통게시판 첨부파일 삭제 -->
+	
+	<update id="deleteBoardFile" >
+		UPDATE 	
+				BD_ATTACHMENT
+	   	SET 	
+	   			STATUS = 'N'
+		WHERE 	
+				BOARD_NO = #{boardNo}
 	
 	</update>
-	   
+	
+	<!-- 사진게시판 첨부파일 진짜 삭제 -->
+	<delete id="deleteFileByBoardNo" parameterType="long">
+	    DELETE 
+	    FROM 
+	    		BD_ATTACHMENT
+	    WHERE 
+	    		board_no = #{boardNo}
+	</delete>
+	
+	
     
-    <!-- 공지사항 삭제 -->
+    <!-- 공통게시판 글삭제(업데이트처리) -->
     <update id="deleteBoard" parameterType="board">
-    UPDATE
-    		BOARD
-    SET
-    		BOARD_TITLE = #{boardTitle},
-			BOARD_CONTENT = #{boardContent},
-			ORIGIN_NAME = #{originName},
-		 	CHANGE_NAME = #{changeName}
-	WHERE
-			BOARD_NO = #{boardNo}
-	AND
-			STATUS = 'Y'
-    
+	    UPDATE
+	    		BOARD
+	    SET
+				STATUS = 'N'
+		WHERE
+				BOARD_NO = #{boardNo}
+		AND
+				STATUS = 'Y'
+	    
     </update>
     
     
     
     
     
+    <!-- 댓글 등록 -->
+    <insert id="insertComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment">
+    	INSERT
+    	INTO
+    			TB_COMMENT(
+    			COMMENT_NO
+		        ,BOARD_NO
+		        ,USER_NO
+		        ,COMMENT_CONTENT
+    			)
+    	VALUES	
+    			(
+    			SEQ_CNO.NEXTVAL
+		        ,#{boardNo}
+		        ,#{userNo}
+		        ,#{commentContent}
+    			)
+    </insert>
+    			
+
+    <!-- 댓글 조회 -->
+    <select id="commentList" parameterType="long" resultType="com.kh.AllThatTrip.board.model.vo.Comment">
+	    SELECT
+	    		COMMENT_NO commentNo
+	   			,USER_NO userNo
+	   			,COMMENT_CONTENT commentContent
+	   			,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
+	    FROM
+	    		TB_COMMENT
+	    WHERE
+	    		STATUS = 'Y'
+	    AND
+	    		BOARD_NO = #{boardNo}
+	    ORDER
+	    BY
+	    		COMMENT_NO DESC
+    </select>
     
     
     
     
+    <delete id="deleteComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment" >
     
+    	DELETE
+    	  FROM
+    			TB_COMMENT
+    	WHERE
+    			COMMENT_NO = #{commentNo}
+    </delete>
     
+   
+    <!-- 댓글 수정 
+    <update id="updateComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment">
+    	UPDATE 
+    			COMMENT
+    	SET		
+    			COMMENT_CONTENT = #{commentContent}
+    	WHERE
+    			COMMENT = #{commentNo}
     
+    </update>
+    -->
 </mapper>

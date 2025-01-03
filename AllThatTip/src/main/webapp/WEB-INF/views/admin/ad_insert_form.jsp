@@ -32,6 +32,13 @@
         #img-area > img{
             width : 80%;
         }
+        
+        #adRadio{
+        
+        
+        
+        }
+        
     </style>
 </head>
 <body>
@@ -44,7 +51,7 @@
             <h2>게시글 작성하기</h2>
             <br>
 
-            <form id="enrollForm" method="post" action="adNotices" enctype="multipart/form-data">
+            <form id="enrollForm" method="post" action="admin_notice" enctype="multipart/form-data">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
@@ -52,11 +59,16 @@
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginUser.userId }" name="adWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginAdmin.adId }" name="adWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                    </tr>
+                    <tr>
+                    	<th><label for="importent">중요도</label></th>
+                    	<td><p>중요</p><input type="radio" id="adRadio" name="importent" value="Y"></td>
+                    	<td><p>비중요</p><input type="radio" id="adRadio" name="importent" value="N" checked="checked"></td>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>

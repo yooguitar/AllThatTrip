@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
+import com.kh.AllThatTrip.admin.model.vo.Admin;
 
 @Mapper
 public interface AdminMapper {
@@ -24,6 +25,8 @@ public interface AdminMapper {
 
 	int deleteAdNotice(Long adNoticeNo);
 
+	Admin adLogin(Admin admin);
+	
 	
 	
 }

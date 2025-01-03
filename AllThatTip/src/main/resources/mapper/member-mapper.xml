@@ -22,9 +22,25 @@
 	 	   STATUS = 'Y'
 	   AND
 	   	   USER_ID = #{userId}
+</select>
+
+<select id="deletedUser" parameterType="member" resultType="member">
+	SELECT
+		   USER_NO 	userNo,
+		   USER_ID 	userId,
+		   USER_PWD userPwd,
+		   USER_NAME userName,
+		   EMAIL,
+		   PHONE,
+		   SPAM,
+		   STATUS,
+		   ENROLL_DATE enrollDate
+	  FROM
+	  	   MEMBER
+	 WHERE
+	 	   STATUS = 'N'
 	   AND
-	   	   USER_PWD = #{userPwd}
-	  	   
+	   	   USER_ID = #{userId}
 </select>
 
 
@@ -58,7 +74,40 @@
 
 </insert>
 
+<select id="checkId" resultType="_int">
+	SELECT
+		   COUNT(*)
+      FROM	
+           MEMBER
+     WHERE
+     	   USER_ID = #{userId}
+       AND	
+           STATUS = 'Y'
+</select>
 
+<update id="memberUpdate" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   USER_PWD = #{userPwd},
+	   	   USER_NAME = #{userName},
+	   	   EMAIL = #{email},
+	   	   PHONE = #{phone},
+		   SPAM = #{spam}
+     WHERE
+     	   USER_ID = #{userId}
+       AND
+       	   STATUS = 'Y'
+</update>
+
+<update id="memberDelete" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   STATUS = 'N'
+	 WHERE	
+	       USER_ID = #{userId}
+</update>
 
 
 
@@ -70,3 +119,33 @@
 
 
 </mapper> 
+<!-- 
+<insert id="bizJoin" parameterType="bUser">
+	INSERT
+	  INTO	
+	       BUSINESS_USER
+	       (
+	       BIZ_NO,
+		   BIZ_NAME,
+		   BIZ_FILENO,
+		   ORIGIN_NAME,
+		   CHANGE_NAME,
+		   FILE_PATH,
+		   UPLOAD_DATE,
+		   FILE_STATUS,
+		   USER_NO
+	       )
+	VALUES
+		   (
+		   SEQ_BUNO.NEXTVAL,
+		   #{bizName},
+		   #{bizFileNo},
+		   #{originName},1``
+		   #{changeName},
+		   #{filePath},
+		   DEFAULT,                                                                                                         
+	       DEFAULT,
+		   #{userNo}
+		   )
+</insert>
+-->

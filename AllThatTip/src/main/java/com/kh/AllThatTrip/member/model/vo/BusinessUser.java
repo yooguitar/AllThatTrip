@@ -18,7 +18,7 @@ public class BusinessUser {
 	private Long bizNo;
 	private String bizName;
 	private String bizFileNo;
-	private String oraginName;
+	private String originName;
 	private String changeName;
 	private String filePath;
 	private Date uploadDate;
