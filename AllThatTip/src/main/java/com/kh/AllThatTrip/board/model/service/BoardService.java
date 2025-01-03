@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.board.model.vo.Comment;
-import com.kh.AllThatTrip.board.model.vo.Reply;
 
 public interface BoardService {
 
@@ -34,7 +33,7 @@ public interface BoardService {
 	List<Comment> commentList(long boardNo);
 	
 	// 댓글삭제
-	//int deleteComment(Long commentNo);
+	int deleteComment(Long commentNo);
 	
 	// 대댓글 작성
 	//int insertReply(Reply reply);

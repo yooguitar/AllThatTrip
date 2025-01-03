@@ -131,7 +131,7 @@
 		
 		        <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" var="num">
 		            <li class="page-item">
-		                <a class="page-link" href="list?boardType=${pageInfo.boardType}&page=${num}">
+		                <a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
 		                    ${num}
 		                </a>
 		            </li>
