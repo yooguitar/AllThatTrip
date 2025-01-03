@@ -64,13 +64,14 @@ public class BoardApiController {
 		
 		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	}
-		
+	
 	// 댓글 삭제
-	@PostMapping("/{commentNo}")
+	/*
+	@PostMapping("/comment/{commentNo}")
 	public ResponseEntity<ResponseData> ajaxDeleteComment(@PathVariable Long commentNo) {
 
 	    // 삭제 서비스 호출 (성공 시 1, 실패 시 0 반환)
-	    int result = boardService.deleteByComment(commentNo);
+	    int result = boardService.deleteComment(commentNo);
 
 	    // 응답 메시지 설정
 	    String message = (result > 0) ? "댓글이 삭제되었습니다." : "댓글 삭제에 실패했습니다.";
@@ -85,6 +86,8 @@ public class BoardApiController {
 
 	    return new ResponseEntity<ResponseData>(response, status);
 	}
-		
+	
+	*/
+
 
 }

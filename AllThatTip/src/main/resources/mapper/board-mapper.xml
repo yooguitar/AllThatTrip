@@ -266,7 +266,7 @@
     
     
     
-    <!-- 댓글 삭제 -->
+    <!-- 댓글 삭제 
     <delete id="deleteComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment" >
     
     	DELETE
@@ -275,7 +275,7 @@
     			COMMENT_NO
     </delete>
     
-    
+    -->
     <!-- 댓글 수정 
     <update id="updateComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment">
     	UPDATE 

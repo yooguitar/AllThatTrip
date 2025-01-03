@@ -57,7 +57,8 @@ public interface BoardMapper {
 	List<Comment> commentList(long boardNo);
 	
 	// 댓글삭제
-	public int deleteByComment(long commentNo);
+
+	//int deleteComment(long commentNo);
 	
 	
 	// 대댓글 작성

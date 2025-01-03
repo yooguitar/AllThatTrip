@@ -357,10 +357,11 @@ public class BoardServiceImple implements BoardService {
 	}
 	
 	// 댓글삭제
-	public int deleteByComment(long commentNo) {
-		return mapper.deleteByComment(commentNo);
+	/*
+	public int deleteComment(Long commentNo) {
+		return mapper.deleteComment(commentNo);
 	}
-	
+	*/
 	
 	// 대댓글 작성
 	//public int insertReply(Reply reply) {

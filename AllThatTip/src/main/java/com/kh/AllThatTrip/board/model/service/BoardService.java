@@ -34,7 +34,7 @@ public interface BoardService {
 	List<Comment> commentList(long boardNo);
 	
 	// 댓글삭제
-	int deleteByComment(long commentNo);
+	//int deleteComment(Long commentNo);
 	
 	// 대댓글 작성
 	//int insertReply(Reply reply);

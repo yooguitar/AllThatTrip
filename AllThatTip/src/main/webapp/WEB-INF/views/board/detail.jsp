@@ -237,6 +237,9 @@
 								    					<td>\${e.userId}</td>
 								    					<td>\${e.commentContent}</td>
 								    					<td>\${e.createDate}</td>
+								    					<td>
+							                            <button class="comment-delete-btn " onclick="deleteByComment(${e.commentNo});">삭제</button>
+							                        	</td>
 														</tr>`    					
 								    				).join('');
     				
@@ -247,6 +250,30 @@
     		
     	}
     	
+    	function deleteByComment(commentNo) {
+    		if(confirm('댓글을 삭제하시겠습니까?')){
+    			$.ajax({
+    				url: `/att/comment/${commentNo}`,
+    				type: 'post',
+    				data:{
+    					_method: 'DELETE'
+    				},
+    				success: function(result){
+    					console.log(result);
+    					if(result.data === 1){
+	   						 alert('댓글이 삭제되었습니다.');
+	   		                    selectComment(); // 삭제 후 댓글 목록 갱신
+	   		                } else {
+	   		                    alert('댓글 삭제에 실패했습니다.');
+	   		                }
+	   		            },
+	   		            error: function(xhr, status, error) {
+	   		                console.error('댓글 삭제 오류:', error);
+	   		                alert('댓글 삭제 중 오류가 발생했습니다.');
+	   		            }
+	   		        });
+	   		    }
+	   		}
     	
     	
     	
