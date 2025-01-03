@@ -4,14 +4,14 @@
 <mapper namespace="com.kh.AllThatTrip.board.model.dao.BoardMapper">
     
 	<sql id="boardColumn">
-		SELECT	B.BOARD_NO AS boardNo,
-				B.BOARD_TYPE AS boardType,
-				B.BOARD_TITLE AS boardTitle,
-				B.USER_NO AS userNo,
-				M.USER_ID AS boardWriter, 
-				B.BOARD_CONTENT AS boardContent,
-				B.COUNT AS count,
-				TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+		SELECT	B.BOARD_NO AS boardNo
+				,B.BOARD_TYPE AS boardType
+				,B.BOARD_TITLE AS boardTitle
+				,B.USER_NO AS userNo
+				,M.USER_ID AS boardWriter 
+				,B.BOARD_CONTENT AS boardContent
+				,B.COUNT AS count
+				,TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
 		FROM
 				BOARD B
 		JOIN
@@ -88,14 +88,14 @@
 		AND		B.STATUS = 'Y'
 		AND		BOARD_NO = #{boardNo} -->
 		SELECT
-			    BOARD_NO AS boardNo,
-			    BOARD_TYPE AS boardType,
-			    BOARD_TITLE AS boardTitle,
-			    USER_NO AS userNo,
-			    USER_ID AS boardWriter, 
-			    BOARD_CONTENT AS boardContent,
-			    COUNT AS count,
-			    TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+			    BOARD_NO AS boardNo
+			    ,BOARD_TYPE AS boardType
+			    ,BOARD_TITLE AS boardTitle
+			    ,USER_NO AS userNo
+			    ,USER_ID AS boardWriter 
+			    ,BOARD_CONTENT AS boardContent
+			    ,COUNT AS count
+			    ,TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
 		FROM
 		 		BOARD B
 		JOIN	
@@ -109,13 +109,13 @@
     <!-- 공통게시판 첨부파일리스트 조회 -->
     <select id="selectFileList" parameterType="long" resultType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
     	SELECT  
-    			FILE_NO AS fileNo,
-		        BOARD_NO AS boardNo,
-		        ORIGIN_NAME AS originName,
-		        CHANGE_NAME AS changeName,
-		        FILE_PATH AS filePath,
-		        UPLOAD_DATE AS uploadDate,
-		        STATUS AS status
+    			FILE_NO AS fileNo
+		        ,BOARD_NO AS boardNo
+		        ,ORIGIN_NAME AS originName
+		        ,CHANGE_NAME AS changeName
+		        ,FILE_PATH AS filePath
+		        ,UPLOAD_DATE AS uploadDate
+		        ,STATUS AS status
 		FROM 	
 				BD_ATTACHMENT
 		WHERE 	
@@ -130,18 +130,18 @@
 		INSERT 
 		INTO BOARD 
 				(
-				BOARD_NO, 
-				BOARD_TYPE, 
-				USER_NO, 
-				BOARD_TITLE, 
-				BOARD_CONTENT
+				BOARD_NO 
+				,BOARD_TYPE 
+				,USER_NO 
+				,BOARD_TITLE 
+				,BOARD_CONTENT
 				)
 	    VALUES (
-	    		SEQ_BUNO.NEXTVAL, 
-	    		#{boardType},
-	    		#{userNo}, 
-	    		#{boardTitle}, 
-	    		#{boardContent}
+	    		SEQ_BUNO.NEXTVAL
+	    		,#{boardType}
+	    		,#{userNo}
+	    		,#{boardTitle}
+	    		,#{boardContent}
 	    		)	
 				
 	</insert>
@@ -151,18 +151,18 @@
 	<insert id="insertBoardFile" parameterType="java.util.List">
 		INSERT 
 	    INTO 	BD_ATTACHMENT (
-	            FILE_NO, 
-	            BOARD_NO, 
-	            ORIGIN_NAME, 
-	            CHANGE_NAME
+	            FILE_NO 
+	            ,BOARD_NO 
+	            ,ORIGIN_NAME 
+	            ,CHANGE_NAME
 	        	)
 		VALUES 
 		<foreach collection="list" item="file" separator=",">
 				(
-	            SEQ_BFNO.NEXTVAL, 
-	            #{file.boardNo}, 
-	            #{file.originName}, 
-            	#{file.changeName}
+	            SEQ_BFNO.NEXTVAL 
+	            ,#{file.boardNo} 
+	            ,#{file.originName} 
+            	,#{file.changeName}
 	        	)
 		</foreach>
 	
@@ -176,8 +176,8 @@
 		UPDATE
 				BOARD
 		SET
-				BOARD_TITLE = #{boardTitle},
-				BOARD_CONTENT = #{boardContent}
+				BOARD_TITLE = #{boardTitle}
+				,BOARD_CONTENT = #{boardContent}
 				
 		WHERE
 				BOARD_NO = #{boardNo}
@@ -226,11 +226,65 @@
     
     
     
+    <!-- 댓글 등록 -->
+    <insert id="insertComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment">
+    	INSERT
+    	INTO
+    			TB_COMMENT(
+    			COMMENT_NO
+		        ,BOARD_NO
+		        ,USER_NO
+		        ,COMMENT_CONTENT
+    			)
+    	VALUES	
+    			(
+    			SEQ_CNO.NEXTVAL
+		        ,#{boardNo}
+		        ,#{userNo}
+		        ,#{commentContent}
+    			)
+    </insert>
+    			
+
+    <!-- 댓글 조회 -->
+    <select id="commentList" parameterType="long" resultType="com.kh.AllThatTrip.board.model.vo.Comment">
+	    SELECT
+	    		COMMENT_NO commentNo
+	   			,USER_NO userNo
+	   			,COMMENT_CONTENT commentContent
+	   			,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
+	    FROM
+	    		TB_COMMENT
+	    WHERE
+	    		STATUS = 'Y'
+	    AND
+	    		BOARD_NO = #{boardNo}
+	    ORDER
+	    BY
+	    		COMMENT_NO DESC
+    </select>
     
     
     
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment" >
+    
+    	DELETE
+    			COMMENT
+    	WHERE
+    			COMMENT_NO
+    </delete>
     
     
+    <!-- 댓글 수정 
+    <update id="updateComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment">
+    	UPDATE 
+    			COMMENT
+    	SET		
+    			COMMENT_CONTENT = #{commentContent}
+    	WHERE
+    			COMMENT = #{commentNo}
     
-    
+    </update>
+    -->
 </mapper>

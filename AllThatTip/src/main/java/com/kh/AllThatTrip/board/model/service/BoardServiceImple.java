@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.AllThatTrip.board.model.dao.BoardMapper;
 import com.kh.AllThatTrip.board.model.vo.BdAttachment;
 import com.kh.AllThatTrip.board.model.vo.Board;
+import com.kh.AllThatTrip.board.model.vo.Comment;
+import com.kh.AllThatTrip.board.model.vo.Reply;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
@@ -145,7 +147,7 @@ public class BoardServiceImple implements BoardService {
 		return board;
 	}	
 	
-	// 다중파일..
+	// 다중파일
 	private BdAttachment createAttachment(Board board, MultipartFile upfile) {
 	    
 	    Board updatedBoard = handlerFileUpload(board, upfile);
@@ -339,4 +341,31 @@ public class BoardServiceImple implements BoardService {
 		return null;
 	}
 	*/
+	
+	
+	
+	
+	// 댓글등록
+	@Override
+	public int insertComment(Comment comment) {
+		return mapper.insertComment(comment);
+	}
+	
+	// 댓글목록
+	public List<Comment> commentList(long boardNo) {
+		return mapper.commentList(boardNo);
+	}
+	
+	// 댓글삭제
+	public int deleteByComment(long commentNo) {
+		return mapper.deleteByComment(commentNo);
+	}
+	
+	
+	// 대댓글 작성
+	//public int insertReply(Reply reply) {
+	//	return 0;
+	//}
+	
+	
 }

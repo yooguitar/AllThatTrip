@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
 import com.kh.AllThatTrip.board.model.vo.Board;
+import com.kh.AllThatTrip.board.model.vo.Comment;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 
@@ -163,7 +164,7 @@ public class BoardController {
 	    return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 	*/
-
+	
 
 	
 	

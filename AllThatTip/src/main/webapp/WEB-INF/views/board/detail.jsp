@@ -123,12 +123,13 @@
             <br><br>
 
             <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
-            <table id="replyArea" class="table" align="center">
+            <table id="CommentArea" class="table" align="center">
                 <thead>
                 
-                	<!-- 비회원 노출 영역 -->
+                	<!-- 비회원 노출 영역 
                 	<c:choose>
 	                	<c:when test="${ empty sessionScope.loginUser }">
+	                	
 	                    <tr>
 	                        <th colspan="2">
 	                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
@@ -141,16 +142,33 @@
 	                     <th colspan="2">
 	                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
 	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th> 
+	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
 	                    </tr>
 	                    </c:otherwise>
                     </c:choose>
+                    비회원으로 일단하자..--> 
+                    
+                    
+                    <tr>
+					    <th colspan="2">
+					        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+					    </th>
+					    <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
+					</tr>
+                    
+                    
+                    
                     
                     
                     <tr>
                         <td colspan="3">댓글(<span id="rcount">0</span>)</td>
                     </tr>
                 </thead>
+                
+                
+                
+                
+                
                 <tbody>
                    
                    
@@ -163,63 +181,46 @@
     
     <script>
     
-    	function findAllFile() {
-    		
-    		const 
-    	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    	function addReply() {
+    	
+    	// 댓글 리스트 호출
+    	$(function(){
+    		// alert(${board.boardNo})
+    		selectComment();
+    	})
+    	
+    	function addComment() {
 			
     		if($('#content').val().trim() != ''){
     			
     			$.ajax({
-    				url: '/hyper/reply',
-    				data: {
-    					refBoardNo: ${board.boardNo},
-    					replyContent : $('#content').val(),
-    					replyWriter: '${sessionScope.loginUser.userId}'
-    				},
+    				url: '/att/comment',
     				type: 'post',
+    				data: {
+    					 	boardNo: ${board.boardNo}, 
+    		                commentContent: $('#content').val(),
+    		                userNo: '1' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
+    		        },
     				success: function(result) {
 						
-    					// console.log(result);
+    					console.log(result);
     					
-    					if(result === 1){
-    						$('#content').val('');
+    					if(result.data === 1){
+    						$('#content').val(''); 
     					}
+    						selectComment();
+    						$('html, body').animate({ scrollTop: $('#CommentArea').offset().top }, 'slow');
 					}
     				
     			});
     		}
 		}
+		
+
     	
-    	
-    	$(function(){
-    		// alert(${board.boardNo})
-    		selectReply();
-    	})
-    	
-    	
-    	function selectReply(){
+    	function selectComment(){
     		
     		$.ajax({
-    			url: '/hyper/reply',
+    			url: '/att/comment',
     			type: 'get',
     			data: {
     				boardNo : ${board.boardNo}
@@ -233,13 +234,13 @@
     				
     				const resultStr = replies.map(e => 
 								    					`<tr>
-								    					<td>\${e.replyWriter}</td>
-								    					<td>\${e.replyContent}</td>
+								    					<td>\${e.userId}</td>
+								    					<td>\${e.commentContent}</td>
 								    					<td>\${e.createDate}</td>
 														</tr>`    					
 								    				).join('');
     				
-    				$('#replyArea tbody').html(resultStr);
+    				$('#CommentArea tbody').html(resultStr);
     				$('#rcount').text(result.data.length);
     			}
     		});
