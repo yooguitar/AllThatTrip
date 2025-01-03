@@ -61,7 +61,7 @@
         
 
     
-    <!--<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
+    <!--<jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> s-->
 
 </body>
 
