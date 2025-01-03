@@ -1,6 +1,8 @@
 
 .navbar {
     display: flex;
+    display :flex;
+    margin : auto;
     justify-content: space-between;
     align-items: center;
     background-color: var(--background-color);
@@ -8,7 +10,6 @@
     width: 1200px;
     height: 70px;
     animation: Bottom 1s forwards;
-    margin : auto;
   }
 
   .navbar__logo{

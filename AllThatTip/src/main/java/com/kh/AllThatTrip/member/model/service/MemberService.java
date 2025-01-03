@@ -1,6 +1,6 @@
 package com.kh.AllThatTrip.member.model.service;
 
-import org.springframework.web.servlet.ModelAndView;
+import javax.servlet.http.HttpSession;
 
 import com.kh.AllThatTrip.member.model.vo.Member;
 
@@ -8,15 +8,13 @@ public interface MemberService {
 	
 	Member login(Member member);
 	
-	void join(Member member);
+	int join(Member member);
 	
+	int checkId(String userId);
 	
+	void memberUpdate(Member member, HttpSession session);
 	
-	
-	
-	
-	
-	
+	void memberDelete(String userPwd, HttpSession session);
 	
 	
 
