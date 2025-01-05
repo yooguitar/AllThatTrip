@@ -64,6 +64,10 @@
     background-color: #60B557;
     color: yellow;
 }
+#loc-btn > a:hover{
+    cursor: pointer;
+    color: yellow;
+}
 #bar-2{
     width: 600px;
     height: 58px;
@@ -120,19 +124,19 @@
     margin: 2px;
 }
 #list-1{
-    background: red;
+    background-color: gainsboro;
 }
 #list-2{
-    background-color: orange;
+    background-color: gainsboro;
 }
 #list-3{
-    background-color: yellow;
+    background-color: gainsboro;
 }
 #list-4{
-    background-color: green;
+    background-color: gainsboro;
 }
 #list-5{
-    background-color: blue;
+    background-color: gainsboro;
 }
 #li-mom > li{
     color: white;

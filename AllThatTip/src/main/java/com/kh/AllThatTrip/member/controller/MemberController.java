@@ -91,14 +91,14 @@ public class MemberController {
 	
 	
 	
-	/* ajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajax */
+	/* ajax */
 	@ResponseBody
 	@GetMapping("idcheck")
 	public int checkId(String userId) {
 		return memberService.checkId(userId);
 	}
 	
-	/* 포워딩용 */
+	/* forward */
 	@GetMapping("attHome.me")
 	public String attHome() {
 		return "common/main";
@@ -136,20 +136,12 @@ public class MemberController {
 	public String findIdPage() {
 		return "member/find_id_page";
 	}
-	
+	@GetMapping("nonUserFindRevPage.me")
+	public String nonUserFindRevPage() {
+		return "member/non_user_find_rev_page";
+	}
+	@GetMapping("cartPage.me")
+	public String cartPage() {
+		return "member/cart_page";
+	}
 }
-
-// 짬통
-//
-// 사업자 회원가입 핸들러
-//	@PostMapping("biz-join.me")
-//	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
-//		if(bUser.getOriginName() != null) {
-//			Member result = memberService.bizJoin(member);
-//			Long userNum = result.getUserNo();
-//			bUser.setUserNo(userNum);
-//			memberService.bizFile(bUser);
-//		} else {
-//			// 예외클래스 만들기
-//		}
-//	}

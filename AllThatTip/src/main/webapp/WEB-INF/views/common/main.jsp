@@ -44,7 +44,9 @@
             
                             <div id="bar">
                                 <div id="bar-1">
-                                    <button type="button" id="loc-btn">지역별</button> <!-- onclick <a href="캠핑지도"> -->
+                                    <button type="button" id="loc-btn">
+                                        <a href="#cate1" style="text-decoration: none; color:white;">지역별</a>
+                                    </button>
                                 </div>
                                 <div id="bar-2">
                                     <form action="검색하기~" method="get">
