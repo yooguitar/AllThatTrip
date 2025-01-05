@@ -136,12 +136,20 @@ public class MemberController {
 	public String findIdPage() {
 		return "member/find_id_page";
 	}
-	@GetMapping("nonUserFindRevPage.me")
-	public String nonUserFindRevPage() {
-		return "member/non_user_find_rev_page";
+	@GetMapping("nonUserFindRsvPage.me")
+	public String nonUserFindRsvPage() {
+		return "member/non_user_find_rsv_page";
 	}
 	@GetMapping("cartPage.me")
 	public String cartPage() {
 		return "member/cart_page";
+	}
+	@GetMapping("wishlistPage.me")
+	public String wishlistPage() {
+		return"member/wishlist_page";
+	}
+	@GetMapping("findRsvPage.me")
+	public String findRsvPage() {
+		return "member/find_rsv_page";
 	}
 }

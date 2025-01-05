@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-    <title>장바구니</title>
+    <title>예약내역 확인</title>
     <style>
         body{
             font-family: "Arial", "Helvetica", sans-serif;
@@ -28,15 +28,11 @@
             border-bottom: 5px solid rgb(50, 96, 68);
         }   
         #cart-div-2{
-            width: 750px;
+            width: 1000px;
             height: auto;
         }
         #cart-div-2 > li{
             list-style: none;
-        }
-        #cart-div-3{
-            width: 250px;
-            height: 700px;
         }
         .cart-div{
             display: inline;
@@ -51,84 +47,56 @@
 <body>
     <div id="wrap">
         <div id="cart-div-1">
-            <h1 style="margin-bottom: 10px;">장바구니</h1>
+            <h1 style="margin-bottom: 10px;">예약 내역 조회</h1>
         </div>
 
         <div id="cart-div-2" class="cart-div" style="margin-top: 100px;">
-            <!--예약 내역이 없을 경우 보여질 div-->
+            <!--찜 내역이 없을 경우 보여질 div-->
             <li id="content-empty">  
                 <div class="content-div-temp">
                     <h3 style="text-align: center;">예약 내역이 없습니다. **display:none</h3>
                 </div>
             </li>
-            <!--예약 내역이 있을 경우 div 반복-->
+            <!--찜 내역이 있을 경우 div 반복-->
             <li>
                 <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
-                    <div style="width: 40px; display: inline; float: left;">
-                        &nbsp;
-                        <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
-                    </div>
+                    <div style="width: 40px; display: inline; float: left;">&nbsp;&nbsp;&nbsp;</div>
                     <div style="display: inline; float: left;">
                         <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
                         " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
                     </div>
-                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 150px; overflow-wrap: break-word;">
                         <a href="#" style="color:black; text-decoration: none;">상품명입력</a>
                     </div>
                     <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
                         <a href="#" style="color: black; text-decoration: none;">가격입력</a>
+                    </div>
+                    <div>
+                        <button onclick="" class="btn btn-primary" style="width: 120px; height: 40px; margin-top: 90px; margin-left: 50px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">예약 취소</button>
                     </div>
                 </div>
             </li>
             <!-- 이건 더미 -->
             <li>
                 <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
-                    <div style="width: 40px; display: inline; float: left;">
-                        &nbsp;
-                        <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
-                    </div>
+                    <div style="width: 40px; display: inline; float: left;">&nbsp;&nbsp;&nbsp;</div>
                     <div style="display: inline; float: left;">
                         <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
                         " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
                     </div>
-                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 150px; overflow-wrap: break-word;">
                         <a href="#" style="color:black; text-decoration: none;">목록2번</a>
                     </div>
                     <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
                         <a href="#" style="color: black; text-decoration: none;">39,800원</a>
                     </div>
+                    <div>
+                        <button onclick="" class="btn btn-primary" style="width: 120px; height: 40px; margin-top: 90px; margin-left: 50px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">예약 취소</button>
+                    </div>
                 </div>
             </li>
         </div>
 
-        <div id="cart-div-3" class="cart-div">
-            <div style="height: 250px;">
-                <table style="margin: auto; vertical-align: auto;">
-                    <br>
-                    <th>주문하실 상품(checked)
-                        <tr>
-                            <td>목록1</td>
-                            <td>가격</td>
-                        </tr>
-                        <tr>
-                            <td>목록2</td>
-                            <td>가격</td>
-                        </tr>
-                    </th>
-                </table>
-            </div>
-            <div style="border-top: 3px solid rgb(50, 96, 68);">
-                <table style="margin: auto;">
-                    <br>
-                    <tr style="font-weight: 800;">
-                        <td>총계:&nbsp;</td>
-                        <td>원</td>
-                    </tr>    
-                </table>
-            </div>
-            <br><br>
-            <button onclick="" id="submit-btn-fin" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">주문하기</button>
-        </div>
 
     </div>
     

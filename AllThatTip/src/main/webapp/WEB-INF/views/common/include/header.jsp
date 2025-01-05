@@ -68,7 +68,7 @@
           <c:when test="${ sessionScope.loginUser eq null }">
 	          <li><a href="#">AllThatTrip!</a>
 	              <ul>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/nonUserFindRevPage.me">예약내역</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/nonUserFindRsvPage.me">예약내역</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="#">장바구니</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="#">이벤트</a></li>
@@ -78,9 +78,9 @@
 	      <c:otherwise>
 	          <li><a href="/att/myPage.me">내정보</a>
 	              <ul>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">예약내역</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/findRsvPage.me">예약내역</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/wishlistPage.me">찜하기</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="#">이벤트</a></li>
 	              </ul>
 	          </li>

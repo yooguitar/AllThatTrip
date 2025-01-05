@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-    <title>장바구니</title>
+    <title>찜목록</title>
     <style>
         body{
             font-family: "Arial", "Helvetica", sans-serif;
@@ -51,17 +51,17 @@
 <body>
     <div id="wrap">
         <div id="cart-div-1">
-            <h1 style="margin-bottom: 10px;">장바구니</h1>
+            <h1 style="margin-bottom: 10px;">찜 목록</h1>
         </div>
 
         <div id="cart-div-2" class="cart-div" style="margin-top: 100px;">
-            <!--예약 내역이 없을 경우 보여질 div-->
+            <!--찜 내역이 없을 경우 보여질 div-->
             <li id="content-empty">  
                 <div class="content-div-temp">
                     <h3 style="text-align: center;">예약 내역이 없습니다. **display:none</h3>
                 </div>
             </li>
-            <!--예약 내역이 있을 경우 div 반복-->
+            <!--찜 내역이 있을 경우 div 반복-->
             <li>
                 <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
                     <div style="width: 40px; display: inline; float: left;">
@@ -127,7 +127,9 @@
                 </table>
             </div>
             <br><br>
-            <button onclick="" id="submit-btn-fin" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">주문하기</button>
+            <button onclick="" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">장바구니에 담기</button>
+            <br>
+            <button onclick="" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); margin-top: 10px;">주문하기</button>
         </div>
 
     </div>
