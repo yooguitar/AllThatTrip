@@ -56,6 +56,7 @@
                     <th>작성일</th>
                     <td colspan="3">${board.createDate}</td>
                 </tr>
+                
                 <tr>
                     <th scope="row">첨부파일</th>
                     <td id="files" colspan="1">
@@ -74,7 +75,6 @@
 	                    </c:otherwise>
  					</c:choose>
                 </tr>
-                
                 
                 <tr>
                     <th>내용</th>

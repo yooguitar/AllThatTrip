@@ -117,7 +117,7 @@ public class BoardServiceImple implements BoardService {
 	// 파일업로드
 	private Board handlerFileUpload(Board board, MultipartFile upfile) {
 		
-		if(upfile == null) {
+		if(upfile == null || upfile.isEmpty()) {
 			log.info("파일이 존재하지 않습니다.");
 
 			return board;
@@ -135,10 +135,9 @@ public class BoardServiceImple implements BoardService {
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch(IOException e) {
-			throw new FailToFileUploadException("파일 이상해");
+			throw new FailToFileUploadException("파일 업로드 실패");
 		}
 		
-		// 첨부파일이 존재했다 → 업로드 + Board객체에 originName + changeName
 		board.setOriginName(fileName);
 		board.setChangeName("/resources/upload_files/" + changeName);
 		//log.info("File save path: {}", savePath)/;
@@ -148,7 +147,7 @@ public class BoardServiceImple implements BoardService {
 	
 	// 다중파일
 	private BdAttachment createAttachment(Board board, MultipartFile upfile) {
-	    
+		
 	    Board updatedBoard = handlerFileUpload(board, upfile);
 
 	    // BdAttachment 객체 생성
@@ -209,6 +208,7 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	// 등록
+	
 	@Transactional
 	@Override
 	public void insertBoard(Board board, MultipartFile upfile) {
@@ -230,6 +230,31 @@ public class BoardServiceImple implements BoardService {
 	    }
 				 	
 	}
+	/*
+	@Transactional
+	@Override
+	public void insertBoard(Board board, MultipartFile[] upfiles) {
+		// 유효성 검증
+		validateBoard(board);
+		
+		mapper.insertBoard(board);
+		log.info("board{}",board);
+		// 파일 유무
+		if (upfiles != null && upfiles.length > 0) {
+			List<BdAttachment> attachments = new ArrayList<>();
+			for (MultipartFile upfile : upfiles) {
+				if (!upfile.isEmpty()) {
+					BdAttachment attachment = createAttachment(board, upfile);
+					attachments.add(attachment);
+				}
+			}
+		
+        if (!attachments.isEmpty()) {
+            mapper.insertBoardFile(attachments);
+        }
+    }
+}
+	*/
 	
 	
 	// 수정
@@ -303,7 +328,16 @@ public class BoardServiceImple implements BoardService {
 	}
 	
 	
-	
+	// 검색
+	public Map<String, Object> searchByCondition(Map<String, Object> params) {
+	    List<Board> boards = mapper.searchByCondition(params);
+
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("boards", boards);
+
+	    return result;
+	}
+
 	// 다중 파일 메소드
 	
 	

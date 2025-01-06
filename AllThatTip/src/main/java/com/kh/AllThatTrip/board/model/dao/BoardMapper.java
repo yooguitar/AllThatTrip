@@ -1,8 +1,10 @@
 package com.kh.AllThatTrip.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.board.model.vo.BdAttachment;
@@ -58,12 +60,20 @@ public interface BoardMapper {
 	int deleteComment(long commentNo);
 	
 	
+	// 검색
+	List<Board> searchByCondition(Map<String, Object> params);
+
+
+
+	
+	
 	// 대댓글 작성
-//	public int insertReply(Reply reply);
+	//	public int insertReply(Reply reply);
 	
 
+	// 검색기능
 
-		
+
 	
 
 }

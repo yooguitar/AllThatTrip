@@ -69,24 +69,6 @@
   	<!-- 공통게시판 상세 조회 -->
   	<select id="selectByNum" parameterType="long" resultType="board">
 	
-		<!-- SELECT
-				BOARD_NO AS boardNo,
-				BOARD_TYPE AS boardType,
-				BOARD_TITLE AS boardTitle,
-				USER_NO AS userNo,
-				USER_ID AS boardWriter, 
-				BOARD_CONTENT AS boardContent,
-				COUNT AS count,
-				ORIGIN_NAME originName,
-				CHANGE_NAME changeName,
-				TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
-		FROM
-				BOARD B
-		JOIN	MEMBER M	USING	(USER_NO)
-		JOIN	BD_ATTACHMENT	USING	(BOARD_NO)
-		WHERE	BOARD_TYPE = 10
-		AND		B.STATUS = 'Y'
-		AND		BOARD_NO = #{boardNo} -->
 		SELECT
 			    BOARD_NO AS boardNo
 			    ,BOARD_TYPE AS boardType
@@ -125,7 +107,7 @@
     
 	
 	<!-- 공통게시판 등록 -->
-	<insert id="insertBoard" parameterType="board">
+	<insert id="insertBoard" parameterType="board" useGeneratedKeys="true" >
 	
 		INSERT 
 		INTO BOARD 
@@ -288,4 +270,44 @@
     
     </update>
     -->
+    
+    
+    <!-- 검색기능 -->
+   <select id="searchByCondition" resultType="board" parameterType="map">
+    SELECT
+	        BOARD_NO boardNo,
+	        BOARD_TITLE boardTitle,
+	        BOARD_TYPE boardType,
+	        USER_NO userNo,
+	        BOARD_CONTENT boardContent,
+	        COUNT,
+	        TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
+    FROM
+       	 	BOARD
+    WHERE
+	        STATUS = 'Y'
+	AND 	BOARD_TYPE = #{boardType}
+	AND 	
+	            <choose>
+	                <when test="condition == 'title'">
+	                    BOARD_TITLE LIKE '%' || #{keyword} || '%'
+	                </when>
+	                <when test="condition == 'content'">
+	                    BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+	                </when>
+	                <when test="condition == 'writer'">
+                    	USER_NO IN (
+                        SELECT USER_NO
+                        FROM USERS
+                        WHERE USERNAME LIKE '%' || #{keyword} || '%'
+                   		)
+               		 </when>
+	                <otherwise>
+	                    1 = 0 
+	                </otherwise>
+	            </choose>
+	        
+	</select>
+	
+
 </mapper>

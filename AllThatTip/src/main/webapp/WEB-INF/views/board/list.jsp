@@ -87,19 +87,21 @@
                      <th>작성일</th>
                  </tr>
              </thead>
+             
+             
              <tbody>
-             	
              	<c:forEach items="${boards}" var="board">
-		    <tr onclick="detail('${board.boardNo}')"> 
-		        <td>${board.boardNo}</td>
-		        <td>${board.boardTitle}</td>
-		        <td>${board.boardWriter}</td>
-		        <td>${board.count}</td>
-		        <td>${board.createDate}</td>
-		    </tr>
-		</c:forEach>
-                 
+				    <tr onclick="detail('${board.boardNo}')"> 
+				        <td>${board.boardNo}</td>
+				        <td>${board.boardTitle}</td>
+				        <td>${board.boardWriter}</td>
+				        <td>${board.count}</td>
+				        <td>${board.createDate}</td>
+				    </tr>
+				</c:forEach>
              </tbody>
+             
+             
          </table>
          <br>
 		<script>
@@ -107,7 +109,7 @@
 				//console.log(num);
 				
 				const boardType = '${board.boardType}';
-				console.log("boardNo:", num, "boardType:", boardType); 
+				// console.log("boardNo:", num, "boardType:", boardType); 
 				window.location.href = '/att/board/list/'+num+'?boardType=' + boardType;
 			}
 			
@@ -146,23 +148,84 @@
             <br clear="both"><br>
 
             <form id="searchForm" action="" method="get" align="center">
+            <input type="hidden" name="boardType" value="${ board.boardType }" />
                 <div class="select">
-                    <select class="custom-select" name="condition">
+                    <select class="custom-select" name="condition" id="condition">
                         <option value="writer">작성자</option>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
                     </select>
                 </div>
                 <div class="text">
-                    <input type="text" class="form-control" name="keyword">
+                    <input type="text" class="form-control" name="keyword" id="keyword" />
                 </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                <button type="button" class="searchBtn btn btn-secondary" onclick="search();">검색</button>
             </form>
             <br><br>
         </div>
         <br><br>
 
     </div>
+    
+    <script>
+ 	function search(){
+ 		const select = document.getElementById('condition');
+ 		const condition = select.options[select.selectedIndex].value;
+ 		
+ 		$.ajax({
+ 			url: '/att/board/search',
+			type: 'get',
+			data: {
+				 	condition: condition, 
+	                keyword: document.getElementById('keyword').value,
+	                boardType: "${ board.boardType }"
+	        },
+	        success: function(result) {
+	            console.log(result); 
+	            
+	            
+	            const boards = result.boards;
+	            const tableBody = document.querySelector("#boardList tbody");
+	            
+	            tableBody.innerHTML = "";
+	            
+	            // 검색 결과가 있을때
+	            if (boards && boards.length > 0) {
+	                boards.forEach(board => {
+	                    
+	                    const row = `
+	                        <tr onclick="detail('${board.boardNo}')">
+	                            <td>${board.boardNo}</td>
+	                            <td>${board.boardTitle}</td>
+	                            <td>${board.boardWriter}</td>
+	                            <td>${board.count}</td>
+	                            <td>${board.createDate}</td>
+	                        </tr>
+	                    `;
+	                    tableBody.innerHTML += row; 
+	                });
+	            } else {
+	                // 검색 결과가 없을때
+	                tableBody.innerHTML = `<tr>
+	                       					 <td colspan="5">검색 결과가 없습니다.</td>
+	                   						</tr>`;
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("AJAX Error: ", error);
+	        }
+	    });
+	}
+ 	</script>
+    
+    
+    
+    
+    
+ 	
+    
+    
+    
 	<jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>

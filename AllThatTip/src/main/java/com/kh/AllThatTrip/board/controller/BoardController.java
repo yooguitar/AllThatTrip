@@ -1,6 +1,7 @@
 package com.kh.AllThatTrip.board.controller;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
 import com.kh.AllThatTrip.board.model.vo.Board;
-import com.kh.AllThatTrip.board.model.vo.Comment;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 
@@ -56,9 +57,11 @@ public class BoardController {
 	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
-	    
+	    //log.info("board:{}", board);
+	    //log.info("map:{}", map);
 	    map.put("board", board);
-	    
+	   
+	   
     	if(board.getBoardType().equals("10")) {
     		return mv.setViewNameAndData("board/list", map);
     	} else if (board.getBoardType().equals("20")) {
@@ -66,8 +69,10 @@ public class BoardController {
     	} else if (board.getBoardType().equals("30")) {
     		return mv.setViewNameAndData("board/qna", map); 
     	} else if (board.getBoardType().equals("40")) {
-    		return mv.setViewNameAndData("board/photo", map); 
-    	} else {
+    		return mv.setViewNameAndData("board/used", map); 
+    	} else if (board.getBoardType().equals("5")) {
+    		return mv.setViewNameAndData("board/review", map); 
+    	}else {
     		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
     	}
 	    		
@@ -99,11 +104,30 @@ public class BoardController {
 	public ModelAndView insertBoard(Board board, MultipartFile upfile, String boardType, HttpSession session) {
 		
 		board.setBoardType(boardType);
-		// log.info("board : {}, upfile : {}",board, upfile);
+		//log.info("board : {}, upfiles : {}",board, upfiles);
+		
 		boardService.insertBoard(board, upfile);
-		session.setAttribute("alertMsg", "게시글 등록 성공");
-		return mv.setViewNameAndData("redirect:/board/list", null);
-	
+
+	    // boardType에 따라 리다이렉트 URL 설정
+	    String redirectUrl;
+	    switch (board.getBoardType()) {
+	        case "10": redirectUrl = "/board/list?boardType=10"; // 공지사항
+	        			break;
+	        case "20": redirectUrl = "/board/list?boardType=20"; // FAQ
+	        			break;
+	        case "30": redirectUrl = "/board/list?boardType=30"; // QnA
+	            		break;
+	        case "40": redirectUrl = "/board/list?boardType=40"; // 중고거래 게시판
+	            		break;
+	        case "50": redirectUrl = "/board/list?boardType=50"; // 후기
+	            		break;
+	        default: throw new BoardNotFoundException("잘못된 경로입니다.");
+	    }
+	    // 성공 메시지 설정
+	    session.setAttribute("alertMsg", "게시글 등록 성공");
+
+	    // ModelAndView 리턴
+	    return new ModelAndView("redirect:" + redirectUrl);
 	}
 
 	// 상세 조회
@@ -164,11 +188,27 @@ public class BoardController {
 	    return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 	*/
+		
 	
-
 	
-	
-
+	@ResponseBody
+	@GetMapping(value="search", produces="application/json; charset=UTF-8")
+	public Map<String, Object> searchbyCondition(String condition, String keyword, String boardType) {
+		log.info("condition: {}", condition);
+		log.info("keyword: {}", keyword);
+		
+		Map<String, Object> searchParams = new HashMap<>();
+	    searchParams.put("condition", condition);
+	    searchParams.put("keyword", keyword);
+	    searchParams.put("boardType", boardType);
+	    
+	    Map<String, Object> searchResult = boardService.searchByCondition(searchParams);
+	    log.info("params: {}", searchParams);
+	    log.info("searchResult{}", searchResult);
+	    return searchResult;
+	}
+    
+  
 }
 	
 

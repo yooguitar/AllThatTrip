@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-        
+    <jsp:include page="../common/include/header.jsp" />    
 
 
     <div class="content">
@@ -81,6 +81,6 @@
     </div>
     
 
-    
+    <jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>

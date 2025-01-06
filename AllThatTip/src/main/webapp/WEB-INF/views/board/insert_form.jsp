@@ -56,12 +56,12 @@
                         <td><input type="text" id="writer" class="form-control" value="test" name="boardWriter" readonly></td>
                     </tr>
                     <tr>
-                        <th><label for="content">* 내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
+                        <th><label for="upfile">첨부파일</label></th>
+                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
                     </tr>
                     <tr>
-                        <th><label for="upfile">첨부파일</label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                        <th><label for="content">* 내용</label></th>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
                     </tr>
                 </table>
                 <br>
