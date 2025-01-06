@@ -26,12 +26,7 @@
   </head>
 
   <body>
-  <c:if test="${ not empty alertMsg }">
-		<script>
-				alert('successfully');
-		</script>
-		<c:remove var="alertMsg" scope="session" />
-	</c:if>
+
     <nav class="navbar">
       <div class="navbar__logo">
 

@@ -125,4 +125,38 @@
 	   	   AD_PWD = #{adPwd}
 	  	   
 </select>
+  <select id="selectAdReplyList" parameterType="_int" resultType="com.kh.AllThatTrip.admin.model.vo.AdReply">
+  	SELECT
+  	       AD_REP_NO adRepNo,
+  	       AD_REP_NAME adRepName,
+  	       AD_REP_CONTENT adRepContent,
+  	       TO_CHAR(AD_CREATE_DATE, 'YYYY-MM-DD') AS adCreateDate
+  	  FROM      
+  		   TB_AD_REPLY
+	 WHERE  		   	
+	       AD_STATUS ='N'
+	   AND
+	       AD_NOTICE_REP_NO = #{adNoticeNo}
+	 ORDER
+	    BY
+	       AD_REP_NO DESC           
+  </select>
+   <insert id="insertAdReply" parameterType="com.kh.AllThatTrip.admin.model.vo.AdReply">
+  	INSERT
+  	  INTO
+  	       TB_AD_REPLY
+  	       (
+  	       AD_REP_NO,
+  	       AD_REP_CONTENT,
+  	       AD_REP_NAME,
+  	       AD_NOTICE_REP_NO
+  	       )
+    VALUES
+  		   (
+  		   SEQ_AD_RNO.NEXTVAL,
+  		   #{adRepContent},
+  		   #{adRepName},
+  		   #{adNoticeRepNo}
+  		   )
+  </insert>
 </mapper> 

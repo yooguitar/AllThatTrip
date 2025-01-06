@@ -17,13 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
+import com.kh.AllThatTrip.admin.model.vo.AdReply;
 import com.kh.AllThatTrip.admin.model.vo.Admin;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
-import com.kh.AllThatTrip.member.model.service.MemberValidator;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -213,5 +213,16 @@ public class AdServiceImpl implements AdService{
 		return loginAdmin;
 	}
 
+	@Override
+	public int insertAdReply(AdReply adReply) {
+		log.info("{}", adReply);
+		return mapper.insertAdReply(adReply);
+	}
+
+	@Override
+	public List<AdReply> selectAdReplyList(int adNoticeNo) {
+		log.info("{}", adNoticeNo);
+		return mapper.selectAdReplyList(adNoticeNo);
+	}
 
 }

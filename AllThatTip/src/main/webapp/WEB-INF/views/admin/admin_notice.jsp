@@ -43,13 +43,13 @@
 </head>
 <body>
 	
-	<jsp:include page="../common/include/header.jsp" />
+	<jsp:include page="../common/include/ad_nav.jsp" />
 	
 	
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>공지사항</h2>
+            <h2>관리자 공지사항</h2>
           	<br>
             <a class="btn btn-secondary" style="float:right;" href="ad_insert_form">글쓰기</a>
             <br>
@@ -126,17 +126,8 @@
             <br clear="both"><br>
 
             <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="importent">중요</option>
-                    </select>
-                </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+              
+              
             </form>
             <br><br>
         </div>
