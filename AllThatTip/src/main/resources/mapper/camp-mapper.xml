@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.kh.att.camp.model.dao.CampMapper">
+ 	
+ 	<insert id="insertCamp" parameterType="camp">
+ 		INSERT 
+ 		  INTO 
+ 		       CAMP 
+ 		       (
+ 		       CAMP_NO, 
+ 		       BIZ_NO, 
+ 		       CAMP_NAME, 
+ 		       CAMP_ADDR, 
+ 		       CAMP_DESC, 
+ 		       ORIGIN_NAME, 
+ 		       CHANGE_NAME
+ 		       ) 
+ 		VALUES 
+ 		       (
+ 		       SEQ_CNO.NEXTVAL, 
+ 		       3, 
+ 		       #{campName}, 
+ 		       #{campAddr}, 
+ 		       #{campDesc}, 
+ 		       #{originName}, 
+ 		       #{changeName}
+ 		       )
+ 	</insert>
+ 	
+ 	<select id="selectCampList" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'N'
+ 	</select>
+ 	
+ 	<select id="selectCampById" parameterType="long" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'N'
+ 		   AND
+ 		       CAMP_NO = #{campNo}
+ 	</select>
+ 	
+ 	<update id="updateCamp" parameterType="camp">
+ 		UPDATE 
+ 			   CAMP
+ 		   SET
+ 		       CAMP_NAME = #{campName}, 
+ 		       CAMP_ADDR = #{campAddr}, 
+ 		       CAMP_DESC = #{campDesc}, 
+ 		       ORIGIN_NAME = #{originName}, 
+ 		       CHANGE_NAME = #{changeName}, 
+ 		       MODIFY_DATE = SYSDATE 
+ 		 WHERE 
+ 		       STATUS = 'N' 
+ 		   AND 
+ 		       CAMP_NO = #{campNo}
+ 	</update>
+ 	
+ 	<update id="deleteCamp" parameterType="camp">
+ 		UPDATE 
+ 		       CAMP 
+ 		   SET 
+ 		       STATUS = 'Y' 
+ 		 WHERE 
+ 		       STATUS = 'N' 
+ 		   AND 
+ 		       CAMP_NO = #{campNo}
+ 	</update>
+ 	
+ </mapper>
