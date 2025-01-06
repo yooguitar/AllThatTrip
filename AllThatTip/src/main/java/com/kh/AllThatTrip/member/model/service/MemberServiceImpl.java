@@ -77,7 +77,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void findPwd(Member member) {
-//		validator.validateLength(member);
 		validator.validateMail(member);
 		Member result = mapper.findPwd(member);
 		if(result == null) { 
@@ -86,6 +85,13 @@ public class MemberServiceImpl implements MemberService {
 				result.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 				mapper.memberUpdate(result);
 			}
+	}
+	
+	/* 찜, 예약, 장바구니 관련 */
+
+	@Override
+	public void findRsv(Member member) {
+		mapper.findRsv(member);
 	}
 	
 

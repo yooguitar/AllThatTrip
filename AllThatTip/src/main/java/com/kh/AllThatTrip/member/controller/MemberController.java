@@ -86,7 +86,14 @@ public class MemberController {
 	
 	
 	
-	
+	/* 예약, 찜, 장바구니 관련 */
+	@GetMapping("findRsvPage.me")
+	public String findRsvPage(HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		memberService.findRsv(loginUser);
+		
+		return "member/find_rsv_page";
+	}
 	
 	
 	
@@ -147,10 +154,6 @@ public class MemberController {
 	@GetMapping("wishlistPage.me")
 	public String wishlistPage() {
 		return"member/wishlist_page";
-	}
-	@GetMapping("findRsvPage.me")
-	public String findRsvPage() {
-		return "member/find_rsv_page";
 	}
 	@GetMapping("findPwdPage.me")
 	public String findPwdPage() {

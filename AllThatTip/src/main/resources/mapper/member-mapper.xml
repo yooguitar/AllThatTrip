@@ -140,38 +140,34 @@
 </select>
 
 
+<!-- 찜, 예약, 장바구니 관련 -->
+<select id="findRsv" parameterType="member" resultMap="">
+	SELECT
+	       m.USER_NO,
+	       u.ROOM_NAME,
+	       u.ROOM_PRICE,
+	       u.ROOM_IMG
+	  FROM
+	       USER_RES_ROOM u
+	  FULL
+	 OUTER
+	  JOIN
+	       MEMBER m
+	    ON
+	       m.user_id = u.user_id
+	 ORDER
+	    BY
+	       RES_NO ASC;
+
+</select>
+
+
+
+
+
+
 
 
 
 
 </mapper> 
-<!-- 
-<insert id="bizJoin" parameterType="bUser">
-	INSERT
-	  INTO	
-	       BUSINESS_USER
-	       (
-	       BIZ_NO,
-		   BIZ_NAME,
-		   BIZ_FILENO,
-		   ORIGIN_NAME,
-		   CHANGE_NAME,
-		   FILE_PATH,
-		   UPLOAD_DATE,
-		   FILE_STATUS,
-		   USER_NO
-	       )
-	VALUES
-		   (
-		   SEQ_BUNO.NEXTVAL,
-		   #{bizName},
-		   #{bizFileNo},
-		   #{originName},1``
-		   #{changeName},
-		   #{filePath},
-		   DEFAULT,                                                                                                         
-	       DEFAULT,
-		   #{userNo}
-		   )
-</insert>
--->

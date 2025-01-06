@@ -23,4 +23,7 @@ public interface MemberMapper {
 	
 	Member findPwd(Member member);
 	
+	/* 찜, 예약, 장바구니 관련 */
+	void findRsv(Member member);
+	
 }
