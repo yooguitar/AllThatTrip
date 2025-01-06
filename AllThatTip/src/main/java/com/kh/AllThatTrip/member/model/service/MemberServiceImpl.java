@@ -37,6 +37,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int join(Member member) {
+		log.info("입력정보:{}", member);
 		Member userInfo = mapper.login(member);
 		validator.validateJoinMember(member);
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
@@ -76,13 +77,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void findPwd(Member member) {
 //		validator.validateLength(member);
-//		validator.validateMail(member);
+		validator.validateMail(member);
 		Member result = mapper.findPwd(member);
-		log.info("1차 조회결과{}", result);
 		if(result == null) { 
 			throw new LoginFailedException("입력 정보를 확인해주세요."); 
 			} else { 
-				System.out.println("null이 아님");
 				result.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 				mapper.memberUpdate(result);
 			}

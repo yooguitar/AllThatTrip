@@ -85,13 +85,13 @@
 			// 도메인 직접입력 선택
       const $domain = $('#domain');
       const $selectDomainSelf = $('#select-domain-self');
-      const $email = $('#email');
+      const $email2 = $('#email-2');
       
       $domain.change(function(){
         if($domain.val() == $selectDomainSelf.val()){
-          $email.css('display', '');
+          $email2.css('display', '');
         } else{
-          $email.css('display', 'none');
+          $email2.css('display', 'none');
         }
       });
 
@@ -149,7 +149,7 @@
 
         <p style="display: inline;">&nbsp;@&nbsp;</p>
 
-        <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain" required>
+        <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain">
             <option value="" id="select-domain-self">직접 입력</option>
             <option value="@kh.com" selected>kh.com</option>
             <option value="@google.com">google.com</option>
@@ -157,8 +157,9 @@
             <option value="@daum.net">daum.net</option>
         </select>
         
-        <!-- 진짜 양식이 전송 될 input -->
-        <input type="text" id="email" style="display: none; width: 360px; margin-left: 410px;" name="email" placeholder="@를 꼭 입력해주세요.">
+        <input type="text" id="email-2" class="form-control" style="display: none; width: 360px; margin-left: 410px;" name="email-2" placeholder="@를 꼭 입력해주세요.">
+        <!-- 완성된 양식이 전송 될 input -->
+        <input type="text" id="email" class="form-control" style="display: none; width: 360px; margin-left: 410px;" name="email">
 
     </div>
 
@@ -210,7 +211,8 @@
   function submitBtn(){
       const emailId = document.getElementById('email-id').value;
       const domain = document.getElementById('domain').value;
-      const email = emailId + domain;
-      document.getElementById('email').value = email; 
+      const email2 = document.getElementById('email-2').value;
+      const email = emailId + domain + email2;
+      document.getElementById('email').value = email;
   }
 </script>
