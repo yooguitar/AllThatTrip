@@ -1,7 +1,5 @@
 package com.kh.AllThatTrip.member.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -30,7 +28,6 @@ public class MemberController {
 	// 로그인 핸들러
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session){
-
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
 			int loginValue = 1;
@@ -51,7 +48,6 @@ public class MemberController {
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
-		//log.info("member입력값 {}", member);
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}

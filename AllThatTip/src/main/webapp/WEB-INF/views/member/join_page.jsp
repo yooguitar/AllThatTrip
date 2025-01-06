@@ -94,30 +94,6 @@
           $email2.css('display', 'none');
         }
       });
-
-      // 휴대폰번호 '-' 자동추가
-      const $phone = ('#phone');
-      $phone.indexOf(function(){
-        
-      })
-	
-	
-
-
-
-
-
-	    
-
-
-
-
-
-
-			const $formControl = $('.form-control'); 
-			const $submitBtnFin = $('#submit-btn-fin');
-	 		
-			
 	
 		})
 	</script>
@@ -174,21 +150,23 @@
         <label>인증번호를 입력 해주세요</label>
         <input type="text" class="form-control" id="phone-ck" placeholder="인증번호 입력 / 아무 숫자나 입력하면 인증 됩니다">
         <br>
-        <button type="button" class="btn btn-primary" id="phone-ck-btn2" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">확인</button>
+        <button onclick="ableBtn();" type="button" class="btn btn-primary" id="phone-ck-btn2" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">확인</button>
     </div>
     <script>
       // 인증번호 입력칸 표시
       function showCheckDiv(){
           document.getElementById('phone-ck-div').removeAttribute('style');
       }
-
+      function ableBtn(){
+        document.getElementById('submit-btn-fin').removeAttribute('disabled');
+      }
     </script>
 
 
     <div class="form-group form-check">
         <br>
       <label class="form-check-label" style="margin-left: 100px;">
-        <input onclick="getSpamCk" type="checkbox" id="spam" name="spam" value="1" style="accent-color:rgb(50, 96, 68);" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" id="spam" name="spam" value="1" style="accent-color:rgb(50, 96, 68);" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </label>
       <label class="form-check-label">
         <input type="checkbox" style="accent-color:rgb(50, 96, 68);" required> 14세 이상입니다
@@ -196,7 +174,7 @@
       <br><br>
     </div>
 
-    <button onclick="submitBtn();" id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
+    <button onclick="submitBtn();" disabled id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
   </form>
   
 </div>
@@ -215,4 +193,7 @@
       const email = emailId + domain + email2;
       document.getElementById('email').value = email;
   }
+
+
+
 </script>

@@ -6,6 +6,11 @@
 <head>
     <title>Document</title>
 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/semantic.min.css"/>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <link rel="stylesheet" href="resources/css/style_main_search.css">
     <link rel="stylesheet" href="resources/css/style_main_map.css">
@@ -32,6 +37,17 @@
         <div id="area">
             <div id="back"></div>
 			<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
+
+            <!-- 회원 탈퇴 성공 시-->
+            <c:if test="${ sessionScope.deleteSuccess ne null}">
+                <script>
+                    alertify
+                    .alert("탈퇴 되었습니다.", function(){
+                        alertify.message('잘가');
+                    });        
+                </script>	
+                <c:remove var="deleteSuccess" scope="session" />
+            </c:if>
 
             <div class="content">
 
