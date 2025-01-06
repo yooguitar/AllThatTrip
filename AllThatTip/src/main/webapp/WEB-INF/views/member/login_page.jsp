@@ -49,6 +49,15 @@
     </style>
 </head>
 <body>
+    <c:if test="${ sessionScope.successAlert ne null }">
+            <script>
+                alertify
+		        .alert("변경 완료!", function(){
+                    alertify.message('확인');
+		        });        
+                </script>	
+	        <c:remove var="successAlert" scope="session" />
+    </c:if>
 	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
 	
 	<!-- 

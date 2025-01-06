@@ -79,9 +79,13 @@ public class MemberController {
 		}
 		return "redirect:findIdPage.me";
 	}
-	
-	
-	
+	// pw찾기 핸들러(pw를 찾아줄 수 없으므로 일치하는 id, phone이 있다면 update 수행)
+	@PostMapping("findPwd.me")
+	public String findPwd(Member member, HttpSession session) {
+		memberService.findPwd(member);
+		session.setAttribute("successAlert", member);
+		return "redirect:loginPage.me";
+	}
 	
 	
 	
@@ -151,5 +155,9 @@ public class MemberController {
 	@GetMapping("findRsvPage.me")
 	public String findRsvPage() {
 		return "member/find_rsv_page";
+	}
+	@GetMapping("findPwdPage.me")
+	public String findPwdPage() {
+		return "member/find_pwd_page";
 	}
 }

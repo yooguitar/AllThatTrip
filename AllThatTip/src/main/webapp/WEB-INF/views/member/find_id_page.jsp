@@ -93,7 +93,7 @@
         
         <br>
         <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">비밀번호를 잊으셨나요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="#" style="color:rgb(50, 96, 68);">비밀번호 찾기</a><br>
+        <a href="/att/findPwdPage.me" style="color:rgb(50, 96, 68);">비밀번호 찾기</a><br>
         </label>
         <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="/att/joinPage.me" style="color:rgb(50, 96, 68);">회원가입</a><br>

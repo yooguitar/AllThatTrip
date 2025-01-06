@@ -21,4 +21,6 @@ public interface MemberMapper {
 	
 	String findId(String userName);
 	
+	Member findPwd(Member member);
+	
 }

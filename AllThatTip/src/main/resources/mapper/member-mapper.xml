@@ -120,7 +120,24 @@
 	       STATUS = 'Y'
 </select>
 
-
+<select id="findPwd" parameterType="member" resultType="member">
+	SELECT
+		   USER_ID 	userId,
+		   USER_PWD userPwd,
+		   USER_NAME userName,
+		   EMAIL,
+		   PHONE,
+		   SPAM,
+		   STATUS
+	  FROM
+	  	   MEMBER
+	 WHERE
+	   	   USER_ID = #{userId}
+	   AND
+	   	   EMAIL = #{email}
+	   AND
+	   	   STATUS = 'Y'	   
+</select>
 
 
 

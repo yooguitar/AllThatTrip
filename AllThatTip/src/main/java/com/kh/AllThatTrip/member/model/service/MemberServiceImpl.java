@@ -38,8 +38,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int join(Member member) {
 		Member userInfo = mapper.login(member);
-		// 상태N인 ID 그대로 다시 회원가입하면 UNIQUE 제약조건 걸려서 500에러
-		// 해결 안되는중
 		validator.validateJoinMember(member);
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 		return mapper.join(member);
@@ -64,7 +62,6 @@ public class MemberServiceImpl implements MemberService {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		loginUser.setUserPwd(userPwd);
 		Member userInfo = mapper.login(loginUser);
-		log.info("값이 돌아왔는지? ()", userPwd);
 		if(userInfo == null) {
 			throw new LoginFailedException("입력 정보를 확인해주세요.");
 		}
@@ -74,7 +71,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String findId(String userName) {
 		return mapper.findId(userName);
-		
+	}
+
+	@Override
+	public void findPwd(Member member) {
+//		validator.validateLength(member);
+//		validator.validateMail(member);
+		Member result = mapper.findPwd(member);
+		log.info("1차 조회결과{}", result);
+		if(result == null) { 
+			throw new LoginFailedException("입력 정보를 확인해주세요."); 
+			} else { 
+				System.out.println("null이 아님");
+				result.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
+				mapper.memberUpdate(result);
+			}
 	}
 	
 
