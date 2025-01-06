@@ -74,7 +74,7 @@
             </div>
             <div class="form-group">
                 <label>조회결과:</label>
-                <input type="id" class="form-control" id="idResult"  placeholder="조회 결과가 표시됩니다." value="${ sessionScope.findUser }" readonly>
+                <input type="id" class="form-control" id="idResult" style="color: orangered;" placeholder="조회 결과가 표시됩니다." value="${ sessionScope.findUser }" readonly>
                 <c:remove var="findUser" scope="session" />
             </div> 
            

@@ -75,7 +75,7 @@ public class MemberController {
 		if(findUser != null) {
 		session.setAttribute("findUser", findUser);
 		} else {
-			session.setAttribute("findUser", "없는 유저입니다.");
+			session.setAttribute("findUser", "존재하지 않는 사용자입니다.");
 		}
 		return "redirect:findIdPage.me";
 	}
