@@ -15,7 +15,7 @@ public interface BoardService {
 	 // 페이징 + 목록
     Map<String, Object> selectBoardList(Board board);
     // 등록
-    void insertBoard(Board board, MultipartFile upfile);
+    void insertBoard(Board board, MultipartFile[] upfiles);
 
     // 상세 조회
     Map<String, Object> selectByNum(long boardNo);

@@ -147,8 +147,8 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="" method="get" align="center">
-            <input type="hidden" name="boardType" value="${ board.boardType }" />
+            <form id="searchForm" action="/att/board/list" method="get" align="center">
+            	<input type="hidden" name="boardType" value="${ board.boardType }" />
                 <div class="select">
                     <select class="custom-select" name="condition" id="condition">
                         <option value="writer">작성자</option>
@@ -159,7 +159,7 @@
                 <div class="text">
                     <input type="text" class="form-control" name="keyword" id="keyword" />
                 </div>
-                <button type="button" class="searchBtn btn btn-secondary" onclick="search();">검색</button>
+                <button type="button" class="searchBtn btn btn-secondary" onclick="searchSubmit()">검색</button>
             </form>
             <br><br>
         </div>
@@ -168,6 +168,14 @@
     </div>
     
     <script>
+    
+	// 검색하기
+    function searchSubmit() {
+    	$('#searchForm').submit();
+    }
+    
+    
+    // 검색하기 ajax
  	function search(){
  		const select = document.getElementById('condition');
  		const condition = select.options[select.selectedIndex].value;
@@ -193,15 +201,15 @@
 	            if (boards && boards.length > 0) {
 	                boards.forEach(board => {
 	                    
-	                    const row = `
-	                        <tr onclick="detail('${board.boardNo}')">
-	                            <td>${board.boardNo}</td>
-	                            <td>${board.boardTitle}</td>
-	                            <td>${board.boardWriter}</td>
-	                            <td>${board.count}</td>
-	                            <td>${board.createDate}</td>
-	                        </tr>
-	                    `;
+	                    var row = '';
+	                        row += '<tr onclick="detail('+board.boardNo+')")>'
+			                row += '   <td>'+board.boardNo+'</td>'
+			                row += '     <td>'+board.boardTitle+'</td>'
+			                row += '     <td>'+board.boardWriter+'</td>'
+			                row += '     <td>'+board.count+'</td>'
+			                row += '     <td>'+board.createDate+'</td>'
+			                row += ' </tr>'
+	                    ;
 	                    tableBody.innerHTML += row; 
 	                });
 	            } else {

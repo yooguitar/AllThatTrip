@@ -28,7 +28,7 @@
 		text-align : center;
 	}
 
-	.thumnail{
+	.thumbnail{
 		box-shadow : 1px 1px 2px #0000002e;
 		width : 300px;
 		padding : 12px;
@@ -40,7 +40,7 @@
 		border-radius: 12px;
 	}
 
-	.thumnail > img{
+	.thumbnail > img{
 		width : 270px;
 		height : 180px;
 		margin-bottom : 8px;
@@ -48,7 +48,7 @@
 		border-radius: 12px;
 	}
 
-	.thumnail:hover{
+	.thumbnail:hover{
 		cursor:pointer;
 		opacity:0.8;
 	}
@@ -85,13 +85,13 @@
     </div>
 
         <c:choose>
-            <c:when test="${ empty list }">
+            <c:when test="${ empty boards }">
                 등록된 게시글이 존재하지 않습니다. <br>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${ list }" var="board">
+                <c:forEach items="${ boards }" var="board">
                     
-                <div class="thumnail" align="center">
+                <div class="thumbnail" align="center">
                     <input type="hidden" value="${ board.boardNo }" />
                     <img src="${ board.imagePath }" alt="이미지">
                     <p>
@@ -104,7 +104,7 @@
         </c:choose>
         
         <script type="text/javascript">
-            $('.thumnail').click(function(){
+            $('.thumbnail').click(function(){
                 
             	const boardNo = $(this).children().eq(0).val();
             

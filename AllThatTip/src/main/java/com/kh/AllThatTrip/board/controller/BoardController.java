@@ -1,7 +1,6 @@
 package com.kh.AllThatTrip.board.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -40,6 +39,7 @@ public class BoardController {
 	// 20	FAQ
 	// 30	fna
 	// 40	중고거래
+	// 50	
 
 	
 	// 전체 리스트 조회
@@ -57,7 +57,7 @@ public class BoardController {
 	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
-	    //log.info("board:{}", board);
+	    log.info("board:{}", board);
 	    //log.info("map:{}", map);
 	    map.put("board", board);
 	   
@@ -70,7 +70,7 @@ public class BoardController {
     		return mv.setViewNameAndData("board/qna", map); 
     	} else if (board.getBoardType().equals("40")) {
     		return mv.setViewNameAndData("board/used", map); 
-    	} else if (board.getBoardType().equals("5")) {
+    	} else if (board.getBoardType().equals("50")) {
     		return mv.setViewNameAndData("board/review", map); 
     	}else {
     		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
@@ -101,12 +101,15 @@ public class BoardController {
 
 	// 공통게시판 등록
 	@PostMapping("list/insert")
-	public ModelAndView insertBoard(Board board, MultipartFile upfile, String boardType, HttpSession session) {
+	public ModelAndView insertBoard(Board board, MultipartFile[] upfiles, String boardType, HttpSession session) {
 		
 		board.setBoardType(boardType);
 		//log.info("board : {}, upfiles : {}",board, upfiles);
-		
-		boardService.insertBoard(board, upfile);
+
+		for(MultipartFile r : upfiles) {
+			log.info("r :: {}", r.toString());
+		}
+		boardService.insertBoard(board, upfiles);
 
 	    // boardType에 따라 리다이렉트 URL 설정
 	    String redirectUrl;
@@ -170,27 +173,8 @@ public class BoardController {
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 
-	/*
-	// 첨부파일 다중저장
-	@PostMapping("photo")
-	public ModelAndView saveAll(Board board, 
-	                            @RequestParam("upfile") List<MultipartFile> upfiles, 
-	                            String boardType, 
-	                            HttpSession session) {
-	    try {
-	        board.setBoardType(boardType);
-	        boardService.saveAll(board, upfiles);
-	        session.setAttribute("alertMsg", "게시글 등록 성공");
-	    } catch (Exception e) {
-	        session.setAttribute("alertMsg", "게시글 등록 실패: " + e.getMessage());
-	        log.error("게시글 등록 실패", e);
-	    }
-	    return mv.setViewNameAndData("redirect:/board/list", null);
-	}
-	*/
-		
 	
-	
+	// 검색
 	@ResponseBody
 	@GetMapping(value="search", produces="application/json; charset=UTF-8")
 	public Map<String, Object> searchbyCondition(String condition, String keyword, String boardType) {

@@ -55,6 +55,23 @@
                         <th><label for="writer">* 작성자</label></th>
                         <td><input type="text" id="writer" class="form-control" value="test" name="boardWriter" readonly></td>
                     </tr>
+                    <!-- <tr>
+			            <th><label for="thumbnail">썸네일</label></th>
+			            <td><input type="file" id="thumbnail" class="form-control-file border" name="thumbnailFile" required></td>
+			        </tr> -->
+			        
+                    <tr>
+                        <th><label for="upfile">썸네일</label></th>
+                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
+                    </tr>
+                    <tr>
+                        <th><label for="upfile">첨부파일</label></th>
+                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
+                    </tr>
+                    <tr>
+                        <th><label for="upfile">첨부파일</label></th>
+                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
+                    </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>

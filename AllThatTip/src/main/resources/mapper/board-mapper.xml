@@ -12,6 +12,12 @@
 				,B.BOARD_CONTENT AS boardContent
 				,B.COUNT AS count
 				,TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+				, (
+		            SELECT CHANGE_NAME 
+		            FROM BD_ATTACHMENT BD 
+		            WHERE B.BOARD_NO = BD.BOARD_NO
+		            AND ( SELECT MIN(file_no) FROM BD_ATTACHMENT BB WHERE BB.BOARD_NO = BD.BOARD_NO ) = BD.FILE_NO
+		          ) imagePath
 		FROM
 				BOARD B
 		JOIN
@@ -108,7 +114,9 @@
 	
 	<!-- 공통게시판 등록 -->
 	<insert id="insertBoard" parameterType="board" useGeneratedKeys="true" >
-	
+		<selectKey resultType="Long" keyProperty="boardNo" order="BEFORE">
+			SELECT SEQ_BUNO.NEXTVAL FROM DUAL
+		</selectKey>
 		INSERT 
 		INTO BOARD 
 				(
@@ -119,7 +127,7 @@
 				,BOARD_CONTENT
 				)
 	    VALUES (
-	    		SEQ_BUNO.NEXTVAL
+	    		#{boardNo}
 	    		,#{boardType}
 	    		,#{userNo}
 	    		,#{boardTitle}
@@ -130,7 +138,7 @@
 	
 	
 	<!-- 공통게시판 첨부파일 등록 -->
-	<insert id="insertBoardFile" parameterType="java.util.List">
+	<insert id="insertBoardFile" parameterType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
 		INSERT 
 	    INTO 	BD_ATTACHMENT (
 	            FILE_NO 
@@ -139,14 +147,12 @@
 	            ,CHANGE_NAME
 	        	)
 		VALUES 
-		<foreach collection="list" item="file" separator=",">
-				(
-	            SEQ_BFNO.NEXTVAL 
-	            ,#{file.boardNo} 
-	            ,#{file.originName} 
-            	,#{file.changeName}
-	        	)
-		</foreach>
+			(
+            SEQ_BFNO.NEXTVAL 
+            ,#{boardNo} 
+            ,#{originName} 
+           	,#{changeName}
+        	)
 	
 	</insert>
 	

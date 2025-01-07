@@ -45,7 +45,7 @@ public interface BoardMapper {
 	// 첨부파일 리스트 진짜 삭제
 	void deleteFileByBoardNo(Long boardNo);
 
-	void insertBoardFile(List<BdAttachment> asList);
+	void insertBoardFile(BdAttachment asList);
 
 	
 	// 댓글등록

@@ -31,8 +31,10 @@ public class Board {
 	private String status;
 	private List<BdAttachment> fileList;
 	private int page;
-  
-		
+	private String keyword;
+	private String condition;
+	private String imagePath;
+	
 } 
 		
 	
