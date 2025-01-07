@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
-
 	private final MemberMapper mapper;
 	private final PasswordEncryptor passwordEncoder;
 	private final MemberValidator validator;
@@ -30,7 +29,6 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int join(Member member) {
-		Member userInfo = mapper.login(member);
 		validator.validateJoinMember(member);
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 		return mapper.join(member);

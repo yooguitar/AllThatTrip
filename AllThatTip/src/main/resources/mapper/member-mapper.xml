@@ -57,7 +57,8 @@
 	  	   PHONE,
 	  	   SPAM,
 	  	   STATUS,
-	  	   ENROLL_DATE
+	  	   ENROLL_DATE,
+	  	   LOGIN_COUNT
 	  	   )
 	VALUES
 		   (
@@ -69,7 +70,8 @@
 		   #{phone},
 		   #{spam},
 		   DEFAULT,
-		   DEFAULT
+		   DEFAULT,
+		   1
 		   )
 
 </insert>
