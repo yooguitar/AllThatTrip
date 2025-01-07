@@ -35,19 +35,20 @@
       </div>
       <div id=navi>
         <ul id="navbar">
-          <li><a href="#">Camp</a>
+          <li><a href="/att/camps/list">Camp</a>
             <ul>
-              <li><a class=aTag style = color:#ebebeb; href="#">오토캠핑장</a></li>
+              <li><a class="aTag" style=color:#ebebeb; href="#">오토캠핑장</a></li>
               
-              <li><a class=aTag style = color:#ebebeb; href="#">글램핑</a></li>
+              <li><a class="aTag" style = color:#ebebeb; href="#">글램핑</a></li>
               
-              <li><a class=aTag style = color:#ebebeb; href="#">카라반</a></li>
+              <li><a class="aTag" style = color:#ebebeb; href="#">카라반</a></li>
 
-              <li><a class=aTag style = color:#ebebeb; href="#">펜션</a></li>
-
-          </ul>
+              <li><a class="aTag" style = color:#ebebeb; href="#">펜션</a></li>
+              
+              <li><a class="aTag" style = color:#ebebeb; href="/att/camps/biz">사업자 메뉴</a></li>
+            </ul>
           </li>
-          <li><a class=aTag href="#">테마검색</a></li>
+          <li><a class="aTag" href="#">테마검색</a></li>
               
           <li><a class=aTag href="http://localhost/att/board/list?boardType=10">커뮤니티</a>
               <ul>
@@ -88,7 +89,7 @@
           </c:choose>
           
 
-          <li><a class=aTag  href="#">추천맛집</a></li>
+          <li><a class="aTag"  href="#">추천맛집</a></li>
 
       </ul>
     </div>

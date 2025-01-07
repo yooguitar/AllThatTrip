@@ -24,6 +24,11 @@ public class CampController {
 	
 	private final CampService campService;
 	private final ModelAndViewUtil mv;
+	
+	@GetMapping("biz")
+	public String forwardBizPage() {
+		return "camp/biz";
+	}
 
 	@GetMapping("list")
 	public ModelAndView selectCampList() {
