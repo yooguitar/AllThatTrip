@@ -10,7 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245); 
             width:80%;
             margin:auto;
         }
@@ -44,7 +43,7 @@
             <br>
 
             <form id="enrollForm" method="post" action="/att/board/list/insert" enctype="multipart/form-data">
-           		<input type="hidden" name="boardType" value="${param.boardType}">
+           		<input type="hidden" name="boardType" value="${board.boardType}">     
                 <input type="hidden" name="userNo" value=1>
                 <table align="center">
                     <tr>
@@ -61,31 +60,44 @@
 			        </tr> -->
 			        
                     <tr>
-                        <th><label for="upfile">썸네일</label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
-                    </tr>
-                    <tr>
-                        <th><label for="upfile">첨부파일</label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
-                    </tr>
-                    <tr>
-                        <th><label for="upfile">첨부파일</label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
-                    </tr>
-                    <tr>
-                        <th><label for="upfile">첨부파일</label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfiles" multiple></td>
-                    </tr>
-                    <tr>
-                        <th><label for="content">* 내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
-                    </tr>
+				    <c:choose>
+					    <!-- boardType이 10일 경우 -->
+					    <c:when test="${board.boardType == 10}">
+					        <tr>
+					            <th><label for="upfile">첨부파일1</label></th>
+					            <td><input type="file" id="upfile1" class="form-control-file border" name="upfiles" multiple></td>
+					        </tr>
+					    </c:when>
+					    
+					    <!-- boardType이 10이 아닌 경우 -->
+					    <c:otherwise>
+					        <tr>
+					            <th><label for="upfile">첨부파일2</label></th>
+					            <td><input type="file" id="upfile2" class="form-control-file border" name="upfiles" multiple></td>
+					        </tr>
+					        <tr>
+					            <th><label for="upfile">첨부파일3</label></th>
+					            <td><input type="file" id="upfile3" class="form-control-file border" name="upfiles" multiple></td>
+					        </tr>
+					        <tr>
+					            <th><label for="upfile">첨부파일4</label></th>
+					            <td><input type="file" id="upfile4" class="form-control-file border" name="upfiles" multiple></td>
+					        </tr>
+					    </c:otherwise>
+					</c:choose>
+
+					<tr>
+				    <th><label for="content">* 내용</label></th>
+				    <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
+				</tr>
+
+                    	 
                 </table>
                 <br>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary">등록하기</button>
-                    <button type="reset" class="btn btn-danger">취소하기</button>
+                    <button type="submit" class="btn btn-primary" >등록하기</button>
+                    <a class="btn btn-secondary" style="float:center;" href="/att/board/list?boardType=${board.boardType}">취소하기</a>
                 </div>
             </form>
         </div>

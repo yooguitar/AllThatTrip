@@ -279,19 +279,52 @@
     
     
     <!-- 검색기능 -->
+    <select id="selectTotalCount2" parameterType="map" resultType="_int">
+	
+		SELECT 
+				COUNT(*)
+		FROM	
+				BOARD
+		JOIN
+    			MEMBER USING (USER_NO)
+		WHERE	
+				BOARD_TYPE = #{boardType}
+		AND		
+				BOARD.STATUS ='Y'
+		AND		
+				<choose>
+	                <when test="condition == 'title'">
+	                    BOARD_TITLE LIKE '%' || #{keyword} || '%'
+	                </when>
+	                <when test="condition == 'content'">
+	                    BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+	                </when>
+	                <when test="condition == 'writer'">
+                    	USER_ID LIKE '%' || #{keyword} || '%'
+               		 </when>
+	                <otherwise>
+	                    1 = 0 
+	                </otherwise>
+	            </choose>
+		
+	</select>
+    
    <select id="searchByCondition" resultType="board" parameterType="map">
     SELECT
 	        BOARD_NO boardNo,
 	        BOARD_TITLE boardTitle,
 	        BOARD_TYPE boardType,
 	        USER_NO userNo,
+	        USER_ID boardWriter,
 	        BOARD_CONTENT boardContent,
 	        COUNT,
 	        TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
     FROM
        	 	BOARD
+    JOIN
+    		MEMBER USING (USER_NO)
     WHERE
-	        STATUS = 'Y'
+	        BOARD.STATUS = 'Y'
 	AND 	BOARD_TYPE = #{boardType}
 	AND 	
 	            <choose>
@@ -302,11 +335,7 @@
 	                    BOARD_CONTENT LIKE '%' || #{keyword} || '%'
 	                </when>
 	                <when test="condition == 'writer'">
-                    	USER_NO IN (
-                        SELECT USER_NO
-                        FROM USERS
-                        WHERE USERNAME LIKE '%' || #{keyword} || '%'
-                   		)
+                    	USER_ID LIKE '%' || #{keyword} || '%'
                		 </when>
 	                <otherwise>
 	                    1 = 0 

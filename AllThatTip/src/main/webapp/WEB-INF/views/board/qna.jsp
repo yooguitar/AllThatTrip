@@ -14,16 +14,16 @@
     <style>
     body {
         font-family: Arial, sans-serif;
-        width:1500px;
+        width:1200px;
         margin: 0 auto;
         padding: 0;
 
     }
 
-    .gna-container {
+    .qna-container {
         width: 70%;
-        margin: 0 auto;
-        padding: 20px;
+        margin: 10px auto;
+        padding: 40px;
         background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 5px;
@@ -38,20 +38,20 @@
     }
 	
    
-    .gna-table {
+    .qna-table {
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
     }
 
-    .gna-table th,
-    .gna-table td {
+    .qna-table th,
+    .qna-table td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: center;
     }
 
-    .gna-table th {
+    .qna-table th {
         background-color: #f2f2f2;
         font-weight: bold;
     }
@@ -74,6 +74,52 @@
     .write-button:hover {
         background-color: #444;
     }
+    
+    .search-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+	}
+	
+	.search-container {
+	    display: flex;
+	    align-items: center;
+	    gap: 10px; /* 입력 필드 간 간격 */
+	}
+	
+	.search-container .select select {
+	    padding: 5px 12px;
+	    border: 1px solid #ddd;
+	    border-radius: 4px;
+	    font-size: 15px;
+	    outline: none;
+	}
+	
+	.search-container .text input {
+	    padding: 12px 16px;
+	    border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 15px; /* 글자 크기 */
+        width: 300px; /* 검색창 너비 조정 */
+        outline: none;
+	}
+	
+	.search-container .searchBtn {
+	    padding: 8px 16px;
+	    border: none;
+	    border-radius: 4px;
+	    background-color: #6c757d;
+	    color: white;
+	    font-size: 14px;
+	    cursor: pointer;
+	    transition: background-color 0.3s;
+	}
+	
+	.search-container .searchBtn:hover {
+	    background-color: #5a6268;
+	}
 
 
     </style>
@@ -82,30 +128,32 @@
 
     <jsp:include page="../common/include/header.jsp" />   
     
-    <div class="gna-container">
+    <div class="qna-container">
         <h1>문의하기(Q&A)</h1>
         
- 
-        <br clear="both"><br>
-        <form id="searchForm" action="" method="get" align="center">
-            <div class="select">
-                <select class="custom-select" name="condition">
-                    <option value="writer">작성자</option>
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                </select>
-            </div>
-            <div class="text">
-                <input type="text" class="form-control" name="keyword">
-            </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            </form>
+ 		<br><br><br>
+        <form id="searchForm" action="" method="get" class="search-form">
+		    <div class="search-container">
+		        <div class="select">
+		            <select class="custom-select" name="condition">
+		                <option value="writer">작성자</option>
+		                <option value="title">제목</option>
+		                <option value="content">내용</option>
+		            </select>
+		        </div>
+		        <div class="text">
+		            <input type="text" class="form-control" name="keyword" placeholder="검색어를 입력하세요">
+		        </div>
+		        <button type="submit" class="searchBtn">검색</button>
+		    </div>
+		</form>
             <br><br>
+            
         <a class="write-button" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
 
   
     <br><br>
-        <table class="gna-table">
+        <table class="qna-table">
             <thead>
                 <tr>
                     <th>No</th>

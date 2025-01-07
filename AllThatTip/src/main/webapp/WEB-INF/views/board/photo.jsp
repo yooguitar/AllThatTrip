@@ -61,6 +61,10 @@
     <h2>중고거래게시판</h2>
     <div class="photolist_outer">
         <div>
+        <br> <br>
+                <img src="/att/resources/img/etc/review_banner.png" alt="Review Banner" style="width: 200px; height: auto;">
+            
+            <!-- 검색창 -->
             <div class="action-bar">
                 <form id="searchForm" action="" method="get" align="center" style="display: inline-block;">
                 <input type="hidden" name="boardType" value="${ board.boardType }" />
@@ -77,12 +81,11 @@
                     <button type="submit" class="searchBtn btn btn-secondary" style="display: inline-block;">검색</button>
                 </form>
                 <a class="btn btn-secondary" href="/att/board/insertForm?boardType=40" style="display: inline-block; margin-left: 10px;">글쓰기</a>
-            </div>
-            <div class="list-area">
-                <!-- Other content -->
-            </div>
-        </div>
-    </div>
+	            </div>
+	            <div class="list-area">
+	            </div>
+		        </div>
+		    </div>
 
         <c:choose>
             <c:when test="${ empty boards }">
@@ -93,7 +96,7 @@
                     
                 <div class="thumbnail" align="center">
                     <input type="hidden" value="${ board.boardNo }" />
-                    <img src="${ board.imagePath }" alt="이미지">
+                    <img src="/att${ board.imagePath }" alt="이미지" style="width: 270px; height: 180px;">
                     <p>
                         <label>No. ${ board.boardNo }</label> / <span>${ board.boardTitle }</span> <br>
                         <label>조회수</label> : <span>${ board.count }</span>
@@ -103,26 +106,23 @@
             </c:otherwise>
         </c:choose>
         
-        <script type="text/javascript">
-            $('.thumbnail').click(function(){
-                
-            	const boardNo = $(this).children().eq(0).val();
-            
-                location.href = 'detail.thumbnail?boardNo='+boardNo;    // url지정
-                // console.log($(this).children().eq(1).children().eq(0).text().split(' ')[1]);	
-                // console.log($(this).children().eq(0).val());    
-                
-            });
-        </script>
+						        
         
+        
+        
+        
+        
+		
+		
+		<script>
+		$('.thumbnail').click(function() {
+		    const num = $(this).children().eq(0).val(); // 게시글 번호
+		    const boardType = $(this).data('boardType'); // 게시판 타입
 
+		    location.href = '/att/board/list/' + num + '?boardType=' + boardType; // URL 지정
+		});
+		</script>
 
-    </div>
-
-
-
-    </div>
-</div>
 
 </body>
 </html>

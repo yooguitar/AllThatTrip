@@ -116,10 +116,12 @@
 		</script>
         <div id="pagingArea">
 		    <ul class="pagination">
+		        <!-- 이전 페이지 버튼 -->
 		        <c:choose>
-		            <c:when test="${ pageInfo.currentPage ne 1 }">
+		            <c:when test="${pageInfo.currentPage > 1}">
 		                <li class="page-item">
-		                    <a class="page-link" href="list?boardType=${pageInfo.boardType}&page=${pageInfo.currentPage - 1}">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage - 1}">
 		                        이전
 		                    </a>
 		                </li>
@@ -131,23 +133,50 @@
 		            </c:otherwise>
 		        </c:choose>
 		
-		        <c:forEach begin="${ pageInfo.startPage }" end="${ pageInfo.endPage }" var="num">
-		            <li class="page-item">
-		                <a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
-		                    ${num}
-		                </a>
-		            </li>
+		        <!-- 페이지 번호 버튼 -->
+		        <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="num">
+		        
+		         	<c:choose>
+		         		<c:when test="${ empty condition }">
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:when>
+		         		<c:otherwise>
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="search?boardType=${board.boardType}&page=${num}&condidion=${condition}&keyword=${keyword}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:otherwise>
+		         	</c:choose>
 		        </c:forEach>
-		                   
-		                   
-                                      
-                    <li class="page-item"><a class="page-link" href="#">다음</a></li>
-                </ul>
-            </div>
+		
+		        <!-- 다음 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage < pageInfo.maxPage}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage + 1}">
+		                        다음
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">다음</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		    </ul>
+		</div>
+
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="/att/board/list" method="get" align="center">
+            <form id="searchForm" action="/att/board/search" method="get" align="center">
             	<input type="hidden" name="boardType" value="${ board.boardType }" />
                 <div class="select">
                     <select class="custom-select" name="condition" id="condition">
@@ -159,7 +188,7 @@
                 <div class="text">
                     <input type="text" class="form-control" name="keyword" id="keyword" />
                 </div>
-                <button type="button" class="searchBtn btn btn-secondary" onclick="searchSubmit()">검색</button>
+                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
             </form>
             <br><br>
         </div>
@@ -168,17 +197,15 @@
     </div>
     
     <script>
-    
-	// 검색하기
-    function searchSubmit() {
-    	$('#searchForm').submit();
-    }
-    
-    
-    // 검색하기 ajax
+   
+ 
+    /* // 검색하기 ajax
  	function search(){
  		const select = document.getElementById('condition');
  		const condition = select.options[select.selectedIndex].value;
+ 		console.log("Condition:", condition);
+ 		console.log("Keyword:", document.getElementById('keyword').value);
+ 		console.log("BoardType:", "${ board.boardType }");
  		
  		$.ajax({
  			url: '/att/board/search',
@@ -193,7 +220,19 @@
 	            
 	            
 	            const boards = result.boards;
+	            const pi = result.pi;
+	            const boardType = result.boardType;
+	            const condition = result.condition;
+	            const keyword = result.keyword;
+	            console.log(pi, boardType, condition, keyword);
 	            const tableBody = document.querySelector("#boardList tbody");
+	            
+	            const preURL = "list?boardType="+boardType+"&page=\${pi.currentPage - 1}&condition="+condition+"&keyword="+keyword;
+	            const nextURL = "list?boardType="+boardType+"&page=\${pi.currentPage + 1}&condition="+condition+"&keyword="+keyword;
+	            const pageURL = "list?boardType="+boardType+"&page=\${num}&condition="+condition+"&keyword="+keyword;
+	            console.log(pageURL);
+	            const pagingArea = document.querySelector('#pagingArea');
+	            // console.log(pagingArea);
 	            
 	            tableBody.innerHTML = "";
 	            
@@ -212,6 +251,54 @@
 	                    ;
 	                    tableBody.innerHTML += row; 
 	                });
+ 					
+ 					pagingArea.innerHTML = ` <ul class="pagination">
+						 				        <!-- 이전 페이지 버튼 -->
+						 				        <c:choose>
+						 				            <c:when test="\${pi.currentPage > 1}">
+						 				                <li class="page-item">
+						 				                    <a class="page-link"
+						 				                       href='preURL'>
+						 				                        이전
+						 				                    </a>
+						 				                </li>
+						 				            </c:when>
+						 				            <c:otherwise>
+						 				                <li class="page-item disabled">
+						 				                    <a class="page-link" href="#">이전</a>
+						 				                </li>
+						 				            </c:otherwise>
+						 				        </c:choose>
+						 				
+						 				        <!-- 페이지 번호 버튼 -->
+						 				        <c:forEach begin="1" end="4" var="num">
+						 				            <li class="page-item" <c:if test='\${pi.currentPage} == num'>active</c:if>>
+						 				                <a class="page-link"
+						 				                   href='pageURL'>
+						 				                    ${num}
+						 				                </a>
+						 				            </li>
+						 				        </c:forEach>
+						 				
+						 				        <!-- 다음 페이지 버튼 -->
+						 				        <c:choose>
+						 				            <c:when test="\${pi.currentPage < pi.maxPage}">
+						 				                <li class="page-item">
+						 				                    <a class="page-link"
+						 				                       href='nextURL'>
+						 				                        다음
+						 				                    </a>
+						 				                </li>
+						 				            </c:when>
+						 				            <c:otherwise>
+						 				                <li class="page-item disabled">
+						 				                    <a class="page-link" href="#">다음</a>
+						 				                </li>
+						 				            </c:otherwise>
+						 				        </c:choose>
+						 				    </ul>`;
+						 				    
+					document.querySelector('option[value='+condition+']').selected = true;
 	            } else {
 	                // 검색 결과가 없을때
 	                tableBody.innerHTML = `<tr>
@@ -223,7 +310,7 @@
 	            console.error("AJAX Error: ", error);
 	        }
 	    });
-	}
+	} */
  	</script>
     
     

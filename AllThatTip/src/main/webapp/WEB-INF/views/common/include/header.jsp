@@ -55,7 +55,7 @@
                   
                   <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=20">FAQ</a></li>
                   
-                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=30">자주묻는질문</a></li>
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=30">Q&A</a></li>
                 
                   <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=40">중고거래</a></li>
                 

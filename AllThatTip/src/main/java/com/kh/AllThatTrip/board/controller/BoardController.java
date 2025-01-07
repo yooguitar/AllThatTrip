@@ -57,7 +57,7 @@ public class BoardController {
 	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
-	    log.info("board:{}", board);
+	    //log.info("board:{}", board);
 	    //log.info("map:{}", map);
 	    map.put("board", board);
 	   
@@ -69,7 +69,7 @@ public class BoardController {
     	} else if (board.getBoardType().equals("30")) {
     		return mv.setViewNameAndData("board/qna", map); 
     	} else if (board.getBoardType().equals("40")) {
-    		return mv.setViewNameAndData("board/used", map); 
+    		return mv.setViewNameAndData("board/photo", map); 
     	} else if (board.getBoardType().equals("50")) {
     		return mv.setViewNameAndData("board/review", map); 
     	}else {
@@ -107,7 +107,7 @@ public class BoardController {
 		//log.info("board : {}, upfiles : {}",board, upfiles);
 
 		for(MultipartFile r : upfiles) {
-			log.info("r :: {}", r.toString());
+			//log.info("r :: {}", r.toString());
 		}
 		boardService.insertBoard(board, upfiles);
 
@@ -120,7 +120,7 @@ public class BoardController {
 	        			break;
 	        case "30": redirectUrl = "/board/list?boardType=30"; // QnA
 	            		break;
-	        case "40": redirectUrl = "/board/list?boardType=40"; // 중고거래 게시판
+	        case "40": redirectUrl = "/board/list?boardType=40"; // 중고거래
 	            		break;
 	        case "50": redirectUrl = "/board/list?boardType=50"; // 후기
 	            		break;
@@ -161,6 +161,7 @@ public class BoardController {
 		
 		boardService.updateBoard(board, upfiles);
 		
+		
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 	
@@ -175,21 +176,24 @@ public class BoardController {
 
 	
 	// 검색
-	@ResponseBody
-	@GetMapping(value="search", produces="application/json; charset=UTF-8")
-	public Map<String, Object> searchbyCondition(String condition, String keyword, String boardType) {
-		log.info("condition: {}", condition);
-		log.info("keyword: {}", keyword);
+	@GetMapping("search")
+	public ModelAndView searchbyCondition(String condition, String keyword, @RequestParam(defaultValue = "10")String boardType, @RequestParam(defaultValue = "1") int page) {
 		
 		Map<String, Object> searchParams = new HashMap<>();
+	
 	    searchParams.put("condition", condition);
 	    searchParams.put("keyword", keyword);
 	    searchParams.put("boardType", boardType);
+	    searchParams.put("page", page);
+	   
 	    
 	    Map<String, Object> searchResult = boardService.searchByCondition(searchParams);
-	    log.info("params: {}", searchParams);
-	    log.info("searchResult{}", searchResult);
-	    return searchResult;
+	    searchResult.put("condition", condition);
+	    searchResult.put("keyword", keyword);
+	    searchResult.put("boardType", boardType);
+	    //log.info("params: {}", searchParams);
+	   // log.info("searchResult{}", searchResult);
+	    return mv.setViewNameAndData("board/list", searchResult);
 	}
     
   

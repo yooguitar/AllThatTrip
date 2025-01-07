@@ -61,7 +61,9 @@ public interface BoardMapper {
 	
 	
 	// 검색
-	List<Board> searchByCondition(Map<String, Object> params);
+	int selectTotalCount2(Map<String, Object> params);
+	
+	List<Board> searchByCondition(Map<String, Object> params, RowBounds rowBounds);
 
 
 

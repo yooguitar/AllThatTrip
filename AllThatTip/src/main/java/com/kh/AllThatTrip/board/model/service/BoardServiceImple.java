@@ -51,6 +51,8 @@ public class BoardServiceImple implements BoardService {
 	
 	
 	
+	
+	
 	private PageInfo getPageInfo(int totalCount, int page) {
 		
 		return Pagination.getPageInfo(totalCount, page, 10, 10);
@@ -305,10 +307,13 @@ public class BoardServiceImple implements BoardService {
 	        }
 	    }
 
-	    // DB에 첨부파일 데이터 삽입
-	    if (fileArray != null && fileArray.length > 0) {
-	        mapper.insertBoardFile(Arrays.asList(fileArray)); // 배열을 리스트로 변환하여 전달
-	    }
+		if (fileArray != null && fileArray.length > 0) {
+		    for (BdAttachment file : fileArray) {
+		        if (file != null) {
+		            mapper.insertBoardFile(file); // 배열 요소를 하나씩 삽입
+		        }
+		    }
+		}
 
 	    // 게시글 업데이트
 	    int result = mapper.updateBoard(board);
@@ -342,12 +347,32 @@ public class BoardServiceImple implements BoardService {
 	
 	// 검색
 	public Map<String, Object> searchByCondition(Map<String, Object> params) {
-	    List<Board> boards = mapper.searchByCondition(params);
-
+		int totalCount = getTotalCount2(params);
+		PageInfo pi = getPageInfo(totalCount, (int)params.get("page"));
+		// log.info("{}", pi);
+		List<Board> boards = getBoardList2(pi, params);
+		// log.info("{}", boards);
 	    Map<String, Object> result = new HashMap<>();
-	    result.put("boards", boards);
+	    result.put("board", boards);
+	    result.put("pageInfo", pi);
 
 	    return result;
+	}
+	
+	private int getTotalCount2(Map<String, Object> params) {
+		int totalCount = mapper.selectTotalCount2(params);
+		// log.info("{}", totalCount);
+		if(totalCount == 0) {
+			throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
+		} 
+		return totalCount;
+	}
+	
+	private List<Board> getBoardList2(PageInfo pi, Map<String, Object> params) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return mapper.searchByCondition(params, rowBounds);
 	}
 
 	// 다중 파일 메소드

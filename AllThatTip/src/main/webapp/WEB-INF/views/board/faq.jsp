@@ -121,7 +121,7 @@
     <jsp:include page="../common/include/header.jsp" />    
     <br>
     <div class="faq-container">
-        <h1>게시판</h1>
+        <h1>FAQ(자주묻는질문)</h1>
         <br><br>
 
         <ul id="faq-category">

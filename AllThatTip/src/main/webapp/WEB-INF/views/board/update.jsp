@@ -11,7 +11,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
             width:80%;
             margin:auto;
         }
@@ -49,7 +48,7 @@
                         <td><input type="text" id="writer" class="form-control" value="${ requestScope.board.boardWriter }" name="boardWriter" readonly></td>
                     </tr> 
                     <tr>
-                        <th><label for="upfile">첨부파일</label></th>
+                        <th><label for="upfile">첨부파일1</label></th>
                         <td>
                             <input type="file" id="upfiles" class="form-control-file border" name="upfiles" multiple>
                             <c:if test="${ not empty board.originName }">
@@ -58,11 +57,24 @@
                             	<a href="${board.changeName }" download="${ board.originName }">${ board.originName }</a>
                             	<input type="hidden" value="${ board.originName }" name="originName" />
                             	<input type="hidden" value="${ board.changeName }" name="changeName" />
-                            
                             </c:if>
-                            
                         </td>
                     </tr>
+                    
+		            <tr>
+		                <th><label for="upfile">첨부파일2</label></th>
+		                <td><input type="file" id="upfile2" class="form-control-file border" name="upfiles" multiple></td>
+		            </tr>
+		            <tr>
+		                <th><label for="upfile">첨부파일3</label></th>
+		                <td><input type="file" id="upfile3" class="form-control-file border" name="upfiles" multiple></td>
+		            </tr>
+		            <tr>
+		                <th><label for="upfile">첨부파일4</label></th>
+		                <td><input type="file" id="upfile4" class="form-control-file border" name="upfiles" multiple></td>
+		            </tr>
+		                    
+                    
                     <tr>
                         <th><label for="content">내용</label></th>
                         <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ requestScope.board.boardContent }</textarea></td>
@@ -71,9 +83,10 @@
                 <br>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="reset" class="btn btn-danger">이전으로</button>
-                </div>
+				    <button type="submit" class="btn btn-primary">수정하기</button>
+				    <button type="button" class="btn btn-danger" onclick="history.back();">이전으로</button>
+				</div>
+
             </form>
         </div>
         <br><br>
