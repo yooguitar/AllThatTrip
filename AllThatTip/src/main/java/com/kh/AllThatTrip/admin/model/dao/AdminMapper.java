@@ -1,6 +1,7 @@
 package com.kh.AllThatTrip.admin.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -32,6 +33,22 @@ public interface AdminMapper {
 	int insertAdReply(AdReply reply);
 
 	List<AdReply> selectAdReplyList(int adNoticeNo);
+
+	Map<String, Object> memberFindAll(Member member);
+
+	List<Member> memberFindAll();
+
+	Member selectMemberId(String userId);
+
+	List<Member> selectMember();
+
+	List<Member> selectDeleteMember();
+
+	List<Member> selectNewMember();
+
+	List<Member> selectOldMember();
+
+	int deleteMember(String userId);
 
 	
 	

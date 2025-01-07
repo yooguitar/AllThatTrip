@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Document</title>
 <style>
 .admin_pages {
@@ -62,6 +62,7 @@ tr {
 	width: 1000px;
 	display: flex;
 	margin-top: -4px;
+	margin-left: -2px;
 	}
 
 th {
@@ -98,7 +99,7 @@ table {
     width : 300px;
 
 }
-.control_outt{
+.control_out{
   
     height : 100px;
     width : 700px;
@@ -124,11 +125,24 @@ table {
 	background-color : #326044;
 	border : none;
 	margin-bottom : 2px;
+	margin-top : 4px;
 	font-size : 10px;
 	color : white;
 }
 
+.control-btn2{
 
+	width: 70px;
+	height : 25px;
+	margin-left : 20px;
+	border-radius : 15px;
+	background-color : #A63641	;
+	border : none;
+	margin-bottom : 2px;
+	margin-top : 4px;
+	font-size : 10px;
+	color : white;
+}
 </style>
 
 </head>
@@ -146,41 +160,32 @@ table {
 						<th>유저번호</th>
 						<th>실명</th>
 						<th>아이디</th>
-						<th>비밀번호</th>
 						<th>이메일</th>
 						<th>전화번호</th>
 						<th>가입일자</th>
 						<th>스팸여부</th>
 						<th>탈퇴여부</th>
 					</tr>
-				</table>
-				<table>
-					<tr>
-						<td>${member.userNo}</td>
-						<td>${member.userName}</td>
-						<td>${member.userId}</td>
-						<td>${member.userPwd}</td>
-						<td>${member.email}</td>
-						<td>${member.phone}</td>
-						<td>${member.enrollDate }</td>
-						<td>${member.spam}</td>
-						<td>${member.status }</td>
-					</tr>
+					<tbody  id="member">
+						
+					</tbody>
 				</table>
 			</div>
 			<div class="control_box">
 				<div class="control_in">
 		            <label class="label-text"> 유저 ID :</label>
 		            <input type="text" id="text-input" /> 
+		            <input type="submit" onclick="selectMemberId()"/>
 		            <br>
-		           	<button class="control-btn">회원조회</button>
-		           	<button class="control-btn">탈퇴조회</button>
+		           	<button class="control-btn" onclick="selectMember()">회원조회</button>
+		           	<button class="control-btn" onclick="selectDeleteMember()">탈퇴조회</button>
 		           	<br>
-		           	<button class="control-btn">최신순</button>
-		           	<button class="control-btn">오래된순</button>
+		           	<button class="control-btn" onclick="selectNewMember()">최신순</button>
+		           	<button class="control-btn" onclick="selectOldMember()">오래된순</button>
 		         </div>
-		         <div class="control_outt">
-		     	
+		         <div class="control_out">
+		     		<button class="control-btn2" onclick="deleteMember()">회원탈퇴</button>
+		     		
 		         </div>    
 			</div>
 		</div>
@@ -212,6 +217,254 @@ table {
 			<div class="control_box"></div>
 		</div>
 	</div>
+	<script>
+	
+	$(function(){
+		
+		selectMemberPad();
+		
+	})
+	
+	
+	function selectMemberPad(){
+		
+		$.ajax({
+			url : '/att/adPad/memberFindAll',
+			type : 'get',
+			success : function(result){
+				// console.log(result);
+				
+				const replies = [...result.data];
+				console.log(replies);
+				
+				const resultStr = replies.map(e => `
+													<tr>
+													<td>\${e.userNo}</td>
+													<td>\${e.userName}</td>
+													<td>\${e.userId}</td>
+													<td>\${e.email}</td>
+													<td>\${e.phone}</td>
+													<td>\${e.enrollDate}</td>
+													<td>\${e.spam}</td>
+													<td>\${e.status}</td>
+													</tr>
+											       `
+							    				).join('');
+				$('#member').html(resultStr);
+			    			
+			}
+		
+		});
+	}
+	
+	function selectMemberId(){
+		
+		const userId = document.querySelector('#text-input').value;
+		
+		$.ajax({
+			url : '/att/adPad/selectMemberId',
+			type : 'get',
+			data : {
+				userId : userId
+			},
+			success : function(result){
+				
+				const memberInfo = result.data;
+				const memberStr =  `<tr>
+									<td>\${memberInfo.userNo}</td>
+									<td>\${memberInfo.userName}</td>
+									<td>\${memberInfo.userId}</td>
+									<td>\${memberInfo.email}</td>
+									<td>\${memberInfo.phone}</td>
+									<td>\${memberInfo.enrollDate}</td>
+									<td>\${memberInfo.spam}</td>
+									<td>\${memberInfo.status}</td>
+									</tr>`
+				$('#member').html(memberStr);
+			},
+			error : function(result){
+				
+				const errorStr = `<tr>
+								  <td>유저가 없습니다.</td>					
+								  </tr>
+								  `
+			   $('#member').html(errorStr);
+			}
+			
+			
+		});
+	}
+	
+function selectMember(){
+		
+			
+		$.ajax({
+			url : '/att/adPad/selectMember',
+			type : 'get',
+			success : function(result){
+				
+				const replies = [...result.data];
+				
+				const resultStr = replies.map(e => `
+													<tr>
+													<td>\${e.userNo}</td>
+													<td>\${e.userName}</td>
+													<td>\${e.userId}</td>
+													<td>\${e.email}</td>
+													<td>\${e.phone}</td>
+													<td>\${e.enrollDate}</td>
+													<td>\${e.spam}</td>
+													<td>\${e.status}</td>
+													</tr>
+											       `
+							    				).join('');
+				$('#member').html(resultStr);
+			},
+			error : function(result){
+				
+				const errorStr = `<tr>
+								  <td>유저가 없습니다.</td>					
+								  </tr>
+								  `
+			   $('#member').html(errorStr);
+			}
+			
+			
+		});
+	}
+	
+function selectDeleteMember(){
+	
+	
+	$.ajax({
+		url : '/att/adPad/selectDeleteMember',
+		type : 'get',
+		success : function(result){
+			
+			const replies = [...result.data];
+			
+			const resultStr = replies.map(e => `
+												<tr>
+												<td>\${e.userNo}</td>
+												<td>\${e.userName}</td>
+												<td>\${e.userId}</td>
+												<td>\${e.email}</td>
+												<td>\${e.phone}</td>
+												<td>\${e.enrollDate}</td>
+												<td>\${e.spam}</td>
+												<td>\${e.status}</td>
+												</tr>
+										       `
+						    				).join('');
+			$('#member').html(resultStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>유저가 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#member').html(errorStr);
+		}
+		
+		
+	});
+}
 
+function selectNewMember(){
+	
+	
+	$.ajax({
+		url : '/att/adPad/selectNewMember',
+		type : 'get',
+		success : function(result){
+			
+			const replies = [...result.data];
+			
+			const resultStr = replies.map(e => `
+												<tr>
+												<td>\${e.userNo}</td>
+												<td>\${e.userName}</td>
+												<td>\${e.userId}</td>
+												<td>\${e.email}</td>
+												<td>\${e.phone}</td>
+												<td>\${e.enrollDate}</td>
+												<td>\${e.spam}</td>
+												<td>\${e.status}</td>
+												</tr>
+										       `
+						    				).join('');
+			$('#member').html(resultStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>유저가 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#member').html(errorStr);
+		}
+		
+		
+	});
+}
+	
+function selectOldMember(){
+	
+	
+	$.ajax({
+		url : '/att/adPad/selectOldMember',
+		type : 'get',
+		success : function(result){
+			
+			const replies = [...result.data];
+			
+			const resultStr = replies.map(e => `
+												<tr>
+												<td>\${e.userNo}</td>
+												<td>\${e.userName}</td>
+												<td>\${e.userId}</td>
+												<td>\${e.email}</td>
+												<td>\${e.phone}</td>
+												<td>\${e.enrollDate}</td>
+												<td>\${e.spam}</td>
+												<td>\${e.status}</td>
+												</tr>
+										       `
+						    				).join('');
+			$('#member').html(resultStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>유저가 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#member').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function deleteMember(){
+	
+	const userId = document.querySelector('#text-input').value;
+
+	$.ajax({
+		url : '/att/adPad/deleteMember',
+		type : 'post',
+		data : {
+			userId : userId
+		},
+		success : function(){
+			alert("탈퇴성공");
+			selectMemberId();
+		}
+	})
+}
+
+
+	</script>
 </body>
 </html>

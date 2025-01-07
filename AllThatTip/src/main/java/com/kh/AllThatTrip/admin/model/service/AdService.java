@@ -28,4 +28,19 @@ public interface AdService {
 
 	List<AdReply> selectAdReplyList(int adNoticeNo);
 
+	List<Member> memberFindAll();
+
+	Member selectMemberId(String userId);
+
+	List<Member> selectMember();
+
+	List<Member> selectDeleteMember();
+
+	List<Member> selectNewMember();
+
+	List<Member> selectOldMember();
+
+	int deleteMember(String userId);
+
+
 }

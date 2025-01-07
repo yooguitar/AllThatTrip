@@ -21,9 +21,78 @@
 		 WHERE
 		       AD_STATUS = 'N'      			   
 	</sql>
+	<sql id="membersColumn">
+		SELECT
+		       USER_NO userNo,
+		       USER_NAME userName,
+		       USER_ID userId,
+		       USER_PWD userPwd,
+		       EMAIL,
+		       PHONE,
+		       TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') as enrollDate,
+		       SPAM,
+		       STATUS
+		  FROM
+		       MEMBER
+	</sql>
+	
+	<select id="memberFindAll" resultType="com.kh.AllThatTrip.member.model.vo.Member">
+		<include refid="membersColumn"/>
+		ORDER
+		   BY
+		      USER_NO DESC
 	
 	
+	</select>
+	<select id="selectMemberId" resultType="com.kh.AllThatTrip.member.model.vo.Member">
+		<include refid="membersColumn"/>
+		 WHERE
+		       USER_ID = #{userId}
+		       
+	</select>
+	<select id="selectMember" resultType="com.kh.AllThatTrip.member.model.vo.Member">
+		<include refid="membersColumn"/>
+		WHERE
+		      STATUS = 'Y'
+		ORDER
+		   BY
+		      USER_ID DESC      
+		      
+	</select>	
+	<select id="selectDeleteMember" resultType="com.kh.AllThatTrip.member.model.vo.Member">
+		<include refid="membersColumn"/>
+		WHERE
+		      STATUS = 'N'
+		ORDER
+		   BY
+		      USER_NO DESC      
 	
+	</select>
+	
+	<select id="selectNewMember" resultType="com.kh.AllThatTrip.member.model.vo.Member">
+		<include refid="membersColumn"/>
+		ORDER
+		   BY
+		      ENROLL_DATE DESC   
+	
+	</select>
+	
+	<select id="selectOldMember" resultType="com.kh.AllThatTrip.member.model.vo.Member">
+		<include refid="membersColumn"/>
+		ORDER
+		   BY
+	          ENROLL_DATE
+	</select>
+	<update id="deleteMember" parameterType="String" >
+		UPDATE
+			   MEMBER
+		   SET
+		   	   STATUS = 'N'
+		 WHERE   	   	   
+			   STATUS = 'Y'
+		   AND
+		       USER_ID = #{userId}	   
+	</update>
 	<select id="selectTotalCount" resultType="_int">
 		SELECT 
 			   COUNT(*) 
@@ -31,6 +100,7 @@
 			   TB_AD_NOTICE 
 		 WHERE 
 			   AD_STATUS = 'N'
+			   
 
 	</select>
 	

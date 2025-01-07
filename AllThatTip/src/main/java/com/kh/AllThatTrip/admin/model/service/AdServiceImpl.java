@@ -225,4 +225,43 @@ public class AdServiceImpl implements AdService{
 		return mapper.selectAdReplyList(adNoticeNo);
 	}
 
+	@Override
+	public List<Member> memberFindAll() {
+		return mapper.memberFindAll();
+	}
+
+	@Override
+	public Member selectMemberId(String userId) {
+		return mapper.selectMemberId(userId);
+	}
+
+	@Override
+	public List<Member> selectMember() {
+		return mapper.selectMember();
+	}
+
+	@Override
+	public List<Member> selectDeleteMember() {
+		return mapper.selectDeleteMember();
+	}
+
+	@Override
+	public List<Member> selectNewMember() {
+		return mapper.selectNewMember();
+	}
+
+	@Override
+	public List<Member> selectOldMember() {
+		return mapper.selectOldMember();
+	}
+
+	@Override
+	public int deleteMember(String userId) {
+		return mapper.deleteMember(userId);
+	}
+
+	
+	
+	
+
 }
