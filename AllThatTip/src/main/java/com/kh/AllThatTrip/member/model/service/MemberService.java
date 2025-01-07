@@ -23,6 +23,10 @@ public interface MemberService {
 	
 	void findPwd(Member member);
 	
+	Member countCheck(Member member);
+	void increaseLoginCount(Member member);
+	void rollbackCount(Member member);
+	
 	/* 예약, 찜, 장바구니 관련 */
 	void findRsv(Member member, HttpSession session);
 	

@@ -25,6 +25,12 @@ public interface MemberMapper {
 	
 	Member findPwd(Member member);
 	
+	void increaseLoginCount(Member member);
+	
+	void rollbackCount(Member member);
+	
+	Member countCheck(Member member);
+	
 	/* 찜, 예약, 장바구니 관련 */
 	ArrayList findRsv(Member member);
 	

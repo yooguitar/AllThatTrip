@@ -160,6 +160,32 @@
 	       RES_NO ASC
 </select>
 
+<update id="increaseLoginCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	       LOGIN_COUNT = LOGIN_COUNT + 1
+	 WHERE
+	  	   USER_ID = #{userId}
+</update>
+
+<update id="rollbackCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   LOGIN_COUNT = 0
+	 WHERE
+	 	   USER_ID = #{userId}
+</update>
+
+<select id="countCheck" parameterType="member" resultType="member">
+	SELECT
+	       LOGIN_COUNT loginCount
+	  FROM
+	  	   MEMBER
+	 WHERE
+	 	   USER_ID = #{userId}
+</select>
 
 
 <!-- 찜, 예약, 장바구니 관련 -->

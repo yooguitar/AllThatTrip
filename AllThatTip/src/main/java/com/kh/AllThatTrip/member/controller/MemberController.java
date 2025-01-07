@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
+import com.kh.AllThatTrip.exception.LoginCountOverException;
 import com.kh.AllThatTrip.member.model.service.MemberService;
 import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -27,20 +28,28 @@ public class MemberController {
 	
 	// 로그인 핸들러
 	@PostMapping("login.me")
-	public String login(Member member, HttpSession session){
-		
+	public String login(Member member, HttpSession session){		
+			Member countMember = memberService.countCheck(member);
+		if(countMember.getLoginCount() > 4) {
+			memberService.rollbackCount(member);
+			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 로그인 정보를 확인해주세요.");
+		}
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
+			memberService.increaseLoginCount(member);
 			int loginValue = 1;
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		}
 		if(!(passwordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd()))) {
+			memberService.increaseLoginCount(member);
 			int loginValue = 1;
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		} else {
 			//log.info("조회된 회원 정보 {}", loginMember);
+			member.setLoginCount(0);
+			memberService.rollbackCount(member);
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  
 			return "redirect:/";

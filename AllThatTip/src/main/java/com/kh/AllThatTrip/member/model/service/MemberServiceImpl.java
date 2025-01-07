@@ -25,18 +25,6 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member login(Member member) {
-		/*
-		 * ** 로그인 시도 횟수제한 아이디어 (미구현)
-		 * int count = member.getLoginCount;
-		 * 조건문으로 count가 5 이상일 경우 초기화 하고 예외처리 
-		 * (조회가 행 단위로 수행되므로 로그인을 시도한 각 ID에 카운트 적립 but 로그인 성공인 경우 또한 카운트가 됨)
-		 * member.setLoginCount() = count;
-		 * count++
-		 * 서비스 갔다오기
-		 */
-		
-		
-		
 		return mapper.login(member);
 	}
 	
@@ -92,6 +80,21 @@ public class MemberServiceImpl implements MemberService {
 			}
 	}
 	
+	@Override
+	public void increaseLoginCount(Member member) {
+		mapper.increaseLoginCount(member);
+	}
+	@Override
+	public void rollbackCount(Member member) {
+		mapper.rollbackCount(member);
+	}
+	@Override
+	public Member countCheck(Member member) {
+		return mapper.countCheck(member);
+	}
+	
+	
+	
 	/* 찜, 예약, 장바구니 관련 */
 
 	@Override
@@ -103,6 +106,9 @@ public class MemberServiceImpl implements MemberService {
 			session.setAttribute("findRsvResult", result);
 		}
 	}
+
+
+
 	
 
 
