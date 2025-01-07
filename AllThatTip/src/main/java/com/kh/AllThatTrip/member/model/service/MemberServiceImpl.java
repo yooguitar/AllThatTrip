@@ -1,6 +1,9 @@
 package com.kh.AllThatTrip.member.model.service;
 
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -91,7 +94,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void findRsv(Member member) {
-		mapper.findRsv(member);
+		 List<Map> result = mapper.findRsv(member);
+		
+		log.info("뭐가 돌아오지?? {}", result);
 	}
 	
 

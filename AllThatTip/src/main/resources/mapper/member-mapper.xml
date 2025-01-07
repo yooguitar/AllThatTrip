@@ -139,11 +139,10 @@
 	   	   STATUS = 'Y'	   
 </select>
 
-
-<!-- 찜, 예약, 장바구니 관련 -->
-<select id="findRsv" parameterType="member" resultMap="">
+<!-- 	USER_NAME만 잘 반환되는 상태
+<select id="findRsv" parameterType="member" resultType="String">
 	SELECT
-	       m.USER_NO,
+	       m.USER_NAME,
 	       u.ROOM_NAME,
 	       u.ROOM_PRICE,
 	       u.ROOM_IMG
@@ -154,13 +153,48 @@
 	  JOIN
 	       MEMBER m
 	    ON
-	       m.user_id = u.user_id
+	       m.USER_ID = u.USER_ID
+	 WHERE
+	 	   u.USER_ID = #{userId}
 	 ORDER
 	    BY
-	       RES_NO ASC;
+	       RES_NO ASC
+</select>
+ -->
 
+
+<!-- 찜, 예약, 장바구니 관련 -->
+<!--  
+<select id="findRsv" parameterType="member" resultMap="findRsvMap">
+		SELECT
+	       m.USER_NAME,
+	       u.ROOM_NAME,
+	       u.ROOM_PRICE,
+	       u.ROOM_IMG
+	  FROM
+	       USER_RES_ROOM u
+	  FULL
+	 OUTER
+	  JOIN
+	       MEMBER m
+	    ON
+	       m.USER_ID = u.USER_ID
+	 WHERE
+	 	   u.USER_ID = #{userId}
+	 ORDER
+	    BY
+	       RES_NO ASC
 </select>
 
+<resultMap id="findRsvMap" type="Rsvs">
+	<id column="user_id" property="userId" />
+	<result column="room_name" property="roomName" />
+	<result column="room_price" property="roomPrice"/>
+	<result column="romm_img" property="roomImg" />
+	
+	<collection column="user_id" javaType="java.util.list" ofType="Rsvs" property="rsvsList" select="" />
+</resultMap>
+-->
 
 
 

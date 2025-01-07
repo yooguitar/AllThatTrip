@@ -1,5 +1,8 @@
 package com.kh.AllThatTrip.member.model.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -24,6 +27,6 @@ public interface MemberMapper {
 	Member findPwd(Member member);
 	
 	/* 찜, 예약, 장바구니 관련 */
-	void findRsv(Member member);
+	List<Map> findRsv(Member member);
 	
 }

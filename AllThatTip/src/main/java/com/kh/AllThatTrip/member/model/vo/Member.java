@@ -20,14 +20,9 @@ public class Member {
 	private String userPwd;
 	private String userName;
 	private String email;
-	private String phone; 	// DB에서 NUMBER로 받아요 숫자만 넣어야 합니다!
-	private String spam;	// 1 || 0 
-	private String status;	// Y || N
-	private Date enrollDate;
-	
-	
-	
-	
-	
-	
+	private String phone; 	
+	private String spam;	
+	private String status;	
+	private String enrollDate;
+
 }
