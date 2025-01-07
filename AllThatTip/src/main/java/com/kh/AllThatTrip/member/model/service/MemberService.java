@@ -1,5 +1,7 @@
 package com.kh.AllThatTrip.member.model.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -22,7 +24,7 @@ public interface MemberService {
 	void findPwd(Member member);
 	
 	/* 예약, 찜, 장바구니 관련 */
-	void findRsv(Member member);
+	void findRsv(Member member, HttpSession session);
 	
 	
 }

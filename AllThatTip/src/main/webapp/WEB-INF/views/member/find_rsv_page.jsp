@@ -51,41 +51,51 @@
         </div>
 
         <div id="cart-div-2" class="cart-div" style="margin-top: 100px;">
+
+            
             <c:choose>
-            <c:when test="">
-                <!--찜 내역이 없을 경우 보여질 div-->
-                <li id="content-empty">  
-                    <div class="content-div-temp">
-                        <h3 style="text-align: center;">예약 내역이 없습니다. **display:none</h3>
-                    </div>
-                </li>
-            </c:when>
-            <c:otherwise>
-                <!--찜 내역이 있을 경우 div 반복-->
-                <li>
-                    <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
-                        <div style="width: 40px; display: inline; float: left;">&nbsp;&nbsp;&nbsp;</div>
-                        <div style="display: inline; float: left;">
-                            <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
-                            " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
+                <c:when test="${ sessionScope.findRsvResult eq null }">
+                    <!--찜 내역이 없을 경우 보여질 div-->
+                    <li id="content-empty">  
+                        <div class="content-div-temp">
+                            <h3 style="text-align: center;">예약 내역이 없습니다.</h3>
                         </div>
-                        <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 150px; overflow-wrap: break-word;">
-                            <a href="#" style="color:black; text-decoration: none;">상품명입력</a>
-                        </div>
-                        <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                            <a href="#" style="color: black; text-decoration: none;">가격입력</a>
-                        </div>
-                        <div>
-                            <button onclick="" class="btn btn-primary" style="width: 120px; height: 40px; margin-top: 90px; margin-left: 50px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">예약 취소</button>
-                        </div>
-                    </div>
-                </li>
-            </c:otherwise>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <h5 style="margin-left: 350px;">
+                        '<span style="font-weight: 800;">${ sessionScope.loginUser.userName }</span>'님의 예약정보 입니다.
+                    </h5>
+                    <!--찜 내역이 있을 경우 div 반복-->
+                    <c:forEach var="rsvs" items="${ sessionScope.findRsvResult }">
+                        <li>
+                            <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
+                                <div style="width: 40px; display: inline; float: left;">&nbsp;&nbsp;&nbsp;</div>
+                                <div style="display: inline; float: left;">
+                                    <img src="${ rsvs.ROOM_IMG }" alt="" style="width: 220px; height: 220px; margin-top: 10px;">
+                                </div>
+                                <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 150px; overflow-wrap: break-word;">
+                                    <a href="#" style="color:black; text-decoration: none;">${ rsvs.ROOM_NAME }</a>
+                                </div>
+                                <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                                    <a href="#" style="color: black; text-decoration: none;">${ rsvs.ROOM_PRICE }원</a>
+                                </div>
+                                <div>
+                                    <button onclick="cancelBtn();" class="btn btn-primary" style="width: 120px; height: 40px; margin-top: 90px; margin-left: 50px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">예약 취소</button>
+                                </div>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </c:otherwise>
             </c:choose>
         </div>
 
-
     </div>
+    <script>
+        function cancelBtn(){
+            location.href = "cancelRsvPage.me";
+        }
+    </script>
     
 </body>
 </html>

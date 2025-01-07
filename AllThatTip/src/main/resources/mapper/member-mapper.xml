@@ -139,8 +139,7 @@
 	   	   STATUS = 'Y'	   
 </select>
 
-<!-- 	USER_NAME만 잘 반환되는 상태
-<select id="findRsv" parameterType="member" resultType="String">
+<select id="findRsv" parameterType="member" resultType="hashmap">
 	SELECT
 	       m.USER_NAME,
 	       u.ROOM_NAME,
@@ -160,7 +159,7 @@
 	    BY
 	       RES_NO ASC
 </select>
- -->
+
 
 
 <!-- 찜, 예약, 장바구니 관련 -->

@@ -1,8 +1,7 @@
 package com.kh.AllThatTrip.member.model.service;
 
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,6 +34,9 @@ public class MemberServiceImpl implements MemberService {
 		 * count++
 		 * 서비스 갔다오기
 		 */
+		
+		
+		
 		return mapper.login(member);
 	}
 	
@@ -93,10 +95,13 @@ public class MemberServiceImpl implements MemberService {
 	/* 찜, 예약, 장바구니 관련 */
 
 	@Override
-	public void findRsv(Member member) {
-		 List<Map> result = mapper.findRsv(member);
-		
-		log.info("뭐가 돌아오지?? {}", result);
+	public void findRsv(Member member, HttpSession session) {
+		session.removeAttribute("findRsvResult");
+		ArrayList result = mapper.findRsv(member);	
+		if(!result.isEmpty()) {
+			System.out.println("null아님");
+			session.setAttribute("findRsvResult", result);
+		}
 	}
 	
 

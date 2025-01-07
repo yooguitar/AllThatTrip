@@ -28,6 +28,7 @@ public class MemberController {
 	// 로그인 핸들러
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session){
+		
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
 			int loginValue = 1;
@@ -90,7 +91,7 @@ public class MemberController {
 	@GetMapping("findRsvPage.me")
 	public String findRsvPage(HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		memberService.findRsv(loginUser);
+		memberService.findRsv(loginUser, session);
 		
 		return "member/find_rsv_page";
 	}
@@ -158,5 +159,9 @@ public class MemberController {
 	@GetMapping("findPwdPage.me")
 	public String findPwdPage() {
 		return "member/find_pwd_page";
+	}
+	@GetMapping("cancelRsvPage.me")
+	public String cancelRsvPage() {
+		return "member/cancel_rsv_page";
 	}
 }
