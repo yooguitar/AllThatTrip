@@ -173,4 +173,8 @@ public class MemberController {
 	public String cancelRsvPage() {
 		return "member/cancel_rsv_page";
 	}
+	@GetMapping("eventListPage.me")
+	public String eventListPage() {
+		return "member/event_list_page";
+	}
 }

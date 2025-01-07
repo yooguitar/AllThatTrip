@@ -55,7 +55,7 @@
 							}
 						});
 					} else {
-						$checkResult.show().css('color', 'crimson').text('아이디는 6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
+						$checkResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
 					}
 				});
 			})
@@ -68,7 +68,7 @@
 			
 			$userPwd.keyup(function(){
 				if($userPwd.val().length < 6 || $userPwd.val().length > 20){
-					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요.');
+					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
 				} else {
 					$pwdCheckResult.show().css('color', 'green').text('사용 가능한 비밀번호입니다.');
 				}
@@ -106,7 +106,7 @@
     </div>
     <div class="form-group">
       <label>사용하실 비밀번호를 입력 해주세요</label>
-      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자, 특수문자 입력" name="userPwd" required>
+      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자 입력" name="userPwd" required>
       <div id="pwd-check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
@@ -185,14 +185,23 @@
 </body>
 </html>
 <script>
+  /*영문자 한글만 허용*/
+  const reg1 = new RegExp(/a-zA-Z가-힣/);
+  /*영문자 숫자만 허용*/
+  const reg2 = new RegExp(/a-zA-Z0-9/);
+
   // form요청 제출 시
   function submitBtn(){
-      const emailId = document.getElementById('email-id').value;
-      const domain = document.getElementById('domain').value;
-      const email2 = document.getElementById('email-2').value;
-      const email = emailId + domain + email2;
-      document.getElementById('email').value = email;
+    const emailId = document.getElementById('email-id').value;
+    const domain = document.getElementById('domain').value;
+    const email2 = document.getElementById('email-2').value;
+    const email = emailId + domain + email2;
+    document.getElementById('email').value = email;
+
+    document.getElementsByClassName('form-control').value.trim();
+
   }
+  
 
 
 
