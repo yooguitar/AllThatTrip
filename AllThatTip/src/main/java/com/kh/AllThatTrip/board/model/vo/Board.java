@@ -34,6 +34,7 @@ public class Board {
 	private String keyword;
 	private String condition;
 	private String imagePath;
+	private String faqType;
 	
 } 
 		

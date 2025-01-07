@@ -137,16 +137,16 @@
 		        <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="num">
 		        
 		         	<c:choose>
-		         		<c:when test="${ empty condition }">
+		         		<c:when test="${ empty board.condition }">
 		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
 		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
 				                    ${num}
 				                </a>
 				            </li>
 		         		</c:when>
-		         		<c:otherwise>
+		         		<c:otherwise>												
 		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
-		                		<a class="page-link" href="search?boardType=${board.boardType}&page=${num}&condidion=${condition}&keyword=${keyword}">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}&condition=${board.condition}&keyword=${board.keyword}">
 				                    ${num}
 				                </a>
 				            </li>
@@ -176,7 +176,7 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="/att/board/search" method="get" align="center">
+            <form id="searchForm" action="/att/board/list" method="get" align="center">
             	<input type="hidden" name="boardType" value="${ board.boardType }" />
                 <div class="select">
                     <select class="custom-select" name="condition" id="condition">

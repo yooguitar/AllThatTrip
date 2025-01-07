@@ -40,8 +40,6 @@ public interface BoardService {
 	//int insertReply(Reply reply);
 	
 	
-	// 검색
-	Map<String, Object> searchByCondition(Map<String, Object> params);
 }
 	
 

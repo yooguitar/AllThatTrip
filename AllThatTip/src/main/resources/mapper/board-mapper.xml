@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kh.AllThatTrip.board.model.dao.BoardMapper">
-    
 	<sql id="boardColumn">
 		SELECT	B.BOARD_NO AS boardNo
 				,B.BOARD_TYPE AS boardType
@@ -18,6 +17,7 @@
 		            WHERE B.BOARD_NO = BD.BOARD_NO
 		            AND ( SELECT MIN(file_no) FROM BD_ATTACHMENT BB WHERE BB.BOARD_NO = BD.BOARD_NO ) = BD.FILE_NO
 		          ) imagePath
+		        <!-- , B.FAQ_TYPE -->
 		FROM
 				BOARD B
 		JOIN
@@ -35,11 +35,26 @@
 		SELECT 
 				COUNT(*)
 		FROM	
-				BOARD
+				BOARD B
+		JOIN
+				MEMBER M
+		ON
+				B.USER_NO = M.USER_NO
 		WHERE	
 				BOARD_TYPE = #{boardType}
 		AND		
-				STATUS ='Y'
+				b.STATUS ='Y'
+		<choose>
+		    <when test="condition == 'title'">
+		        AND B.BOARD_TITLE LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="condition == 'content'">
+		        AND B.BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="condition == 'writer'">
+		       	AND M.USER_ID LIKE '%' || #{keyword} || '%'
+			</when>
+		</choose>
 		
 	</select>
     
@@ -65,6 +80,18 @@
 				B.BOARD_TYPE = #{boardType}
 		AND		
 				B.STATUS = 'Y'
+			
+			<choose>
+			    <when test="condition == 'title'">
+			        AND B.BOARD_TITLE LIKE '%' || #{keyword} || '%'
+			    </when>
+			    <when test="condition == 'content'">
+			        AND B.BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+			    </when>
+			    <when test="condition == 'writer'">
+			       	AND USER_ID LIKE '%' || #{keyword} || '%'
+			 	</when>
+			</choose>
 		ORDER 
 		BY 		
 				B.BOARD_NO DESC
@@ -144,12 +171,12 @@
 	            ,CHANGE_NAME
 	        	)
 		VALUES 
-			(
-            SEQ_BFNO.NEXTVAL 
-            ,SEQ_BUNO.CURRVAL 
-            ,#{originName} 
-           	,#{changeName}
-        	)
+				(
+	            SEQ_BFNO.NEXTVAL 
+	            ,SEQ_BUNO.CURRVAL 
+	            ,#{originName} 
+	           	,#{changeName}
+	        	)
 	
 	</insert>
 	
@@ -275,71 +302,6 @@
     -->
     
     
-    <!-- 검색기능 -->
-    <select id="selectTotalCount2" parameterType="map" resultType="_int">
-	
-		SELECT 
-				COUNT(*)
-		FROM	
-				BOARD
-		JOIN
-    			MEMBER USING (USER_NO)
-		WHERE	
-				BOARD_TYPE = #{boardType}
-		AND		
-				BOARD.STATUS ='Y'
-		AND		
-				<choose>
-	                <when test="condition == 'title'">
-	                    BOARD_TITLE LIKE '%' || #{keyword} || '%'
-	                </when>
-	                <when test="condition == 'content'">
-	                    BOARD_CONTENT LIKE '%' || #{keyword} || '%'
-	                </when>
-	                <when test="condition == 'writer'">
-                    	USER_ID LIKE '%' || #{keyword} || '%'
-               		 </when>
-	                <otherwise>
-	                    1 = 0 
-	                </otherwise>
-	            </choose>
-		
-	</select>
-    
-   <select id="searchByCondition" resultType="board" parameterType="map">
-    SELECT
-	        BOARD_NO boardNo,
-	        BOARD_TITLE boardTitle,
-	        BOARD_TYPE boardType,
-	        USER_NO userNo,
-	        USER_ID boardWriter,
-	        BOARD_CONTENT boardContent,
-	        COUNT,
-	        TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
-    FROM
-       	 	BOARD
-    JOIN
-    		MEMBER USING (USER_NO)
-    WHERE
-	        BOARD.STATUS = 'Y'
-	AND 	BOARD_TYPE = #{boardType}
-	AND 	
-	            <choose>
-	                <when test="condition == 'title'">
-	                    BOARD_TITLE LIKE '%' || #{keyword} || '%'
-	                </when>
-	                <when test="condition == 'content'">
-	                    BOARD_CONTENT LIKE '%' || #{keyword} || '%'
-	                </when>
-	                <when test="condition == 'writer'">
-                    	USER_ID LIKE '%' || #{keyword} || '%'
-               		 </when>
-	                <otherwise>
-	                    1 = 0 
-	                </otherwise>
-	            </choose>
-	        
-	</select>
 	
 
 </mapper>

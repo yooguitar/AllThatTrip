@@ -15,7 +15,7 @@ import com.kh.AllThatTrip.board.model.vo.Comment;
 public interface BoardMapper {
 	
 	// 개수 조회
-	int selectTotalCount(String boardType);
+	int selectTotalCount(Board board);
 	
 	// 목록조회
 	List<Board> selectBoardList(Board board, RowBounds rowBounds);
@@ -58,15 +58,6 @@ public interface BoardMapper {
 	// 댓글삭제
 
 	int deleteComment(long commentNo);
-	
-	
-	// 검색
-	int selectTotalCount2(Map<String, Object> params);
-	
-	List<Board> searchByCondition(Map<String, Object> params, RowBounds rowBounds);
-
-
-
 	
 	
 	// 대댓글 작성

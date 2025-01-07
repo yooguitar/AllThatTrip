@@ -40,8 +40,8 @@ public class BoardServiceImple implements BoardService {
 	private final ServletContext context;
 	
 	
-	private int getTotalCount(String boardType) {
-		int totalCount = mapper.selectTotalCount(boardType);
+	private int getTotalCount(Board board) {
+		int totalCount = mapper.selectTotalCount(board);
 		
 		if(totalCount == 0) {
 			throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
@@ -165,7 +165,7 @@ public class BoardServiceImple implements BoardService {
 	@Override
 	public Map<String, Object> selectBoardList(Board board) { 
 		
-		int totalCount = getTotalCount(board.getBoardType());
+		int totalCount = getTotalCount(board);
 		
 		// log.info("게시글개수: {}", totalCount);
 		// log.info("요청페이지: {}", currentPage);
@@ -174,7 +174,7 @@ public class BoardServiceImple implements BoardService {
 	
 		List<Board> boards = getBoardList(pi, board);
 		
-		//log.info("게시글목록:{}", boards);
+		log.info("게시글목록:{}", boards);
 		
 		Map<String, Object> map = new HashMap();
 		
@@ -345,35 +345,6 @@ public class BoardServiceImple implements BoardService {
 	}
 	
 	
-	// 검색
-	public Map<String, Object> searchByCondition(Map<String, Object> params) {
-		int totalCount = getTotalCount2(params);
-		PageInfo pi = getPageInfo(totalCount, (int)params.get("page"));
-		// log.info("{}", pi);
-		List<Board> boards = getBoardList2(pi, params);
-		// log.info("{}", boards);
-	    Map<String, Object> result = new HashMap<>();
-	    result.put("board", boards);
-	    result.put("pageInfo", pi);
-
-	    return result;
-	}
-	
-	private int getTotalCount2(Map<String, Object> params) {
-		int totalCount = mapper.selectTotalCount2(params);
-		// log.info("{}", totalCount);
-		if(totalCount == 0) {
-			throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
-		} 
-		return totalCount;
-	}
-	
-	private List<Board> getBoardList2(PageInfo pi, Map<String, Object> params) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		return mapper.searchByCondition(params, rowBounds);
-	}
 
 	// 다중 파일 메소드
 	

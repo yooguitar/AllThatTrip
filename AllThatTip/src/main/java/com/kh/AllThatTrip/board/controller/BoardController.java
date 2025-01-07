@@ -57,7 +57,7 @@ public class BoardController {
 	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
-	    //log.info("board:{}", board);
+	    log.info("board:{}", board);
 	    //log.info("map:{}", map);
 	    map.put("board", board);
 	   
@@ -174,29 +174,6 @@ public class BoardController {
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 
-	
-	// 검색
-	@GetMapping("search")
-	public ModelAndView searchbyCondition(String condition, String keyword, @RequestParam(defaultValue = "10")String boardType, @RequestParam(defaultValue = "1") int page) {
-		
-		Map<String, Object> searchParams = new HashMap<>();
-	
-	    searchParams.put("condition", condition);
-	    searchParams.put("keyword", keyword);
-	    searchParams.put("boardType", boardType);
-	    searchParams.put("page", page);
-	   
-	    
-	    Map<String, Object> searchResult = boardService.searchByCondition(searchParams);
-	    searchResult.put("condition", condition);
-	    searchResult.put("keyword", keyword);
-	    searchResult.put("boardType", boardType);
-	    //log.info("params: {}", searchParams);
-	   // log.info("searchResult{}", searchResult);
-	    return mv.setViewNameAndData("board/list", searchResult);
-	}
-    
-  
 }
 	
 
