@@ -59,7 +59,6 @@
                 
                   <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=40">중고거래</a></li>
                 
-                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=50">리뷰게시판</a></li>
               </ul>
           </li>
 

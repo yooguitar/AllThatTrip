@@ -57,13 +57,15 @@
 </style>
 </head>
 <body>
+
+    <jsp:include page="../common/include/header.jsp" />  
     <div class="used_innerOuter" style="padding:5% 10%;">
     <h2>중고거래게시판</h2>
     <div class="photolist_outer">
         <div>
-        <br> <br>
-                <img src="/att/resources/img/etc/review_banner.png" alt="Review Banner" style="width: 200px; height: auto;">
-            
+        <br>
+            <img src="/att/resources/img/etc/review_banner.png" alt="Review Banner" style="width: 1200px; height: auto; display: block; margin: 0 auto;" >
+        <br><br>    
             <!-- 검색창 -->
             <div class="action-bar">
                 <form id="searchForm" action="" method="get" align="center" style="display: inline-block;">
@@ -105,7 +107,7 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-        
+        </div>
 						        
         
         
@@ -122,7 +124,8 @@
 		    location.href = '/att/board/list/' + num + '?boardType=' + boardType; // URL 지정
 		});
 		</script>
-
+		
+    <jsp:include page="../common/include/footer.jsp" />   
 
 </body>
 </html>

@@ -113,10 +113,7 @@
     
 	
 	<!-- 공통게시판 등록 -->
-	<insert id="insertBoard" parameterType="board" useGeneratedKeys="true" >
-		<selectKey resultType="Long" keyProperty="boardNo" order="BEFORE">
-			SELECT SEQ_BUNO.NEXTVAL FROM DUAL
-		</selectKey>
+	<insert id="insertBoard" parameterType="board">
 		INSERT 
 		INTO BOARD 
 				(
@@ -127,7 +124,7 @@
 				,BOARD_CONTENT
 				)
 	    VALUES (
-	    		#{boardNo}
+	    		SEQ_BUNO.NEXTVAL
 	    		,#{boardType}
 	    		,#{userNo}
 	    		,#{boardTitle}
@@ -149,7 +146,7 @@
 		VALUES 
 			(
             SEQ_BFNO.NEXTVAL 
-            ,#{boardNo} 
+            ,SEQ_BUNO.CURRVAL 
             ,#{originName} 
            	,#{changeName}
         	)

@@ -139,6 +139,8 @@
                     <option value="title">제목</option>
                     <option value="content">내용</option>
                 </select>
+                
+                
             </div>
             
             <div class="text">
@@ -153,19 +155,23 @@
         <br><br>
     </div>
 
-    <!-- 동적 게시판 렌더링 -->
+
+
+
+    <!-- 동적 게시판 렌더링 삭제하기 키 추가해야함 -->
 	
 	<div id="faq-contentlist">
 	    <c:forEach items="${boards}" var="board">
 	        <div class="faq-item" id="faq-point-${board.boardNo}">
 	            <h2 class="faq-question">${board.boardTitle}</h2>
 	            <p class="faq-answer">${board.boardContent}</p>
+	            
+	            
 	        </div>
 	    </c:forEach>
 	</div>
     
-    <!-- 로그인안해도 보임 -->
-	<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
+   
 	
 
     <script>

@@ -104,7 +104,7 @@ public class BoardController {
 	public ModelAndView insertBoard(Board board, MultipartFile[] upfiles, String boardType, HttpSession session) {
 		
 		board.setBoardType(boardType);
-		//log.info("board : {}, upfiles : {}",board, upfiles);
+		log.info("board : {}, upfiles : {}",board, upfiles);
 
 		for(MultipartFile r : upfiles) {
 			//log.info("r :: {}", r.toString());
