@@ -1,6 +1,5 @@
 package com.kh.AllThatTrip.board.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -102,15 +100,22 @@ public class BoardController {
 	// 공통게시판 등록
 	@PostMapping("list/insert")
 	public ModelAndView insertBoard(Board board, MultipartFile[] upfiles, String boardType, HttpSession session) {
+		//log.info("시작");
+		//log.info("boardType1111:{}",boardType);
 		
 		board.setBoardType(boardType);
-		log.info("board : {}, upfiles : {}",board, upfiles);
+		//log.info("board : {}, upfiles : {}",board, upfiles);
+		//log.info("boardType2222:{}",boardType);
 
+		if (upfiles == null) {
+			upfiles = new MultipartFile[0];
+		}
 		for(MultipartFile r : upfiles) {
-			//log.info("r :: {}", r.toString());
+		//	log.info("r :: {}", r.toString());
 		}
 		boardService.insertBoard(board, upfiles);
 
+		//log.info("boardType3333:{}",boardType);
 	    // boardType에 따라 리다이렉트 URL 설정
 	    String redirectUrl;
 	    switch (board.getBoardType()) {
@@ -126,9 +131,10 @@ public class BoardController {
 	            		break;
 	        default: throw new BoardNotFoundException("잘못된 경로입니다.");
 	    }
+	    //log.info("URL:{}",redirectUrl);
 	    // 성공 메시지 설정
 	    session.setAttribute("alertMsg", "게시글 등록 성공");
-
+	    //log.info("종료:{}");
 	    // ModelAndView 리턴
 	    return new ModelAndView("redirect:" + redirectUrl);
 	}

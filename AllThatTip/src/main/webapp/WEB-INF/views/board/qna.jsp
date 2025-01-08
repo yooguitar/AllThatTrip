@@ -19,15 +19,13 @@
         padding: 0;
 
     }
-
+	#pagingArea {width:fit-content; margin:auto;}
+	
     .qna-container {
         width: 70%;
         margin: 10px auto;
         padding: 40px;
         background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
@@ -127,32 +125,32 @@
 <body>
 
     <jsp:include page="../common/include/header.jsp" />   
-    
-    <div class="qna-container">
-        <h1>문의하기(Q&A)</h1>
-        
- 		<br><br><br>
-        <form id="searchForm" action="" method="get" class="search-form">
-		    <div class="search-container">
-		        <div class="select">
-		            <select class="custom-select" name="condition">
-		                <option value="writer">작성자</option>
-		                <option value="title">제목</option>
-		                <option value="content">내용</option>
-		            </select>
-		        </div>
-		        <div class="text">
-		            <input type="text" class="form-control" name="keyword" placeholder="검색어를 입력하세요">
-		        </div>
-		        <button type="submit" class="searchBtn">검색</button>
-		    </div>
-		</form>
-            <br><br>
-            
-        <a class="write-button" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
-
-  
     <br><br>
+    <h1>문의하기(Q&A)</h1>
+    <div class="qna-container">
+        
+ 		<br>
+		<form id="searchForm" action="/att/board/list" method="get" align="center" style="display: inline-block;">
+			<input type="hidden" name="boardType" value="${ board.boardType }" />
+				<div class="select" style="display: inline-block;">
+				     <select class="custom-select" name="condition" id="condition">
+				         <option value="title">제목</option>
+				         <option value="content">내용</option>
+				         <option value="writer">작성자</option>
+				     </select>
+				 </div>
+				<div class="text" style="display: inline-block;">
+				    <input type="text" class="form-control" name="keyword">
+				</div>
+			<button type="submit" class="searchBtn btn btn-secondary" style="display: inline-block;">검색</button>
+		</form>
+		<br><br> 
+           	<c:if test="${not empty sessionScope.loginUser and board.boardType == 30}">
+				<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
+			</c:if>
+		<br><br> 
+  
+    	<br><br>
         <table class="qna-table">
             <thead>
                 <tr>
@@ -177,7 +175,67 @@
 			</tbody>
         </table>
     </div>
-
+	
+	<!-- 페이징 -->
+        <div id="pagingArea">
+		    <ul class="pagination">
+		        <!-- 이전 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage > 1}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage - 1}">
+		                        이전
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">이전</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		
+		        <!-- 페이지 번호 버튼 -->
+		        <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="num">
+		        
+		         	<c:choose>
+		         		<c:when test="${ empty board.condition }">
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:when>
+		         		<c:otherwise>												
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}&condition=${board.condition}&keyword=${board.keyword}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:otherwise>
+		         	</c:choose>
+		        </c:forEach>
+		
+		        <!-- 다음 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage < pageInfo.maxPage}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage + 1}">
+		                        다음
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">다음</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		    </ul>
+		</div>
+        
 
 		<script>
 			function detail(num) {

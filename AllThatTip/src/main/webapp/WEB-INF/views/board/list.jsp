@@ -41,79 +41,47 @@
     </style>
 </head>
 <body>
-	<jsp:include page="../common/include/header.jsp" />
-    <div class="content">
-       <br><br>
-       <div class="innerOuter" style="padding:5% 10%;">
-           <h2>공지사항</h2>
-           
-           	
-           <br>
-           <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 
-           <c:if test="${ not empty sessionScope.loginUser}">
-           	<a class="btn btn-secondary" style="float:right;" href="insertForm">글쓰기</a>
-           </c:if>
-           -->
-       
-           
-           <c:choose>
-               <c:when test="${board.boardType == 10}">
-                   <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=10">글쓰기</a>
-               </c:when>
-               <c:when test="${board.boardType == 20}">
-                   <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
-               </c:when>
-               <c:when test="${board.boardType == 30}">
-                   <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
-               </c:when>
-               <c:when test="${board.boardType == 40}">
-                   <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=40">글쓰기</a>
-               </c:when>
-               <c:otherwise>
-                   <a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=50">글쓰기</a>
-               </c:otherwise>
-           </c:choose>
-           
+		<jsp:include page="../common/include/header.jsp" />
+		<div class="content">
+		   <br><br>
+		   <div class="innerOuter" style="padding:5% 10%;">
+		<h2>공지사항</h2>
+		<br>
+		<c:if test="${not empty sessionScope.loginUser and board.boardType == 10}">
+			<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=10">글쓰기</a>
+		</c:if>
+		
         
-         <br>
-         <br>
-         <table id="boardList" class="table table-hover" align="center">
-             <thead>
-                 <tr>
-                     <th>글번호</th>
-                     <th>제목</th>
-                     <th>작성자</th>
-                     <th>조회수</th>
-                     <th>작성일</th>
-                 </tr>
-             </thead>
-             
-             
-             <tbody>
-             	<c:forEach items="${boards}" var="board">
-				    <tr onclick="detail('${board.boardNo}')"> 
-				        <td>${board.boardNo}</td>
-				        <td>${board.boardTitle}</td>
-				        <td>${board.boardWriter}</td>
-				        <td>${board.count}</td>
-				        <td>${board.createDate}</td>
-				    </tr>
+		<br><br>
+		<table id="boardList" class="table table-hover" align="center">
+		    <thead>
+		        <tr>
+		            <th>글번호</th>
+		            <th>제목</th>
+		            <th>작성자</th>
+		            <th>조회수</th>
+		            <th>작성일</th>
+		        </tr>
+ </thead>
+		    
+		    
+<tbody>
+		    	<c:forEach items="${boards}" var="board">
+							<tr onclick="detail('${board.boardNo}')"> 
+							<td>${board.boardNo}</td>
+							<td>${board.boardTitle}</td>
+							<td>${board.boardWriter}</td>
+							<td>${board.count}</td>
+							<td>${board.createDate}</td>
+							</tr>
 				</c:forEach>
-             </tbody>
-             
-             
-         </table>
-         <br>
-		<script>
-			function detail(num) {
-				//console.log(num);
-				
-				const boardType = '${board.boardType}';
-				// console.log("boardNo:", num, "boardType:", boardType); 
-				window.location.href = '/att/board/list/'+num+'?boardType=' + boardType;
-			}
-			
-		</script>
+
+		           
+		           
+       </table>
+		<br>
+</tbody>
+
         <div id="pagingArea">
 		    <ul class="pagination">
 		        <!-- 이전 페이지 버튼 -->
@@ -196,6 +164,18 @@
 
     </div>
     
+    <script>
+		function detail(num) {
+			//console.log(num);
+			
+			const boardType = '${board.boardType}';
+			// console.log("boardNo:", num, "boardType:", boardType); 
+			window.location.href = '/att/board/list/'+num+'?boardType=' + boardType;
+		}
+			
+	</script>
+	
+	
     <script>
    
  
@@ -313,11 +293,6 @@
 	} */
  	</script>
     
-    
-    
-    
-    
- 	
     
     
     

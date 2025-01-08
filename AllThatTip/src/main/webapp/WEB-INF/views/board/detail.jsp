@@ -195,7 +195,7 @@
     				data: {
     					 	boardNo: ${board.boardNo}, 
     		                commentContent: $('#content').val(),
-    		                userNo: '1' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
+    		                userNo: '2' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
     		        },
     				success: function(result) {
 						

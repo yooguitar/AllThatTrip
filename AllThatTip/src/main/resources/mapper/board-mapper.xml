@@ -250,7 +250,7 @@
     			)
     	VALUES	
     			(
-    			SEQ_CNO.NEXTVAL
+    			SEQ_TBCM.NEXTVAL
 		        ,#{boardNo}
 		        ,#{userNo}
 		        ,#{commentContent}

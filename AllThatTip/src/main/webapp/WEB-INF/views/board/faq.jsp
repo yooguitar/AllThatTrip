@@ -40,7 +40,7 @@
         cursor: pointer;
     }
 
-
+	#pagingArea {width:fit-content; margin:auto;}
     .faq-question {
         font-size: 18px;
         color:#333;
@@ -123,39 +123,25 @@
     <div class="faq-container">
         <h1>FAQ(자주묻는질문)</h1>
         <br><br>
-
-        <ul id="faq-category">
-            <li data-target="faq-point-1">Category 1</li>
-            <li data-target="faq-point-2">Category 2</li>
-            <li data-target="faq-point-3">Category 3</li>
-            <li data-target="faq-point-4">Category 4</li>
-            <li data-target="faq-point-5">Category 5</li>
-        </ul>
-
-        <form id="searchForm" action="" method="get" align="center">
-        <input type="hidden" name="boardType" value="${ board.boardType }" />
-            <div class="select">
-                <select class="custom-select" name="condition">
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                </select>
-                
-                
-            </div>
-            
-            <div class="text">
-                <input type="text" class="form-control" name="keyword">
-            </div>
-            <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            <c:if test="${ not empty sessionScope.loginUser}">
-                <a class="btn btn-secondary" style="float:right;" href="http://localhost/att/board/insertForm?boardType=20">글쓰기</a>
-            </c:if>
-        </form>
-        
+		
+        <form id="searchForm" action="/att/board/list" method="get" align="center">
+            	<input type="hidden" name="boardType" value="${ board.boardType }" />
+	                <div class="select">
+	                    <select class="custom-select" name="condition" id="condition">
+	                        <option value="title">제목</option>
+	                        <option value="content">내용</option>
+	                    </select>
+	                </div>
+                <div class="text">
+                    <input type="text" class="form-control" name="keyword" id="keyword" />
+                </div>
+                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+            </form>
+        	<c:if test="${not empty sessionScope.loginUser and board.boardType == 20}">
+					<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
+				</c:if>
         <br><br>
     </div>
-
-
 
 
     <!-- 동적 게시판 렌더링 삭제하기 키 추가해야함 -->
@@ -171,8 +157,65 @@
 	    </c:forEach>
 	</div>
     
-   
-	
+   <!-- 페이징 -->
+        <div id="pagingArea">
+		    <ul class="pagination">
+		        <!-- 이전 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage > 1}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage - 1}">
+		                        이전
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">이전</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		
+		        <!-- 페이지 번호 버튼 -->
+		        <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="num">
+		        
+		         	<c:choose>
+		         		<c:when test="${ empty board.condition }">
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:when>
+		         		<c:otherwise>												
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}&condition=${board.condition}&keyword=${board.keyword}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:otherwise>
+		         	</c:choose>
+		        </c:forEach>
+		
+		        <!-- 다음 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage < pageInfo.maxPage}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage + 1}">
+		                        다음
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">다음</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		    </ul>
+		</div>
 
     <script>
     document.addEventListener('DOMContentLoaded',function(){

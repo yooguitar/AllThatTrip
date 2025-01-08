@@ -35,7 +35,8 @@ public class BoardApiController {
 	// 댓글 등록
 	@PostMapping
 	public ResponseEntity<ResponseData> ajaxInsertComment(Comment comment, HttpSession session){
-		
+		log.info("comment:{}",comment);
+		// log.info("userNo:{}", ((Comment)(session.getAttribute("loginUser"))).getUserNo());
 		//User loginUser = (User) session.getAttribute("loginUser");
 		//  성공 시 1, 실패 시 0
 		int result = boardService.insertComment(comment);	
