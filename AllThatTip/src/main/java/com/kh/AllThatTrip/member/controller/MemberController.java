@@ -116,8 +116,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("cartPage.me")
-	public String cartPage(HttpSession session, Room roomNo) {
-		
+	public String cartPage(HttpSession session, Room room) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		memberService.findRoom(room, session);
 		return "member/cart_page";
 	}
 	

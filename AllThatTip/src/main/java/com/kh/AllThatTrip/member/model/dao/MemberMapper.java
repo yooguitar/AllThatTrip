@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 @Mapper
@@ -37,4 +38,11 @@ public interface MemberMapper {
 	ArrayList findRsv(Member member);
 	
 	//ArrayList findCart(Member member);
+	
+	ArrayList findRoom(Room room);
+	
+	
+	
+	
+	
 }

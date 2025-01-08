@@ -168,6 +168,20 @@
 		   캠핑정보를 가져올 수 있는 테이블을 골라야함
 </select>
 -->
+
+<select id="findRoom" parameterType="room" resultType="hashmap">
+	SELECT
+           R.ROOM_NAME,
+           R.ROOM_PRICE,
+           I.CHANGE_NAME
+      FROM  
+           ROOMS R, ROOM_IMG I
+     WHERE
+           I.ROOM_NO = ${roomNo}
+       AND
+           ROWNUM = 1
+</select>
+
 <update id="increaseLoginCount" parameterType="member">
 	UPDATE
 		   MEMBER

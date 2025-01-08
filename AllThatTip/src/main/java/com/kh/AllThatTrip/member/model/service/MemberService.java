@@ -1,9 +1,8 @@
 package com.kh.AllThatTrip.member.model.service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 public interface MemberService {
@@ -36,5 +35,6 @@ public interface MemberService {
 	
 	void findCart(Member member, HttpSession session);
 	
+	void findRoom(Room room, HttpSession session);
 	
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.member.model.dao.MemberMapper;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -116,6 +117,13 @@ public class MemberServiceImpl implements MemberService {
 		//if(!result.isEmpty()) {
 		//	session.setAttribute("findCartResult", result);
 		//}
+	}
+
+	@Override
+	public void findRoom(Room room, HttpSession session) {
+		ArrayList roomResult = mapper.findRoom(room);
+		log.info("숙소정보 반환 값 {}", roomResult);
+		session.setAttribute("findCartResult", roomResult);
 	}
 
 

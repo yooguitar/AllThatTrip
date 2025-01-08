@@ -73,14 +73,13 @@
                                 <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
                             </div>
                             <div style="display: inline; float: left;">
-                                <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
-                                " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
+                                <img src="${ findCartResult[0].CHANGE_NAME }" alt="" style="width: 220px; height: 220px; margin-top: 10px;">
                             </div>
                             <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                                <a href="#" style="color:black; text-decoration: none;">상품명입력</a>
+                                <a href="#" style="color:black; text-decoration: none;">${ findCartResult[0].ROOM_NAME }</a>
                             </div>
                             <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                                <a href="#" style="color: black; text-decoration: none;">가격입력</a>
+                                <a href="#" style="color: black; text-decoration: none;">${ findCartResult[0].ROOM_PRICE }&nbsp;원</a>
                             </div>
                         </div>
                     </li>
