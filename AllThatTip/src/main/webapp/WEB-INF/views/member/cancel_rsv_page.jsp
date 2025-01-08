@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>로그인 페이지 입니다.</title>
+    <title>예약취소</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,43 +20,70 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
     
     <style>
+    	#upper-div{
+    		width:1200px;
+    		height:150px;
+    		margin:auto;
+    	}
+    	#lower-div{
+    		width:1200px;
+    		margin:auto;
+    	}
+    	#login-bg{
+    		width:1200px;
+    		height:700px;
+    		margin:auto;
+    	}
         #wrap{
             border : 1px solid rgba(0,0,0,0.2);
             border-radius: 5px;
             width: 500px;
-            height: 520px;
+            height: 600px;
             margin: auto;
             margin-top: 50px;
         }
         .title-join-biz{
             text-align: center;
         }
-
+		
     </style>
 </head>
 <body>
-	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" />-->
-	<!-- include 아직 하면 안됩니다. 스타일 겹쳐요 -->
-	
     <div class="container" id="wrap">
         <br>
-        <h2 class="title-join-biz">로그인</h2>
+        <h2 class="title-join-biz">예약 취소</h2>
         <br>
-        <form action="adLogin.me" method="post">
+        <form action="memberDelete.me" method="post">
             <div class="form-group">
-                <label>ID:</label>
-                <input type="id" class="form-control" id="adId" placeholder="아이디 입력" name="adId" required>
+                <label>비밀번호를 확인합니다.</label>
+                <input type="password" class="form-control" id="userPwd" placeholder="비밀번호 입력" name="userPwd" required>
             </div>
             <div class="form-group">
-                <label>Password:</label>
-                <input type="password" class="form-control" id="adPwd" placeholder="비밀번호 입력" name="adPwd" required>
+                <p>예약 취소 사유를 입력해주세요.</p>
+                <textarea style="border: 1px solid #ced4da; width: 465px; height: 250px; resize: none;" placeholder="입력"></textarea>
+                <!-- DB에 컬럼 없으므로 입력 X -->
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 470px; height: 50px;">로그인</button>
+            
+            <button type="submit" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); width: 470px; height: 50px;">제출</button>
         </form>
         
+        <c:if test="${ sessionScope.loginValue eq 1 }">
+	        <script>
+		        alertify
+		        .alert("아이디, 비밀번호를 확인해주세요.", function(){
+		          alertify.message('확인');
+		        });        
+	        </script>	
+	        <c:remove var="loginValue" scope="session" />
+        </c:if>
 
+        
+
+    </div>
+
+   
     
-    <!--<jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> s-->
+    <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
 
 </body>
 

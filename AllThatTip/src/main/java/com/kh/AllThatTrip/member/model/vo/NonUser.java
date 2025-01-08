@@ -1,6 +1,5 @@
 package com.kh.AllThatTrip.member.model.vo;
 
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +17,7 @@ public class NonUser {
 	private Long rsvNo;
 	private String nonUserName;
 	private String phone;
-	private Date rsvDate;
+	private String rsvDate;
 	
 	
 } 
