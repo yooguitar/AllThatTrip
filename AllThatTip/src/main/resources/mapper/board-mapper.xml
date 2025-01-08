@@ -263,12 +263,15 @@
 	    SELECT
 	    		COMMENT_NO commentNo
 	   			,USER_NO userNo
+	   			,USER_ID userId
 	   			,COMMENT_CONTENT commentContent
 	   			,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
 	    FROM
 	    		TB_COMMENT
+	    JOIN
+	    		MEMBER USING (USER_NO)
 	    WHERE
-	    		STATUS = 'Y'
+	    		TB_COMMENT.STATUS = 'Y'
 	    AND
 	    		BOARD_NO = #{boardNo}
 	    ORDER

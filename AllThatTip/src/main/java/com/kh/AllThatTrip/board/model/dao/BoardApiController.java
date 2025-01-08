@@ -34,7 +34,7 @@ public class BoardApiController {
 	
 	// 댓글 등록
 	@PostMapping
-	public ResponseEntity<ResponseData> ajaxInsertComment(Comment comment, HttpSession session){
+	public ResponseEntity<ResponseData> ajaxInsertComment(Comment comment){
 		log.info("comment:{}",comment);
 		// log.info("userNo:{}", ((Comment)(session.getAttribute("loginUser"))).getUserNo());
 		//User loginUser = (User) session.getAttribute("loginUser");
@@ -56,7 +56,7 @@ public class BoardApiController {
 	
 	// 댓글 조회
 	@GetMapping
-	public ResponseEntity<ResponseData> ajaxCommnetList(Long boardNo){
+	public ResponseEntity<ResponseData> ajaxCommnetList(long boardNo){
 			
 		List<Comment> commnets = boardService.commentList(boardNo);
 		ResponseData response = ResponseData.builder()

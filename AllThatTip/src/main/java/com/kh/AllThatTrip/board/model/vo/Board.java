@@ -20,7 +20,7 @@ public class Board {
 
 	private Long boardNo;
 	private String  boardType;
-	private int userNo;
+	private Long userNo;
 	private String boardWriter;
 	private String boardTitle;
 	private String boardContent;

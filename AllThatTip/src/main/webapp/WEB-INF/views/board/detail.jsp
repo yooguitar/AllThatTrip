@@ -123,28 +123,7 @@
             <table id="CommentArea" class="table" align="center">
                 <thead>
                 
-                	<!-- 비회원 노출 영역 
-                	<c:choose>
-	                	<c:when test="${ empty sessionScope.loginUser }">
-	                	
-	                    <tr>
-	                        <th colspan="2">
-	                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
-	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th> 
-	                    </tr>
-	                    </c:when>
-	                    <c:otherwise>
-	                    <tr>
-	                     <th colspan="2">
-	                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
-	                    </tr>
-	                    </c:otherwise>
-                    </c:choose>
-                    비회원으로 일단하자..--> 
-                    
+                	
                     
                     <tr>
 					    <th colspan="2">
@@ -195,7 +174,7 @@
     				data: {
     					 	boardNo: ${board.boardNo}, 
     		                commentContent: $('#content').val(),
-    		                userNo: '2' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
+    		                userNo: '${sessionScope.loginUser.userNo}'
     		        },
     				success: function(result) {
 						
