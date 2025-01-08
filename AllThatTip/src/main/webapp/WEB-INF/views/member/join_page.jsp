@@ -175,7 +175,7 @@
       <br><br>
     </div>
 
-    <button onclick="submitBtn();" id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
+    <button onclick="submitBtn();" disabled id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
   </form>
   
 </div>
