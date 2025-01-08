@@ -17,17 +17,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
+import com.kh.AllThatTrip.admin.model.vo.AdReply;
 import com.kh.AllThatTrip.admin.model.vo.Admin;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
-import com.kh.AllThatTrip.member.model.service.MemberValidator;
+import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Service
@@ -36,12 +38,13 @@ public class AdServiceImpl implements AdService{
 
 	private final AdminMapper mapper;
 	private final ServletContext context;
+	private final PasswordEncryptor passwordEncoder;
 
 
 	private int getTotalCount() {
 		int totalCount = mapper.selectTotalCount();
 		if(totalCount == 0) {
-			throw new BoardNotFoundException("게시글이 없습니다");
+			// throw new BoardNotFoundException("게시글이 없습니다");
 		}
 		return totalCount;
 	}
@@ -74,6 +77,7 @@ public class AdServiceImpl implements AdService{
 		validateAdNotice(adNotice);
 
 		if(!("".equals(upfile.getOriginalFilename())))	{
+			log.info("{}", upfile);
 			handleFileUpload(adNotice,upfile);
 		}
 		mapper.insertAdNotice(adNotice);
@@ -88,12 +92,14 @@ public class AdServiceImpl implements AdService{
 		String changeName = currentTime + randomNum + ext;
 
 		String savePath = context.getRealPath("/resources/upload_files/");
-
+		log.info("{}", savePath);
+		
 		try {
 			upfile.transferTo(new File(savePath + changeName));
-		} catch (IOException e) {
+		} catch (IllegalStateException | IOException e) {
 			throw new FailToFileUploadException("파일이 업로드 되지 않았습니다.");
 		}
+		
 		// 첨부파일이 존재했다 => 업로드 + Board객체에 originName + changeName
 		adNotice.setAdOriName(fileName);
 		adNotice.setAdChaName("/att/resources/upload_files/" + changeName);
@@ -210,5 +216,76 @@ public class AdServiceImpl implements AdService{
 		return loginAdmin;
 	}
 
+	@Override
+	public int insertAdReply(AdReply adReply) {
+		log.info("{}", adReply);
+		return mapper.insertAdReply(adReply);
+	}
+
+	@Override
+	public List<AdReply> selectAdReplyList(int adNoticeNo) {
+		log.info("{}", adNoticeNo);
+		return mapper.selectAdReplyList(adNoticeNo);
+	}
+
+	@Override
+	public List<Member> memberFindAll() {
+		return mapper.memberFindAll();
+	}
+
+	@Override
+	public Member selectMemberId(String userId) {
+		return mapper.selectMemberId(userId);
+	}
+
+	@Override
+	public List<Member> selectMember() {
+		return mapper.selectMember();
+	}
+
+	@Override
+	public List<Member> selectDeleteMember() {
+		return mapper.selectDeleteMember();
+	}
+
+	@Override
+	public List<Member> selectNewMember() {
+		return mapper.selectNewMember();
+	}
+
+	@Override
+	public List<Member> selectOldMember() {
+		return mapper.selectOldMember();
+	}
+
+	@Override
+	public int deleteMember(String userId) {
+		return mapper.deleteMember(userId);
+	}
+
+	@Override
+	public int unDeleteMember(String userId) {
+		return mapper.unDeleteMember(userId);
+	}
+
+	@Override
+	public int spamMember(String userId) {
+		return mapper.spamMember(userId);
+	}
+
+	@Override
+	public int unSpamMember(String userId) {
+		return mapper.unSpamMember(userId);
+	}
+
+	@Override
+	public int updatePasswordMember(Member member) {
+		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
+		return mapper.updatePasswordMember(member);
+	}
+
+	
+	
+	
 
 }
