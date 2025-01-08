@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.LoginCountOverException;
 import com.kh.AllThatTrip.member.model.service.MemberService;
@@ -110,19 +111,16 @@ public class MemberController {
 			Member loginUser = (Member)session.getAttribute("loginUser");
 			memberService.findCart(loginUser, session);
 			return "member/cart_page";
-			
-			
-			
 		}
-		/*
-		 * else {
-		 * 	//비회원
-		 * }
-		 */
-		
 		return "member/cart_page";
-		
 	}
+	
+	@PostMapping("cartPage.me")
+	public String cartPage(HttpSession session, Room roomNo) {
+		
+		return null;
+	}
+	
 	
 	@GetMapping("wishlistPage.me")
 	public String wishlistPage(HttpSession session) {

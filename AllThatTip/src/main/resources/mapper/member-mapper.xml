@@ -162,7 +162,12 @@
 	       RES_NO ASC
 </select>
 
-
+<!-- 
+<select id="findCart" parameterType="member" resultType="hashmap">
+	SELECT
+		   캠핑정보를 가져올 수 있는 테이블을 골라야함
+</select>
+-->
 <update id="increaseLoginCount" parameterType="member">
 	UPDATE
 		   MEMBER
