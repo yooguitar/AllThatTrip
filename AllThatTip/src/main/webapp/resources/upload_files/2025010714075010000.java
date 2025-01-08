@@ -20,7 +20,7 @@ public class Board {
 
 	private Long boardNo;
 	private String  boardType;
-	private Long userNo;
+	private int userNo;
 	private String boardWriter;
 	private String boardTitle;
 	private String boardContent;
@@ -29,14 +29,11 @@ public class Board {
 	private String createDate;
 	private int count;
 	private String status;
-	private List<BdAttachment> fileList;
-	private int page;
-	private String keyword;
-	private String condition;
-	private String imagePath;
-	private String faqType;
-	
-} 
+	private List<?> fileList;
+	private int page;    
+	private RowBounds rowBounds;
+		
+	} 
 		
 	
 

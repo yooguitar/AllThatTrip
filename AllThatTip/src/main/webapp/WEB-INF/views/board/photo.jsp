@@ -4,59 +4,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Q&A(문의하기)</title>
+    <title>중고거래리스트</title>
+    <meta charset="utf-8">
+    <!--생략하셔도 됩니다.-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
 
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        width:1200px;
-        margin: 0 auto;
-        padding: 0;
-
-    }
+    
+  <style> 
+    
+    .used_innerOuter {
+            width:80%;
+            margin:auto;
+            padding:5% 10%;
+            background-color:white;
+        }
 	#pagingArea {width:fit-content; margin:auto;}
+
+
+	.list-area{
+		text-align : center;
+		
+	}
+
+	.thumbnail{
+
+		box-shadow : 1px 1px 2px #0000002e;
+		width : 310px;
+		padding : 12px;
+		margin : 20px;
+		display : inline-block;
+		background-color: #ffffffb0;
+		color:#000000b0;
+		font-weight: bold;
+		border-radius: 12px;
+	}
+
+	.thumbnail > img{
+		width : 300px;
+		height : 200px;
+		margin-bottom : 8px;
+		border : 1px solid rgb(172 205 255 / 57%);
+		border-radius: 12px;
+	}
+
+	.thumbnail:hover{
+		cursor:pointer;
+		opacity:0.8;
+	}
 	
-    .qna-container {
-        width: 70%;
-        margin: 10px auto;
-        padding: 40px;
-        background-color: #fff;
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 30px;
-        color: #333;
-        margin-bottom: 30px;
-    }
-	
-   
-    .qna-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    .qna-table th,
-    .qna-table td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .qna-table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
-
-   
-
-    .write-button {
+	.write-button {
         display: block;
         margin: 0 auto;
         padding: 10px 20px;
@@ -72,64 +70,23 @@
     .write-button:hover {
         background-color: #444;
     }
-    
-    .search-form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-	}
-	
-	.search-container {
-	    display: flex;
-	    align-items: center;
-	    gap: 10px; /* 입력 필드 간 간격 */
-	}
-	
-	.search-container .select select {
-	    padding: 5px 12px;
-	    border: 1px solid #ddd;
-	    border-radius: 4px;
-	    font-size: 15px;
-	    outline: none;
-	}
-	
-	.search-container .text input {
-	    padding: 12px 16px;
-	    border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 15px; /* 글자 크기 */
-        width: 300px; /* 검색창 너비 조정 */
-        outline: none;
-	}
-	
-	.search-container .searchBtn {
-	    padding: 8px 16px;
-	    border: none;
-	    border-radius: 4px;
-	    background-color: #6c757d;
-	    color: white;
-	    font-size: 14px;
-	    cursor: pointer;
-	    transition: background-color 0.3s;
-	}
-	
-	.search-container .searchBtn:hover {
-	    background-color: #5a6268;
-	}
 
-
-    </style>
+</style>
 </head>
 <body>
 
-    <jsp:include page="../common/include/header.jsp" />   
-    <br><br>
-    <h1>문의하기(Q&A)</h1>
-    <div class="qna-container">
+    <jsp:include page="../common/include/header.jsp" />  
+    <div class="used_innerOuter" style="padding:5% 10%;">
+    <h2>중고거래게시판</h2>
+    <div class="photolist_outer">
+        <div>
+        <br>
+            <img src="/att/resources/img/etc/photo_banner.jpg" alt="Review Banner" style="width: 1150px; height: auto; display: block; margin: 0 auto;" >
+        <br><br>    
         
- 		<br>
+           <!-- 검색창 -->
+           <div class="action-bar">
+               <br>
 		<form id="searchForm" action="/att/board/list" method="get" align="center" style="display: inline-block;">
 			<input type="hidden" name="boardType" value="${ board.boardType }" />
 				<div class="select" style="display: inline-block;">
@@ -144,39 +101,42 @@
 				</div>
 			<button type="submit" class="searchBtn btn btn-secondary" style="display: inline-block;">검색</button>
 		</form>
-		<br><br> 
-           	<c:if test="${not empty sessionScope.loginUser and board.boardType == 30}">
-				<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
-			</c:if>
-		<br><br> 
-  
-    	<br><br>
-        <table class="qna-table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>조회수</th>
-                    <th>작성일</th>
+           <br><br> 
+               
+		<c:if test="${not empty sessionScope.loginUser and board.boardType == 40}">
+			<a class="btn btn-secondary" style="float:right;" id="write-button" href="/att/board/insertForm?boardType=40">글쓰기</a>
+		</c:if>
+			<br>
+            </div>
+            </div>
+            <div class="list-area">
+	        </div>
+	    </div>
+
+        <c:choose>
+            <c:when test="${ empty boards }">
+                등록된 게시글이 존재하지 않습니다. <br>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${ boards }" var="board">
                     
-                </tr>
-            </thead>
-			<tbody>
-			  	<c:forEach items="${boards}" var="board">
-					<tr onclick="detail('${board.boardNo}')"> 
-						<td>${board.boardNo}</td>
-						<td>${board.boardTitle}</td>
-						<td>${board.boardWriter}</td>
-						<td>${board.count}</td>
-						<td>${board.createDate}</td>
-			  		</tr>
-				</c:forEach>
-			</tbody>
-        </table>
-    </div>
-	
-	<!-- 페이징 -->
+                <div class="thumbnail" align="center">
+                    <input type="hidden" value="${ board.boardNo }" />
+                    <img src="/att${ board.imagePath }" alt="이미지" style="width: 100%; height: 100%;">
+                    <p>
+                        <label>No.  ${ board.boardNo }</label> <br>
+                        <label>제목: ${ board.boardTitle }</label> <br>
+                        <label>작성자: ${ board.boardWriter }</label> <br>
+                        <label>조회수</label> : <span>${ board.count }</span>
+                    </p>
+                </div>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+       </div>
+						        
+        
+        <!-- 페이징 -->
         <div id="pagingArea">
 		    <ul class="pagination">
 		        <!-- 이전 페이지 버튼 -->
@@ -235,17 +195,21 @@
 		        </c:choose>
 		    </ul>
 		</div>
+       
         
-
+        
+		
+		
 		<script>
-			function detail(num) {
-				const boardType = '${board.boardType}';
-				window.location.href = '/att/board/list/'+num+'?boardType=' + boardType;
-			}
-			
-		</script>
- <!-- 로그인안해도 보임 -->
+		$('.thumbnail').click(function() {
+		    const num = $(this).children().eq(0).val(); // 게시글 번호
+		    const boardType = $(this).data('boardType'); // 게시판 타입
 
-    <jsp:include page="../common/include/footer.jsp" />
+		    location.href = '/att/board/list/' + num + '?boardType=' + boardType; // URL 지정
+		});
+		</script>
+		
+    <jsp:include page="../common/include/footer.jsp" />   
+
 </body>
 </html>

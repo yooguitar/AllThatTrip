@@ -11,7 +11,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style> 
         .content {
-            background-color:rgb(247, 245, 245);
             width:80%;
             margin:auto;
         }
@@ -52,10 +51,11 @@
                 </tr>
                 <tr>
                     <th>작성자</th><td colspan="1"></td>
-                    <td>${board.userNo}</td>
+                    <td>${board.boardWriter}</td>
                     <th>작성일</th>
                     <td colspan="3">${board.createDate}</td>
                 </tr>
+                
                 <tr>
                     <th scope="row">첨부파일</th>
                     <td id="files" colspan="1">
@@ -74,7 +74,6 @@
 	                    </c:otherwise>
  					</c:choose>
                 </tr>
-                
                 
                 <tr>
                     <th>내용</th>
@@ -117,44 +116,14 @@
 				}
             </script>
             
-            
-            <!-- 
-            	case 1: 수정하기 누르면 수정할 수 있는 입력 양식이 있어야함
-            			입력양식에는 원본 게시글 정보들이 들어있어야함
-            			
-            	case 2: 삭제하기 누르면 Board테이블에 가서 STAUS 컬럼 'N'으로 바꾸고
-            			혹시 첨부파일도 있었다면 같이 지워줌
-            
-             -->
+         
             
             <br><br>
 
-            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
             <table id="CommentArea" class="table" align="center">
                 <thead>
                 
-                	<!-- 비회원 노출 영역 
-                	<c:choose>
-	                	<c:when test="${ empty sessionScope.loginUser }">
-	                	
-	                    <tr>
-	                        <th colspan="2">
-	                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
-	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th> 
-	                    </tr>
-	                    </c:when>
-	                    <c:otherwise>
-	                    <tr>
-	                     <th colspan="2">
-	                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
-	                    </tr>
-	                    </c:otherwise>
-                    </c:choose>
-                    비회원으로 일단하자..--> 
-                    
+                	
                     
                     <tr>
 					    <th colspan="2">
@@ -205,7 +174,7 @@
     				data: {
     					 	boardNo: ${board.boardNo}, 
     		                commentContent: $('#content').val(),
-    		                userNo: '1' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
+    		                userNo: '${sessionScope.loginUser.userNo}'
     		        },
     				success: function(result) {
 						

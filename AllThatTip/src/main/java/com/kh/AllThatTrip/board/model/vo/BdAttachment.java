@@ -21,6 +21,7 @@ public class BdAttachment {
     private String changeName; 
     private String filePath; 
     private Date uploadDate; 
+    private String thumbnail;
     private String status; 
 
 }

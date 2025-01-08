@@ -1,8 +1,10 @@
 package com.kh.AllThatTrip.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.board.model.vo.BdAttachment;
@@ -13,7 +15,7 @@ import com.kh.AllThatTrip.board.model.vo.Comment;
 public interface BoardMapper {
 	
 	// 개수 조회
-	int selectTotalCount(String boardType);
+	int selectTotalCount(Board board);
 	
 	// 목록조회
 	List<Board> selectBoardList(Board board, RowBounds rowBounds);
@@ -43,7 +45,7 @@ public interface BoardMapper {
 	// 첨부파일 리스트 진짜 삭제
 	void deleteFileByBoardNo(Long boardNo);
 
-	void insertBoardFile(List<BdAttachment> asList);
+	void insertBoardFile(BdAttachment asList);
 
 	
 	// 댓글등록
@@ -59,11 +61,12 @@ public interface BoardMapper {
 	
 	
 	// 대댓글 작성
-//	public int insertReply(Reply reply);
+	//	public int insertReply(Reply reply);
 	
 
+	// 검색기능
 
-		
+
 	
 
 }
