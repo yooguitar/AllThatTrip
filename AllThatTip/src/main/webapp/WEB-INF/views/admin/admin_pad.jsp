@@ -179,6 +179,7 @@ table {
 				<table>
 					<tr>
 						<th>유저번호</th>
+						<th>판매자 이름</th>
 						<th>실명</th>
 						<th>아이디</th>
 						<th>이메일</th>
@@ -219,22 +220,20 @@ table {
 
 		<div id="admin_con">
 			<div class="panelist">
-				<p5>판매자 목록 리스트</p5>
+				<p5>게시판 목록 리스트</p5>
 			</div>
 			<div class="panel">
 				<table>
 					<tr>
+						<th>게시판번호</th>
+						<th>게시판타입</th>
 						<th>유저번호</th>
-						<th>실명</th>
-						<th>사업자 이름</th>
-						<th>아이디</th>
-						<th>이메일</th>
-						<th>전화번호</th>
-						<th>가입일자</th>
-						<th>스팸여부</th>
-						<th>탈퇴여부</th>
+						<th>유저이름</th>
+						<th>제목</th>
+						<th>작성일자</th>
+						<th>삭제여부</th>
 					</tr>
-					<tbody  id="biz_user">
+					<tbody  id="board">
 						
 					</tbody>
 				</table>
@@ -253,10 +252,11 @@ table {
 	<div class="admin_pages">
 		<div id="admin_con">
 			<div class="panelist">
-				<p5>게시글 목록 리스트</p5>
 			</div>
 			<div class="panel"></div>
-			<div class="control_box"></div>
+			<div class="control_box">
+				  
+			</div>
 		</div>
 
 		<div id="admin_con">
@@ -582,6 +582,7 @@ function updatePasswordMember(){
 		}
 	})
 }
+
 	</script>
 </body>
 </html>
