@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.admin.model.service.AdService;
+import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.common.model.vo.ResponseData;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -154,7 +155,7 @@ public class AdminPadController {
 	public ResponseEntity<ResponseData> spamMember(String userId) {
 		int result = adService.spamMember(userId);
 		ResponseData response = ResponseData.builder()
-											.message("회원 복구 성공.")
+											.message("변경 성공.")
 											.status(HttpStatus.OK.toString())
 											.data(result)
 											.build();
@@ -167,7 +168,7 @@ public class AdminPadController {
 	public ResponseEntity<ResponseData> unSpamMember(String userId) {
 		int result = adService.unSpamMember(userId);
 		ResponseData response = ResponseData.builder()
-											.message("회원 복구 성공.")
+											.message("변경 성공.")
 											.status(HttpStatus.OK.toString())
 											.data(result)
 											.build();
@@ -187,5 +188,29 @@ public class AdminPadController {
 
 		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 
+	}
+	
+	@PostMapping("resetCount")
+	public ResponseEntity<ResponseData> resetCount(String userId) {
+		int result = adService.resetCount(userId);
+		ResponseData response = ResponseData.builder()
+											.message("변경 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
+	@GetMapping("boardFindAll")
+	public ResponseEntity<ResponseData> boardFindAll() {
+		List<Board> boards = adService.boardFindAll();
+		ResponseData response = ResponseData.builder()
+											.message("유저 조회 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(boards)
+											.build();
+		
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	}
 }

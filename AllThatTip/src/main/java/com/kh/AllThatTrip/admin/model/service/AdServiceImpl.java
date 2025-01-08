@@ -19,6 +19,7 @@ import com.kh.AllThatTrip.admin.model.dao.AdminMapper;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
 import com.kh.AllThatTrip.admin.model.vo.AdReply;
 import com.kh.AllThatTrip.admin.model.vo.Admin;
+import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.common.model.template.Pagination;
 import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
@@ -282,6 +283,16 @@ public class AdServiceImpl implements AdService{
 	public int updatePasswordMember(Member member) {
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 		return mapper.updatePasswordMember(member);
+	}
+
+	@Override
+	public int resetCount(String userId) {
+		return mapper.resetCount(userId);
+	}
+
+	@Override
+	public List<Board> boardFindAll() {
+		return mapper.boardFindAll();
 	}
 
 	
