@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -94,6 +92,10 @@ public class BoardServiceImple implements BoardService {
 		return value.replaceAll("\n", "<br>");
 	}
 	
+	private String convertBrToNewline(String value) {
+		return value.replaceAll("<br>", "\n");
+	}
+	
 	
 	private void validateBoardNo(Long boardNo) {
 		if(boardNo == null || boardNo <= 0) {
@@ -174,7 +176,7 @@ public class BoardServiceImple implements BoardService {
 	
 		List<Board> boards = getBoardList(pi, board);
 		
-		log.info("게시글목록:{}", boards);
+		// log.info("게시글목록:{}", boards);
 		
 		Map<String, Object> map = new HashMap();
 		
@@ -196,7 +198,6 @@ public class BoardServiceImple implements BoardService {
 		validateBoardNo(boardNo);
 		incrementViewCount(boardNo);
 		Board board = findBoardByNum(boardNo);
-		
 		// board 객체에 List<fileList> 객체 생성 후 객체안에서 파일은 List 타입으로 처리
 		// 사유 : 상세페이지는 한개의 로우 파일은 리스트형태로 조회가 가능하기에 fileList 는 list타입으로 처리
 		// (상세 게시글 데이터 로우 : 상세 게시글 첨부파일 로우) == (1:n)
@@ -210,6 +211,28 @@ public class BoardServiceImple implements BoardService {
 		return responseData;	// 사용자에게 반환
 
 	}
+	
+	// 상세조회2
+		@Override
+		public Map<String, Object> selectByNum2(long boardNo) {
+			
+			validateBoardNo(boardNo);
+			incrementViewCount(boardNo);
+			Board board = findBoardByNum(boardNo);
+			board.setBoardContent(convertBrToNewline(board.getBoardContent()));
+			// board 객체에 List<fileList> 객체 생성 후 객체안에서 파일은 List 타입으로 처리
+			// 사유 : 상세페이지는 한개의 로우 파일은 리스트형태로 조회가 가능하기에 fileList 는 list타입으로 처리
+			// (상세 게시글 데이터 로우 : 상세 게시글 첨부파일 로우) == (1:n)
+			List<BdAttachment> fileList = mapper.selectFileList(boardNo); //게시글 번호를 기준으로 첨부파일 목록을 조회, 첨부파일 데이터를 리스트 형태로 반환
+			
+			board.setFileList(fileList); // board객체에 fileList 다중 파일을 하나의 객체로 관리
+			
+			Map<String, Object> responseData = new HashMap<>();
+	        responseData.put("board", board); // 응답데이터 지정
+			
+			return responseData;	// 사용자에게 반환
+
+		}
 
 	// 등록
 	
@@ -310,12 +333,15 @@ public class BoardServiceImple implements BoardService {
 		if (fileArray != null && fileArray.length > 0) {
 		    for (BdAttachment file : fileArray) {
 		        if (file != null) {
-		            mapper.insertBoardFile(file); // 배열 요소를 하나씩 삽입
+		        	file.setBoardNo(board.getBoardNo());
+		            mapper.insertBoardFile2(file); // 배열 요소를 하나씩 삽입
 		        }
 		    }
 		}
 
 	    // 게시글 업데이트
+		// 유효성 검증
+		validateBoard(board);
 	    int result = mapper.updateBoard(board);
 	    if (result < 1) {
 	        throw new BoardNotFoundException("게시글 수정에 실패하였습니다");
@@ -345,47 +371,6 @@ public class BoardServiceImple implements BoardService {
 	}
 	
 	
-
-	// 다중 파일 메소드
-	
-	
-	/*
-	// 첨부파일 다중 등록
-	@Transactional
-	@Override
-	public Map<String, Object> saveAll(Board board, List<MultipartFile> upfiles) {
-
-	    // 유효성 검증
-	    validateBoard(board);
-	    List<Board> fileBoards = new ArrayList<>();
-
-	    // 파일 유무 확인 및 처리
-	    if (upfiles != null && !upfiles.isEmpty()) {
-	        for (MultipartFile upfile : upfiles) {
-	            if (!upfile.isEmpty()) {
-	                Board fileBoard = handlerFileUpload(board, upfile);
-	                fileBoards.add(fileBoard);
-	            }
-	        }
-	    }
-
-	    // 게시글 정보 저장
-	    mapper.insertBoard(board);
-
-	    // 파일 정보가 있으면 파일 정보 저장
-	    if (!fileBoards.isEmpty()) {
-	        for (Board fileBoard : fileBoards) {
-	            fileBoard.setBoardNo(board.getBoardNo()); 
-	            mapper.insertBoardFile(fileBoard);
-	        }
-	    }
-		return null;
-	}
-	*/
-	
-	
-	
-	
 	// 댓글등록
 	@Override
 	public int insertComment(Comment comment) {
@@ -403,11 +388,6 @@ public class BoardServiceImple implements BoardService {
 		return mapper.deleteComment(commentNo);
 	}
 	
-	
-	// 대댓글 작성
-	//public int insertReply(Reply reply) {
-	//	return 0;
-	//}
 	
 	
 }

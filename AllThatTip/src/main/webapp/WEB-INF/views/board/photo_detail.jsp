@@ -80,12 +80,15 @@
             </table>
             <br>
 
+		<tbody>
+            </div>
+            
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-               
-                <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="postSubmit(2);">삭제하기</a>
-             
+               	<c:if test="${ sessionScope.loginUser.userNo eq requestScope.board.boardWriter }">
+	                <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
+	                <a class="btn btn-danger" onclick="postSubmit(2);">삭제하기</a>
+             	</c:if>
             </div>
             
             <form action="/att/board/list/update" method="post" id="postForm">
@@ -97,20 +100,6 @@
             
             	 -->
             </form>
-		
-            <script>
-            	function postSubmit(num) {
-            		const boardNo = $('input[name="boardNo"]').val(); 
-            		const boardType = $('input[name="boardType"]').val();
-				
-            		if(num == 1){
-            			$('#postForm').attr('action', '/att/board/list/update-form').submit();
-            		} else { 
-            			$('#postForm').attr('action', '/att/board/list/delete').submit();
-            		}
-				}
-            </script>
-            
          
             
             <br><br>
@@ -148,10 +137,6 @@
 					    <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
 					</tr>
                     
-                    
-                    
-                    
-                    
                     <tr>
                         <td colspan="3">댓글(<span id="rcount">0</span>)</td>
                     </tr>
@@ -161,17 +146,28 @@
                 
                 
                 
-                <tbody>
+                
                    
                    
-                </tbody>
+                
             </table>
         </div>
         <br><br>
 
     </div>
-      
-    <script>
+    </tbody>
+   <script>
+		function postSubmit(num) {
+			const boardNo = $('input[name="boardNo"]').val(); 
+			const boardType = $('input[name="boardType"]').val();
+		
+			if(num == 1){
+				$('#postForm').attr('action', '/att/board/list/update-form').submit();
+			} else { 
+				$('#postForm').attr('action', '/att/board/list/delete').submit();
+			}
+		}
+	
     
     	
     	// 댓글 리스트 호출

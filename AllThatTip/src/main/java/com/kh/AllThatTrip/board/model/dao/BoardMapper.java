@@ -58,6 +58,8 @@ public interface BoardMapper {
 	// 댓글삭제
 
 	int deleteComment(long commentNo);
+
+	void insertBoardFile2(BdAttachment file);
 	
 	
 	// 대댓글 작성

@@ -39,11 +39,14 @@
 		color:#000000b0;
 		font-weight: bold;
 		border-radius: 12px;
+		overflow: hidden;
 	}
 
 	.thumbnail > img{
 		width : 300px;
 		height : 200px;
+		object-fit: cover;
+		object-position;
 		margin-bottom : 8px;
 		border : 1px solid rgb(172 205 255 / 57%);
 		border-radius: 12px;
@@ -122,7 +125,7 @@
                     
                 <div class="thumbnail" align="center">
                     <input type="hidden" value="${ board.boardNo }" />
-                    <img src="/att${ board.imagePath }" alt="이미지" style="width: 100%; height: 100%;">
+                    <img src="/att${ board.imagePath }" alt="이미지" >
                     <p>
                         <label>No.  ${ board.boardNo }</label> <br>
                         <label>제목: ${ board.boardTitle }</label> <br>

@@ -55,7 +55,7 @@ public class BoardController {
 	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
-	    log.info("board:{}", board);
+	    //log.info("board:{}", board);
 	    //log.info("map:{}", map);
 	    map.put("board", board);
 	   
@@ -155,7 +155,7 @@ public class BoardController {
 	@PostMapping("/list/update-form")
 	public ModelAndView updateForm(Long boardNo) {
 		//log.info("수정할 게시글 번호: {}", boardNo);
-		Map<String, Object> responseData = boardService.selectByNum(boardNo);
+		Map<String, Object> responseData = boardService.selectByNum2(boardNo);
 		
 		return mv.setViewNameAndData("board/update", responseData);
 	}
