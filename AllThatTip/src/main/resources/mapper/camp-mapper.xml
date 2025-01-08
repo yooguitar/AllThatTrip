@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.kh.AllThatTrip.camp.model.dao.CampMapper">
+ 	
+ 	<insert id="insertCamp" parameterType="camp">
+ 		INSERT 
+ 		  INTO 
+ 		       CAMP 
+ 		       (
+ 		       CAMP_NO, 
+ 		       BIZ_NO, 
+ 		       CAMP_NAME, 
+ 		       CAMP_ADDR, 
+ 		       CAMP_DESC, 
+ 		       ORIGIN_NAME, 
+ 		       CHANGE_NAME
+ 		       ) 
+ 		VALUES 
+ 		       (
+ 		       SEQ_CNO.NEXTVAL, 
+ 		       #{bizNo}, 
+ 		       #{campName}, 
+ 		       #{campAddr}, 
+ 		       #{campDesc}, 
+ 		       #{originName}, 
+ 		       #{changeName}
+ 		       )
+ 	</insert>
+ 	
+ 	<select id="selectCampList" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectCampListByBizNo" parameterType="long" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+ 		   AND
+ 		   	   BIZ_NO = #{bizNo}
+ 	</select>
+ 	
+ 	<select id="selectCampById" parameterType="long" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+ 		   AND
+ 		       CAMP_NO = #{campNo}
+ 	</select>
+ 	
+ 	<update id="updateCamp" parameterType="camp">
+ 		UPDATE 
+ 			   CAMP
+ 		   SET
+ 		       CAMP_NAME = #{campName}, 
+ 		       CAMP_ADDR = #{campAddr}, 
+ 		       CAMP_DESC = #{campDesc}, 
+ 		       ORIGIN_NAME = #{originName}, 
+ 		       CHANGE_NAME = #{changeName}, 
+ 		       MODIFY_DATE = SYSDATE 
+ 		 WHERE 
+ 		       STATUS = 'Y' 
+ 		   AND 
+ 		       CAMP_NO = #{campNo}
+ 	</update>
+ 	
+ 	<update id="deleteCamp" parameterType="camp">
+ 		UPDATE 
+ 		       CAMP 
+ 		   SET 
+ 		       STATUS = 'N' 
+ 		 WHERE 
+ 		       STATUS = 'Y' 
+ 		   AND 
+ 		       CAMP_NO = #{campNo}
+ 	</update>
+ 	
+ 	<select id="bizLogin" parameterType="member" resultType="bizMember">
+ 		SELECT 
+ 			   USER_NO userNo, 
+ 			   BIZ_NO bizNo, 
+ 			   BIZ_FILENO bizFileNo, 
+ 			   USER_ID userId, 
+ 			   USER_PWD userPwd, 
+ 			   USER_NAME userName,
+ 			   EMAIL, 
+ 			   PHONE, 
+ 			   SPAM, 
+ 			   STATUS, 
+ 			   ENROLL_DATE enrollDate 
+ 		  FROM 
+ 			   MEMBER 
+ 		  JOIN 
+ 			   BUSINESS_USER USING (USER_NO) 
+ 	     WHERE 
+ 	           USER_ID = #{userId}
+ 	       AND
+ 			   STATUS ='Y'
+ 	</select>
+ 	
+ </mapper>
