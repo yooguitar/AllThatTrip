@@ -98,6 +98,20 @@ table {
 	height:25px;
 }
 
+#text-input3{
+    margin-left : 10px;
+    margin-top : 5px;
+	width: 100px;
+	height:25px;
+}
+
+#text-input4{
+    margin-left : 10px;
+    margin-top : 5px;
+	width: 100px;
+	height:25px;
+}
+
 .label-text{
     font-weight: 800px;
     font-size : 12px;
@@ -247,25 +261,29 @@ table {
 			<div class="control_box">
 				 <div class="control_in">
 		            <label class="label-text"> 유저 ID :</label>
-		            <input type="text" id="text-input" /> 
-		            <input type="submit" onclick="selectMemberId()"/>
+		            <input type="text" id="text-input3" /> 
+		            <input type="submit" onclick="selectBoardWriter()"/>
 		            <br>
-		           	<button class="control-btn" onclick="selectMember()">회원조회</button>
-		           	<button class="control-btn" onclick="selectDeleteMember()">탈퇴조회</button>
+		           	<button class="control-btn" onclick="selectCountMax()">조회수↑</button>
+		           	<button class="control-btn" onclick="selectCountMin()">조회수↓</button>
+		           	<button class="control-btn" onclick="selectDeleteBoard()">삭제조회</button>
 		           	<br>
-		           	<button class="control-btn" onclick="selectNewMember()">최신순</button>
-		           	<button class="control-btn" onclick="selectOldMember()">오래된순</button>
+		           	<button class="control-btn" onclick="selectNewBoard()">최신순</button>
+		           	<button class="control-btn" onclick="selectOldBoard()">오래된순</button>
+		           	<button class="control-btn" onclick="selectBoard()">게시글조회</button>
 		         </div>
 		         <div class="control_out">
-		         	<label class="label-text"> 변경할 비밀번호 :</label>
-		            <input type="text" id="text-input2" />
-		            <input type="submit" onclick="updatePasswordMember()"/>
-		     		<button class="control-btn2" onclick="deleteMember()">회원탈퇴</button>
-		     		<button class="control-btn3" onclick="unDeleteMember()" >회원복구</button>
-		     		<button class="control-btn2" onclick="spamMember()">스팸처리</button>
-		     		<button class="control-btn3" onclick="unSpamMember()" >스팸철회</button>
+		            <label class="label-text"> 보드 번호 :</label>
+		            <input type="text" id="text-input4" />
+		         	<input type="submit" onclick="selectBoardNo()"/>
+		     		<button class="control-btn2" onclick="deleteBoard()">게시글삭제</button>
+		     		<button class="control-btn3" onclick="unDeleteBoard()" >게시글복구</button>
 		     		<br>
-		     		<button class="control-btn3" onclick="resetCount()" >횟수 초기화</button>
+		     		<button class="control-btn" onclick="select40Board()" >중고거래</button>
+		     		<button class="control-btn" onclick="select30Board()" >질문</button>
+		     		<button class="control-btn" onclick="select20Board()" >FAQ</button>
+		     		<button class="control-btn" onclick="select10Board()" >공지사항</button>
+		     		<button class="control-btn" onclick="select50Board()" >후기게시판</button>
 		         </div>    
 			</div>
 		</div>
@@ -648,7 +666,7 @@ function selectBoardPad(){
 			const resultStr = replies.map(e => `
 												<tr>
 												<td>\${e.boardNo}</td>
-												<td>\${e.boardType}</td>
+												<td>\${e.boardCdName}</td>
 												<td>\${e.count}</td>
 												<td>\${e.boardWriter}</td>
 												<td>\${e.boardTitle}</td>
@@ -664,8 +682,526 @@ function selectBoardPad(){
 	});
 }
 
-	</script>
+function selectBoardWriter(){
 	
+	const userId = document.querySelector('#text-input3').value;
 	
+	$.ajax({
+		url : '/att/adPad/selectBoardWriter',
+		type : 'get',
+		data : {
+			boardWriter : userId	
+		},
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function selectCountMax(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectCountMax',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function selectCountMin(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectCountMin',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function selectNewBoard(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectNewBoard',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function selectOldBoard(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectOldBoard',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function selectDeleteBoard(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectDeleteBoard',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function selectBoard(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectBoard',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function select40Board(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/select40Board',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+function select30Board(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/select30Board',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+function select20Board(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/select20Board',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+
+function select10Board(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/select10Board',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}
+
+function select50Board(){
+	
+	const userId = document.querySelector('#text-input3').value;
+	
+	$.ajax({
+		url : '/att/adPad/select50Board',
+		type : 'get',
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}
+
+
+function deleteBoard(){
+	
+	const boardNo = document.querySelector('#text-input4').value;
+	console.log(boardNo);
+	$.ajax({
+		url : '/att/adPad/deleteBoard',
+		type : 'post',
+		data : {
+			boardNo : boardNo
+		},
+		success : function(){
+			alert("변경성공");
+			selectBoardNo();
+		}
+	})
+}
+
+function unDeleteBoard(){
+	
+	const boardNo = document.querySelector('#text-input4').value;
+	console.log(boardNo);
+	$.ajax({
+		url : '/att/adPad/unDeleteBoard',
+		type : 'post',
+		data : {
+			boardNo : boardNo
+		},
+		success : function(){
+			alert("변경성공");
+			selectBoardNo();
+		}
+	})
+}
+
+
+function selectBoardNo(){
+	
+	const boardNo = document.querySelector('#text-input4').value;
+	
+	$.ajax({
+		url : '/att/adPad/selectBoardNo',
+		type : 'get',
+		data : {
+			boardNo : boardNo	
+		},
+		success : function(result){
+			
+			const boardInfo = [...result.data];
+			const boardStr = boardInfo.map(boardInfo => `
+												<tr>
+												<td>\${boardInfo.boardNo}</td>
+												<td>\${boardInfo.boardCdName}</td>
+												<td>\${boardInfo.count}</td>
+												<td>\${boardInfo.boardWriter}</td>
+												<td>\${boardInfo.boardTitle}</td>
+												<td>\${boardInfo.createDate}</td>
+												<td>\${boardInfo.status}</td>
+												</tr>
+										       `
+										       ).join('');
+			$('#board').html(boardStr);
+		},
+		error : function(result){
+			
+			const errorStr = `<tr>
+							  <td>게시물이 없습니다.</td>					
+							  </tr>
+							  `
+		   $('#board').html(errorStr);
+		}
+		
+		
+	});
+}	
+</script>	
 </body>
 </html>

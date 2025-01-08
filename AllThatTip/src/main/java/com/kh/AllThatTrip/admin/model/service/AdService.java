@@ -55,5 +55,34 @@ public interface AdService {
 
 	List<Board> boardFindAll();
 
+	List<Board> selectBoardWriter(String boardWriter);
+
+	List<Board> selectCountMax();
+
+	List<Board> selectCountMin();
+
+	List<Board> selectNewBoard();
+
+	List<Board> selectOldBoard();
+
+	List<Board> selectDeleteBoard();
+
+	List<Board> selectBoard();
+
+	List<Board> select40Board();
+
+	List<Board> select30Board();
+
+	List<Board> select20Board();
+
+	List<Board> select10Board();
+
+	List<Board> select50Board();
+
+	int deleteBoard(int boardNo);
+
+	int unDeleteBoard(int boardNo);
+
+	List<Board> selectBoardNo(int boardNo);
 
 }
