@@ -104,6 +104,15 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public void findCart(Member member, HttpSession session) {
+		session.removeAttribute("findCartResult");
+//		ArrayList result = mapper.findCart(member);
+//		if(!result.isEmpty()) {
+//			session.setAttribute("findCartResult", result);
+//		}
+	}
+
 
 
 	

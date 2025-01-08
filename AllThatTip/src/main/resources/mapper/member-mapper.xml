@@ -162,6 +162,7 @@
 	       RES_NO ASC
 </select>
 
+
 <update id="increaseLoginCount" parameterType="member">
 	UPDATE
 		   MEMBER
@@ -190,38 +191,6 @@
 </select>
 
 
-<!-- 찜, 예약, 장바구니 관련 -->
-<!--  
-<select id="findRsv" parameterType="member" resultMap="findRsvMap">
-		SELECT
-	       m.USER_NAME,
-	       u.ROOM_NAME,
-	       u.ROOM_PRICE,
-	       u.ROOM_IMG
-	  FROM
-	       USER_RES_ROOM u
-	  FULL
-	 OUTER
-	  JOIN
-	       MEMBER m
-	    ON
-	       m.USER_ID = u.USER_ID
-	 WHERE
-	 	   u.USER_ID = #{userId}
-	 ORDER
-	    BY
-	       RES_NO ASC
-</select>
-
-<resultMap id="findRsvMap" type="Rsvs">
-	<id column="user_id" property="userId" />
-	<result column="room_name" property="roomName" />
-	<result column="room_price" property="roomPrice"/>
-	<result column="romm_img" property="roomImg" />
-	
-	<collection column="user_id" javaType="java.util.list" ofType="Rsvs" property="rsvsList" select="" />
-</resultMap>
--->
 
 
 

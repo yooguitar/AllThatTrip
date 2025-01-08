@@ -106,15 +106,26 @@ public class MemberController {
 	
 	@GetMapping("cartPage.me")
 	public String cartPage(HttpSession session) {
-		// 비회원
-		
-		
-		
-		// 회원
-		
-		
+		if(session.getAttribute("loginUser") != null) {
+			// 회원
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			memberService.findCart(loginUser, session);
+			return "member/cart_page";
+		}
+		/*
+		 * else {
+		 * 	//비회원
+		 * 	session.setAttribute("nonUser", 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * }
+		 */
 		
 		return "member/cart_page";
+		
 	}
 	
 	@GetMapping("wishlistPage.me")

@@ -34,4 +34,5 @@ public interface MemberMapper {
 	/* 찜, 예약, 장바구니 관련 */
 	ArrayList findRsv(Member member);
 	
+	//ArrayList findCart(Member member);
 }

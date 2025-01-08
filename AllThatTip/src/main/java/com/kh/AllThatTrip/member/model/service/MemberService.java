@@ -29,6 +29,7 @@ public interface MemberService {
 	
 	/* 예약, 찜, 장바구니 관련 */
 	void findRsv(Member member, HttpSession session);
+	void findCart(Member member, HttpSession session);
 	
 	
 }
