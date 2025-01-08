@@ -19,7 +19,7 @@
     height: 400px;
     /* background: blueviolet; */
     margin: auto;
-    padding-top: 250px;
+    padding-top: 229px;
 }
 #bar-title{
     color: white;
@@ -104,7 +104,7 @@
 /* list div 영역 */
 
 #list{
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.6);
     width: 1100px;
     height: 300px;
     margin: auto;
@@ -113,7 +113,9 @@
     list-style-type: none;
     display: inline-block;
 }
-#li-mom > li > div:hover{
+
+
+#li-mom > li:hover{
     cursor: pointer;
     transform: translateY(-5px);
 }

@@ -88,32 +88,7 @@
                             
                             <div id="list-mom">
                                 <ul id="li-mom">
-                                    <li>
-                                        <div id="list-1" class="list-baby" img=""></div>
-                                        <h4 id="">좋은캠핑장</h4>  
-                                        <p id="">ㅎㅇ</p>
-                                    </li>
-                                    <li>
-                                        <div id="list-2" class="list-baby" img=""></div>
-                                        <h4 id="">악덕캠핑장</h4>
-                                        <p id="">ㅎㅇ</p>
-            
-                                    </li>
-                                    <li>
-                                        <div id="list-3" class="list-baby" img=""></div>
-                                        <h4 id="">나 제목</h4>
-                                        <p id="">ㅎㅇ</p>
-                                    </li>
-                                    <li>
-                                        <div id="list-4" class="list-baby" img=""></div>
-                                        <h4 id="">자리채우기</h4>
-                                        <p id="">ㅎㅇㅎㅇ</p>
-                                    </li>
-                                    <li>
-                                        <div id="list-5" class="list-baby" img=""></div>
-                                        <h4 id="">아~힘들다!</h4>
-                                        <p id="">이제그만</p>
-                                    </li>
+                                    
                                 </ul>
             
                             </div>
@@ -354,6 +329,25 @@
             document.getElementById('campMap').addEventListener('mouseout', (e) => {
                 document.getElementById('Map').src = "resources/img/map/kmap.gif";
             })
+            
+            $.ajax({
+            	url : 'campsAjax/recentList',
+            	type : 'get',
+            	success : function(result){
+            		//console.log(result.data);
+            		const camps = [...result.data];
+            		const str = camps.map(e => 
+				            					`
+				            					<li>
+						            			<img src="/att\${e.changeName}" alt="" style="width: 200px; height: 150px; margin: 2px;">
+						                        <h4>\${e.campAddr}</h4>  
+						                        <p>\${e.campDesc}</p>
+						                        </li>
+						                        `
+            		).join('');
+            		document.querySelector('#li-mom').innerHTML = str;
+            	}
+            });
         }
 
         const cardWrapper = document.getElementById('cardWrapper');

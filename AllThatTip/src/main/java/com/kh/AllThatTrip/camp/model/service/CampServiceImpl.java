@@ -145,4 +145,9 @@ public class CampServiceImpl implements CampService {
 		return loginBiz;
 	}
 
+	@Override
+	public List<Camp> recentList() {
+		return mapper.recentList();
+	}
+
 }

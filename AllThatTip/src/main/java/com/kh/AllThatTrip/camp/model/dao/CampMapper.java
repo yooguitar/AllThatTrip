@@ -24,5 +24,7 @@ public interface CampMapper {
 	int deleteCamp(Camp camp);
 	
 	BizMember bizLogin(Member member);
+
+	List<Camp> recentList();
 	
 }

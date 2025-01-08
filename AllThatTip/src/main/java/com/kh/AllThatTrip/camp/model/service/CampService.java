@@ -1,5 +1,6 @@
 package com.kh.AllThatTrip.camp.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -25,5 +26,7 @@ public interface CampService {
 	void updateCamp(Camp camp, MultipartFile upfile);
 	
 	void deleteCamp(Camp camp, String check);
+	
+	List<Camp> recentList();
 	
 }
