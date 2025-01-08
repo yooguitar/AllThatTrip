@@ -240,7 +240,7 @@
 		        </div>
 		        <button onclick="updateRoom(${ room.roomNo });">정보 수정</button> <button class="btn-open-modal">숙소 삭제</button>
 				<c:if test="${ sessionScope.loginUser ne null }">
-					<form action="/att/member/cartPage.me" method="post" style="margin-top: 3px;">
+					<form action="/att/cartPage.me" method="post" style="margin-top: 3px;">
 						<input type="text" style="display: none;" value="${ room.roomNo }"> 
 						<button type="submit" style="width: 152px;">장바구니</button>
 					</form> 

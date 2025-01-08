@@ -118,7 +118,7 @@ public class MemberController {
 	@PostMapping("cartPage.me")
 	public String cartPage(HttpSession session, Room roomNo) {
 		
-		return null;
+		return "member/cart_page";
 	}
 	
 	
