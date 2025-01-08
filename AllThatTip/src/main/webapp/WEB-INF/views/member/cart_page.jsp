@@ -55,50 +55,38 @@
         </div>
 
         <div id="cart-div-2" class="cart-div" style="margin-top: 100px;">
-            <!--예약 내역이 없을 경우 보여질 div-->
-            <li id="content-empty">  
-                <div class="content-div-temp">
-                    <h3 style="text-align: center;">예약 내역이 없습니다. **display:none</h3>
-                </div>
-            </li>
-            <!--예약 내역이 있을 경우 div 반복-->
-            <li>
-                <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
-                    <div style="width: 40px; display: inline; float: left;">
-                        &nbsp;
-                        <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
-                    </div>
-                    <div style="display: inline; float: left;">
-                        <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
-                        " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
-                    </div>
-                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                        <a href="#" style="color:black; text-decoration: none;">상품명입력</a>
-                    </div>
-                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                        <a href="#" style="color: black; text-decoration: none;">가격입력</a>
-                    </div>
-                </div>
-            </li>
-            <!-- 이건 더미 -->
-            <li>
-                <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
-                    <div style="width: 40px; display: inline; float: left;">
-                        &nbsp;
-                        <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
-                    </div>
-                    <div style="display: inline; float: left;">
-                        <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
-                        " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
-                    </div>
-                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                        <a href="#" style="color:black; text-decoration: none;">목록2번</a>
-                    </div>
-                    <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                        <a href="#" style="color: black; text-decoration: none;">39,800원</a>
-                    </div>
-                </div>
-            </li>
+            <c:choose>
+                <c:when test="">
+                    <!--예약 내역이 없을 경우 보여질 div-->
+                    <li id="content-empty">  
+                        <div class="content-div-temp">
+                            <h3 style="text-align: center;">예약 내역이 없습니다. **display:none</h3>
+                        </div>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <!--예약 내역이 있을 경우 div 반복-->
+                    <li>
+                        <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
+                            <div style="width: 40px; display: inline; float: left;">
+                                &nbsp;
+                                <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
+                            </div>
+                            <div style="display: inline; float: left;">
+                                <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
+                                " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
+                            </div>
+                            <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                                <a href="#" style="color:black; text-decoration: none;">상품명입력</a>
+                            </div>
+                            <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                                <a href="#" style="color: black; text-decoration: none;">가격입력</a>
+                            </div>
+                        </div>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+                
         </div>
 
         <div id="cart-div-3" class="cart-div">

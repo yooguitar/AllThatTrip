@@ -101,8 +101,25 @@ public class MemberController {
 	public String findRsvPage(HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		memberService.findRsv(loginUser, session);
-		
 		return "member/find_rsv_page";
+	}
+	
+	@GetMapping("cartPage.me")
+	public String cartPage(HttpSession session) {
+		// 비회원
+		
+		
+		
+		// 회원
+		
+		
+		
+		return "member/cart_page";
+	}
+	
+	@GetMapping("wishlistPage.me")
+	public String wishlistPage(HttpSession session) {
+		return"member/wishlist_page";
 	}
 	
 	
@@ -114,7 +131,6 @@ public class MemberController {
 	public int checkId(String userId) {
 		return memberService.checkId(userId);
 	}
-	
 	/* forward */
 	@GetMapping("attHome.me")
 	public String attHome() {
@@ -156,14 +172,6 @@ public class MemberController {
 	@GetMapping("nonUserFindRsvPage.me")
 	public String nonUserFindRsvPage() {
 		return "member/non_user_find_rsv_page";
-	}
-	@GetMapping("cartPage.me")
-	public String cartPage() {
-		return "member/cart_page";
-	}
-	@GetMapping("wishlistPage.me")
-	public String wishlistPage() {
-		return"member/wishlist_page";
 	}
 	@GetMapping("findPwdPage.me")
 	public String findPwdPage() {

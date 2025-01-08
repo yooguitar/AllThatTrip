@@ -69,8 +69,8 @@
 	          <li><a href="#">AllThatTrip!</a>
 	              <ul>
 	                  <li><a class=aTag style = color:#ebebeb; href="/att/nonUserFindRsvPage.me">예약내역</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">장바구니</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#" onclick="alertNeedLogin();">찜하기</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="/att/eventListPage.me">이벤트</a></li>
 	              </ul>
 	          </li>
@@ -134,7 +134,9 @@ function logout(){
 			    alertify.error('아니오');
 			  });
 }
-
+function alertNeedLogin(){
+  alertify.alert("로그인 후 이용해주세요.");
+}
 
 
 </script>  

@@ -41,8 +41,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void memberUpdate(Member member, HttpSession session) {
-		validator.validateLength(member);
-		validator.validateMail(member);
+//		validator.validateLength(member);
+//		validator.validateMail(member);
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 		mapper.memberUpdate(member);
 		session.setAttribute("loginUser", mapper.login(member));
@@ -100,7 +100,6 @@ public class MemberServiceImpl implements MemberService {
 		session.removeAttribute("findRsvResult");
 		ArrayList result = mapper.findRsv(member);	
 		if(!result.isEmpty()) {
-			System.out.println("null아님");
 			session.setAttribute("findRsvResult", result);
 		}
 	}

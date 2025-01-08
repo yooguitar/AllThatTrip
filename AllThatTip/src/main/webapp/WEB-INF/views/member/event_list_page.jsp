@@ -24,11 +24,13 @@
         }
         #main-banner-img{
             width: fit-content;
-            height: 300px;
+            height: 400px;
         }
         .carousel-inner img {
         width: 100%;
         height: 100%;
+        overflow: hidden;
+        margin: auto;
         }
         #event-div-1{
             width: 1000px;

@@ -29,6 +29,7 @@
   <h2>회원가입</h2><br><br>
 
 	<script>
+  
 		$(function(){
 
 			// Ajax ID 중복체크
@@ -48,7 +49,7 @@
 								if(result > 0){
 									$checkResult.show().css('color', 'crimson').text('중복된 아이디입니다.');
 								} else if($idInput.val().includes('admin')){
-									$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.')
+									$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.');
 								} else {
 									$checkResult.show().css('color', 'green').text('사용 가능한 아이디입니다.');
 								}
@@ -116,7 +117,7 @@
     </div>
     <div class="form-group">
         <label>이름을 입력 해주세요</label>
-        <input type="name" class="form-control" id="userName" placeholder="입력" name="userName" required>
+        <input type="name" class="form-control" id="userName" placeholder="2자 이상 영문, 한글, 숫자 입력" name="userName" required>
     </div>
 
     <div class="form-group">
@@ -174,7 +175,7 @@
       <br><br>
     </div>
 
-    <button onclick="submitBtn();" disabled id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
+    <button onclick="submitBtn();" id="submit-btn-fin" type="submit" class="btn btn-primary" style="width: 770px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">회원가입 완료</button>
   </form>
   
 </div>
@@ -185,10 +186,6 @@
 </body>
 </html>
 <script>
-  /*영문자 한글만 허용*/
-  const reg1 = new RegExp(/a-zA-Z가-힣/);
-  /*영문자 숫자만 허용*/
-  const reg2 = new RegExp(/a-zA-Z0-9/);
 
   // form요청 제출 시
   function submitBtn(){
