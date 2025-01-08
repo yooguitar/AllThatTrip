@@ -4,23 +4,22 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
 import com.kh.AllThatTrip.board.model.vo.Comment;
-import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.common.model.vo.ResponseData;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RestController
 @RequestMapping("comment")
@@ -28,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardApiController {
 	
 	private final BoardService boardService;
-	private final ModelAndViewUtil mv;
+
 	
 	// 댓글 등록
 	@PostMapping
@@ -66,10 +65,10 @@ public class BoardApiController {
 	}
 	
 	// 댓글 삭제
-	/*
-	@PostMapping("/comment/{commentNo}")
-	public ResponseEntity<ResponseData> ajaxDeleteComment(@PathVariable Long commentNo) {
-
+	
+	@PostMapping("delete")
+	public ResponseEntity<ResponseData> ajaxDeleteComment(Long commentNo) {
+		// log.info("{}", commentNo);
 	    // 삭제 서비스 호출 (성공 시 1, 실패 시 0 반환)
 	    int result = boardService.deleteComment(commentNo);
 
@@ -87,7 +86,7 @@ public class BoardApiController {
 	    return new ResponseEntity<ResponseData>(response, status);
 	}
 	
-	*/
+
 
 
 }

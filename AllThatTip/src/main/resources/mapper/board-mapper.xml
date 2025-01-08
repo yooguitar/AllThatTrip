@@ -266,16 +266,17 @@
     
     
     
-    <!-- 댓글 삭제 
+    
     <delete id="deleteComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment" >
     
     	DELETE
-    			COMMENT
+    	  FROM
+    			TB_COMMENT
     	WHERE
-    			COMMENT_NO
+    			COMMENT_NO = #{commentNo}
     </delete>
     
-    -->
+   
     <!-- 댓글 수정 
     <update id="updateComment" parameterType="com.kh.AllThatTrip.board.model.vo.Comment">
     	UPDATE 

@@ -1,16 +1,13 @@
 package com.kh.AllThatTrip.board.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.board.model.vo.BdAttachment;
 import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.board.model.vo.Comment;
-import com.kh.AllThatTrip.board.model.vo.Reply;
 
 @Mapper
 public interface BoardMapper {
@@ -58,7 +55,7 @@ public interface BoardMapper {
 	
 	// 댓글삭제
 
-	//int deleteComment(long commentNo);
+	int deleteComment(long commentNo);
 	
 	
 	// 대댓글 작성

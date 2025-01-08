@@ -103,14 +103,16 @@
 	      <div class="login">
 
 
-	        <a class=aTag  href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+
+	        <a class="aTag"  href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+
 
 	      </div>
 	    </c:when>
 	    <c:otherwise>
 	      <div class="login">
 
-	        <label style="color:white; font-size:15px;">💡<label>
+	        <label style="color:white; font-size:15px;">💡</label>
 
 	        <a onclick="logout();" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 

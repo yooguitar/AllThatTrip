@@ -22,6 +22,14 @@
             padding:5% 10%;
             background-color:white;
         }
+        .comment-delete-btn {
+		    background-color: #326044;
+		    color: white;
+		    border: none;
+		    padding: 8px 12px; /* 크기를 줄임 */
+		    font-size: 13px;
+		    border-radius: 5px; /* 모서리를 둥글게 */
+		}
 
         table * {margin:5px;}
         table {width:100%;}
@@ -34,7 +42,7 @@
         <div class="innerOuter">
             <h2>게시글 상세보기</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="list?boardType=${param.boardType}">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="/att/board/list?boardType=${board.boardType}">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -215,9 +223,8 @@
 		}
 		
 
-    	
+    	// 댓글목록
     	function selectComment(){
-    		
     		
     		$.ajax({
     			url: '/att/comment',
@@ -230,7 +237,7 @@
     				// console.log(result);
     				
     				const replies = [...result.data];
-    				console.log(replies);
+    				// console.log(replies);
     				
     				const resultStr = replies.map(e => 
 								    					`<tr>
@@ -238,7 +245,7 @@
 								    					<td>\${e.commentContent}</td>
 								    					<td>\${e.createDate}</td>
 								    					<td>
-							                            <button class="comment-delete-btn " onclick="deleteByComment(${e.commentNo});">삭제</button>
+							                            <button class="comment-delete-btn" onclick="deleteByComment(\${e.commentNo});">삭제</button>
 							                        	</td>
 														</tr>`    					
 								    				).join('');
@@ -250,30 +257,30 @@
     		
     	}
     	
+    	
+    	// 댓글삭제
     	function deleteByComment(commentNo) {
     		if(confirm('댓글을 삭제하시겠습니까?')){
     			$.ajax({
-    				url: `/att/comment/${commentNo}`,
+    				url: '/att/comment/delete',
     				type: 'post',
     				data:{
-    					_method: 'DELETE'
+    					commentNo: commentNo
     				},
     				success: function(result){
-    					console.log(result);
+    					// console.log(result);
     					if(result.data === 1){
-	   						 alert('댓글이 삭제되었습니다.');
-	   		                    selectComment(); // 삭제 후 댓글 목록 갱신
-	   		                } else {
-	   		                    alert('댓글 삭제에 실패했습니다.');
-	   		                }
-	   		            },
-	   		            error: function(xhr, status, error) {
-	   		                console.error('댓글 삭제 오류:', error);
-	   		                alert('댓글 삭제 중 오류가 발생했습니다.');
+	   						alert('댓글이 삭제되었습니다.');
 	   		            }
-	   		        });
-	   		    }
-	   		}
+	                    selectComment(); // 삭제 후 댓글 목록 갱신
+	   		        },
+   		            error: function(xhr, status, error) {
+   		                // console.log('댓글 삭제 오류:' + error);
+   		                alert('댓글 삭제 중 오류가 발생했습니다.');
+   		            }
+   		        });
+   		    }
+   		}
     	
     	
     	
