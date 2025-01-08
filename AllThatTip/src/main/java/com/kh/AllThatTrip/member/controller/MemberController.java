@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
+import com.kh.AllThatTrip.exception.LoginCountOverException;
 import com.kh.AllThatTrip.member.model.service.MemberService;
 import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -27,71 +28,121 @@ public class MemberController {
 	
 	// 로그인 핸들러
 	@PostMapping("login.me")
-	public String login(Member member, HttpSession session){
-
+	public String login(Member member, HttpSession session){		
+			Member countMember = memberService.countCheck(member);
+		if(countMember.getLoginCount() > 4) {
+			memberService.rollbackCount(member);
+			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 로그인 정보를 확인해주세요.");
+		}
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
+			memberService.increaseLoginCount(member);
 			int loginValue = 1;
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		}
 		if(!(passwordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd()))) {
+			memberService.increaseLoginCount(member);
 			int loginValue = 1;
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		} else {
 			//log.info("조회된 회원 정보 {}", loginMember);
+			member.setLoginCount(0);
+			memberService.rollbackCount(member);
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  
 			return "redirect:/";
 		}
 	}
-	
 	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
-		//log.info("member입력값 {}", member);
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
-	
 	// 회원정보수정 핸들러
 	@PostMapping("memberUpdate.me")
 	public ModelAndView memberUpdate(Member member, HttpSession session) {
 		memberService.memberUpdate(member, session);
 		session.setAttribute("alertMsg", "정보수정 성공");
-		return mv.setViewNameAndData("redirect:mypage.me", null);
+		return mv.setViewNameAndData("member/my_page", null);
 	}
-	
 	// 회원탈퇴 핸들러
 	@PostMapping("memberDelete.me")
 	public ModelAndView memberDelete(String userPwd, HttpSession session) {
 		memberService.memberDelete(userPwd, session);
-		
-		return null;
+		return mv.setViewNameAndData("common/main", null);
+	}
+	// id찾기 핸들러
+	@PostMapping("findId.me")
+	public String findId(String userName, HttpSession session) {
+		String findUser = memberService.findId(userName);
+		if(findUser != null) {
+		session.setAttribute("findUser", findUser);
+		} else {
+			session.setAttribute("findUser", "존재하지 않는 사용자입니다.");
+		}
+		return "redirect:findIdPage.me";
+	}
+	// pw찾기 핸들러(pw를 찾아줄 수 없으므로 일치하는 id, phone이 있다면 update 수행)
+	@PostMapping("findPwd.me")
+	public String findPwd(Member member, HttpSession session) {
+		memberService.findPwd(member);
+		session.setAttribute("successAlert", member);
+		return "redirect:loginPage.me";
 	}
 	
 	
 	
 	
+	/* 예약, 찜, 장바구니 관련 */
+	@GetMapping("findRsvPage.me")
+	public String findRsvPage(HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		memberService.findRsv(loginUser, session);
+		return "member/find_rsv_page";
+	}
+	
+	@GetMapping("cartPage.me")
+	public String cartPage(HttpSession session) {
+		if(session.getAttribute("loginUser") != null) {
+			// 회원
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			memberService.findCart(loginUser, session);
+			return "member/cart_page";
+		}
+		/*
+		 * else {
+		 * 	//비회원
+		 * 	session.setAttribute("nonUser", 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * }
+		 */
+		
+		return "member/cart_page";
+		
+	}
+	
+	@GetMapping("wishlistPage.me")
+	public String wishlistPage(HttpSession session) {
+		return"member/wishlist_page";
+	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	/* ajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajaxajax */
+	/* ajax */
 	@ResponseBody
 	@GetMapping("idcheck")
 	public int checkId(String userId) {
 		return memberService.checkId(userId);
 	}
-	
-	/* 포워딩용 */
+	/* forward */
 	@GetMapping("attHome.me")
 	public String attHome() {
 		return "common/main";
@@ -125,19 +176,24 @@ public class MemberController {
 	public String deletePage() {
 		return "member/delete_page";
 	}
+	@GetMapping("findIdPage.me")
+	public String findIdPage() {
+		return "member/find_id_page";
+	}
+	@GetMapping("nonUserFindRsvPage.me")
+	public String nonUserFindRsvPage() {
+		return "member/non_user_find_rsv_page";
+	}
+	@GetMapping("findPwdPage.me")
+	public String findPwdPage() {
+		return "member/find_pwd_page";
+	}
+	@GetMapping("cancelRsvPage.me")
+	public String cancelRsvPage() {
+		return "member/cancel_rsv_page";
+	}
+	@GetMapping("eventListPage.me")
+	public String eventListPage() {
+		return "member/event_list_page";
+	}
 }
-
-// 짬통
-//
-// 사업자 회원가입 핸들러
-//	@PostMapping("biz-join.me")
-//	public void bizJoin(Member member, BusinessUser bUser, HttpSession session) {
-//		if(bUser.getOriginName() != null) {
-//			Member result = memberService.bizJoin(member);
-//			Long userNum = result.getUserNo();
-//			bUser.setUserNo(userNum);
-//			memberService.bizFile(bUser);
-//		} else {
-//			// 예외클래스 만들기
-//		}
-//	}

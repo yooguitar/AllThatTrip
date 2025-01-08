@@ -61,7 +61,6 @@
 
 <div class="container" id="wrap">
   <h2>내 정보 수정</h2>
-  <br><label>가입일: <fmt:formatDate value="${ sessionScope.loginUser.enrollDate }" pattern="yyyy-MM-dd" /></label>
   <br><br>
 
   <form action="memberUpdate.me" method="post" id="join-form">

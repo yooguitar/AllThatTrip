@@ -69,20 +69,20 @@
           <c:when test="${ sessionScope.loginUser eq null }">
 	          <li><a href="#">AllThatTrip!</a>
 	              <ul>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">예약내역</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">장바구니</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">이벤트</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/nonUserFindRsvPage.me">예약내역</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#" onclick="alertNeedLogin();">찜하기</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/eventListPage.me">이벤트</a></li>
 	              </ul>
 	          </li>
 	      </c:when>
 	      <c:otherwise>
 	          <li><a href="/att/myPage.me">내정보</a>
 	              <ul>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">예약내역</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">장바구니</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#">이벤트</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/findRsvPage.me">예약내역</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/wishlistPage.me">찜하기</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="/att/eventListPage.me">이벤트</a></li>
 	              </ul>
 	          </li>
 	      </c:otherwise>
@@ -104,7 +104,9 @@
 	      <div class="login">
 
 
+
 	        <a class="aTag"  href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+
 
 	      </div>
 	    </c:when>
@@ -113,7 +115,7 @@
 
 	        <label style="color:white; font-size:15px;">💡</label>
 
-	        <a onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	        <a onclick="logout();" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 
 	      </div>
 	    </c:otherwise>  
@@ -135,7 +137,9 @@ function logout(){
 			    alertify.error('아니오');
 			  });
 }
-
+function alertNeedLogin(){
+  alertify.alert("로그인 후 이용해주세요.");
+}
 
 
 </script>  
