@@ -31,8 +31,9 @@ public class MemberController {
 	public String login(Member member, HttpSession session){		
 			Member countMember = memberService.countCheck(member);
 		if(countMember.getLoginCount() > 4) {
-			memberService.rollbackCount(member);
-			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 로그인 정보를 확인해주세요.");
+			//memberService.rollbackCount(member);
+			memberService.loginFullCount(member);
+			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 관리자에게 문의 하세요.");
 		}
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
@@ -48,7 +49,7 @@ public class MemberController {
 			return "member/login_page";
 		} else {
 			//log.info("조회된 회원 정보 {}", loginMember);
-			member.setLoginCount(0);
+			//member.setLoginCount(0);
 			memberService.rollbackCount(member);
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  

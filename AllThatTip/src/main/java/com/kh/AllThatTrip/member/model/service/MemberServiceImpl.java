@@ -90,6 +90,10 @@ public class MemberServiceImpl implements MemberService {
 	public Member countCheck(Member member) {
 		return mapper.countCheck(member);
 	}
+	@Override
+	public void loginFullCount(Member member) {
+		mapper.loginFullCount(member);
+	}
 	
 	
 	
@@ -112,6 +116,7 @@ public class MemberServiceImpl implements MemberService {
 //			session.setAttribute("findCartResult", result);
 //		}
 	}
+
 
 
 

@@ -29,6 +29,8 @@ public interface MemberMapper {
 	
 	void rollbackCount(Member member);
 	
+	void loginFullCount(Member member);
+	
 	Member countCheck(Member member);
 	
 	/* 찜, 예약, 장바구니 관련 */

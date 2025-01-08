@@ -84,7 +84,7 @@
 	          </li>
 	      </c:when>
 	      <c:otherwise>
-	          <li><a href="/att/myPage.me">내정보</a>
+	          <li><a href="#">AllThatTrip!</a>
 	              <ul>
 	                  <li><a class=aTag style = color:#ebebeb; href="/att/findRsvPage.me">예약내역</a></li>
 	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
@@ -95,8 +95,9 @@
 	      </c:otherwise>
           </c:choose>
           
-
-          <li><a class="aTag"  href="#">추천맛집</a></li>
+          <c:if test="${ sessionScope.loginUser ne null }">
+            <li><a class="aTag"  href="/att/myPage.me">마이페이지</a></li>
+          </c:if>
 
       </ul>
     </div>

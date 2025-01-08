@@ -26,6 +26,7 @@ public interface MemberService {
 	Member countCheck(Member member);
 	void increaseLoginCount(Member member);
 	void rollbackCount(Member member);
+	void loginFullCount(Member member);
 	
 	/* 예약, 찜, 장바구니 관련 */
 	void findRsv(Member member, HttpSession session);
