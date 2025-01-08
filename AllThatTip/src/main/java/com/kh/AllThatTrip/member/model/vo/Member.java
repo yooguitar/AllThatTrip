@@ -24,5 +24,5 @@ public class Member {
 	private String status;	
 	private String enrollDate;
 	private int loginCount;
-
+	private long bizNo;
 }
