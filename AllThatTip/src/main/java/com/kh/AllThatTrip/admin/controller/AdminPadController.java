@@ -137,5 +137,55 @@ public class AdminPadController {
 
 	}
 			
+	@PostMapping("unDeleteMember")
+	public ResponseEntity<ResponseData> unDeleteMember(String userId) {
+		int result = adService.unDeleteMember(userId);
+		ResponseData response = ResponseData.builder()
+											.message("회원 복구 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
 	
+	@PostMapping("spamMember")
+	public ResponseEntity<ResponseData> spamMember(String userId) {
+		int result = adService.spamMember(userId);
+		ResponseData response = ResponseData.builder()
+											.message("회원 복구 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
+	
+	@PostMapping("unSpamMember")
+	public ResponseEntity<ResponseData> unSpamMember(String userId) {
+		int result = adService.unSpamMember(userId);
+		ResponseData response = ResponseData.builder()
+											.message("회원 복구 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
+	@PostMapping("updatePasswordMember")
+	public ResponseEntity<ResponseData> updatePasswordMember(Member member) {
+		log.info("{}", member);
+		int result = adService.updatePasswordMember(member);
+		ResponseData response = ResponseData.builder()
+											.message("회원 복구 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
 }

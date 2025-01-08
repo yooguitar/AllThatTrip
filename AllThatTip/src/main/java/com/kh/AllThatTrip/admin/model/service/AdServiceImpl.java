@@ -24,10 +24,12 @@ import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
+import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Service
@@ -36,6 +38,7 @@ public class AdServiceImpl implements AdService{
 
 	private final AdminMapper mapper;
 	private final ServletContext context;
+	private final PasswordEncryptor passwordEncoder;
 
 
 	private int getTotalCount() {
@@ -258,6 +261,27 @@ public class AdServiceImpl implements AdService{
 	@Override
 	public int deleteMember(String userId) {
 		return mapper.deleteMember(userId);
+	}
+
+	@Override
+	public int unDeleteMember(String userId) {
+		return mapper.unDeleteMember(userId);
+	}
+
+	@Override
+	public int spamMember(String userId) {
+		return mapper.spamMember(userId);
+	}
+
+	@Override
+	public int unSpamMember(String userId) {
+		return mapper.unSpamMember(userId);
+	}
+
+	@Override
+	public int updatePasswordMember(Member member) {
+		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
+		return mapper.updatePasswordMember(member);
 	}
 
 	

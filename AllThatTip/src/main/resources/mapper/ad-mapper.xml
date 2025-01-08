@@ -93,6 +93,48 @@
 		   AND
 		       USER_ID = #{userId}	   
 	</update>
+	<update id="unDeleteMember" parameterType="String">
+		UPDATE
+		       MEMBER
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       STATUS = 'N'
+		   AND
+		       USER_ID = #{userId}               
+	
+	</update>
+	<update id="spamMember" parameterType="String">
+		UPDATE
+		       MEMBER
+		   SET
+		       SPAM = '0'
+		 WHERE
+		       SPAM = '1'
+		   AND
+		       USER_ID = #{userId}           
+	
+	</update>
+	<update id="unSpamMember" parameterType="String">
+		UPDATE
+		       MEMBER
+		   SET
+		       SPAM = '1'
+		 WHERE
+		       SPAM = '0'
+		   AND
+		       USER_ID = #{userId}           
+	
+	</update>
+	<update id="updatePasswordMember" parameterType="member">
+		UPDATE
+		       MEMBER
+		   SET
+		       USER_PWD = #{userPwd}
+		 WHERE
+		       USER_ID = #{userId}           
+	
+	</update>
 	<select id="selectTotalCount" resultType="_int">
 		SELECT 
 			   COUNT(*) 

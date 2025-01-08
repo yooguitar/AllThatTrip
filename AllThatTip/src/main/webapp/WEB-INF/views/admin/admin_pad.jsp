@@ -87,6 +87,13 @@ table {
 	height:25px;
 }
 
+#text-input2{
+    margin-left : 10px;
+    margin-top : 5px;
+	width: 100px;
+	height:25px;
+}
+
 .label-text{
     font-weight: 800px;
     font-size : 12px;
@@ -143,6 +150,20 @@ table {
 	font-size : 10px;
 	color : white;
 }
+
+.control-btn3{
+
+	width: 70px;
+	height : 25px;
+	margin-left : 20px;
+	border-radius : 15px;
+	background-color : #57af79;
+	border : none;
+	margin-bottom : 2px;
+	margin-top : 4px;
+	font-size : 10px;
+	color : white;
+}
 </style>
 
 </head>
@@ -184,15 +205,40 @@ table {
 		           	<button class="control-btn" onclick="selectOldMember()">오래된순</button>
 		         </div>
 		         <div class="control_out">
+		         	<label class="label-text"> 변경할 비밀번호 :</label>
+		            <input type="text" id="text-input2" />
+		            <input type="submit" onclick="updatePasswordMember()"/>
 		     		<button class="control-btn2" onclick="deleteMember()">회원탈퇴</button>
+		     		<button class="control-btn3" onclick="unDeleteMember()" >회원복구</button>
+		     		<button class="control-btn2" onclick="spamMember()">스팸처리</button>
+		     		<button class="control-btn3" onclick="unSpamMember()" >스팸철회</button>
 		     		
 		         </div>    
 			</div>
 		</div>
 
 		<div id="admin_con">
-			<div class="panelist"></div>
-			<div class="panel"></div>
+			<div class="panelist">
+				<p5>판매자 목록 리스트</p5>
+			</div>
+			<div class="panel">
+				<table>
+					<tr>
+						<th>유저번호</th>
+						<th>실명</th>
+						<th>사업자 이름</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>가입일자</th>
+						<th>스팸여부</th>
+						<th>탈퇴여부</th>
+					</tr>
+					<tbody  id="biz_user">
+						
+					</tbody>
+				</table>
+			</div>
 
 			<div class="control_box">
 				 
@@ -206,7 +252,9 @@ table {
 	
 	<div class="admin_pages">
 		<div id="admin_con">
-			<div class="panelist"></div>
+			<div class="panelist">
+				<p5>게시글 목록 리스트</p5>
+			</div>
 			<div class="panel"></div>
 			<div class="control_box"></div>
 		</div>
@@ -464,7 +512,76 @@ function deleteMember(){
 	})
 }
 
+function unDeleteMember(){
+	
+	const userId = document.querySelector('#text-input').value;
 
+	$.ajax({
+		url : '/att/adPad/unDeleteMember',
+		type : 'post',
+		data : {
+			userId : userId
+		},
+		success : function(){
+			alert("복구성공");
+			selectMemberId();
+		}
+	})
+}
+
+function spamMember(){
+	
+	const userId = document.querySelector('#text-input').value;
+
+	$.ajax({
+		url : '/att/adPad/spamMember',
+		type : 'post',
+		data : {
+			userId : userId
+		},
+		success : function(){
+			alert("변경성공");
+			selectMemberId();
+		}
+	})
+}
+
+function unSpamMember(){
+	
+	const userId = document.querySelector('#text-input').value;
+
+	$.ajax({
+		url : '/att/adPad/unSpamMember',
+		type : 'post',
+		data : {
+			userId : userId
+		},
+		success : function(){
+			alert("변경성공");
+			selectMemberId();
+		}
+	})
+}
+
+function updatePasswordMember(){
+	
+	const userId = document.querySelector('#text-input').value;
+	const $userPwd = document.querySelector('#text-input2').value;
+	console.log($userPwd);
+	
+	$.ajax({
+		url : '/att/adPad/updatePasswordMember',
+		type : 'post',
+		data : {
+			userId : userId,
+			userPwd : $userPwd
+		},
+		success : function(){
+			alert("변경성공");
+			selectMemberId();
+		}
+	})
+}
 	</script>
 </body>
 </html>

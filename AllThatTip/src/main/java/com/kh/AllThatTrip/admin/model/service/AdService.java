@@ -42,5 +42,13 @@ public interface AdService {
 
 	int deleteMember(String userId);
 
+	int unDeleteMember(String userId);
+
+	int spamMember(String userId);
+
+	int unSpamMember(String userId);
+
+	int updatePasswordMember(Member member);
+
 
 }
