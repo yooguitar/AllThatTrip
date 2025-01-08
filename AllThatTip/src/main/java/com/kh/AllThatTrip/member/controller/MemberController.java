@@ -48,8 +48,6 @@ public class MemberController {
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		} else {
-			//log.info("조회된 회원 정보 {}", loginMember);
-			//member.setLoginCount(0);
 			memberService.rollbackCount(member);
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  
@@ -112,16 +110,13 @@ public class MemberController {
 			Member loginUser = (Member)session.getAttribute("loginUser");
 			memberService.findCart(loginUser, session);
 			return "member/cart_page";
+			
+			
+			
 		}
 		/*
 		 * else {
 		 * 	//비회원
-		 * 	session.setAttribute("nonUser", 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
 		 * }
 		 */
 		

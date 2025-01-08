@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void memberUpdate(Member member, HttpSession session) {
 //		validator.validateLength(member);
-//		validator.validateMail(member);
+		validator.validateMail(member);
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 		mapper.memberUpdate(member);
 		session.setAttribute("loginUser", mapper.login(member));
@@ -82,20 +82,21 @@ public class MemberServiceImpl implements MemberService {
 	public void increaseLoginCount(Member member) {
 		mapper.increaseLoginCount(member);
 	}
+	
 	@Override
 	public void rollbackCount(Member member) {
 		mapper.rollbackCount(member);
 	}
+	
 	@Override
 	public Member countCheck(Member member) {
 		return mapper.countCheck(member);
 	}
+	
 	@Override
 	public void loginFullCount(Member member) {
 		mapper.loginFullCount(member);
 	}
-	
-	
 	
 	/* 찜, 예약, 장바구니 관련 */
 
