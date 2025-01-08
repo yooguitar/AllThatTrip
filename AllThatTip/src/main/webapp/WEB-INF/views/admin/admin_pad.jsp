@@ -179,7 +179,6 @@ table {
 				<table>
 					<tr>
 						<th>유저번호</th>
-						<th>판매자 이름</th>
 						<th>실명</th>
 						<th>아이디</th>
 						<th>이메일</th>
@@ -265,6 +264,10 @@ table {
 			<div class="control_box"></div>
 		</div>
 	</div>
+	
+	<jsp:include page="../common/include/footer.jsp" />
+	
+	
 	<script>
 	
 	$(function(){
