@@ -98,18 +98,7 @@
             	 -->
             </form>
 		
-            <script>
-            	function postSubmit(num) {
-            		const boardNo = $('input[name="boardNo"]').val(); 
-            		const boardType = $('input[name="boardType"]').val();
-				
-            		if(num == 1){
-            			$('#postForm').attr('action', '/att/board/list/update-form').submit();
-            		} else { 
-            			$('#postForm').attr('action', '/att/board/list/delete').submit();
-            		}
-				}
-            </script>
+            
             
          
             
@@ -170,6 +159,18 @@
         <br><br>
 
     </div>
+	<script>
+	function postSubmit(num) {
+		const boardNo = $('input[name="boardNo"]').val(); 
+		const boardType = $('input[name="boardType"]').val();
+	
+		if(num == 1){
+			$('#postForm').attr('action', '/att/board/list/update-form').submit();
+		} else { 
+			$('#postForm').attr('action', '/att/board/list/delete').submit();
+		}
+	}
+	</script>
       
     <script>
     
