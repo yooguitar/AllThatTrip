@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
 import com.kh.AllThatTrip.admin.model.vo.AdReply;
 import com.kh.AllThatTrip.admin.model.vo.Admin;
+import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 public interface AdService {
@@ -49,6 +50,10 @@ public interface AdService {
 	int unSpamMember(String userId);
 
 	int updatePasswordMember(Member member);
+
+	int resetCount(String userId);
+
+	List<Board> boardFindAll();
 
 
 }

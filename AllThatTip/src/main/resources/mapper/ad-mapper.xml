@@ -31,11 +31,28 @@
 		       PHONE,
 		       TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') as enrollDate,
 		       SPAM,
-		       STATUS
+		       STATUS,
+		       LOGIN_COUNT loginCount
 		  FROM
 		       MEMBER
 	</sql>
-	
+	<sql id="boardsColumn">
+		SELECT
+			   B.BOARD_NO AS boardNo,
+			   B.BOARD_TYPE AS boardType,
+			   B.COUNT AS count, 
+			   M.USER_ID boardWriter,
+			   B.BOARD_TITLE boardTitle,
+			   TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') as createDate,
+			   B.STATUS status 		
+		  FROM
+		       BOARD B
+		  JOIN
+		       MEMBER M  
+		  	ON
+		       B.USER_NO = M.USER_NO
+		      
+	</sql>
 	<select id="memberFindAll" resultType="com.kh.AllThatTrip.member.model.vo.Member">
 		<include refid="membersColumn"/>
 		ORDER
@@ -135,6 +152,17 @@
 		       USER_ID = #{userId}           
 	
 	</update>
+	<update id="resetCount" parameterType="String">
+		UPDATE
+			   MEMBER
+		   SET
+		       LOGIN_COUNT = 0	   
+		 WHERE
+		       LOGIN_COUNT = 5
+		   AND
+		       USER_ID = #{userId}
+	</update>	
+
 	<select id="selectTotalCount" resultType="_int">
 		SELECT 
 			   COUNT(*) 
@@ -271,4 +299,13 @@
   		   #{adNoticeRepNo}
   		   )
   </insert>
+  <select id="boardFindAll" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+  		   <include refid="boardsColumn"/>
+	  		WHERE
+			      B.STATUS = 'Y'
+			ORDER
+			   BY
+			      B.BOARD_NO DESC 
+  
+  </select>
 </mapper> 

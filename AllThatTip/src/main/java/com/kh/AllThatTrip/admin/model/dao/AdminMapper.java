@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.kh.AllThatTrip.admin.model.vo.AdNotice;
 import com.kh.AllThatTrip.admin.model.vo.AdReply;
 import com.kh.AllThatTrip.admin.model.vo.Admin;
+import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 @Mapper
@@ -57,6 +58,10 @@ public interface AdminMapper {
 	int unSpamMember(String userId);
 
 	int updatePasswordMember(Member member);
+
+	int resetCount(String userId);
+
+	List<Board> boardFindAll();
 
 	
 	

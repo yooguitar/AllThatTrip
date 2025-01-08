@@ -46,6 +46,7 @@
 	overflow: scroll;
 	width: 1000px;
 	height: 280px;
+	background-color: rgb(202, 219, 202);
 }
 
 .panelist {
@@ -61,19 +62,22 @@ tr {
 	background-color: rgb(202, 219, 202);
 	width: 1000px;
 	display: flex;
-	margin-top: -4px;
 	margin-left: -2px;
+	margin-top : 3px;
 	}
 
 th {
 	font-size: 12px;
-	width: 100px;
+	width: 150px;
 }
 
 td {
 	text-align: center;
-	width: 100px;
+	width: 150px;
 	font-size: 10px;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
 }
 
 table {
@@ -186,6 +190,7 @@ table {
 						<th>가입일자</th>
 						<th>스팸여부</th>
 						<th>탈퇴여부</th>
+						<th>로그인시도횟수</th>
 					</tr>
 					<tbody  id="member">
 						
@@ -212,7 +217,8 @@ table {
 		     		<button class="control-btn3" onclick="unDeleteMember()" >회원복구</button>
 		     		<button class="control-btn2" onclick="spamMember()">스팸처리</button>
 		     		<button class="control-btn3" onclick="unSpamMember()" >스팸철회</button>
-		     		
+		     		<br>
+		     		<button class="control-btn3" onclick="resetCount()" >횟수 초기화</button>
 		         </div>    
 			</div>
 		</div>
@@ -226,7 +232,7 @@ table {
 					<tr>
 						<th>게시판번호</th>
 						<th>게시판타입</th>
-						<th>유저번호</th>
+						<th>조회수</th>
 						<th>유저이름</th>
 						<th>제목</th>
 						<th>작성일자</th>
@@ -239,10 +245,28 @@ table {
 			</div>
 
 			<div class="control_box">
-				 
-		                
-			
-		
+				 <div class="control_in">
+		            <label class="label-text"> 유저 ID :</label>
+		            <input type="text" id="text-input" /> 
+		            <input type="submit" onclick="selectMemberId()"/>
+		            <br>
+		           	<button class="control-btn" onclick="selectMember()">회원조회</button>
+		           	<button class="control-btn" onclick="selectDeleteMember()">탈퇴조회</button>
+		           	<br>
+		           	<button class="control-btn" onclick="selectNewMember()">최신순</button>
+		           	<button class="control-btn" onclick="selectOldMember()">오래된순</button>
+		         </div>
+		         <div class="control_out">
+		         	<label class="label-text"> 변경할 비밀번호 :</label>
+		            <input type="text" id="text-input2" />
+		            <input type="submit" onclick="updatePasswordMember()"/>
+		     		<button class="control-btn2" onclick="deleteMember()">회원탈퇴</button>
+		     		<button class="control-btn3" onclick="unDeleteMember()" >회원복구</button>
+		     		<button class="control-btn2" onclick="spamMember()">스팸처리</button>
+		     		<button class="control-btn3" onclick="unSpamMember()" >스팸철회</button>
+		     		<br>
+		     		<button class="control-btn3" onclick="resetCount()" >횟수 초기화</button>
+		         </div>    
 			</div>
 		</div>
 	</div>
@@ -273,6 +297,7 @@ table {
 	$(function(){
 		
 		selectMemberPad();
+		selectBoardPad();
 		
 	})
 	
@@ -298,6 +323,7 @@ table {
 													<td>\${e.enrollDate}</td>
 													<td>\${e.spam}</td>
 													<td>\${e.status}</td>
+													<td>\${e.loginCount}</td>
 													</tr>
 											       `
 							    				).join('');
@@ -330,6 +356,7 @@ table {
 									<td>\${memberInfo.enrollDate}</td>
 									<td>\${memberInfo.spam}</td>
 									<td>\${memberInfo.status}</td>
+									<td>\${memberInfo.loginCount}</td>
 									</tr>`
 				$('#member').html(memberStr);
 			},
@@ -366,6 +393,7 @@ function selectMember(){
 													<td>\${e.enrollDate}</td>
 													<td>\${e.spam}</td>
 													<td>\${e.status}</td>
+													<td>\${e.loginCount}</td>
 													</tr>
 											       `
 							    				).join('');
@@ -404,6 +432,7 @@ function selectDeleteMember(){
 												<td>\${e.enrollDate}</td>
 												<td>\${e.spam}</td>
 												<td>\${e.status}</td>
+												<td>\${e.loginCount}</td>
 												</tr>
 										       `
 						    				).join('');
@@ -442,6 +471,7 @@ function selectNewMember(){
 												<td>\${e.enrollDate}</td>
 												<td>\${e.spam}</td>
 												<td>\${e.status}</td>
+												<td>\${e.loginCount}</td>
 												</tr>
 										       `
 						    				).join('');
@@ -480,6 +510,7 @@ function selectOldMember(){
 												<td>\${e.enrollDate}</td>
 												<td>\${e.spam}</td>
 												<td>\${e.status}</td>
+												<td>\${e.loginCount}</td>
 												</tr>
 										       `
 						    				).join('');
@@ -586,6 +617,55 @@ function updatePasswordMember(){
 	})
 }
 
+function resetCount(){
+	
+	const userId = document.querySelector('#text-input').value;
+
+	$.ajax({
+		url : '/att/adPad/resetCount',
+		type : 'post',
+		data : {
+			userId : userId
+		},
+		success : function(){
+			alert("변경성공");
+			selectMemberId();
+		}
+	})
+}
+
+function selectBoardPad(){
+	
+	$.ajax({
+		url : '/att/adPad/boardFindAll',
+		type : 'get',
+		success : function(result){
+			// console.log(result);
+			
+			const replies = [...result.data];
+			console.log(replies);
+			
+			const resultStr = replies.map(e => `
+												<tr>
+												<td>\${e.boardNo}</td>
+												<td>\${e.boardType}</td>
+												<td>\${e.count}</td>
+												<td>\${e.boardWriter}</td>
+												<td>\${e.boardTitle}</td>
+												<td>\${e.createDate}</td>
+												<td>\${e.status}</td>
+												</tr>
+										       `
+						    				).join('');
+			$('#board').html(resultStr);
+		    			
+		}
+	
+	});
+}
+
 	</script>
+	
+	
 </body>
 </html>
