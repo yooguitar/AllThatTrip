@@ -18,8 +18,8 @@
  		       ) 
  		VALUES 
  		       (
- 		       SEQ_RNO.NEXTVAL, 
- 		       1, 
+ 		       SEQ_ROOM_NO.NEXTVAL, 
+ 		       #{campNo}, 
  		       #{roomTypeNo}, 
  		       #{roomName}, 
  		       #{roomDesc}, 
@@ -33,7 +33,7 @@
  		       ROOMS_THEME 
  		VALUES 
  		       (
- 		       SEQ_RNO.CURRVAL, 
+ 		       SEQ_ROOM_NO.CURRVAL, 
  		       #{themeNo}
  		       )
  	</insert>
@@ -51,8 +51,8 @@
  		       ) 
  		VALUES 
  		       (
- 		       SEQ_RINO.NEXTVAL, 
- 		       SEQ_RNO.CURRVAL, 
+ 		       SEQ_ROOM_IMG_NO.NEXTVAL, 
+ 		       SEQ_ROOM_NO.CURRVAL, 
  		       #{originName}, 
  		       #{changeName}, 
  		       #{fileLevel}
@@ -74,7 +74,7 @@
 		  JOIN 
 		       ROOM_TYPE USING (ROOM_TYPE_NO)
 		 WHERE
-		 	   ROOMS.STATUS = 'N'
+		 	   ROOMS.STATUS = 'Y'
  	</select>
  	
  	<select id="selectRoomImgList" resultType="roomImg">
@@ -89,6 +89,42 @@
 		       ROOM_IMG USING (ROOM_NO)
 		 WHERE
 		 	   FILE_LEVEL = 1
+ 	</select>
+ 	
+ 	<select id="selectRoomListByCampNo" resultType="room">
+ 		SELECT
+		       ROOM_NO roomNo, 
+		       CAMP_NO campNo, 
+		       ROOM_TYPE_NAME roomTypeName, 
+		       ROOM_NAME roomName, 
+		       ROOM_DESC roomDesc, 
+		       TO_CHAR(ROOM_PRICE, '999,999,999') price, 
+		       COUNT, 
+		       ROOMS.STATUS status
+		  FROM 
+		       ROOMS 
+		  JOIN 
+		       ROOM_TYPE USING (ROOM_TYPE_NO)
+		 WHERE
+		 	   ROOMS.STATUS = 'Y'
+		   AND
+		       CAMP_NO = #{campNo}
+ 	</select>
+ 	
+ 	<select id="selectRoomImgListByCampNo" resultType="roomImg">
+ 		SELECT
+		       ROOM_NO roomNo, 
+		       ORIGIN_NAME originName,
+		       CHANGE_NAME changeName,
+		       FILE_LEVEL fileLevel
+		  FROM
+		       ROOMS
+		  JOIN
+		       ROOM_IMG USING (ROOM_NO)
+		 WHERE
+		 	   FILE_LEVEL = 1
+		   AND
+		       CAMP_NO = #{campNo}		 	  
  	</select>
  	
  	<select id="selectRoomById" resultType="room">
@@ -109,7 +145,7 @@
 		 WHERE
 		 	   ROOM_NO = #{roomNo}
 		   AND
-		       ROOMS.STATUS = 'N'
+		       ROOMS.STATUS = 'Y'
  	</select>
  	
  	<select id="selectRoomThemeById" resultType="roomTheme">
@@ -188,11 +224,11 @@
  		UPDATE 
  		       ROOMS 
  		   SET 
- 		       STATUS = 'Y' 
+ 		       STATUS = 'N' 
  		 WHERE 
  		       ROOM_NO = #{roomNo} 
  		   AND 
- 		       STATUS = 'N'
+ 		       STATUS = 'Y'
  	</update>
  	
  </mapper>

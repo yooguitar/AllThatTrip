@@ -9,12 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.camp.model.dao.CampMapper;
+import com.kh.AllThatTrip.camp.model.dao.RoomMapper;
+import com.kh.AllThatTrip.camp.model.vo.BizMember;
 import com.kh.AllThatTrip.camp.model.vo.Camp;
+import com.kh.AllThatTrip.camp.model.vo.Room;
+import com.kh.AllThatTrip.camp.model.vo.RoomImg;
+import com.kh.AllThatTrip.exception.LoginFailedException;
+import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
+import com.kh.AllThatTrip.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,24 +33,27 @@ import lombok.extern.slf4j.Slf4j;
 public class CampServiceImpl implements CampService {
 	
 	private final CampMapper mapper;
+	private final RoomMapper rMapper;
 	private final ServletContext context;
+	private final PasswordEncryptor passwordEncoder;
 
 	@Override
-	public void insertCamp(Camp camp, MultipartFile upfile) {
+	public void insertCamp(Camp camp, MultipartFile upfile, HttpSession session) {
 		String originName = upfile.getOriginalFilename();
 		String ext = originName.substring(originName.lastIndexOf("."));
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		int randomNum = (int)(Math.random() * 9000) + 1000;
 		String fileName = "ATT_JH_";
 		String changeName = fileName + currentTime + "_" + randomNum + ext;
-		String savePath = context.getRealPath("/resources/upload_files/");
+		String savePath = context.getRealPath("/resources/camp_upload_files/");
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
+		camp.setBizNo(((BizMember)(session.getAttribute("loginUser"))).getBizNo());
 		camp.setOriginName(originName);
-		camp.setChangeName("/resources/upload_files/" + changeName);
+		camp.setChangeName("/resources/camp_upload_files/" + changeName);
 		// log.info("camp : {}", camp);
 		mapper.insertCamp(camp);
 	}
@@ -54,11 +65,24 @@ public class CampServiceImpl implements CampService {
 		responseData.put("campList", campList);
 		return responseData;
 	}
+	
+	@Override
+	public Map<String, Object> selectCampListByBizNo(HttpSession session) {
+		Long bizNo = ((BizMember)(session.getAttribute("loginUser"))).getBizNo();
+		List<Camp> campList = mapper.selectCampListByBizNo(bizNo);
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		responseData.put("campList", campList);
+		return responseData;
+	}
 
 	@Override
 	public Map<String, Object> selectCampById(Long campNo) {
-		Camp camp = mapper.selectCampById(campNo);
 		Map<String, Object> responseData = new HashMap<String, Object>();
+		Camp camp = mapper.selectCampById(campNo);
+		List<Room> roomList = rMapper.selectRoomListByCampNo(campNo);
+		List<RoomImg> roomImgList = rMapper.selectRoomImgListByCampNo(campNo);
+		responseData.put("roomList", roomList);
+		responseData.put("roomImgList", roomImgList);
 		responseData.put("camp", camp);
 		return responseData;
 	}
@@ -79,14 +103,14 @@ public class CampServiceImpl implements CampService {
 			int randomNum = (int)(Math.random() * 9000) + 1000;
 			String fileName = "ATT_JH_";
 			String changeName = fileName + currentTime + "_" + randomNum + ext;
-			String savePath = context.getRealPath("/resources/upload_files/");
+			String savePath = context.getRealPath("/resources/camp_upload_files/");
 			try {
 				upfile.transferTo(new File(savePath + changeName));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 			camp.setOriginName(originName);
-			camp.setChangeName("/resources/upload_files/" + changeName);
+			camp.setChangeName("/resources/camp_upload_files/" + changeName);
 		}
 		mapper.updateCamp(camp);
 	}
@@ -106,6 +130,19 @@ public class CampServiceImpl implements CampService {
 				}
 			}
 		}
+	}
+
+	@Override
+	public BizMember bizLogin(Member member, HttpSession session) {
+		BizMember loginBiz = mapper.bizLogin(member);
+		// log.info("{}", loginBiz);
+		if(loginBiz == null) {
+			throw new LoginFailedException("아이디 없음");
+		}
+		if(!(passwordEncoder.matches(member.getUserPwd(), loginBiz.getUserPwd()))) {
+			throw new LoginFailedException("비밀번호 불일치");
+		}
+		return loginBiz;
 	}
 
 }

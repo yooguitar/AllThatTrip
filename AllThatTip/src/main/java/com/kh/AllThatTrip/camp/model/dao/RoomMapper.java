@@ -21,6 +21,10 @@ public interface RoomMapper {
 	
 	List<RoomImg> selectRoomImgList();
 	
+	List<Room> selectRoomListByCampNo(Long campNo);
+	
+	List<RoomImg> selectRoomImgListByCampNo(Long campNo);
+	
 	Room selectRoomById(int roomNo);
 	
 	List<RoomTheme> selectRoomThemeById(int roomNo);

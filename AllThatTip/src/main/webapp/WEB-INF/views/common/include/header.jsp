@@ -45,7 +45,14 @@
 
               <li><a class="aTag" style = color:#ebebeb; href="#">펜션</a></li>
               
-              <li><a class="aTag" style = color:#ebebeb; href="/att/camps/biz">사업자 메뉴</a></li>
+              <c:choose>
+              	<c:when test="${ empty sessionScope.loginUser.bizNo }">
+              		<li><a class="aTag" style = color:#ebebeb; href="/att/camps/bizLogin">사업자 메뉴</a></li>
+              	</c:when>
+              	<c:otherwise>
+	            	<li><a class="aTag" style = color:#ebebeb; href="/att/camps/biz">사업자 메뉴</a></li>
+              	</c:otherwise>
+              </c:choose>
             </ul>
           </li>
           <li><a class="aTag" href="#">테마검색</a></li>

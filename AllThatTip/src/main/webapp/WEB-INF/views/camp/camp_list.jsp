@@ -14,6 +14,8 @@
 	
 	.camp-list-div{
 		width: 1200px;
+		height: auto;
+		overflow: hidden;
 		margin: auto;
 	}
 	

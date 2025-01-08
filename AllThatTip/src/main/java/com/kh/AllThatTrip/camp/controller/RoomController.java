@@ -1,5 +1,6 @@
 package com.kh.AllThatTrip.camp.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -26,15 +27,17 @@ public class RoomController {
 	private final ModelAndViewUtil mv;
 	
 	@GetMapping("insert_form")
-	public ModelAndView forwardRoomInsertForm() {
-		return mv.setViewNameAndData("room/room_insert_form", null);
+	public ModelAndView forwardRoomInsertForm(int campNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("campNo", campNo);
+		return mv.setViewNameAndData("room/room_insert_form", map);
 	}
 	
 	@PostMapping("insert")
 	public ModelAndView insertRoom(Room room, MultipartFile[] upfile) {
 		// log.info("room : {} / upfile : {}", room, upfile);
 		roomService.insertRoom(room, upfile);
-		return mv.setViewNameAndData("redirect:/", null);
+		return mv.setViewNameAndData("redirect:/camps/detail?campNo=" + room.getCampNo(), null);
 	}
 	
 	@GetMapping("list")

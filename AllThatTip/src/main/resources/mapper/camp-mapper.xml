@@ -20,7 +20,7 @@
  		VALUES 
  		       (
  		       SEQ_CNO.NEXTVAL, 
- 		       3, 
+ 		       #{bizNo}, 
  		       #{campName}, 
  		       #{campAddr}, 
  		       #{campDesc}, 
@@ -42,6 +42,23 @@
  		       CAMP 
  		 WHERE 
  		       STATUS = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectCampListByBizNo" parameterType="long" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+ 		   AND
+ 		   	   BIZ_NO = #{bizNo}
  	</select>
  	
  	<select id="selectCampById" parameterType="long" resultType="camp">
@@ -87,5 +104,28 @@
  		   AND 
  		       CAMP_NO = #{campNo}
  	</update>
+ 	
+ 	<select id="bizLogin" parameterType="member" resultType="bizMember">
+ 		SELECT 
+ 			   USER_NO userNo, 
+ 			   BIZ_NO bizNo, 
+ 			   BIZ_FILENO bizFileNo, 
+ 			   USER_ID userId, 
+ 			   USER_PWD userPwd, 
+ 			   USER_NAME userName,
+ 			   EMAIL, 
+ 			   PHONE, 
+ 			   SPAM, 
+ 			   STATUS, 
+ 			   ENROLL_DATE enrollDate 
+ 		  FROM 
+ 			   MEMBER 
+ 		  JOIN 
+ 			   BUSINESS_USER USING (USER_NO) 
+ 	     WHERE 
+ 	           USER_ID = #{userId}
+ 	       AND
+ 			   STATUS ='Y'
+ 	</select>
  	
  </mapper>

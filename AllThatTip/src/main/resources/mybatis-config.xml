@@ -18,6 +18,7 @@
 		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.Room" alias="room" />
 		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.RoomTheme" alias="roomTheme" />
 		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.RoomImg" alias="roomImg" />
+		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.BizMember" alias="bizMember" />
 	</typeAliases>
 
 	<mappers>

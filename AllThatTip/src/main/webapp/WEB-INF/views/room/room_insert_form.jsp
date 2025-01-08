@@ -275,6 +275,7 @@
 		            <button type="submit">등록</button> <button type="reset">초기화</button> <input type="button" value="취소" onclick="backToMain();">
 	            </div>
         	</fieldset>
+        	<input type="hidden" name="campNo" value="${ campNo }" />
         </form>
     </div>
     <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />	

@@ -20,7 +20,7 @@
 		<br>
 		<a href="/att/camps/insert_form" style="color:black;"> camp 등록 </a> <br><br>
 		
-		<a href="/att/camps/list" style="color:black;"> camp 리스트 </a> <br><br>
+		<a href="/att/camps/biz_list" style="color:black;"> camp 리스트 </a> <br><br>
 		
 		<a href="/att/rooms/insert_form" style="color:black;"> room 등록 </a> <br><br>
 		

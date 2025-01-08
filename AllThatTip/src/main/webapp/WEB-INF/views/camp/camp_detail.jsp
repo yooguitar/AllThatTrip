@@ -6,20 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <!-- JavaScript -->
-	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
-	
-	<!-- CSS -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
-	<!-- Default theme -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
-	<!-- Semantic UI theme -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/semantic.min.css"/>
-	<!-- Bootstrap theme -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.min.css"/>
-	
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
 
 	body{
@@ -76,6 +62,40 @@
 	.title-img-div{
 		height: 200px;
 	}
+	
+	.room-list-div{
+		width: 1168px;
+		height: auto;
+		overflow: hidden;
+		margin: auto;
+	}
+	
+	.room-list-div>div{
+		margin: 40px;
+		padding: 2px;
+		float: left;
+	}
+	
+	.room-list-div>div:hover{
+		transform: scale(1.15);
+		font-weight: 900;
+		color: #326044;
+	}
+	
+	.room-div{
+		border: 1px solid #60B557;
+		border-radius: 5px;
+	}
+	
+	.room-info{
+		text-align: center;
+	}
+	
+	.room-div>img{
+		width: 300px;
+		height: 160px;
+	}
+	
 </style>
 </head>
 <body>
@@ -104,7 +124,30 @@
 		            <img src="/att${ camp.changeName }" alt="대표 이미지">
        			</div>
 	        </div>
-	        <button onclick="updateCamp(${camp.campNo});">정보 수정</button> <button class="btn-open-modal">캠핑장 삭제</button> <br><br>
+	        <button onclick="updateCamp(${camp.campNo});">정보 수정</button> <button class="btn-open-modal">캠핑장 삭제</button>
+	        <br><br>
+		</fieldset>
+	</div>
+	
+	<div class="detail-div">
+		<fieldset>
+			<legend>등록된 숙소 목록</legend>
+			<div class="room-list-div">
+				<c:forEach items="${ roomList }" var="rl">
+					<div class="room-div" onclick="room_detail(${ rl.roomNo })">
+						<c:forEach items="${ roomImgList }" var="img">
+			        		<c:if test="${ rl.roomNo eq img.roomNo }">
+				            	<img src="/att${ img.changeName }" alt="대표 이미지">
+				            </c:if>
+			        	</c:forEach>
+				        <div class="room-info">
+				            <p>${ rl.roomName }</p>
+				            <p>${ rl.price }원</p>
+				        </div>
+					</div>
+				</c:forEach>
+			</div>
+			<button onclick="insertRoom(${camp.campNo});">숙소 등록</button>
 		</fieldset>
 	</div>
 	
@@ -159,6 +202,15 @@
 		function updateCamp(campNo){
 			// console.log(campNo);
 			location.href = '/att/camps/update_form?campNo=' + campNo;
+		}
+		
+		function insertRoom(campNo){
+			// console.log(campNo);
+			location.href = '/att/rooms/insert_form?campNo=' + campNo;
+		}
+		
+		function room_detail(roomNo){
+			location.href = '/att/rooms/detail?roomNo=' + roomNo;
 		}
 		
 		const check = document.getElementById('check');
