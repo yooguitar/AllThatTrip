@@ -2,6 +2,7 @@ package com.kh.AllThatTrip.member.model.service;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -91,7 +92,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public Member countCheck(Member member) {
-		return mapper.countCheck(member);
+		
+		Member result = mapper.countCheck(member);
+		
+		if(result == null) {
+			throw new LoginFailedException("없는 ID입니다.");
+		}
+		
+		return result;
 	}
 	
 	@Override
@@ -107,24 +115,31 @@ public class MemberServiceImpl implements MemberService {
 		ArrayList result = mapper.findRsv(member);	
 		if(!result.isEmpty()) {
 			session.setAttribute("findRsvResult", result);
-		
 		}
 	}
-
+	
+	// CART GET요청 시
 	@Override
-	public void findCart(Member member, HttpSession session) {
-		session.removeAttribute("findCartResult");
-		//ArrayList result = mapper.findCart(member);
-		//if(!result.isEmpty()) {
-		//	session.setAttribute("findCartResult", result);
-		//}
+	public void findCart(HttpSession session) {
+		if(session.getAttribute("loginUser") == null) {
+			// 로그인 되어있지 않다면 장바구니 초기화
+			mapper.deleteCart();
+		}
+		ArrayList cartResult = mapper.findCart();
+		log.info("카트조회결과{}", cartResult);
+		session.setAttribute("cartResult", cartResult);
 	}
-
+	
+	// CART POST 요청 시 (장바구니 등록 경우)
 	@Override
 	public void findRoom(Room room, HttpSession session) {
-		ArrayList roomResult = mapper.findRoom(room);
-		log.info("숙소정보 반환 값 {}", roomResult);
-		session.setAttribute("findCartResult", roomResult);
+		if(session.getAttribute("loginUser") == null) {
+			mapper.deleteCart();
+		}
+		HashMap roomResult = mapper.findRoom(room);
+		mapper.saveCart(roomResult);
+		ArrayList cartResult = mapper.findCart();
+		session.setAttribute("cartResult", cartResult);
 	}
 
 

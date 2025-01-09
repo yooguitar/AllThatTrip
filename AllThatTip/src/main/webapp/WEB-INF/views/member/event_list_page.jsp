@@ -19,7 +19,7 @@
         #wrap{
             width: 1000px;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 100px;
             margin-bottom: 100px;
         }
         #main-banner-img{
@@ -48,6 +48,7 @@
       </style>
 </head>
 <body>
+    <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
     <div id="wrap">
         <div id="main-banner-img">
             <div id="demo" class="carousel slide" data-ride="carousel">
@@ -103,5 +104,6 @@
         </div>
 
     </div>
+    <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </body>
 </html>

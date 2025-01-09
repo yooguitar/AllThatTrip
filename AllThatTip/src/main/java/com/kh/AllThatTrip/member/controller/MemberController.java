@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.LoginCountOverException;
+import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.member.model.service.MemberService;
 import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -29,8 +30,8 @@ public class MemberController {
 	
 	// 로그인 핸들러
 	@PostMapping("login.me")
-	public String login(Member member, HttpSession session){		
-			Member countMember = memberService.countCheck(member);
+	public String login(Member member, HttpSession session){
+		Member countMember = memberService.countCheck(member);
 		if(countMember.getLoginCount() > 4) {
 			//memberService.rollbackCount(member);
 			memberService.loginFullCount(member);
@@ -104,23 +105,32 @@ public class MemberController {
 		return "member/find_rsv_page";
 	}
 	
+	
+	
+	
 	@GetMapping("cartPage.me")
 	public String cartPage(HttpSession session) {
-		if(session.getAttribute("loginUser") != null) {
-			// 회원
-			Member loginUser = (Member)session.getAttribute("loginUser");
-			memberService.findCart(loginUser, session);
-			return "member/cart_page";
-		}
+		memberService.findCart(session);
 		return "member/cart_page";
 	}
 	
 	@PostMapping("cartPage.me")
 	public String cartPage(HttpSession session, Room room) {
-		Member loginUser = (Member)session.getAttribute("loginUser");
 		memberService.findRoom(room, session);
+
+		
+		
 		return "member/cart_page";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("wishlistPage.me")

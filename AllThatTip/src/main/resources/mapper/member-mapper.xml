@@ -162,13 +162,6 @@
 	       RES_NO ASC
 </select>
 
-<!-- 
-<select id="findCart" parameterType="member" resultType="hashmap">
-	SELECT
-		   캠핑정보를 가져올 수 있는 테이블을 골라야함
-</select>
--->
-
 <select id="findRoom" parameterType="room" resultType="hashmap">
 	SELECT
            R.ROOM_NAME,
@@ -183,6 +176,36 @@
        AND
            ROWNUM = 1
 </select>
+
+<insert id="saveCart" parameterType="HashMap">
+	INSERT
+	  INTO
+	       CART
+	       (
+	       ROOM_NAME,
+	       ROOM_PRICE,
+	       CHANGE_NAME
+	       )   
+	VALUES
+	       (
+	       #{ROOM_NAME},
+	       #{ROOM_PRICE},
+	       #{CHANGE_NAME}
+	       )   
+</insert>
+
+<select id="findCart" resultType="HashMap">
+	SELECT
+		   ROOM_NAME,
+		   ROOM_PRICE,
+		   CHANGE_NAME
+	  FROM
+	       CART
+</select>
+
+<update id="deleteCart">
+	DELETE FROM CART
+</update>
 
 <update id="increaseLoginCount" parameterType="member">
 	UPDATE

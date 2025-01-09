@@ -19,7 +19,7 @@
         #wrap{
             width: 1000px;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 150px;
             margin-bottom: 100px;
         }
         #cart-div-1{
@@ -49,14 +49,14 @@
       </style>
 </head>
 <body>
+    <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
     <div id="wrap">
         <div id="cart-div-1">
             <h1 style="margin-bottom: 10px;">장바구니</h1>
         </div>
-
         <div id="cart-div-2" class="cart-div" style="margin-top: 100px;">
             <c:choose>
-                <c:when test="${ sessionScope.findCartResult eq null }">
+                <c:when test="${ sessionScope.cartResult[0] eq null }">
                     <!--예약 내역이 없을 경우 보여질 div-->
                     <li id="content-empty">  
                         <div class="content-div-temp">
@@ -65,29 +65,30 @@
                     </li>
                 </c:when>
                 <c:otherwise>
-                    <!--예약 내역이 있을 경우 div 반복-->
-                    <li>
-                        <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
-                            <div style="width: 40px; display: inline; float: left;">
-                                &nbsp;
-                                <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
+                    <c:forEach var="cartLoop" items="${ sessionScope.cartResult }">
+                        <!--예약 내역이 있을 경우 div 반복-->
+                        <li>
+                            <div class="content-div-temp" style="border-bottom: 3px dotted gainsboro;">
+                                <div style="width: 40px; display: inline; float: left;">
+                                    &nbsp;
+                                    <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
+                                </div>
+                                <div style="display: inline; float: left;">
+                                    <img src="${ cartLoop.CHANGE_NAME }" alt="" style="width: 220px; height: 220px; margin-top: 10px;">
+                                </div>
+                                <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                                    <a href="#" style="color:black; text-decoration: none;">${ cartLoop.ROOM_NAME }</a>
+                                </div>
+                                <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
+                                    <a href="#" style="color: black; text-decoration: none;">${ cartLoop.ROOM_PRICE }&nbsp;원</a>
+                                </div>
                             </div>
-                            <div style="display: inline; float: left;">
-                                <img src="${ findCartResult[0].CHANGE_NAME }" alt="" style="width: 220px; height: 220px; margin-top: 10px;">
-                            </div>
-                            <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                                <a href="#" style="color:black; text-decoration: none;">${ findCartResult[0].ROOM_NAME }</a>
-                            </div>
-                            <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                                <a href="#" style="color: black; text-decoration: none;">${ findCartResult[0].ROOM_PRICE }&nbsp;원</a>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </c:forEach>
                 </c:otherwise>
             </c:choose>
                 
         </div>
-        <c:forEach var="cartList" items="${ sessionScope.findCartResult }">
             <div id="cart-div-3" class="cart-div">
                 <div style="height: 250px;">
                     <table style="margin: auto; vertical-align: auto;">
@@ -116,9 +117,8 @@
                 <br><br>
                 <button onclick="" id="submit-btn-fin" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">주문하기</button>
             </div>
-        </c:forEach>
             
         </div>
-    
+        <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </body>
 </html>

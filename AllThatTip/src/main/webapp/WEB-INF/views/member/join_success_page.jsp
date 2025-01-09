@@ -19,7 +19,8 @@
             width: 900px;
             height: 700px;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 100px;
+            margin-bottom: 50px;
         }
         .btn-light{
             width: 280px;
@@ -53,7 +54,7 @@
         
     </div>
     
-    <div style="margin-left:360px">
+
 	<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 	</div>
     
