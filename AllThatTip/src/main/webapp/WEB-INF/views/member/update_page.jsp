@@ -32,7 +32,7 @@
 		<c:remove var="alertMsg" scope="session" />
   </c:if>
 
-<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 <script>
   $(function(){
   			// 비밀번호 입력 확인
@@ -118,8 +118,8 @@
   </form>
   
 </div>
-<div style="margin-left:360px">
-<!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> -->
+
+<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </div>
 
 

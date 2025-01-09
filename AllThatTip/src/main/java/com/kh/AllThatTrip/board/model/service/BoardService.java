@@ -20,6 +20,8 @@ public interface BoardService {
     // 상세 조회
     Map<String, Object> selectByNum(long boardNo);
     
+    // 상세 조회2
+    Map<String, Object> selectByNum2(long boardNo);
     
     // 수정
     void updateBoard(Board board, MultipartFile[] upfiles);

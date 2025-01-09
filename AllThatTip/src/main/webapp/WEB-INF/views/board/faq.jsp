@@ -75,13 +75,14 @@
             width:80%;
             margin:auto;
         }
-        #searchForm>* {
-            float:left;
-            margin:5px;
-        }
-        .select {width:20%;}
-        .text {width:53%;}
-        .searchBtn {width:20%;}
+    #searchForm>* {
+        float:left;
+        margin:5px;
+    }
+    
+    .select {width:20%;}
+    .text {width:53%;}
+    .searchBtn {width:20%;}
 
 
     #faq-category {
@@ -112,6 +113,23 @@
         padding: 60px;
     }
 
+
+	.write-button {
+	        display: block;
+	        margin: 0 auto;
+	        padding: 7px 20px;
+	        font-size: 16px;
+	        color: #fff;
+	        background-color: #326044;
+	        border: none;
+	        border-radius: 5px;
+	        cursor: pointer;
+	        transition: background-color 0.3s;
+    }
+
+    .write-button:hover {
+        background-color: #444;
+    }
 	
 
 </style>
@@ -135,10 +153,10 @@
                 <div class="text">
                     <input type="text" class="form-control" name="keyword" id="keyword" />
                 </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                <button type="submit" class="write-button">검색</button>
             </form>
-        	<c:if test="${not empty sessionScope.loginUser and board.boardType == 20}">
-					<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
+        		<c:if test="${not empty sessionScope.loginUser and board.boardType == 20}">
+					<a class="write-button" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
 				</c:if>
         <br><br>
     </div>

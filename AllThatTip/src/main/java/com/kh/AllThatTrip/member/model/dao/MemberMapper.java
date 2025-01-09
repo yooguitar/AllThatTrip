@@ -1,6 +1,7 @@
 package com.kh.AllThatTrip.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -37,12 +38,13 @@ public interface MemberMapper {
 	/* 찜, 예약, 장바구니 관련 */
 	ArrayList findRsv(Member member);
 	
-	//ArrayList findCart(Member member);
+	HashMap findRoom(Room room);
 	
-	ArrayList findRoom(Room room);
+	void saveCart(HashMap roomResult);
 	
+	ArrayList findCart();
 	
-	
+	void deleteCart();
 	
 	
 }

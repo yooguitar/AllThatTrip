@@ -17,7 +17,6 @@
 		            WHERE B.BOARD_NO = BD.BOARD_NO
 		            AND ( SELECT MIN(file_no) FROM BD_ATTACHMENT BB WHERE BB.BOARD_NO = BD.BOARD_NO ) = BD.FILE_NO
 		          ) imagePath
-		        <!-- , B.FAQ_TYPE -->
 		FROM
 				BOARD B
 		JOIN
@@ -151,7 +150,7 @@
 				,BOARD_CONTENT
 				)
 	    VALUES (
-	    		SEQ_BUNO.NEXTVAL
+	    		SEQ_BOARD_NO.NEXTVAL
 	    		,#{boardType}
 	    		,#{userNo}
 	    		,#{boardTitle}
@@ -172,8 +171,27 @@
 	        	)
 		VALUES 
 				(
-	            SEQ_BFNO.NEXTVAL 
-	            ,SEQ_BUNO.CURRVAL 
+	            SEQ_BOARD_FILE_NO.NEXTVAL 
+	            ,SEQ_BOARD_NO.CURRVAL 
+	            ,#{originName} 
+	           	,#{changeName}
+	        	)
+	
+	</insert>
+	
+	<!-- 공통게시판 첨부파일 수정 등록 -->
+	<insert id="insertBoardFile2" parameterType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
+		INSERT 
+	    INTO 	BD_ATTACHMENT (
+	            FILE_NO 
+	            ,BOARD_NO 
+	            ,ORIGIN_NAME 
+	            ,CHANGE_NAME
+	        	)
+		VALUES 
+				(
+	            SEQ_BOARD_FILE_NO.NEXTVAL 
+	            ,#{boardNo}
 	            ,#{originName} 
 	           	,#{changeName}
 	        	)

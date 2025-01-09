@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>중고거래리스트</title>
     <meta charset="utf-8">
+    <title>중고거래게시판</title>
     <!--생략하셔도 됩니다.-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -39,11 +39,14 @@
 		color:#000000b0;
 		font-weight: bold;
 		border-radius: 12px;
+		overflow: hidden;
 	}
 
 	.thumbnail > img{
 		width : 300px;
 		height : 200px;
+		object-fit: cover;
+		object-position;
 		margin-bottom : 8px;
 		border : 1px solid rgb(172 205 255 / 57%);
 		border-radius: 12px;
@@ -54,7 +57,7 @@
 		opacity:0.8;
 	}
 	
-	.write-button {
+	.write-button2 {
         display: block;
         margin: 0 auto;
         padding: 10px 20px;
@@ -66,9 +69,28 @@
         cursor: pointer;
         transition: background-color 0.3s;
     }
-
+    
+    .write-button {
+        display: inline-block;
+	    font-weight: 400;
+	    color: #fff;
+	    text-align: center;
+	    vertical-align: middle;
+	
+	    user-select: none;
+	    background-color: #326044;
+	    border: 1px solid #326044;
+	    padding: .375rem .75rem;
+	    font-size: 1rem;
+	    line-height: 1.5;
+	    border-radius: .25rem;
+    
+    }
+    
+    
     .write-button:hover {
         background-color: #444;
+        text-decoration::none;
     }
 
 </style>
@@ -104,7 +126,7 @@
            <br><br> 
                
 		<c:if test="${not empty sessionScope.loginUser and board.boardType == 40}">
-			<a class="btn btn-secondary" style="float:right;" id="write-button" href="/att/board/insertForm?boardType=40">글쓰기</a>
+			<a class="write-button" style="float:right;" id="write-button" href="/att/board/insertForm?boardType=40">글쓰기</a>
 		</c:if>
 			<br>
             </div>
@@ -118,11 +140,12 @@
                 등록된 게시글이 존재하지 않습니다. <br>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${ boards }" var="board">
+                <c:forEach items="${ boards }" var="board" >
                     
                 <div class="thumbnail" align="center">
                     <input type="hidden" value="${ board.boardNo }" />
-                    <img src="/att${ board.imagePath }" alt="이미지" style="width: 100%; height: 100%;">
+                    <input type="hidden" name="boardType" value="${ board.boardType }" />
+                    <img src="/att${ board.imagePath }" alt="이미지" >
                     <p>
                         <label>No.  ${ board.boardNo }</label> <br>
                         <label>제목: ${ board.boardTitle }</label> <br>
@@ -195,7 +218,6 @@
 		        </c:choose>
 		    </ul>
 		</div>
-       
         
         
 		
@@ -209,6 +231,13 @@
 		});
 		</script>
 		
+		<script>
+		    // 세션의 alertMsg 출력 후 제거
+		    <c:if test="${not empty sessionScope.alertMsg}">
+		        alert("${sessionScope.alertMsg}");
+		        <c:set var="alertMsg" value="" scope="session"/>
+		    </c:if>
+		</script>
     <jsp:include page="../common/include/footer.jsp" />   
 
 </body>

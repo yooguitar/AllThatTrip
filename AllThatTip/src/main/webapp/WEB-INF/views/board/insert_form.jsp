@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>게시판글등록</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -76,12 +76,13 @@
 					    
 					    	<tr>
 					            <th><label for="upfile">첨부파일1</label></th>
-					            <td><input type="file" id="upfile1" class="form-control-file border" name="upfiles" multiple></td>
+					            
+					            <td><input type="file" accept = "image/*" id="upfile1" class="form-control-file border" name="upfiles" multiple></td>
 					        </tr>
 					        <tr>
 							    <td colspan="2" style="text-align: left;">
-							        <li style="color: red; font-size: 0.7em; list-style-type: none; margin-left: 180px;">
-							            *  첨부파일 1번 등록 시 게시글 썸네일로 등록됩니다.
+							        <li style="color: red; font-size: 0.7em; list-style-type: none; margin-left: 210px;">
+							            *  첨부파일 1번 등록 시 게시글 썸네일로 등록됩니다. (이미지만 등록 가능)
 							        </li>
 							    </td>
 							</tr>
