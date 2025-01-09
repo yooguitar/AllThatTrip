@@ -107,6 +107,7 @@ public class MemberServiceImpl implements MemberService {
 		ArrayList result = mapper.findRsv(member);	
 		if(!result.isEmpty()) {
 			session.setAttribute("findRsvResult", result);
+		
 		}
 	}
 

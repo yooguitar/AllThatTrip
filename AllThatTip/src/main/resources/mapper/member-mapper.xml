@@ -179,6 +179,8 @@
      WHERE
            I.ROOM_NO = ${roomNo}
        AND
+           R.ROOM_NO = ${roomNo}
+       AND
            ROWNUM = 1
 </select>
 
