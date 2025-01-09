@@ -213,4 +213,221 @@ public class AdminPadController {
 		
 		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	}
+	
+	@GetMapping("selectBoardWriter")
+	public ResponseEntity<ResponseData> selectBoardWriter(String boardWriter){
+		log.info("{}",boardWriter);
+		List<Board> board = adService.selectBoardWriter(boardWriter);
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("selectCountMax")
+	public ResponseEntity<ResponseData> selectCountMax(){
+		List<Board> board = adService.selectCountMax();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	@GetMapping("selectCountMin")
+	public ResponseEntity<ResponseData> selectCountMin(){
+		List<Board> board = adService.selectCountMin();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("selectNewBoard")
+	public ResponseEntity<ResponseData> selectNewBoard(){
+		List<Board> board = adService.selectNewBoard();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("selectOldBoard")
+	public ResponseEntity<ResponseData> selectOldBoard(){
+		List<Board> board = adService.selectOldBoard();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	@GetMapping("selectDeleteBoard")
+	public ResponseEntity<ResponseData> selectDeleteBoard(){
+		List<Board> board = adService.selectDeleteBoard();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	@GetMapping("selectBoard")
+	public ResponseEntity<ResponseData> selectBoard(){
+		List<Board> board = adService.selectBoard();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	@GetMapping("select40Board")
+	public ResponseEntity<ResponseData> select40Board(){
+		List<Board> board = adService.select40Board();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("select30Board")
+	public ResponseEntity<ResponseData> select30Board(){
+		List<Board> board = adService.select30Board();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("select20Board")
+	public ResponseEntity<ResponseData> select20Board(){
+		List<Board> board = adService.select20Board();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("select10Board")
+	public ResponseEntity<ResponseData> select10Board(){
+		List<Board> board = adService.select10Board();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@GetMapping("select50Board")
+	public ResponseEntity<ResponseData> select50Board(){
+		List<Board> board = adService.select50Board();
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
+	
+	@PostMapping("deleteBoard")
+	public ResponseEntity<ResponseData> deleteBoard(int boardNo) {
+		int result = adService.deleteBoard(boardNo);
+		ResponseData response = ResponseData.builder()
+											.message("변경 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
+	@PostMapping("unDeleteBoard")
+	public ResponseEntity<ResponseData> unDeleteBoard(int boardNo) {
+		int result = adService.unDeleteBoard(boardNo);
+		ResponseData response = ResponseData.builder()
+											.message("변경 성공.")
+											.status(HttpStatus.OK.toString())
+											.data(result)
+											.build();
+
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+
+	}
+	@GetMapping("selectBoardNo")
+	public ResponseEntity<ResponseData> selectBoardNo(int boardNo){
+		log.info("{}",boardNo);
+		List<Board> board = adService.selectBoardNo(boardNo);
+		String message = (board != null) ? "조회 성공" : "조회된 결과가 없습니다.";
+	    HttpStatus status = (board != null) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+		ResponseData response = ResponseData.builder()
+										    .message(message)
+										    .status(status.toString())
+										    .data(board)
+										    .build();
+		
+		return new ResponseEntity<ResponseData>(response, status);
+	}
 }

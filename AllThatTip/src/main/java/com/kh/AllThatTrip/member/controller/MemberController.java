@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.LoginCountOverException;
 import com.kh.AllThatTrip.member.model.service.MemberService;
@@ -31,8 +32,9 @@ public class MemberController {
 	public String login(Member member, HttpSession session){		
 			Member countMember = memberService.countCheck(member);
 		if(countMember.getLoginCount() > 4) {
-			memberService.rollbackCount(member);
-			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 로그인 정보를 확인해주세요.");
+			//memberService.rollbackCount(member);
+			memberService.loginFullCount(member);
+			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 관리자에게 문의 하세요.");
 		}
 		Member loginMember = memberService.login(member);
 		if(loginMember == null){ 
@@ -47,8 +49,6 @@ public class MemberController {
 			session.setAttribute("loginValue", loginValue);
 			return "member/login_page";
 		} else {
-			//log.info("조회된 회원 정보 {}", loginMember);
-			member.setLoginCount(0);
 			memberService.rollbackCount(member);
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  
@@ -112,21 +112,16 @@ public class MemberController {
 			memberService.findCart(loginUser, session);
 			return "member/cart_page";
 		}
-		/*
-		 * else {
-		 * 	//비회원
-		 * 	session.setAttribute("nonUser", 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * }
-		 */
-		
 		return "member/cart_page";
-		
 	}
+	
+	@PostMapping("cartPage.me")
+	public String cartPage(HttpSession session, Room room) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		memberService.findRoom(room, session);
+		return "member/cart_page";
+	}
+	
 	
 	@GetMapping("wishlistPage.me")
 	public String wishlistPage(HttpSession session) {

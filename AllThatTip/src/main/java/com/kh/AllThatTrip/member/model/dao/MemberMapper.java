@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 @Mapper
@@ -29,10 +30,19 @@ public interface MemberMapper {
 	
 	void rollbackCount(Member member);
 	
+	void loginFullCount(Member member);
+	
 	Member countCheck(Member member);
 	
 	/* 찜, 예약, 장바구니 관련 */
 	ArrayList findRsv(Member member);
 	
 	//ArrayList findCart(Member member);
+	
+	ArrayList findRoom(Room room);
+	
+	
+	
+	
+	
 }

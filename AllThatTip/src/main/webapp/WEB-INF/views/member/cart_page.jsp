@@ -56,11 +56,11 @@
 
         <div id="cart-div-2" class="cart-div" style="margin-top: 100px;">
             <c:choose>
-                <c:when test="">
+                <c:when test="${ sessionScope.findCartResult eq null }">
                     <!--예약 내역이 없을 경우 보여질 div-->
                     <li id="content-empty">  
                         <div class="content-div-temp">
-                            <h3 style="text-align: center;">예약 내역이 없습니다. **display:none</h3>
+                            <h3 style="text-align: center;">예약 내역이 없습니다.</h3>
                         </div>
                     </li>
                 </c:when>
@@ -73,14 +73,13 @@
                                 <input type="checkbox" style="margin-top: 110px; accent-color: white;" checked>&nbsp;
                             </div>
                             <div style="display: inline; float: left;">
-                                <img src="https://m.thankqcamping.com/file/2024/03/07/2024030750360.84.jpg
-                                " alt="" style="width: 220px; height: 220px; margin-top: 10px; background-color: grey;">
+                                <img src="${ findCartResult[0].CHANGE_NAME }" alt="" style="width: 220px; height: 220px; margin-top: 10px;">
                             </div>
                             <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                                <a href="#" style="color:black; text-decoration: none;">상품명입력</a>
+                                <a href="#" style="color:black; text-decoration: none;">${ findCartResult[0].ROOM_NAME }</a>
                             </div>
                             <div style="display: inline; float: left; width: 150px; height: fit-content; margin-top: 100px; margin-left: 50px; overflow-wrap: break-word;">
-                                <a href="#" style="color: black; text-decoration: none;">가격입력</a>
+                                <a href="#" style="color: black; text-decoration: none;">${ findCartResult[0].ROOM_PRICE }&nbsp;원</a>
                             </div>
                         </div>
                     </li>
@@ -88,37 +87,38 @@
             </c:choose>
                 
         </div>
-
-        <div id="cart-div-3" class="cart-div">
-            <div style="height: 250px;">
-                <table style="margin: auto; vertical-align: auto;">
-                    <br>
-                    <th>주문하실 상품(checked)
-                        <tr>
-                            <td>목록1</td>
-                            <td>가격</td>
-                        </tr>
-                        <tr>
-                            <td>목록2</td>
-                            <td>가격</td>
-                        </tr>
-                    </th>
-                </table>
+        <c:forEach var="cartList" items="${ sessionScope.findCartResult }">
+            <div id="cart-div-3" class="cart-div">
+                <div style="height: 250px;">
+                    <table style="margin: auto; vertical-align: auto;">
+                        <br>
+                        <th>주문하실 상품(checked)
+                            <tr>
+                                <td>목록1</td>
+                                <td>가격</td>
+                            </tr>
+                            <tr>
+                                <td>목록2</td>
+                                <td>가격</td>
+                            </tr>
+                        </th>
+                    </table>
+                </div>
+                <div style="border-top: 3px solid rgb(50, 96, 68);">
+                    <table style="margin: auto;">
+                        <br>
+                        <tr style="font-weight: 800;">
+                            <td>총계:&nbsp;</td>
+                            <td>원</td>
+                        </tr>    
+                    </table>
+                </div>
+                <br><br>
+                <button onclick="" id="submit-btn-fin" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">주문하기</button>
             </div>
-            <div style="border-top: 3px solid rgb(50, 96, 68);">
-                <table style="margin: auto;">
-                    <br>
-                    <tr style="font-weight: 800;">
-                        <td>총계:&nbsp;</td>
-                        <td>원</td>
-                    </tr>    
-                </table>
-            </div>
-            <br><br>
-            <button onclick="" id="submit-btn-fin" class="btn btn-primary" style="width: 250px; height: 60px; background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">주문하기</button>
+        </c:forEach>
+            
         </div>
-
-    </div>
     
 </body>
 </html>

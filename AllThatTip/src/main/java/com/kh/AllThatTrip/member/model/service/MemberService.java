@@ -1,9 +1,8 @@
 package com.kh.AllThatTrip.member.model.service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.member.model.vo.Member;
 
 public interface MemberService {
@@ -24,12 +23,18 @@ public interface MemberService {
 	void findPwd(Member member);
 	
 	Member countCheck(Member member);
+	
 	void increaseLoginCount(Member member);
+	
 	void rollbackCount(Member member);
+	
+	void loginFullCount(Member member);
 	
 	/* 예약, 찜, 장바구니 관련 */
 	void findRsv(Member member, HttpSession session);
+	
 	void findCart(Member member, HttpSession session);
 	
+	void findRoom(Room room, HttpSession session);
 	
 }
