@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +17,7 @@
   <style>
     #wrap{
         width: 800px;
-        margin-top: 50px;
+        margin-top: 100px;
         margin-bottom: 100px;
     }
 
@@ -33,11 +32,11 @@
 		<c:remove var="alertMsg" scope="session" />
   </c:if>
 
-<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 
 <div class="container" id="wrap">
   <h2>내 정보</h2>
-  <br><label>가입일: <fmt:formatDate value="${ sessionScope.loginUser.enrollDate }" pattern="yyyy-MM-dd" /></label>
+  <br><label>가입일: ${ loginUser.enrollDate }</label>
   <br><br>
 
   <form action="join.me" method="post" id="join-form">
@@ -80,8 +79,7 @@
   </form>
   
 </div>
-<div style="margin-left:360px">
-<!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> -->
+<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </div>
 
 

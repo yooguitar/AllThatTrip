@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ 게시판</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-  <link rel="stylesheet" href="styles.css">
-<style>
+    <meta charset="UTF-8">
+    <title>FAQ(자주묻는질문)</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
 
     body{
         font-family: Arial, Helvetica, sans-serif;
@@ -42,7 +40,7 @@
         cursor: pointer;
     }
 
-
+	#pagingArea {width:fit-content; margin:auto;}
     .faq-question {
         font-size: 18px;
         color:#333;
@@ -77,13 +75,14 @@
             width:80%;
             margin:auto;
         }
-        #searchForm>* {
-            float:left;
-            margin:5px;
-        }
-        .select {width:20%;}
-        .text {width:53%;}
-        .searchBtn {width:20%;}
+    #searchForm>* {
+        float:left;
+        margin:5px;
+    }
+    
+    .select {width:20%;}
+    .text {width:53%;}
+    .searchBtn {width:20%;}
 
 
     #faq-category {
@@ -115,105 +114,128 @@
     }
 
 
+	.write-button {
+	        display: block;
+	        margin: 0 auto;
+	        padding: 7px 20px;
+	        font-size: 16px;
+	        color: #fff;
+	        background-color: #326044;
+	        border: none;
+	        border-radius: 5px;
+	        cursor: pointer;
+	        transition: background-color 0.3s;
+    }
+
+    .write-button:hover {
+        background-color: #444;
+    }
+	
 
 </style>
 
 </head>
 <body>
     <jsp:include page="../common/include/header.jsp" />    
-	<br>
-	<div class="faq-container">
-	<h1>자주 묻는 질문 (FAQ)</h1>
-	<br><br>
-	
-	<ul id="faq-category">
-		<li data-target="faq-point-1">Member</li>
-		<li data-target="faq-point-2">Reservation</li>
-		<li data-target="faq-point-3">사장님전용</li>
-		<li data-target="faq-point-4">어쩌고고고고고</li>
-		<li data-target="faq-point-5">저쩌고용용</li>
-	</ul>
-	
-	<form id="searchForm" action="" method="get" align="center">
-		<div class="select">
-			<select class="custom-select" name="condition">
-			<option value="title">제목</option>
-			<option value="content">내용</option>
-			</select>
-		</div>
-		<div class="text">
-			<input type="text" class="form-control" name="keyword">
-		</div>
-		<button type="submit" class="searchBtn btn btn-secondary">검색</button>
-		<c:if test="${ not empty sessionScope.loginUser}">
-			<a class="btn btn-secondary" style="float:right;" href="http://localhost/att/board/insertForm?boardType=20">글쓰기</a>
-		</c:if>
-	</form>
-	
-	    
-	<br><br>
-	
-	</div>
+    <br>
+    <div class="faq-container">
+        <h1>FAQ(자주묻는질문)</h1>
+        <br><br>
+		
+        <form id="searchForm" action="/att/board/list" method="get" align="center">
+            	<input type="hidden" name="boardType" value="${ board.boardType }" />
+	                <div class="select">
+	                    <select class="custom-select" name="condition" id="condition">
+	                        <option value="title">제목</option>
+	                        <option value="content">내용</option>
+	                    </select>
+	                </div>
+                <div class="text">
+                    <input type="text" class="form-control" name="keyword" id="keyword" />
+                </div>
+                <button type="submit" class="write-button">검색</button>
+            </form>
+        		<c:if test="${not empty sessionScope.loginUser and board.boardType == 20}">
+					<a class="write-button" style="float:right;" href="/att/board/insertForm?boardType=20">글쓰기</a>
+				</c:if>
+        <br><br>
+    </div>
 
+
+    <!-- 동적 게시판 렌더링 삭제하기 키 추가해야함 -->
+	
 	<div id="faq-contentlist">
-	    <div class="faq-item" id="faq-point-1">
-	        <h2 class ="faq-question">1. 1번질문이에요.</h2>
-	        <p class ="faq-answer">1번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item">
-	        <h2 class ="faq-question">2. 2번질문이에요.</h2>
-	        <p class ="faq-answer">2번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item">
-	        <h2 class ="faq-question">3. 3번질문이에요.</h2>
-	        <p class ="faq-answer">3번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item" id="faq-point-2">
-	        <h2 class ="faq-question">4. 4번질문이에요.</h2>
-	        <p class ="faq-answer">4번 답변입니다.</p>
-	    </div>
-	    <div class="faq-item">
-	        <h2 class ="faq-question">5. 5번질문이에요.</h2>
-	        <p class ="faq-answer">5번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item">
-	        <h2 class ="faq-question">6. 6번질문이에요.</h2>
-	        <p class ="faq-answer">6번 답변입니다.</p>
-	    </div>
-	    <div class="faq-item" id="faq-point-3">
-	        <h2 class ="faq-question">7. 7번질문이에요.</h2>
-	        <p class ="faq-answer">7번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item">
-	        <h2 class ="faq-question">8. 8번질문이에요.</h2>
-	        <p class ="faq-answer">4번 답변입니다.</p>
-	    </div>
-	    <div class="faq-item">
-	        <h2 class ="faq-question">9. 9번질문이에요.</h2>
-	        <p class ="faq-answer">9번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item">
-	        <h2 class ="faq-question">10. 10번질문이에요.</h2>
-	        <p class ="faq-answer">10번 답변입니다.</p>
-	    </div>
-	    <div class="faq-item" id="faq-point-4">
-	        <h2 class ="faq-question">11. 11번질문이에요.</h2>
-	        <p class ="faq-answer">11번 답변입니다.</p>
-	    </div>
-	
-	    <div class="faq-item">
-	        <h2 class ="faq-question">12. 12번질문이에요.</h2>
-	        <p class ="faq-answer">12번 답변입니다.</p>
-	    </div>
+	    <c:forEach items="${boards}" var="board">
+	        <div class="faq-item" id="faq-point-${board.boardNo}">
+	            <h2 class="faq-question">${board.boardTitle}</h2>
+	            <p class="faq-answer">${board.boardContent}</p>
+	            
+	            
+	        </div>
+	    </c:forEach>
 	</div>
+    
+   <!-- 페이징 -->
+        <div id="pagingArea">
+		    <ul class="pagination">
+		        <!-- 이전 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage > 1}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage - 1}">
+		                        이전
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">이전</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		
+		        <!-- 페이지 번호 버튼 -->
+		        <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="num">
+		        
+		         	<c:choose>
+		         		<c:when test="${ empty board.condition }">
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:when>
+		         		<c:otherwise>												
+		         			<li class="page-item <c:if test='${pageInfo.currentPage == num}'>active</c:if>'">
+		                		<a class="page-link" href="list?boardType=${board.boardType}&page=${num}&condition=${board.condition}&keyword=${board.keyword}">
+				                    ${num}
+				                </a>
+				            </li>
+		         		</c:otherwise>
+		         	</c:choose>
+		        </c:forEach>
+		
+		        <!-- 다음 페이지 버튼 -->
+		        <c:choose>
+		            <c:when test="${pageInfo.currentPage < pageInfo.maxPage}">
+		                <li class="page-item">
+		                    <a class="page-link"
+		                       href="list?boardType=${board.boardType}&page=${pageInfo.currentPage + 1}">
+		                        다음
+		                    </a>
+		                </li>
+		            </c:when>
+		            <c:otherwise>
+		                <li class="page-item disabled">
+		                    <a class="page-link" href="#">다음</a>
+		                </li>
+		            </c:otherwise>
+		        </c:choose>
+		    </ul>
+		</div>
 
-	<script>
+    <script>
     document.addEventListener('DOMContentLoaded',function(){
         const faqItems = document.querySelectorAll('.faq-item');
 
@@ -222,41 +244,38 @@
             const answer = item.querySelector('.faq-answer');
 
             question.addEventListener('click',() => {
-
                 faqItems.forEach(otherItem => {
                     if(otherItem !== item){
                         otherItem.querySelector('.faq-question').classList.remove('active');
                         otherItem.querySelector('.faq-answer').classList.remove('show');
-                        
                     }
                 });
 
                 question.classList.toggle('active');
                 answer.classList.toggle('show');
-            })
-        })
-    })
-    
+            });
+        });
+    });
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryItems = document.querySelectorAll('#faq-category > li');
 
-	    document.addEventListener('DOMContentLoaded', function () {
-	    const categoryItems = document.querySelectorAll('#faq-category > li');
-	
-	    categoryItems.forEach(item => {
-	        item.addEventListener('click', function () {
-	            const targetId = this.getAttribute('data-target'); 
-	            if (targetId) {
-	                const targetElement = document.getElementById(targetId);
-	                if (targetElement) {
-	                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-	                }
-	            }
-	        });
-	    });
-	});
+        categoryItems.forEach(item => {
+            item.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target'); 
+                if (targetId) {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    });
     </script>
-    
     
     <jsp:include page="../common/include/footer.jsp" />
 </body>
+
+
 </html>

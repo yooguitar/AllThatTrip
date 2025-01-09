@@ -32,7 +32,7 @@
 		<c:remove var="alertMsg" scope="session" />
   </c:if>
 
-<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 <script>
   $(function(){
   			// 비밀번호 입력 확인
@@ -61,7 +61,6 @@
 
 <div class="container" id="wrap">
   <h2>내 정보 수정</h2>
-  <br><label>가입일: <fmt:formatDate value="${ sessionScope.loginUser.enrollDate }" pattern="yyyy-MM-dd" /></label>
   <br><br>
 
   <form action="memberUpdate.me" method="post" id="join-form">
@@ -119,8 +118,8 @@
   </form>
   
 </div>
-<div style="margin-left:360px">
-<!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> -->
+
+<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </div>
 
 

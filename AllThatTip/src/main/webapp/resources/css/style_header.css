@@ -1,6 +1,6 @@
 
 .navbar {
-    display: flex;
+    /* display: flex; */
     display :flex;
     margin : auto;
     justify-content: space-between;
@@ -8,7 +8,7 @@
     background-color: var(--background-color);
     padding: 8px 12px;
     width: 1200px;
-    height: 70px;
+    /* height: 70px; */
     animation: Bottom 1s forwards;
   }
 

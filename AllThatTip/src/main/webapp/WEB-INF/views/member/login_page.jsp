@@ -40,7 +40,7 @@
             width: 500px;
             height: 520px;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 100px;
         }
         .title-join-biz{
             text-align: center;
@@ -49,7 +49,16 @@
     </style>
 </head>
 <body>
-	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+    <c:if test="${ sessionScope.successAlert ne null }">
+            <script>
+                alertify
+		        .alert("변경 완료!", function(){
+                    alertify.message('확인');
+		        });        
+                </script>	
+	        <c:remove var="successAlert" scope="session" />
+    </c:if>
+	<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 	
 	<!-- 
 	<c:if test="${ sessionScope.loginCount ne null};">
@@ -62,7 +71,6 @@
 	    <c:remove var="loginCount" scope="session" />
 	</c:if>
 	-->
-	
     <div class="container" id="wrap">
         <br>
         <h2 class="title-join-biz">로그인</h2>
@@ -80,39 +88,40 @@
                 <label class="form-check-label">
                     <input class="form-check-input" type="checkbox" name="remember" style="accent-color:rgb(50, 96, 68);" checked> 아이디 저장
                 </label>
-                    <a href="#" style="color: rgb(33, 37, 41); float:right;">아이디 / 비밀번호 찾기</a>
+                <a href="findIdPage.me" style="color: rgb(33, 37, 41); float:right;">아이디 / 비밀번호 찾기</a>
             </div>
             <button type="submit" class="btn btn-primary" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68); width: 470px; height: 50px;">로그인</button>
         </form>
         
         <c:if test="${ sessionScope.loginValue eq 1 }">
-	        <script>
-		        alertify
+            <script>
+                alertify
 		        .alert("아이디, 비밀번호를 확인해주세요.", function(){
-		          alertify.message('확인');
+                    alertify.message('확인');
 		        });        
-	        </script>	
+                </script>	
 	        <c:remove var="loginValue" scope="session" />
         </c:if>
-
+        
         <br>
         <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">아직 회원이 아니신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <a href="/att/joinPage.me" style="color:rgb(50, 96, 68);">회원가입</a><br>
-
+            
+            <a href="/att/joinPage.me" style="color:rgb(50, 96, 68);">회원가입</a><br>
+            
         </label>
         <br><br>
+        <a href="adLoginPage.me" style="margin-left: 215px; color:rgb(50, 96, 68);">admin</a>
         <p class="title-join-biz" style="font-size: 12px;">비회원 예약도 가능합니다.</p><br>
-
+        
     </div>
-
+    
     <br>
-    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41); margin-bottom: 100px;">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/att/bizJoinPage.me" style="color:rgb(50, 96, 68);">사업자 회원가입</a>
     </label>
     
-    <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
-
+    <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
+    
 </body>
 
 

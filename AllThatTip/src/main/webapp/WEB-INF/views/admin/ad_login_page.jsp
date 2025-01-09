@@ -51,11 +51,6 @@
                 <label>Password:</label>
                 <input type="password" class="form-control" id="adPwd" placeholder="비밀번호 입력" name="adPwd" required>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" name="remember" checked> 아이디 저장
-                </label>
-            </div>
             <button type="submit" class="btn btn-primary" style="width: 470px; height: 50px;">로그인</button>
         </form>
         

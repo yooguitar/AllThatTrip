@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kh.AllThatTrip.board.model.dao.BoardMapper">
-    
 	<sql id="boardColumn">
 		SELECT	B.BOARD_NO AS boardNo
 				,B.BOARD_TYPE AS boardType
@@ -12,6 +11,12 @@
 				,B.BOARD_CONTENT AS boardContent
 				,B.COUNT AS count
 				,TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
+				, (
+		            SELECT CHANGE_NAME 
+		            FROM BD_ATTACHMENT BD 
+		            WHERE B.BOARD_NO = BD.BOARD_NO
+		            AND ( SELECT MIN(file_no) FROM BD_ATTACHMENT BB WHERE BB.BOARD_NO = BD.BOARD_NO ) = BD.FILE_NO
+		          ) imagePath
 		FROM
 				BOARD B
 		JOIN
@@ -29,11 +34,26 @@
 		SELECT 
 				COUNT(*)
 		FROM	
-				BOARD
+				BOARD B
+		JOIN
+				MEMBER M
+		ON
+				B.USER_NO = M.USER_NO
 		WHERE	
 				BOARD_TYPE = #{boardType}
 		AND		
-				STATUS ='Y'
+				b.STATUS ='Y'
+		<choose>
+		    <when test="condition == 'title'">
+		        AND B.BOARD_TITLE LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="condition == 'content'">
+		        AND B.BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="condition == 'writer'">
+		       	AND M.USER_ID LIKE '%' || #{keyword} || '%'
+			</when>
+		</choose>
 		
 	</select>
     
@@ -59,6 +79,18 @@
 				B.BOARD_TYPE = #{boardType}
 		AND		
 				B.STATUS = 'Y'
+			
+			<choose>
+			    <when test="condition == 'title'">
+			        AND B.BOARD_TITLE LIKE '%' || #{keyword} || '%'
+			    </when>
+			    <when test="condition == 'content'">
+			        AND B.BOARD_CONTENT LIKE '%' || #{keyword} || '%'
+			    </when>
+			    <when test="condition == 'writer'">
+			       	AND USER_ID LIKE '%' || #{keyword} || '%'
+			 	</when>
+			</choose>
 		ORDER 
 		BY 		
 				B.BOARD_NO DESC
@@ -69,24 +101,6 @@
   	<!-- 공통게시판 상세 조회 -->
   	<select id="selectByNum" parameterType="long" resultType="board">
 	
-		<!-- SELECT
-				BOARD_NO AS boardNo,
-				BOARD_TYPE AS boardType,
-				BOARD_TITLE AS boardTitle,
-				USER_NO AS userNo,
-				USER_ID AS boardWriter, 
-				BOARD_CONTENT AS boardContent,
-				COUNT AS count,
-				ORIGIN_NAME originName,
-				CHANGE_NAME changeName,
-				TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS createDate
-		FROM
-				BOARD B
-		JOIN	MEMBER M	USING	(USER_NO)
-		JOIN	BD_ATTACHMENT	USING	(BOARD_NO)
-		WHERE	BOARD_TYPE = 10
-		AND		B.STATUS = 'Y'
-		AND		BOARD_NO = #{boardNo} -->
 		SELECT
 			    BOARD_NO AS boardNo
 			    ,BOARD_TYPE AS boardType
@@ -126,7 +140,6 @@
 	
 	<!-- 공통게시판 등록 -->
 	<insert id="insertBoard" parameterType="board">
-	
 		INSERT 
 		INTO BOARD 
 				(
@@ -137,7 +150,7 @@
 				,BOARD_CONTENT
 				)
 	    VALUES (
-	    		SEQ_BUNO.NEXTVAL
+	    		SEQ_BOARD_NO.NEXTVAL
 	    		,#{boardType}
 	    		,#{userNo}
 	    		,#{boardTitle}
@@ -148,7 +161,7 @@
 	
 	
 	<!-- 공통게시판 첨부파일 등록 -->
-	<insert id="insertBoardFile" parameterType="java.util.List">
+	<insert id="insertBoardFile" parameterType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
 		INSERT 
 	    INTO 	BD_ATTACHMENT (
 	            FILE_NO 
@@ -157,14 +170,31 @@
 	            ,CHANGE_NAME
 	        	)
 		VALUES 
-		<foreach collection="list" item="file" separator=",">
 				(
-	            SEQ_BFNO.NEXTVAL 
-	            ,#{file.boardNo} 
-	            ,#{file.originName} 
-            	,#{file.changeName}
+	            SEQ_BOARD_FILE_NO.NEXTVAL 
+	            ,SEQ_BOARD_NO.CURRVAL 
+	            ,#{originName} 
+	           	,#{changeName}
 	        	)
-		</foreach>
+	
+	</insert>
+	
+	<!-- 공통게시판 첨부파일 수정 등록 -->
+	<insert id="insertBoardFile2" parameterType="com.kh.AllThatTrip.board.model.vo.BdAttachment">
+		INSERT 
+	    INTO 	BD_ATTACHMENT (
+	            FILE_NO 
+	            ,BOARD_NO 
+	            ,ORIGIN_NAME 
+	            ,CHANGE_NAME
+	        	)
+		VALUES 
+				(
+	            SEQ_BOARD_FILE_NO.NEXTVAL 
+	            ,#{boardNo}
+	            ,#{originName} 
+	           	,#{changeName}
+	        	)
 	
 	</insert>
 	
@@ -238,7 +268,7 @@
     			)
     	VALUES	
     			(
-    			SEQ_CNO.NEXTVAL
+    			SEQ_TBCM.NEXTVAL
 		        ,#{boardNo}
 		        ,#{userNo}
 		        ,#{commentContent}
@@ -251,12 +281,15 @@
 	    SELECT
 	    		COMMENT_NO commentNo
 	   			,USER_NO userNo
+	   			,USER_ID userId
 	   			,COMMENT_CONTENT commentContent
 	   			,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS createDate
 	    FROM
 	    		TB_COMMENT
+	    JOIN
+	    		MEMBER USING (USER_NO)
 	    WHERE
-	    		STATUS = 'Y'
+	    		TB_COMMENT.STATUS = 'Y'
 	    AND
 	    		BOARD_NO = #{boardNo}
 	    ORDER
@@ -288,4 +321,8 @@
     
     </update>
     -->
+    
+    
+	
+
 </mapper>

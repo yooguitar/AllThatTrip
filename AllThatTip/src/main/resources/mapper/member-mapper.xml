@@ -57,7 +57,8 @@
 	  	   PHONE,
 	  	   SPAM,
 	  	   STATUS,
-	  	   ENROLL_DATE
+	  	   ENROLL_DATE,
+	  	   LOGIN_COUNT
 	  	   )
 	VALUES
 		   (
@@ -69,7 +70,8 @@
 		   #{phone},
 		   #{spam},
 		   DEFAULT,
-		   DEFAULT
+		   DEFAULT,
+		   1
 		   )
 
 </insert>
@@ -109,43 +111,136 @@
 	       USER_ID = #{userId}
 </update>
 
+<select id="findId" parameterType="String" resultType="String">
+	SELECT
+		   USER_ID 	userId
+	  FROM	
+	       MEMBER
+	 WHERE
+	 	   USER_NAME = #{userName}
+	   AND
+	       STATUS = 'Y'
+</select>
 
+<select id="findPwd" parameterType="member" resultType="member">
+	SELECT
+		   USER_ID 	userId,
+		   USER_PWD userPwd,
+		   USER_NAME userName,
+		   EMAIL,
+		   PHONE,
+		   SPAM,
+		   STATUS
+	  FROM
+	  	   MEMBER
+	 WHERE
+	   	   USER_ID = #{userId}
+	   AND
+	   	   EMAIL = #{email}
+	   AND
+	   	   STATUS = 'Y'	   
+</select>
 
+<select id="findRsv" parameterType="member" resultType="hashmap">
+	SELECT
+	       m.USER_NAME,
+	       u.ROOM_NAME,
+	       u.ROOM_PRICE,
+	       u.ROOM_IMG
+	  FROM
+	       USER_RES_ROOM u
+	  FULL
+	 OUTER
+	  JOIN
+	       MEMBER m
+	    ON
+	       m.USER_ID = u.USER_ID
+	 WHERE
+	 	   u.USER_ID = #{userId}
+	 ORDER
+	    BY
+	       RES_NO ASC
+</select>
 
+<select id="findRoom" parameterType="room" resultType="hashmap">
+	SELECT
+           R.ROOM_NAME,
+           R.ROOM_PRICE,
+           I.CHANGE_NAME
+      FROM  
+           ROOMS R, ROOM_IMG I
+     WHERE
+           I.ROOM_NO = ${roomNo}
+       AND
+           R.ROOM_NO = ${roomNo}
+       AND
+           ROWNUM = 1
+</select>
 
+<insert id="saveCart" parameterType="HashMap">
+	INSERT
+	  INTO
+	       CART
+	       (
+	       ROOM_NAME,
+	       ROOM_PRICE,
+	       CHANGE_NAME
+	       )   
+	VALUES
+	       (
+	       #{ROOM_NAME},
+	       #{ROOM_PRICE},
+	       #{CHANGE_NAME}
+	       )   
+</insert>
 
+<select id="findCart" resultType="HashMap">
+	SELECT
+		   ROOM_NAME,
+		   ROOM_PRICE,
+		   CHANGE_NAME
+	  FROM
+	       CART
+</select>
 
+<update id="deleteCart">
+	DELETE FROM CART
+</update>
 
+<update id="increaseLoginCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	       LOGIN_COUNT = LOGIN_COUNT + 1
+	 WHERE
+	  	   USER_ID = #{userId}
+</update>
 
+<update id="rollbackCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   LOGIN_COUNT = 0
+	 WHERE
+	 	   USER_ID = #{userId}
+</update>
+
+<update id="loginFullCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   STATUS = 'N'
+	 WHERE
+	 	   USER_ID = #{userId}
+</update>
+
+<select id="countCheck" parameterType="member" resultType="member">
+	SELECT
+	       LOGIN_COUNT loginCount
+	  FROM
+	  	   MEMBER
+	 WHERE
+	 	   USER_ID = #{userId}
+</select>
 
 </mapper> 
-<!-- 
-<insert id="bizJoin" parameterType="bUser">
-	INSERT
-	  INTO	
-	       BUSINESS_USER
-	       (
-	       BIZ_NO,
-		   BIZ_NAME,
-		   BIZ_FILENO,
-		   ORIGIN_NAME,
-		   CHANGE_NAME,
-		   FILE_PATH,
-		   UPLOAD_DATE,
-		   FILE_STATUS,
-		   USER_NO
-	       )
-	VALUES
-		   (
-		   SEQ_BUNO.NEXTVAL,
-		   #{bizName},
-		   #{bizFileNo},
-		   #{originName},1``
-		   #{changeName},
-		   #{filePath},
-		   DEFAULT,                                                                                                         
-	       DEFAULT,
-		   #{userNo}
-		   )
-</insert>
--->
