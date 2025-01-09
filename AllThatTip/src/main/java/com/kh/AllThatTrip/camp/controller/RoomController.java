@@ -49,7 +49,7 @@ public class RoomController {
 	}
 	
 	@GetMapping("detail")
-	public ModelAndView selectRoomById(int roomNo) {
+	public ModelAndView selectRoomById(int roomNo) {  
 		Map<String, Object> responseData = roomService.selectRoomById(roomNo);
 		// log.info("{}", responseData);
 		return mv.setViewNameAndData("room/room_detail", responseData);
