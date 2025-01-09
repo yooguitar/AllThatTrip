@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.LoginCountOverException;
-import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.member.model.service.MemberService;
 import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -28,12 +27,15 @@ public class MemberController {
 	private final ModelAndViewUtil mv;
 	private final PasswordEncryptor passwordEncoder;
 	
-	// 로그인 핸들러
+	/**
+	 * login() 기능
+	 * 1. 
+	 * 
+	 */
 	@PostMapping("login.me")
 	public String login(Member member, HttpSession session){
 		Member countMember = memberService.countCheck(member);
 		if(countMember.getLoginCount() > 4) {
-			//memberService.rollbackCount(member);
 			memberService.loginFullCount(member);
 			throw new LoginCountOverException("로그인 시도 횟수 초과입니다. 관리자에게 문의 하세요.");
 		}
@@ -51,31 +53,28 @@ public class MemberController {
 			return "member/login_page";
 		} else {
 			memberService.rollbackCount(member);
+			session.removeAttribute("cartResult");
 			session.setAttribute("loginUser", loginMember);
 			session.setAttribute("alertMsg", "로그인 성공");  
 			return "redirect:/";
 		}
 	}
-	// 회원가입 핸들러
 	@PostMapping("join.me")
 	public ModelAndView join(Member member, HttpSession session) {
 		memberService.join(member);
 		return mv.setViewNameAndData("member/join_success_page", null);
 	}
-	// 회원정보수정 핸들러
 	@PostMapping("memberUpdate.me")
 	public ModelAndView memberUpdate(Member member, HttpSession session) {
 		memberService.memberUpdate(member, session);
 		session.setAttribute("alertMsg", "정보수정 성공");
 		return mv.setViewNameAndData("member/my_page", null);
 	}
-	// 회원탈퇴 핸들러
 	@PostMapping("memberDelete.me")
 	public ModelAndView memberDelete(String userPwd, HttpSession session) {
 		memberService.memberDelete(userPwd, session);
 		return mv.setViewNameAndData("common/main", null);
 	}
-	// id찾기 핸들러
 	@PostMapping("findId.me")
 	public String findId(String userName, HttpSession session) {
 		String findUser = memberService.findId(userName);
@@ -86,62 +85,32 @@ public class MemberController {
 		}
 		return "redirect:findIdPage.me";
 	}
-	// pw찾기 핸들러(pw를 찾아줄 수 없으므로 일치하는 id, phone이 있다면 update 수행)
 	@PostMapping("findPwd.me")
 	public String findPwd(Member member, HttpSession session) {
 		memberService.findPwd(member);
 		session.setAttribute("successAlert", member);
 		return "redirect:loginPage.me";
 	}
-	
-	
-	
-	
-	/* 예약, 찜, 장바구니 관련 */
 	@GetMapping("findRsvPage.me")
 	public String findRsvPage(HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		memberService.findRsv(loginUser, session);
 		return "member/find_rsv_page";
 	}
-	
-	
-	
-	
 	@GetMapping("cartPage.me")
 	public String cartPage(HttpSession session) {
 		memberService.findCart(session);
 		return "member/cart_page";
 	}
-	
 	@PostMapping("cartPage.me")
 	public String cartPage(HttpSession session, Room room) {
 		memberService.findRoom(room, session);
-
-		
-		
 		return "member/cart_page";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@GetMapping("wishlistPage.me")
 	public String wishlistPage(HttpSession session) {
 		return"member/wishlist_page";
 	}
-	
-	
-	
-	
-	/* ajax */
 	@ResponseBody
 	@GetMapping("idcheck")
 	public int checkId(String userId) {
