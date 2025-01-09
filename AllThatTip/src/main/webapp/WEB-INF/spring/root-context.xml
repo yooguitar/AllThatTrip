@@ -18,14 +18,11 @@
 	
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-
 		<property name="url" value="jdbc:oracle:thin:@192.168.20.201:1521:xe" />
-
 		<property name="username" value="TRIP" />
 		<property name="password" value="TRIP" />
 					
 	</bean>	
-	
 		
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
@@ -36,7 +33,7 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 		
-	<mybatis-spring:scan base-package="com.kh.AllThatTrip.member.model.dao, com.kh.AllThatTrip.board.model.dao, com.kh.AllThatTrip.admin.model.dao, com.kh.AllThatTrip.camp.model.dao" />
+	<mybatis-spring:scan base-package="com.kh.AllThatTrip.member.model.dao, com.kh.AllThatTrip.board.model.dao, com.kh.AllThatTrip.admin.model.dao" />
 	 
 	 <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
 	 		id="transactionManager" >

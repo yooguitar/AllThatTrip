@@ -26,37 +26,28 @@
   </head>
 
   <body>
-
     <nav class="navbar">
       <div class="navbar__logo">
 
 
-        <a class=aTag href="/att" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
+        <a class=aTag href="#" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
 
       </div>
       <div id=navi>
         <ul id="navbar">
-          <li><a href="/att/camps/list">Camp</a>
+          <li><a href="#">Camp</a>
             <ul>
-              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/1">오토캠핑장</a></li>
+              <li><a class=aTag style = color:#ebebeb; href="#">오토캠핑장</a></li>
               
-              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/2">글램핑</a></li>
+              <li><a class=aTag style = color:#ebebeb; href="#">글램핑</a></li>
               
-              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/3">카라반</a></li>
+              <li><a class=aTag style = color:#ebebeb; href="#">카라반</a></li>
 
-              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/4">펜션</a></li>
-              
-              <c:choose>
-              	<c:when test="${ empty sessionScope.loginUser.bizNo }">
-              		<li><a class="aTag" style = color:#ebebeb; href="/att/camps/bizLogin">사업자 메뉴</a></li>
-              	</c:when>
-              	<c:otherwise>
-	            	<li><a class="aTag" style = color:#ebebeb; href="/att/camps/biz">사업자 메뉴</a></li>
-              	</c:otherwise>
-              </c:choose>
-            </ul>
+              <li><a class=aTag style = color:#ebebeb; href="#">펜션</a></li>
+
+          </ul>
           </li>
-          <li><a class="aTag" href="#">테마검색</a></li>
+          <li><a class=aTag href="#">테마검색</a></li>
               
           <li><a class=aTag href="http://localhost/att/board/list?boardType=10">커뮤니티</a>
               <ul>
@@ -64,10 +55,11 @@
                   
                   <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=20">FAQ</a></li>
                   
-                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=30">Q&A</a></li>
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=30">자주묻는질문</a></li>
                 
                   <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=40">중고거래</a></li>
                 
+                  <li><a class=aTag style = color:#ebebeb; href="http://localhost/att/board/list?boardType=50">리뷰게시판</a></li>
               </ul>
           </li>
 
@@ -76,28 +68,27 @@
           <c:when test="${ sessionScope.loginUser eq null }">
 	          <li><a href="#">AllThatTrip!</a>
 	              <ul>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/nonUserFindRsvPage.me">예약내역</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="#" onclick="alertNeedLogin();">찜하기</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/eventListPage.me">이벤트</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">예약내역</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">장바구니</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">이벤트</a></li>
 	              </ul>
 	          </li>
 	      </c:when>
 	      <c:otherwise>
-	          <li><a href="#">AllThatTrip!</a>
+	          <li><a href="/att/myPage.me">내정보</a>
 	              <ul>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/findRsvPage.me">예약내역</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/cartPage.me">장바구니</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/wishlistPage.me">찜하기</a></li>
-	                  <li><a class=aTag style = color:#ebebeb; href="/att/eventListPage.me">이벤트</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">예약내역</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">장바구니</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">찜하기</a></li>
+	                  <li><a class=aTag style = color:#ebebeb; href="#">이벤트</a></li>
 	              </ul>
 	          </li>
 	      </c:otherwise>
           </c:choose>
           
-          <c:if test="${ sessionScope.loginUser ne null }">
-            <li><a class="aTag"  href="/att/myPage.me">마이페이지</a></li>
-          </c:if>
+
+          <li><a class=aTag  href="#">추천맛집</a></li>
 
       </ul>
     </div>
@@ -112,9 +103,7 @@
 	      <div class="login">
 
 
-
 	        <a class="aTag"  href="/att/loginPage.me" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
-
 
 	      </div>
 	    </c:when>
@@ -123,7 +112,7 @@
 
 	        <label style="color:white; font-size:15px;">💡</label>
 
-	        <a onclick="logout();" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
+	        <a onclick="" href="redirect:/" id="login_icon"><img src="/att/resources/img/logo/ico_user_white.svg"></a>
 
 	      </div>
 	    </c:otherwise>  
@@ -145,9 +134,7 @@ function logout(){
 			    alertify.error('아니오');
 			  });
 }
-function alertNeedLogin(){
-  alertify.alert("로그인 후 이용해주세요.");
-}
+
 
 
 </script>  

@@ -44,7 +44,7 @@ public class AdminNoticeController {
 	
 	@PostMapping("admin_notice")                   
 	public ModelAndView save(AdNotice adNotice, MultipartFile upfile, HttpSession session) {
-		log.info("{}", upfile);
+		
 		adService.insertAdNotice(adNotice, upfile);
 		session.setAttribute("alertMsg","게시글 등록에 성공했습니다.");
 		return mv.setViewNameAndData("redirect:/admin/admin_notice", null);

@@ -43,13 +43,13 @@
 </head>
 <body>
 	
-	<jsp:include page="../common/include/ad_nav.jsp" />
+	<jsp:include page="../common/include/header.jsp" />
 	
 	
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>관리자 공지사항</h2>
+            <h2>공지사항</h2>
           	<br>
             <a class="btn btn-secondary" style="float:right;" href="ad_insert_form">글쓰기</a>
             <br>
@@ -67,28 +67,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                	<c:choose>
-	                	<c:when test="${ not empty adNotices }">
-		                	<c:forEach items="${ adNotices }" var="adNotice">
-			                    <tr onclick="detail('${adNotice.adNoticeNo}')">
-			                        <td>${ adNotice.adNoticeNo }</td>
-			                        <td>${ adNotice.importent }
-			                        <td>${ adNotice.adNoticeTitle }</td>
-			                        <td>${ adNotice.adWriter }</td>
-			                        <td>${ adNotice.adNoticeCount }</td>
-			                        <td>${ adNotice.adUploadDate } </td>
-			                         <td>
-			                        	<c:if test="${ not empty adNotice.adOriName }">
-			                       		   💌
-			                        	</c:if>
-			                        </td>
-			                    </tr>
-		                    </c:forEach>
-	                	</c:when>
-	                    <c:otherwise>
-	                    	<tr><td>게시글이 없습니다.</td></tr>
-	                    </c:otherwise>
-                	</c:choose>
+                	
+                	<c:forEach items="${ adNotices }" var="adNotice">
+	                    <tr onclick="detail('${adNotice.adNoticeNo}')">
+	                        <td>${ adNotice.adNoticeNo }</td>
+	                        <td>${ adNotice.importent }
+	                        <td>${ adNotice.adNoticeTitle }</td>
+	                        <td>${ adNotice.adWriter }</td>
+	                        <td>${ adNotice.adNoticeCount }</td>
+	                        <td>${ adNotice.adUploadDate } </td>
+	                         <td>
+	                        	<c:if test="${ not empty adNotice.adOriName }">
+	                       		   💌
+	                        	</c:if>
+	                        </td>
+	                    </tr>
+                    </c:forEach>
+                    
                 </tbody>
             </table>
             <br>
@@ -126,8 +121,17 @@
             <br clear="both"><br>
 
             <form id="searchForm" action="" method="get" align="center">
-              
-              
+                <div class="select">
+                    <select class="custom-select" name="condition">
+                        <option value="writer">작성자</option>
+                        <option value="title">제목</option>
+                        <option value="importent">중요</option>
+                    </select>
+                </div>
+                <div class="text">
+                    <input type="text" class="form-control" name="keyword">
+                </div>
+                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
             </form>
             <br><br>
         </div>

@@ -14,19 +14,13 @@
 		<typeAlias type="com.kh.AllThatTrip.board.model.vo.Board" alias="board" />
 		<typeAlias type="com.kh.AllThatTrip.admin.model.vo.AdNotice" alias="adNotice" />
 		<typeAlias type="com.kh.AllThatTrip.admin.model.vo.Admin" alias="admin" />
-		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.Camp" alias="camp" />
-		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.Room" alias="room" />
-		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.RoomTheme" alias="roomTheme" />
-		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.RoomImg" alias="roomImg" />
-		<typeAlias type="com.kh.AllThatTrip.camp.model.vo.BizMember" alias="bizMember" />
+		
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mapper/member-mapper.xml" />
 		<mapper resource="/mapper/board-mapper.xml" />
 		<mapper resource="/mapper/ad-mapper.xml" />
-		<mapper resource="/mapper/camp-mapper.xml" />
-		<mapper resource="/mapper/room-mapper.xml" />
 	</mappers>
 	
 

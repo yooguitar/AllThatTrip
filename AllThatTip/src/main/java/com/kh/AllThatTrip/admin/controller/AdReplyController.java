@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("adReply")
+@RequestMapping("ad_reply")
 public class AdReplyController {
 	private final AdService adService;
 	
 	@PostMapping
-	public ResponseEntity<ResponseData> ajaxInsertAdReply(AdReply adReply) {
-		System.out.println(adReply);
+	public ResponseEntity<ResponseData> ajaxInsertReply(AdReply adReply) {
+		
 		int result = adService.insertAdReply(adReply);
 		ResponseData response = ResponseData.builder()
 											.message("댓글 등록에 성공띠")
@@ -33,8 +33,8 @@ public class AdReplyController {
 		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	}	
 	@GetMapping(produces="application/json; charset=UTF-8") //JSON [{replyNo : 1, replyWriter : 'admin'...}....]
-	public ResponseEntity<ResponseData> ajaxSelectAdReply(int adNoticeRepNo){
-		List<AdReply> replies = adService.selectAdReplyList(adNoticeRepNo);
+	public ResponseEntity<ResponseData> ajaxSelectReply(int adNoticeNo){
+		List<AdReply> replies = adService.selectAdReplyList(adNoticeNo);
 		ResponseData response = ResponseData.builder()
 											.message("댓글 조회에 성공띠")
 											.status(HttpStatus.OK.toString())

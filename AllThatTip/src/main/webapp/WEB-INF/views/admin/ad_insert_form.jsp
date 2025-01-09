@@ -43,7 +43,7 @@
 </head>
 <body>
         
-    <jsp:include page="../common/include/ad_nav.jsp" />
+    <jsp:include page="../common/include/header.jsp" />
 
     <div class="content">
         <br><br>

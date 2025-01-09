@@ -8,13 +8,12 @@ import com.kh.AllThatTrip.exception.BoardNoValueException;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 import com.kh.AllThatTrip.exception.DuplicateKeyException;
 import com.kh.AllThatTrip.exception.FailToFileUploadException;
+import com.kh.AllThatTrip.exception.InvalidParameterException;
+import com.kh.AllThatTrip.exception.UserFoundException;
 import com.kh.AllThatTrip.exception.InValidLengthException;
 import com.kh.AllThatTrip.exception.InvalidDomainTypeException;
-import com.kh.AllThatTrip.exception.InvalidInputValueException;
-import com.kh.AllThatTrip.exception.InvalidParameterException;
-import com.kh.AllThatTrip.exception.LoginCountOverException;
 import com.kh.AllThatTrip.exception.LoginFailedException;
-import com.kh.AllThatTrip.exception.UserFoundException;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,10 +65,11 @@ public class ExceptionHandlingController {
 	}
 
 	// 입력 제한 미달/초과
-//	@ExceptionHandler(InValidLengthException.class)
-//	protected ModelAndView InValidLengthException(InValidLengthException e) {
-//		return createErrorResponse("유효하지 않은 값을 입력하셨습니다.", e);
-//	}
+	@ExceptionHandler(InValidLengthException.class)
+	protected ModelAndView InValidLengthException(InValidLengthException e) {
+		return createErrorResponse("유효하지 않은 값을 입력하셨습니다.", e);
+	}
+
 	// 이메일 입력 형식 오류
 	@ExceptionHandler(InvalidDomainTypeException.class)
 	protected ModelAndView InvalidDomainTypeException(InvalidDomainTypeException e) {
@@ -80,16 +80,6 @@ public class ExceptionHandlingController {
 	@ExceptionHandler(LoginFailedException.class)
 	protected ModelAndView LoginFailedException(LoginFailedException e) {
 		return createErrorResponse("올바르지 않은 정보 입력", e);
-	}
-	// 로그인 실패 5회 초과 누적
-	@ExceptionHandler(LoginCountOverException.class)
-	protected ModelAndView LoginCountOverException(LoginCountOverException e) {
-		return createErrorResponse("로그인 시도 횟수 초과", e);
-	}
-	// 정규표현식 위배
-	@ExceptionHandler(InvalidInputValueException.class)
-	protected ModelAndView InvalidInputValueException(InvalidInputValueException e) {
-		return createErrorResponse("입력 정보를 확인해주세요", e);
 	}
 	
 }

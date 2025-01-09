@@ -38,8 +38,7 @@ table {
 </head>
 <body>
 
-	<jsp:include page="../common/include/ad_nav.jsp" />
-	
+	<jsp:include page="../common/include/header.jsp" />
 
 	<div class="content">
 		<br>
@@ -116,7 +115,7 @@ table {
 			<br>
 			<br>
 
-			<table id="adReplyArea" class="table" align="center">
+			<table id="replyArea" class="table" align="center">
 				<thead>
 
 					<c:choose>
@@ -125,8 +124,8 @@ table {
 								<th colspan="2"><textarea class="form-control" readonly
 										cols="55" rows="2" style="resize: none; width: 100%;">로그인 후 이용가능합니다.</textarea>
 								</th>
-								<th style="vertical-align: middle">
-								<button class="btn btn-secondary">등록하기</button></th>
+								<th style="vertical-align: middle"><button
+										class="btn btn-secondary">등록하기</button></th>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -134,8 +133,8 @@ table {
 								<th colspan="2"><textarea class="form-control" name=""
 										id="content" cols="55" rows="2"
 										style="resize: none; width: 100%;"></textarea></th>
-								<th style="vertical-align: middle">
-								<button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+								<th style="vertical-align: middle"><button
+										class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -161,9 +160,9 @@ table {
     		if($('#content').val().trim() != ''){
     			
     			$.ajax({
-    				url : '/att/adReply',
+    				url : '/att/admin/adReply',
     				data : {
-    					adNoticeRepNo : ${adNotice.adNoticeNo},
+    					adRepNo : ${adNotice.adNoticeNo},
     					adRepContent : $('#content').val(),
     					adRepName : '${sessionScope.loginAdmin.adId}'
     				},
@@ -178,7 +177,6 @@ table {
     						$('#content').val('');
     						
     					}
-    					selectReply();
     				}
     			});
     			
@@ -187,7 +185,7 @@ table {
     	}
     	
     	$(function(){
-    		
+    		alert(${adNotice.adNoticeNo})
     		selectReply();
     	})
     	
@@ -196,10 +194,10 @@ table {
     	function selectReply(){
     		
     		$.ajax({
-    			url : '/att/adReply',
+    			url : '/att/admin/adreply',
     			type : 'get',
     			data : {
-    				adNoticeRepNo : ${adNotice.adNoticeNo}
+    				adNoticeNo : ${adNotice.adNoticeNo}
     			},
     			success : function(result){
     				//console.log(result);
@@ -213,7 +211,7 @@ table {
 								    					<td>\${e.adCreateDate}></td>
 								    					</tr>`
 								    				).join('');
-    				$('#adReplyArea tbody').html(resultStr);
+    				$('#replyArea tbody').html(resultStr);
     				$('#rcount').text(result.data.length);
     			    			
     		}

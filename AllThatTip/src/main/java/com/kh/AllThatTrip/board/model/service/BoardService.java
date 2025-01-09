@@ -3,7 +3,6 @@ package com.kh.AllThatTrip.board.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.AllThatTrip.board.model.vo.Board;
@@ -15,13 +14,11 @@ public interface BoardService {
 	 // 페이징 + 목록
     Map<String, Object> selectBoardList(Board board);
     // 등록
-    void insertBoard(Board board, MultipartFile[] upfiles);
+    void insertBoard(Board board, MultipartFile upfile);
 
     // 상세 조회
     Map<String, Object> selectByNum(long boardNo);
     
-    // 상세 조회2
-    Map<String, Object> selectByNum2(long boardNo);
     
     // 수정
     void updateBoard(Board board, MultipartFile[] upfiles);

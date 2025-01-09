@@ -17,8 +17,7 @@ public class Comment {
 
 	private long commentNo; 
 	private long boardNo;
-    private Long userNo;
-    private String userId;
+    private int userNo; 
     private String commentContent; 
     private String createDate; 
     private String status; 

@@ -1,5 +1,6 @@
 package com.kh.AllThatTrip.board.controller;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
 import com.kh.AllThatTrip.board.model.vo.Board;
+import com.kh.AllThatTrip.board.model.vo.Comment;
 import com.kh.AllThatTrip.common.ModelAndViewUtil;
 import com.kh.AllThatTrip.exception.BoardNotFoundException;
 
@@ -37,7 +39,6 @@ public class BoardController {
 	// 20	FAQ
 	// 30	fna
 	// 40	중고거래
-	// 50	
 
 	
 	// 전체 리스트 조회
@@ -55,11 +56,9 @@ public class BoardController {
 	    
 	    // 서비스 호출
 	    Map<String, Object> map = boardService.selectBoardList(board);
-	    //log.info("board:{}", board);
-	    //log.info("map:{}", map);
+	    
 	    map.put("board", board);
-	   
-	   
+	    
     	if(board.getBoardType().equals("10")) {
     		return mv.setViewNameAndData("board/list", map);
     	} else if (board.getBoardType().equals("20")) {
@@ -68,9 +67,7 @@ public class BoardController {
     		return mv.setViewNameAndData("board/qna", map); 
     	} else if (board.getBoardType().equals("40")) {
     		return mv.setViewNameAndData("board/photo", map); 
-    	} else if (board.getBoardType().equals("50")) {
-    		return mv.setViewNameAndData("board/review", map); 
-    	}else {
+    	} else {
     		throw new BoardNotFoundException("존재하지 않는 게시글입니다.");
     	}
 	    		
@@ -99,42 +96,14 @@ public class BoardController {
 
 	// 공통게시판 등록
 	@PostMapping("list/insert")
-	public ModelAndView insertBoard(Board board, MultipartFile[] upfiles, String boardType, HttpSession session) {
-		//log.info("시작");
-		//log.info("boardType1111:{}",boardType);
+	public ModelAndView insertBoard(Board board, MultipartFile upfile, String boardType, HttpSession session) {
 		
 		board.setBoardType(boardType);
-		//log.info("board : {}, upfiles : {}",board, upfiles);
-		//log.info("boardType2222:{}",boardType);
-
-		if (upfiles == null) {
-			upfiles = new MultipartFile[0];
-		}
-		for(MultipartFile r : upfiles) {
-		//	log.info("r :: {}", r.toString());
-		}
-		boardService.insertBoard(board, upfiles);
-
-		//log.info("boardType3333:{}",boardType);
-	    // boardType에 따라 리다이렉트 URL 설정
-	    String redirectUrl;
-	    switch (board.getBoardType()) {
-	        case "10": redirectUrl = "/board/list?boardType=10"; // 공지사항
-	        			break;
-	        case "20": redirectUrl = "/board/list?boardType=20"; // FAQ
-	        			break;
-	        case "30": redirectUrl = "/board/list?boardType=30"; // QnA
-	            		break;
-	        case "40": redirectUrl = "/board/list?boardType=40"; // 중고거래
-	            		break;
-	        default: throw new BoardNotFoundException("잘못된 경로입니다.");
-	    }
-	    //log.info("URL:{}",redirectUrl);
-	    // 성공 메시지 설정
-	    session.setAttribute("alertMsg", "게시글 등록이 완료되었습니다.");
-	    //log.info("종료:{}");
-	    // ModelAndView 리턴
-	    return new ModelAndView("redirect:" + redirectUrl);
+		// log.info("board : {}, upfile : {}",board, upfile);
+		boardService.insertBoard(board, upfile);
+		session.setAttribute("alertMsg", "게시글 등록 성공");
+		return mv.setViewNameAndData("redirect:/board/list", null);
+	
 	}
 
 	// 상세 조회
@@ -146,17 +115,14 @@ public class BoardController {
 		return mv.setViewNameAndData("board/detail", responseData);
 		
 	}
-	
 
 	// 수정 양식
 	// boardNo 파라미터만 보내도 상세조회를 하기 때문에 boardType을 알수있음 → 뷰 페이지 제어 필요
 
 	@PostMapping("/list/update-form")
-	public ModelAndView updateForm(Long boardNo ) {
+	public ModelAndView updateForm(Long boardNo) {
 		//log.info("수정할 게시글 번호: {}", boardNo);
-		Map<String, Object> responseData = boardService.selectByNum2(boardNo);
-		
-		
+		Map<String, Object> responseData = boardService.selectByNum(boardNo);
 		
 		return mv.setViewNameAndData("board/update", responseData);
 	}
@@ -168,26 +134,40 @@ public class BoardController {
 		
 		boardService.updateBoard(board, upfiles);
 		
-		session.setAttribute("alertMsg", "게시글 수정이 완료되었습니다.");
-		
-		String redirectUrl = "/board/list?boardType=" + board.getBoardType();
-		return new ModelAndView("redirect:" + redirectUrl);
+		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 	
 	
 	// 삭제
 	@PostMapping("/list/delete")
-	public ModelAndView deleteBoard(Long boardNo, String changeName, Board board, HttpSession session) {
+	public ModelAndView deleteBoard(Long boardNo, String changeName) {
 		
 		boardService.deleteBoard(boardNo, changeName);
-		
-		session.setAttribute("alertMsg", "게시글 삭제가 완료되었습니다.");
-		
-		String redirectUrl = "/board/list?boardType=" + board.getBoardType();
-
-	    return new ModelAndView("redirect:" + redirectUrl);
+		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
 
+	/*
+	// 첨부파일 다중저장
+	@PostMapping("photo")
+	public ModelAndView saveAll(Board board, 
+	                            @RequestParam("upfile") List<MultipartFile> upfiles, 
+	                            String boardType, 
+	                            HttpSession session) {
+	    try {
+	        board.setBoardType(boardType);
+	        boardService.saveAll(board, upfiles);
+	        session.setAttribute("alertMsg", "게시글 등록 성공");
+	    } catch (Exception e) {
+	        session.setAttribute("alertMsg", "게시글 등록 실패: " + e.getMessage());
+	        log.error("게시글 등록 실패", e);
+	    }
+	    return mv.setViewNameAndData("redirect:/board/list", null);
+	}
+	*/
+	
+
+	
+	
 
 }
 	

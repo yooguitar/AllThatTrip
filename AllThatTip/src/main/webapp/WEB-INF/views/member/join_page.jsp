@@ -16,20 +16,19 @@
   <style>
     #wrap{
         width: 800px;
-        margin-top: 100px;
+        margin-top: 50px;
         margin-bottom: 100px;
     }
 
   </style>
 </head>
 <body>
-  <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
+
 
 <div class="container" id="wrap">
   <h2>회원가입</h2><br><br>
 
 	<script>
-  
 		$(function(){
 
 			// Ajax ID 중복체크
@@ -49,14 +48,14 @@
 								if(result > 0){
 									$checkResult.show().css('color', 'crimson').text('중복된 아이디입니다.');
 								} else if($idInput.val().includes('admin')){
-									$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.');
+									$checkResult.show().css('color', 'crimson').text('ID에 "admin"을 포함할 수 없습니다.')
 								} else {
 									$checkResult.show().css('color', 'green').text('사용 가능한 아이디입니다.');
 								}
 							}
 						});
 					} else {
-						$checkResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
+						$checkResult.show().css('color', 'crimson').text('아이디는 6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
 					}
 				});
 			})
@@ -69,7 +68,7 @@
 			
 			$userPwd.keyup(function(){
 				if($userPwd.val().length < 6 || $userPwd.val().length > 20){
-					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요(공백문자, 특수문자X)');
+					$pwdCheckResult.show().css('color', 'crimson').text('6자 이상 20자 이하로 입력해주세요.');
 				} else {
 					$pwdCheckResult.show().css('color', 'green').text('사용 가능한 비밀번호입니다.');
 				}
@@ -86,15 +85,39 @@
 			// 도메인 직접입력 선택
       const $domain = $('#domain');
       const $selectDomainSelf = $('#select-domain-self');
-      const $email2 = $('#email-2');
+      const $email = $('#email');
       
       $domain.change(function(){
         if($domain.val() == $selectDomainSelf.val()){
-          $email2.css('display', '');
+          $email.css('display', '');
         } else{
-          $email2.css('display', 'none');
+          $email.css('display', 'none');
         }
       });
+
+      // 휴대폰번호 '-' 자동추가
+      const $phone = ('#phone');
+      $phone.indexOf(function(){
+        
+      })
+	
+	
+
+
+
+
+
+	    
+
+
+
+
+
+
+			const $formControl = $('.form-control'); 
+			const $submitBtnFin = $('#submit-btn-fin');
+	 		
+			
 	
 		})
 	</script>
@@ -107,7 +130,7 @@
     </div>
     <div class="form-group">
       <label>사용하실 비밀번호를 입력 해주세요</label>
-      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자 입력" name="userPwd" required>
+      <input type="password" class="form-control" id="userPwd" placeholder="6 - 20자 영문, 숫자, 특수문자 입력" name="userPwd" required>
       <div id="pwd-check-result" style="font-size:0.9em; display:none; margin:10px;"></div>
     </div>
     <div class="form-group">
@@ -117,7 +140,7 @@
     </div>
     <div class="form-group">
         <label>이름을 입력 해주세요</label>
-        <input type="name" class="form-control" id="userName" placeholder="2자 이상 영문, 한글, 숫자 입력" name="userName" required>
+        <input type="name" class="form-control" id="userName" placeholder="입력" name="userName" required>
     </div>
 
     <div class="form-group">
@@ -126,7 +149,7 @@
 
         <p style="display: inline;">&nbsp;@&nbsp;</p>
 
-        <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain">
+        <select style="width: 360px; display: inline; margin-top: 10px;" class="custom-select mb-3" id="domain" required>
             <option value="" id="select-domain-self">직접 입력</option>
             <option value="@kh.com" selected>kh.com</option>
             <option value="@google.com">google.com</option>
@@ -134,9 +157,8 @@
             <option value="@daum.net">daum.net</option>
         </select>
         
-        <input type="text" id="email-2" class="form-control" style="display: none; width: 360px; margin-left: 410px;" name="email-2" placeholder="@를 꼭 입력해주세요.">
-        <!-- 완성된 양식이 전송 될 input -->
-        <input type="text" id="email" class="form-control" style="display: none; width: 360px; margin-left: 410px;" name="email">
+        <!-- 진짜 양식이 전송 될 input -->
+        <input type="text" id="email" style="display: none; width: 360px; margin-left: 410px;" name="email" placeholder="@를 꼭 입력해주세요.">
 
     </div>
 
@@ -151,23 +173,21 @@
         <label>인증번호를 입력 해주세요</label>
         <input type="text" class="form-control" id="phone-ck" placeholder="인증번호 입력 / 아무 숫자나 입력하면 인증 됩니다">
         <br>
-        <button onclick="ableBtn();" type="button" class="btn btn-primary" id="phone-ck-btn2" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">확인</button>
+        <button type="button" class="btn btn-primary" id="phone-ck-btn2" style="background-color:rgb(50, 96, 68); border:rgb(50, 96, 68);">확인</button>
     </div>
     <script>
       // 인증번호 입력칸 표시
       function showCheckDiv(){
           document.getElementById('phone-ck-div').removeAttribute('style');
       }
-      function ableBtn(){
-        document.getElementById('submit-btn-fin').removeAttribute('disabled');
-      }
+
     </script>
 
 
     <div class="form-group form-check">
         <br>
       <label class="form-check-label" style="margin-left: 100px;">
-        <input type="checkbox" id="spam" name="spam" value="1" style="accent-color:rgb(50, 96, 68);" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input onclick="getSpamCk" type="checkbox" id="spam" name="spam" value="1" style="accent-color:rgb(50, 96, 68);" checked> SMS, Email로 상품 및 이벤트 정보 받기(선택)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </label>
       <label class="form-check-label">
         <input type="checkbox" style="accent-color:rgb(50, 96, 68);" required> 14세 이상입니다
@@ -183,24 +203,14 @@
 <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> -->
 </div>
 
-<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </body>
 </html>
 <script>
-
   // form요청 제출 시
   function submitBtn(){
-    const emailId = document.getElementById('email-id').value;
-    const domain = document.getElementById('domain').value;
-    const email2 = document.getElementById('email-2').value;
-    const email = emailId + domain + email2;
-    document.getElementById('email').value = email;
-
-    document.getElementsByClassName('form-control').value.trim();
-
+      const emailId = document.getElementById('email-id').value;
+      const domain = document.getElementById('domain').value;
+      const email = emailId + domain;
+      document.getElementById('email').value = email; 
   }
-  
-
-
-
 </script>

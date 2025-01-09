@@ -1,7 +1,6 @@
 package com.kh.AllThatTrip.board.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.AllThatTrip.board.model.service.BoardService;
-import com.kh.AllThatTrip.board.model.vo.Board;
 import com.kh.AllThatTrip.board.model.vo.Comment;
 import com.kh.AllThatTrip.common.model.vo.ResponseData;
 
@@ -34,9 +31,8 @@ public class BoardApiController {
 	
 	// 댓글 등록
 	@PostMapping
-	public ResponseEntity<ResponseData> ajaxInsertComment(Comment comment){
-		log.info("comment:{}",comment);
-		// log.info("userNo:{}", ((Comment)(session.getAttribute("loginUser"))).getUserNo());
+	public ResponseEntity<ResponseData> ajaxInsertComment(Comment comment, HttpSession session){
+		
 		//User loginUser = (User) session.getAttribute("loginUser");
 		//  성공 시 1, 실패 시 0
 		int result = boardService.insertComment(comment);	
@@ -56,7 +52,7 @@ public class BoardApiController {
 	
 	// 댓글 조회
 	@GetMapping
-	public ResponseEntity<ResponseData> ajaxCommnetList(long boardNo){
+	public ResponseEntity<ResponseData> ajaxCommnetList(Long boardNo){
 			
 		List<Comment> commnets = boardService.commentList(boardNo);
 		ResponseData response = ResponseData.builder()
@@ -91,22 +87,6 @@ public class BoardApiController {
 	}
 	
 
-	/*
-	@ResponseBody
-	@GetMapping(value="search",produces="application/json; charset=UTF-8")
-	public Board boardsSearch(Long no) {
-		
-		Map<String, Object> response = boardService.selectByNum(no);
-		
-		log.info("조회된 게시글 정보: {}", response.get("board"));
-		
-		return (Board)response.get("board");
-	}
-	*/
-	@ResponseBody
-	@RequestMapping("/search")
-	public String boardsSearch() {
-	    return "boards/searchTest";
-	}
-	
+
+
 }

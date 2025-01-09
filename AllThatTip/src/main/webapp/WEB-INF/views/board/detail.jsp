@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>게시판 상세</title>
+    <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style> 
         .content {
+            background-color:rgb(247, 245, 245);
             width:80%;
             margin:auto;
         }
@@ -52,11 +52,10 @@
                 </tr>
                 <tr>
                     <th>작성자</th><td colspan="1"></td>
-                    <td>${board.boardWriter}</td>
+                    <td>${board.userNo}</td>
                     <th>작성일</th>
                     <td colspan="3">${board.createDate}</td>
                 </tr>
-                
                 <tr>
                     <th scope="row">첨부파일</th>
                     <td id="files" colspan="1">
@@ -76,6 +75,7 @@
  					</c:choose>
                 </tr>
                 
+                
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
@@ -87,14 +87,15 @@
             <br>
 
             <div align="center">
-			        <c:if test="${board.boardWriter eq sessionScope.loginUser.userId}">
-			            <!-- 작성자가 본인일 때만 버튼 표시 -->
-			            <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
-			            <a class="btn btn-danger" onclick="confirmDelete();">삭제하기</a>
-			        </c:if>
+                <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
+               
+                <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
+                <a class="btn btn-danger" onclick="postSubmit(2);">삭제하기</a>
+             
+            </div>
             
             <form action="/att/board/list/update" method="post" id="postForm">
-            	<input type="hidden" name="boardType" value="${board.boardType}">
+            	<input type="hidden" name="boardType" value="${param.boardType}">
             	<input type="hidden" name="boardNo" value="${ board.boardNo }" />
             	<input type="hidden" name="changeName" value="${ board.changeName }" />
             	<input type="hidden" name="boardWriter" value="${ board.boardWriter }" />
@@ -103,9 +104,6 @@
             	 -->
             </form>
 		
-		
-		
-		
             <script>
             	function postSubmit(num) {
             		const boardNo = $('input[name="boardNo"]').val(); 
@@ -113,49 +111,61 @@
 				
             		if(num == 1){
             			$('#postForm').attr('action', '/att/board/list/update-form').submit();
-            		} 
+            		} else { 
+            			$('#postForm').attr('action', '/att/board/list/delete').submit();
+            		}
 				}
-            	
-            	 function confirmDelete() {
-            	        // 삭제 확인 메시지
-            	        if (confirm("삭제하시겠습니까?")) {
-            	            $('#postForm').attr('action', '/att/board/list/delete').submit();
-            	        } else {
-            	            // 취소 시 아무 동작도 하지 않음
-            	            return false;
-            	        }
-            	    }
-            	
-            	
             </script>
             
-         
+            
+            <!-- 
+            	case 1: 수정하기 누르면 수정할 수 있는 입력 양식이 있어야함
+            			입력양식에는 원본 게시글 정보들이 들어있어야함
+            			
+            	case 2: 삭제하기 누르면 Board테이블에 가서 STAUS 컬럼 'N'으로 바꾸고
+            			혹시 첨부파일도 있었다면 같이 지워줌
+            
+             -->
             
             <br><br>
 
+            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
             <table id="CommentArea" class="table" align="center">
                 <thead>
                 
-                	<!-- 비회원 노출 영역 -->
-				<c:choose>
-					<c:when test="${ empty sessionScope.loginUser }">
-					<tr>
-						<th colspan="2">
-							<textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
-						</th>
-						<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th> 
+                	<!-- 비회원 노출 영역 
+                	<c:choose>
+	                	<c:when test="${ empty sessionScope.loginUser }">
+	                	
+	                    <tr>
+	                        <th colspan="2">
+	                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
+	                        </th>
+	                        <th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th> 
+	                    </tr>
+	                    </c:when>
+	                    <c:otherwise>
+	                    <tr>
+	                     <th colspan="2">
+	                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+	                        </th>
+	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
+	                    </tr>
+	                    </c:otherwise>
+                    </c:choose>
+                    비회원으로 일단하자..--> 
+                    
+                    
+                    <tr>
+					    <th colspan="2">
+					        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+					    </th>
+					    <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
 					</tr>
-					</c:when>
-						<c:otherwise>
-					<tr>
-						<th colspan="2">
-							<textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-						</th>
-					<th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
-					</tr>
-					</c:otherwise>
-				</c:choose>
-
+                    
+                    
+                    
+                    
                     
                     <tr>
                         <td colspan="3">댓글(<span id="rcount">0</span>)</td>
@@ -195,7 +205,7 @@
     				data: {
     					 	boardNo: ${board.boardNo}, 
     		                commentContent: $('#content').val(),
-    		                userNo: '${sessionScope.loginUser.userNo}'
+    		                userNo: '1' // 테스트용 사용자 번호 추후 로그인세션으로 변경하기
     		        },
     				success: function(result) {
 						
@@ -272,14 +282,11 @@
    		    }
    		}
     	
+    	
+    	
+    </script>
     
-	    // 세션의 alertMsg 출력 후 제거
-	    <c:if test="${not empty sessionScope.alertMsg}">
-	        alert("${sessionScope.alertMsg}");
-	        <c:set var="alertMsg" value="" scope="session"/>
-	    </c:if>
-	</script>
-	
+    
     <jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>

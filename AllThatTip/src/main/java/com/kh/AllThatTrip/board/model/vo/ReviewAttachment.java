@@ -13,14 +13,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BdAttachment {
+public class ReviewAttachment {
 
 	private int fileNo; 
-    private Long boardNo; 
-    private String originName; 
+    private int reviewNo; 
+    private String originName;
     private String changeName; 
-    private String filePath; 
+    private String filePath;
     private Date uploadDate; 
-    private String status; 
-
+    private int fileLevel; 
+    private String status;
 }
