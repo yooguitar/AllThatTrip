@@ -41,4 +41,6 @@ public interface RoomMapper {
 	
 	int deleteRoom(Room room);
 	
+	List<Room> selectRoomListByRoomType(Long id);
+	
 }

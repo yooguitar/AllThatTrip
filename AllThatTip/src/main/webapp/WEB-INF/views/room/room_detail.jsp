@@ -238,15 +238,10 @@
 		        		</c:if>
 			        </c:forEach>
 		        </div>
-		        <button onclick="updateRoom(${ room.roomNo });">정보 수정</button> <button class="btn-open-modal">숙소 삭제</button>
-				<!--장바구니-->
-				<c:if test="${ sessionScope.loginUser ne null }">
-					<form action="/att/cartPage.me" method="post" style="margin-top: 3px;">
-						<input type="text" style="display: none;" name="roomNo" value="${ room.roomNo }"> 
-						<button type="submit" style="width: 152px;">장바구니 담기</button>
-					</form> 
-				</c:if>
-				<br><br>
+
+		        <c:if test="${ not empty sessionScope.loginUser.bizNo }">
+			        <button onclick="updateRoom(${ room.roomNo });">정보 수정</button> <button class="btn-open-modal">숙소 삭제</button> <br><br>
+	       		</c:if>
 		</fieldset>
 	</div>
 	
@@ -282,6 +277,7 @@
     </div>
     <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 
+	<button style="display:none;" class="btn-open-modal">숙소 삭제</button>
 	<script>
 		const modal = document.querySelector('.modal');
 	    const btnOpenModal = document.querySelector('.btn-open-modal');

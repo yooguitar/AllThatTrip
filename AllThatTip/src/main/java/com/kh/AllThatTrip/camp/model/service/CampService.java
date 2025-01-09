@@ -28,5 +28,9 @@ public interface CampService {
 	void deleteCamp(Camp camp, String check);
 	
 	List<Camp> recentList();
+
+	Map<String, Object> searchCamp(String keyword);
+
+	Map<String, Object> searchCampsByAddr(String addr, int page);
 	
 }

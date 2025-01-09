@@ -150,4 +150,14 @@ public class RoomServiceImpl implements RoomService {
 		}
 	}
 
+	@Override
+	public Map<String, Object> selectRoomListByRoomType(Long id) {
+			Map<String, Object> responseData = new HashMap<String, Object>(); 
+			List<Room> roomList = mapper.selectRoomListByRoomType(id);
+			List<RoomImg> roomImgList = mapper.selectRoomImgList();
+			responseData.put("roomList", roomList);
+			responseData.put("roomImgList", roomImgList);
+		return responseData;
+	}
+
 }

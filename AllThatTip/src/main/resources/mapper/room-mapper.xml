@@ -231,4 +231,24 @@
  		       STATUS = 'Y'
  	</update>
  	
+ 	<select id="selectRoomListByRoomType" resultType="room">
+ 		SELECT
+		       ROOM_NO roomNo, 
+		       CAMP_NO campNo, 
+		       ROOM_TYPE_NAME roomTypeName, 
+		       ROOM_NAME roomName, 
+		       ROOM_DESC roomDesc, 
+		       TO_CHAR(ROOM_PRICE, '999,999,999') price, 
+		       COUNT, 
+		       ROOMS.STATUS status
+		  FROM 
+		       ROOMS 
+		  JOIN 
+		       ROOM_TYPE USING (ROOM_TYPE_NO)
+		 WHERE
+		 	   ROOMS.STATUS = 'Y'
+		   AND
+		   	   ROOM_TYPE_NO = #{id}
+ 	</select>
+ 	
  </mapper>

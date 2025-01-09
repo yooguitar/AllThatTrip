@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,6 +99,13 @@ public class CampController {
 		// log.info("campNo : {} / check : {}", campNo, check);
 		campService.deleteCamp(camp, check);
 		return mv.setViewNameAndData("redirect:/camps/biz_list", null);
+	}
+	
+	@GetMapping("search")
+	public ModelAndView searchCamp(String keyword) {
+		// log.info("{}", keyword);
+		Map<String, Object> responseData = campService.searchCamp(keyword);
+		return mv.setViewNameAndData("camp/camp_search_list", responseData);
 	}
 
 }

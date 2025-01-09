@@ -17,5 +17,7 @@ public interface RoomService {
 	void updateRoom(Room room, MultipartFile[] upfile);
 	
 	void deleteRoom(Room room, String check);
+
+	Map<String, Object> selectRoomListByRoomType(Long id);
 	
 }

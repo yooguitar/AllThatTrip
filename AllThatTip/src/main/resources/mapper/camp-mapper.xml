@@ -159,4 +159,53 @@
  		       ROWNUM &lt; 6
  	</select>
  	
+ 	<select id="searchCamp" parameterType="string" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+ 		   AND
+ 		   	   CAMP_NAME LIKE '%' || #{keyword} || '%'
+ 	</select>
+ 	
+ 	<select id="countList" parameterType="string" resultType="_int">
+ 		SELECT 
+ 		       COUNT(*) 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+		<if test="addr != '전국'">
+ 		   AND
+ 		   	   CAMP_ADDR LIKE '%' || #{addr} || '%'
+		</if> 		       
+ 	</select>
+ 	
+ 	<select id="searchCampsByAddr" parameterType="string" resultType="camp">
+ 		SELECT 
+ 		       CAMP_NO campNo, 
+ 		       BIZ_NO bizNo, 
+ 		       CAMP_NAME campName, 
+ 		       CAMP_ADDR campAddr, 
+ 		       CAMP_DESC campDesc, 
+ 		       ORIGIN_NAME originName, 
+ 		       CHANGE_NAME changeName 
+ 		  FROM 
+ 		       CAMP 
+ 		 WHERE 
+ 		       STATUS = 'Y'
+		<if test="addr != '전국'">
+ 		   AND
+ 		   	   CAMP_ADDR LIKE '%' || #{addr} || '%'
+		</if> 		       
+ 	</select>
+ 	
  </mapper>

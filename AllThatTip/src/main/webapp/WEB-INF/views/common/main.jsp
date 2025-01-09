@@ -65,8 +65,8 @@
                                     </button>
                                 </div>
                                 <div id="bar-2">
-                                    <form action="검색하기~" method="get">
-                                        <input type="text" placeholder="캠핑장 검색" id="loc-search">
+                                    <form action="camps/search" method="get">
+                                        <input type="text" name="keyword" placeholder="캠핑장 검색" id="loc-search">
                                         <button type="submit" id="search-btn">찾기</button>
                                     </form>
                                 </div>   
@@ -131,19 +131,19 @@
                         <!--kmap-->
                         <div class="campinfo">
                             <div class="head">
-                                <div class="count_box"><span id="total_count">2523</span>개</div>
+                                <div class="count_box"><span id="total_count"></span>개</div>
                                 <div class="page_ui">
-                                    <a href="#" id="pre_page"><i class="angle_left" aria-hidden="true">이전</i></a>
+                                    <button id="pre-btn" onclick="prePage();">이전</button>
                                     <div class="pagestat">
-                                        <span id="nowpage">1</span>
+                                        <span id="nowpage"></span>
                                         /
-                                        <span id="totalpage">421</span>
+                                        <span id="totalpage"></span>
                                     </div>
-                                    <a href="#" id="next_page"><i class="angle_right" aria-hidden="true">다음</i></a>
+                                    <button id="next-btn" onclick="nextPage();">다음</button>
                                 </div>
                                 <div class="select_sido">
                                     <select name="cate1" id="cate1" class="searchSelect">
-                                        <option value="전국" selected>전국</option>
+                                        <option value="전국">전국</option>
                                         <option value="서울">서울</option>
                                         <option value="경기">경기</option>
                                         <option value="인천">인천</option>
@@ -165,60 +165,7 @@
                                 </div>
                             </div>
                             <div class="camp_right_content">
-                                <div class="items hand " onclick="location.href='./?c=camping&m=camping&campID=2918'">
-                                    <div class="photo">
-                                    <img src="https://www.5gcamp.com/files/camping/2018/10/17/66decf1e7aa7cadf940ce488f2ccb5fa_450.jpg"  alt=""   class="tm" />
-                                    </div>
-                                    <div class="cont">
-                                        <p class="tt">송도 스포츠파크 캠핑장</p>
-                                        <p class="mcont">인천 > 연수구 > 송도동</p>
-                                    </div>
-                                </div>
-                                <div class="items hand " onclick="location.href='./?c=camping&m=camping&campID=2639'">
-                                    <div class="photo">
-                                        <img src="https://www.5gcamp.com/files/camping/2018/01/27/971b6761278a0361231f180bf511ee06_450.jpg"  alt=""   class="tm" />
-                                    </div>
-                                    <div class="cont">
-                                        <p class="tt">잼핑홀리데이 대부도점 </p>
-                                        <p class="mcont">경기 > 안산시 > 대부북동</p>
-                                    </div>
-                                </div>
-                                <div class="items hand nomargin" onclick="location.href='./?c=camping&m=camping&campID=4377'">
-                                    <div class="photo">
-                                        <img src="https://www.5gcamp.com/files/camping/2020/11/08/bc6c758db94efd53c898240b11da6ed1_450.jpg"  alt=""   class="tm" />
-                                    </div>
-                                    <div class="cont">
-                                        <p class="tt">인천 송도 국제캠핑장 </p>
-                                        <p class="mcont">인천 > 연수구 > 송도동</p>
-                                    </div>
-                                </div>
-                                <div class="items hand " onclick="location.href='./?c=camping&m=camping&campID=2767'">
-                                    <div class="photo">
-                                        <img src="https://www.5gcamp.com/files/camping/2018/04/02/5cdc0adfe420749ce1d3cbf4d8e32983_450.jpg"  alt=""   class="tm" />
-                                    </div>
-                                    <div class="cont">
-                                        <p class="tt">대부도 푸른섬 캠핑장 </p>
-                                        <p class="mcont">경기 > 안산시 > 대부북동</p>
-                                    </div>
-                                </div>
-                                <div class="items hand " onclick="location.href='./?c=camping&m=camping&campID=329'">
-                                    <div class="photo">
-                                        <img src="https://www.5gcamp.com/files/camping/2018/01/29/7e285c660c73056271fbddb40b10505d_450.jpg"  alt=""   class="tm" />
-                                    </div>
-                                    <div class="cont">
-                                        <p class="tt">대부도 해솔길 캠핑장 </p>
-                                        <p class="mcont">경기 > 안산시 > 대부북동</p>
-                                    </div>
-                                </div>
-                                <div class="items hand nomargin" onclick="location.href='./?c=camping&m=camping&campID=330'">
-                                    <div class="photo">
-                                        <img src="https://www.5gcamp.com/files/camping/2018/01/22/e6afb0df500ccb6cff58214d232ed738_450.jpg"  alt=""   class="tm" />
-                                    </div>
-                                    <div class="cont">
-                                        <p class="tt">씨엘관광농원 캠핑장 </p>
-                                        <p class="mcont">경기 > 안산시 > 대부동동</p>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -348,7 +295,180 @@
             		document.querySelector('#li-mom').innerHTML = str;
             	}
             });
+            
+            $.ajax({
+        		url : 'campsAjax/searchAddr',
+        		type : 'get',
+        		data : {
+        			addr : '전국',
+        			page : 1
+        		},
+        		success : function(result){
+        			const camps = [...result.data];
+        			const count = result.data2;
+        			const maxPage = result.data3.maxPage;
+        			const currPage = result.data3.currentPage;
+        			// console.log(camps, count);
+        			
+        			document.querySelector('#total_count').innerText = count;
+        			
+        			const str = camps.map(e => `
+							        			<div class="items hand" onclick="camp_detail(\${ e.campNo })">
+								                    <div class="photo">
+								                    	<img src="/att\${e.changeName}" alt="대표 이미지" class="tm" />
+								                    </div>
+								                    <div class="cont">
+								                        <p class="tt">\${e.campName}</p>
+								                        <p class="mcont">\${e.campAddr}</p>
+								                    </div>
+							                    </div>
+        									   `
+        									   ).join('');
+        			document.querySelector('.camp_right_content').innerHTML = str;
+        			document.querySelector('#totalpage').innerText = maxPage;
+        			document.querySelector('#nowpage').innerText = currPage;
+        			document.querySelector('#pre-btn').disabled = true;
+        			if(currPage >= maxPage){
+						document.querySelector('#next-btn').disabled = true;
+					} else{
+						document.querySelector('#next-btn').disabled = false;
+					}
+        		}
+        	});
         }
+        
+        document.getElementById('campMap').addEventListener('click', (e) => {
+        	//console.log(e.target.alt);
+        	const areaName = e.target.alt;
+        	
+        	const select = document.querySelector('select option[value="' + areaName + '"]');
+        	// console.log(select);
+        	select.selected = true;
+        	
+            document.querySelector('select').dispatchEvent(new Event('change'));
+        });
+        
+        document.querySelector('select').addEventListener('change', (e) => {
+        	// console.log(e.target.value);
+        	const areaName = e.target.value;
+        	
+        	$.ajax({
+        		url : 'campsAjax/searchAddr',
+        		type : 'get',
+        		data : {
+        			addr : areaName,
+        			page : 1
+        		},
+        		success : function(result){
+        			const camps = [...result.data];
+        			const count = result.data2;
+        			const currPage = result.data3.currentPage;
+        			const maxPage = result.data3.maxPage;
+        			// console.log(camps, count);
+        			
+        			document.querySelector('#total_count').innerText = count;
+        			
+        			const str = camps.map(e => `
+							        			<div class="items hand">
+								                    <div class="photo">
+								                    	<img src="/att\${e.changeName}" alt="대표 이미지" class="tm" />
+								                    </div>
+								                    <div class="cont">
+								                        <p class="tt">\${e.campName}</p>
+								                        <p class="mcont">\${e.campAddr}</p>
+								                    </div>
+							                    </div>
+											   `
+				   								).join('');
+					document.querySelector('.camp_right_content').innerHTML = str;
+					document.querySelector('#totalpage').innerText = maxPage;
+					document.querySelector('#pre-btn').disabled = true;
+					if(currPage >= maxPage){
+						document.querySelector('#next-btn').disabled = true;
+					} else{
+						document.querySelector('#next-btn').disabled = false;
+					}
+        		}
+        	});
+        });
+        
+        function prePage(){
+        	const areaName = document.querySelector('select').value;
+        	let currPage = document.querySelector('#nowpage').innerText;
+        	currPage--;
+        	$.ajax({
+        		url : 'campsAjax/searchAddr',
+        		type : 'get',
+        		data : {
+        			addr : areaName,
+        			page : currPage - 1
+        		},
+        		success : function(result){
+        			const camps = [...result.data];
+        			const count = result.data2;
+        			const maxPage = result.data3.maxPage;
+        			const str = camps.map(e => `
+							        			<div class="items hand">
+								                    <div class="photo">
+								                    	<img src="/att\${e.changeName}" alt="대표 이미지" class="tm" />
+								                    </div>
+								                    <div class="cont">
+								                        <p class="tt">\${e.campName}</p>
+								                        <p class="mcont">\${e.campAddr}</p>
+								                    </div>
+							                    </div>
+											   `
+				   								).join('');
+					document.querySelector('.camp_right_content').innerHTML = str;
+					document.querySelector('#nowpage').innerText = currPage;
+					document.querySelector('#next-btn').disabled = false;
+					if(currPage == 1){
+						document.querySelector('#pre-btn').disabled = true;
+					}
+        		}
+        	});
+        }
+        
+        function nextPage(){
+        	const areaName = document.querySelector('select').value;
+        	let currPage = document.querySelector('#nowpage').innerText;
+        	currPage++;
+        	$.ajax({
+        		url : 'campsAjax/searchAddr',
+        		type : 'get',
+        		data : {
+        			addr : areaName,
+        			page : currPage
+        		},
+        		success : function(result){
+        			const camps = [...result.data];
+        			const count = result.data2;
+        			const maxPage = result.data3.maxPage;
+        			const str = camps.map(e => `
+							        			<div class="items hand">
+								                    <div class="photo">
+								                    	<img src="/att\${e.changeName}" alt="대표 이미지" class="tm" />
+								                    </div>
+								                    <div class="cont">
+								                        <p class="tt">\${e.campName}</p>
+								                        <p class="mcont">\${e.campAddr}</p>
+								                    </div>
+							                    </div>
+											   `
+				   								).join('');
+					document.querySelector('.camp_right_content').innerHTML = str;
+					document.querySelector('#nowpage').innerText = currPage;
+					document.querySelector('#pre-btn').disabled = false;
+					if(currPage == maxPage){
+						document.querySelector('#next-btn').disabled = true;
+					}
+        		}
+        	});
+        }
+        
+        function camp_detail(campNo){
+			location.href = '/att/camps/detail?campNo=' + campNo;
+		}
 
         const cardWrapper = document.getElementById('cardWrapper');
         let currentSlide = 0;
