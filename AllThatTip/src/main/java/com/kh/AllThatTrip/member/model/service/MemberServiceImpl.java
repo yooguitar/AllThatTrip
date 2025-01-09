@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.member.model.dao.MemberMapper;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -42,7 +43,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void memberUpdate(Member member, HttpSession session) {
 //		validator.validateLength(member);
-//		validator.validateMail(member);
+		validator.validateMail(member);
 		member.setUserPwd(passwordEncoder.encode(member.getUserPwd()));
 		mapper.memberUpdate(member);
 		session.setAttribute("loginUser", mapper.login(member));
@@ -82,16 +83,21 @@ public class MemberServiceImpl implements MemberService {
 	public void increaseLoginCount(Member member) {
 		mapper.increaseLoginCount(member);
 	}
+	
 	@Override
 	public void rollbackCount(Member member) {
 		mapper.rollbackCount(member);
 	}
+	
 	@Override
 	public Member countCheck(Member member) {
 		return mapper.countCheck(member);
 	}
 	
-	
+	@Override
+	public void loginFullCount(Member member) {
+		mapper.loginFullCount(member);
+	}
 	
 	/* 찜, 예약, 장바구니 관련 */
 
@@ -101,17 +107,26 @@ public class MemberServiceImpl implements MemberService {
 		ArrayList result = mapper.findRsv(member);	
 		if(!result.isEmpty()) {
 			session.setAttribute("findRsvResult", result);
+		
 		}
 	}
 
 	@Override
 	public void findCart(Member member, HttpSession session) {
 		session.removeAttribute("findCartResult");
-//		ArrayList result = mapper.findCart(member);
-//		if(!result.isEmpty()) {
-//			session.setAttribute("findCartResult", result);
-//		}
+		//ArrayList result = mapper.findCart(member);
+		//if(!result.isEmpty()) {
+		//	session.setAttribute("findCartResult", result);
+		//}
 	}
+
+	@Override
+	public void findRoom(Room room, HttpSession session) {
+		ArrayList roomResult = mapper.findRoom(room);
+		log.info("숙소정보 반환 값 {}", roomResult);
+		session.setAttribute("findCartResult", roomResult);
+	}
+
 
 
 

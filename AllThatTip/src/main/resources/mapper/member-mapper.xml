@@ -162,6 +162,27 @@
 	       RES_NO ASC
 </select>
 
+<!-- 
+<select id="findCart" parameterType="member" resultType="hashmap">
+	SELECT
+		   캠핑정보를 가져올 수 있는 테이블을 골라야함
+</select>
+-->
+
+<select id="findRoom" parameterType="room" resultType="hashmap">
+	SELECT
+           R.ROOM_NAME,
+           R.ROOM_PRICE,
+           I.CHANGE_NAME
+      FROM  
+           ROOMS R, ROOM_IMG I
+     WHERE
+           I.ROOM_NO = ${roomNo}
+       AND
+           R.ROOM_NO = ${roomNo}
+       AND
+           ROWNUM = 1
+</select>
 
 <update id="increaseLoginCount" parameterType="member">
 	UPDATE
@@ -177,6 +198,15 @@
 		   MEMBER
 	   SET
 	   	   LOGIN_COUNT = 0
+	 WHERE
+	 	   USER_ID = #{userId}
+</update>
+
+<update id="loginFullCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   STATUS = 'N'
 	 WHERE
 	 	   USER_ID = #{userId}
 </update>
