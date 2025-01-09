@@ -39,7 +39,7 @@
 	<sql id="boardsColumn">
 		SELECT
 			   B.BOARD_NO AS boardNo,
-			   B.BOARD_TYPE AS boardType,
+			   T.BOARD_CD_NAME AS boardCdName,
 			   B.COUNT AS count, 
 			   M.USER_ID boardWriter,
 			   B.BOARD_TITLE boardTitle,
@@ -51,6 +51,10 @@
 		       MEMBER M  
 		  	ON
 		       B.USER_NO = M.USER_NO
+		  JOIN
+		       BOARD_TYPE T 
+		    ON
+		       T.BOARD_TYPE = B.BOARD_TYPE          
 		      
 	</sql>
 	<select id="memberFindAll" resultType="com.kh.AllThatTrip.member.model.vo.Member">
@@ -301,11 +305,127 @@
   </insert>
   <select id="boardFindAll" resultType="com.kh.AllThatTrip.board.model.vo.Board">
   		   <include refid="boardsColumn"/>
-	  		WHERE
-			      B.STATUS = 'Y'
 			ORDER
 			   BY
 			      B.BOARD_NO DESC 
   
   </select>
+  <select id="selectBoardWriter" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   AND
+		       M.USER_ID = #{boardWriter}
+		       
+	</select>
+	 <select id="selectBoardNo" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   AND
+		       B.BOARD_NO = #{boardNo}
+		       
+	</select>
+	<select id="selectCountMax" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   ORDER
+		      BY
+		         B.COUNT DESC
+		       
+	</select>
+	<select id="selectCountMin" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   ORDER
+		      BY
+		         B.COUNT
+		       
+	</select>
+	<select id="selectNewBoard" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   ORDER
+		      BY
+		         B.CREATE_DATE DESC
+		       
+	</select>
+		<select id="selectOldBoard" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   ORDER
+		      BY
+		         B.CREATE_DATE
+		       
+	</select>
+	<select id="selectDeleteBoard" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.STATUS = 'N'
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<select id="selectBoard" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.STATUS = 'Y'
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<select id="select50Board" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.BOARD_TYPE = 50
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<select id="select40Board" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.BOARD_TYPE = 40
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<select id="select30Board" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.BOARD_TYPE = 30
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<select id="select20Board" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.BOARD_TYPE = 20
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<select id="select10Board" resultType="com.kh.AllThatTrip.board.model.vo.Board">
+		<include refid="boardsColumn"/>
+		   WHERE
+			     B.BOARD_TYPE = 10
+		   ORDER
+		      BY
+		         B.BOARD_NO DESC 
+	</select>
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE
+		       BOARD
+		   SET
+		       STATUS = 'N'
+		 WHERE
+		       STATUS = 'Y'
+		   AND
+		       BOARD_NO = #{boardNo}           
+	
+	</update>
+	<update id="unDeleteBoard" parameterType="_int">
+		UPDATE
+		       BOARD
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       STATUS = 'N'
+		   AND
+		       BOARD_NO = #{boardNo}           
+	
+	</update>
 </mapper> 

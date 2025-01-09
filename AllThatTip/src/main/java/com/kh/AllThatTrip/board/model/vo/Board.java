@@ -35,7 +35,7 @@ public class Board {
 	private String condition;
 	private String imagePath;
 	private String faqType;
-	
+	private String boardCdName;
 } 
 		
 	
