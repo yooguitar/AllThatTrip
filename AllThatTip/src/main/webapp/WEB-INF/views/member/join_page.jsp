@@ -16,14 +16,14 @@
   <style>
     #wrap{
         width: 800px;
-        margin-top: 50px;
+        margin-top: 100px;
         margin-bottom: 100px;
     }
 
   </style>
 </head>
 <body>
-
+  <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 
 <div class="container" id="wrap">
   <h2>회원가입</h2><br><br>
@@ -183,6 +183,7 @@
 <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" /> -->
 </div>
 
+<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 </body>
 </html>
 <script>

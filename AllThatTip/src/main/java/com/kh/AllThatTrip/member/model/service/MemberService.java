@@ -22,7 +22,7 @@ public interface MemberService {
 	
 	void findPwd(Member member);
 	
-	Member countCheck(Member member);
+	void countCheck(Member member);
 	
 	void increaseLoginCount(Member member);
 	
@@ -33,7 +33,7 @@ public interface MemberService {
 	/* 예약, 찜, 장바구니 관련 */
 	void findRsv(Member member, HttpSession session);
 	
-	void findCart(Member member, HttpSession session);
+	void findCart(HttpSession session);
 	
 	void findRoom(Room room, HttpSession session);
 	

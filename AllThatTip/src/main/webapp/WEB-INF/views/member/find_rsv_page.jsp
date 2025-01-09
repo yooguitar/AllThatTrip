@@ -19,8 +19,8 @@
         #wrap{
             width: 1000px;
             margin: auto;
-            margin-top: 50px;
-            margin-bottom: 100px;
+            margin-top: 150px;
+   
         }
         #cart-div-1{
             width: 1000px;
@@ -45,6 +45,7 @@
       </style>
 </head>
 <body>
+    <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
     <div id="wrap">
         <div id="cart-div-1">
             <h1 style="margin-bottom: 10px;">예약 내역 조회</h1>
@@ -91,11 +92,11 @@
         </div>
 
     </div>
+    <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
+</body>
     <script>
         function cancelBtn(){
             location.href = "cancelRsvPage.me";
         }
     </script>
-    
-</body>
 </html>

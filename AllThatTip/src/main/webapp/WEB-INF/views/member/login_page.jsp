@@ -40,7 +40,7 @@
             width: 500px;
             height: 520px;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 100px;
         }
         .title-join-biz{
             text-align: center;
@@ -58,7 +58,7 @@
                 </script>	
 	        <c:remove var="successAlert" scope="session" />
     </c:if>
-	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+	<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 	
 	<!-- 
 	<c:if test="${ sessionScope.loginCount ne null};">
@@ -116,11 +116,11 @@
     </div>
     
     <br>
-    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41);">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="title-join-biz" style="display: block; color: rgb(33, 37, 41); margin-bottom: 100px;">사장님 이신가요? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/att/bizJoinPage.me" style="color:rgb(50, 96, 68);">사업자 회원가입</a>
     </label>
     
-    <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
+    <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
     
 </body>
 
