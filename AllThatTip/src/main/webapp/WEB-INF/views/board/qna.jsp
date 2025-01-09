@@ -17,6 +17,7 @@
         width:1200px;
         margin: 0 auto;
         padding: 0;
+        
 
     }
 	#pagingArea {width:fit-content; margin:auto;}
@@ -26,6 +27,7 @@
         margin: 10px auto;
         padding: 40px;
         background-color: #fff;
+        
     }
 
     h1 {
@@ -59,7 +61,7 @@
     .write-button {
         display: block;
         margin: 0 auto;
-        padding: 10px 20px;
+        padding: 8px 20px;
         font-size: 16px;
         color: #fff;
         background-color: #326044;
@@ -142,11 +144,11 @@
 				<div class="text" style="display: inline-block;">
 				    <input type="text" class="form-control" name="keyword">
 				</div>
-			<button type="submit" class="searchBtn btn btn-secondary" style="display: inline-block;">검색</button>
+			<button type="submit" class="write-button" style="display: inline-block;">검색</button>
 		</form>
 		<br><br> 
            	<c:if test="${not empty sessionScope.loginUser and board.boardType == 30}">
-				<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
+				<a class="write-button" style="float:right;" href="/att/board/insertForm?boardType=30">글쓰기</a>
 			</c:if>
 		<br><br> 
   
