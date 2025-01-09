@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>중고거래리스트</title>
+    <title>중고거래게시판</title>
     <!--생략하셔도 됩니다.-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -57,7 +57,7 @@
 		opacity:0.8;
 	}
 	
-	.write-button {
+	.write-button2 {
         display: block;
         margin: 0 auto;
         padding: 10px 20px;
@@ -69,9 +69,28 @@
         cursor: pointer;
         transition: background-color 0.3s;
     }
-
+    
+    .write-button {
+        display: inline-block;
+	    font-weight: 400;
+	    color: #fff;
+	    text-align: center;
+	    vertical-align: middle;
+	
+	    user-select: none;
+	    background-color: #326044;
+	    border: 1px solid #326044;
+	    padding: .375rem .75rem;
+	    font-size: 1rem;
+	    line-height: 1.5;
+	    border-radius: .25rem;
+    
+    }
+    
+    
     .write-button:hover {
         background-color: #444;
+        text-decoration::none;
     }
 
 </style>
@@ -107,7 +126,7 @@
            <br><br> 
                
 		<c:if test="${not empty sessionScope.loginUser and board.boardType == 40}">
-			<a class="btn btn-secondary" style="float:right;" id="write-button" href="/att/board/insertForm?boardType=40">글쓰기</a>
+			<a class="write-button" style="float:right;" id="write-button" href="/att/board/insertForm?boardType=40">글쓰기</a>
 		</c:if>
 			<br>
             </div>

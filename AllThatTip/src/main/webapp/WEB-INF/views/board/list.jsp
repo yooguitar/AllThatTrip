@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>게시판 리스트</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -46,7 +46,7 @@
         .write-button {
         display: block;
         margin: 0 auto;
-        padding: 8px 20px;
+        padding: 7px 20px;
         font-size: 16px;
         color: #fff;
         background-color: #326044;
@@ -177,7 +177,7 @@
                 <div class="text">
                     <input type="text" class="form-control" name="keyword" id="keyword" />
                 </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                <button type="submit" class="write-button">검색</button>
             </form>
             <br><br>
         </div>

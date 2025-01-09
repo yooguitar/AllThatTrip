@@ -170,19 +170,22 @@ public class BoardController {
 		
 		session.setAttribute("alertMsg", "게시글 수정이 완료되었습니다.");
 		
-		return mv.setViewNameAndData("redirect:/board/list", null);
+		String redirectUrl = "/board/list?boardType=" + board.getBoardType();
+		return new ModelAndView("redirect:" + redirectUrl);
 	}
 	
 	
 	// 삭제
 	@PostMapping("/list/delete")
-	public ModelAndView deleteBoard(Long boardNo, String changeName, HttpSession session) {
+	public ModelAndView deleteBoard(Long boardNo, String changeName, Board board, HttpSession session) {
 		
 		boardService.deleteBoard(boardNo, changeName);
 		
 		session.setAttribute("alertMsg", "게시글 삭제가 완료되었습니다.");
 		
-		return mv.setViewNameAndData("redirect:/board/list", null);
+		String redirectUrl = "/board/list?boardType=" + board.getBoardType();
+
+	    return new ModelAndView("redirect:" + redirectUrl);
 	}
 
 
