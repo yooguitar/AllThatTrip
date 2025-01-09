@@ -127,13 +127,11 @@ public class BoardController {
 	            		break;
 	        case "40": redirectUrl = "/board/list?boardType=40"; // 중고거래
 	            		break;
-	        case "50": redirectUrl = "/board/list?boardType=50"; // 후기
-	            		break;
 	        default: throw new BoardNotFoundException("잘못된 경로입니다.");
 	    }
 	    //log.info("URL:{}",redirectUrl);
 	    // 성공 메시지 설정
-	    session.setAttribute("alertMsg", "게시글 등록 성공");
+	    session.setAttribute("alertMsg", "게시글 등록이 완료되었습니다.");
 	    //log.info("종료:{}");
 	    // ModelAndView 리턴
 	    return new ModelAndView("redirect:" + redirectUrl);
@@ -148,14 +146,17 @@ public class BoardController {
 		return mv.setViewNameAndData("board/detail", responseData);
 		
 	}
+	
 
 	// 수정 양식
 	// boardNo 파라미터만 보내도 상세조회를 하기 때문에 boardType을 알수있음 → 뷰 페이지 제어 필요
 
 	@PostMapping("/list/update-form")
-	public ModelAndView updateForm(Long boardNo) {
+	public ModelAndView updateForm(Long boardNo ) {
 		//log.info("수정할 게시글 번호: {}", boardNo);
 		Map<String, Object> responseData = boardService.selectByNum2(boardNo);
+		
+		
 		
 		return mv.setViewNameAndData("board/update", responseData);
 	}
@@ -167,6 +168,7 @@ public class BoardController {
 		
 		boardService.updateBoard(board, upfiles);
 		
+		session.setAttribute("alertMsg", "게시글 수정이 완료되었습니다.");
 		
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
@@ -174,11 +176,15 @@ public class BoardController {
 	
 	// 삭제
 	@PostMapping("/list/delete")
-	public ModelAndView deleteBoard(Long boardNo, String changeName) {
+	public ModelAndView deleteBoard(Long boardNo, String changeName, HttpSession session) {
 		
 		boardService.deleteBoard(boardNo, changeName);
+		
+		session.setAttribute("alertMsg", "게시글 삭제가 완료되었습니다.");
+		
 		return mv.setViewNameAndData("redirect:/board/list", null);
 	}
+
 
 }
 	

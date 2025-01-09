@@ -148,20 +148,6 @@ public class BoardServiceImple implements BoardService {
 		return attachment;
 	}	
 	
-	// 다중파일
-	// 일단 주석 안쓸예정인데 혹시모름
-//	private BdAttachment createAttachment(Board board, MultipartFile upfile) {
-//		
-//	    Board updatedBoard = handlerFileUpload(board, upfile);
-//
-//	    // BdAttachment 객체 생성
-//	    BdAttachment attachment = new BdAttachment();
-//	    attachment.setBoardNo(updatedBoard.getBoardNo()); // 게시글 번호
-//	    attachment.setOriginName(updatedBoard.getOriginName()); // 원본 파일명
-//	    attachment.setChangeName(updatedBoard.getChangeName()); // 변경된 파일명
-//	    //attachment.setThumbnail(Thumbnail ? "Y" : "N");
-//	    return attachment;
-//	}
 	
 	// 페이징처리
 	@Override
@@ -191,7 +177,7 @@ public class BoardServiceImple implements BoardService {
 	}
 
 	
-	// 상세조회
+	// 상세조회1
 	@Override
 	public Map<String, Object> selectByNum(long boardNo) {
 		
@@ -220,22 +206,20 @@ public class BoardServiceImple implements BoardService {
 			incrementViewCount(boardNo);
 			Board board = findBoardByNum(boardNo);
 			board.setBoardContent(convertBrToNewline(board.getBoardContent()));
-			// board 객체에 List<fileList> 객체 생성 후 객체안에서 파일은 List 타입으로 처리
-			// 사유 : 상세페이지는 한개의 로우 파일은 리스트형태로 조회가 가능하기에 fileList 는 list타입으로 처리
-			// (상세 게시글 데이터 로우 : 상세 게시글 첨부파일 로우) == (1:n)
-			List<BdAttachment> fileList = mapper.selectFileList(boardNo); //게시글 번호를 기준으로 첨부파일 목록을 조회, 첨부파일 데이터를 리스트 형태로 반환
 			
-			board.setFileList(fileList); // board객체에 fileList 다중 파일을 하나의 객체로 관리
+			List<BdAttachment> fileList = mapper.selectFileList(boardNo); 
+			
+			board.setFileList(fileList); 
 			
 			Map<String, Object> responseData = new HashMap<>();
-	        responseData.put("board", board); // 응답데이터 지정
+	        responseData.put("board", board); 
 			
-			return responseData;	// 사용자에게 반환
+			return responseData;	
 
 		}
 
+		
 	// 등록
-	
 	@Transactional
 	@Override
 	public void insertBoard(Board board, MultipartFile[] upfiles) {
@@ -267,31 +251,6 @@ public class BoardServiceImple implements BoardService {
 	        }
 	    }
 	}
-	/*
-	@Transactional
-	@Override
-	public void insertBoard(Board board, MultipartFile[] upfiles) {
-		// 유효성 검증
-		validateBoard(board);
-		
-		mapper.insertBoard(board);
-		log.info("board{}",board);
-		// 파일 유무
-		if (upfiles != null && upfiles.length > 0) {
-			List<BdAttachment> attachments = new ArrayList<>();
-			for (MultipartFile upfile : upfiles) {
-				if (!upfile.isEmpty()) {
-					BdAttachment attachment = createAttachment(board, upfile);
-					attachments.add(attachment);
-				}
-			}
-		
-        if (!attachments.isEmpty()) {
-            mapper.insertBoardFile(attachments);
-        }
-    }
-}
-	*/
 	
 	
 	// 수정
@@ -302,9 +261,9 @@ public class BoardServiceImple implements BoardService {
 		findBoardByNum(board.getBoardNo());
 		Board model = mapper.selectByNum(board.getBoardNo()); // 기존 게시글 조회
 		
-//		if(model.getUserNo() == session.getUserNo) {
-//			throw new BoardNotFoundException("작성자와 로그인한 사람이 다릅니다.");
-//		}
+		//if(board.getUserNo() == session.getUserNo) {
+		//	throw new BoardNotFoundException("작성자와 로그인한 사람이 다릅니다.");
+		//}
 		// 1. 기존 파일 삭제 (업데이트 경로에서)
 		if(model.getFileList() != null && model.getFileList().isEmpty()) {
 			for(BdAttachment file : model.getFileList()) {
@@ -348,7 +307,8 @@ public class BoardServiceImple implements BoardService {
 	    }
 	}
 
-
+	
+	// 삭제 
 	@Override
 	public void deleteBoard(Long boardNo, String changeName) {
 		validateBoardNo(boardNo);

@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>상세페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -87,15 +87,14 @@
             <br>
 
             <div align="center">
-                <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-               
-                <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="postSubmit(2);">삭제하기</a>
-             
-            </div>
+			        <c:if test="${board.boardWriter eq sessionScope.loginUser.userId}">
+			            <!-- 작성자가 본인일 때만 버튼 표시 -->
+			            <a class="btn btn-primary" onclick="postSubmit(1);">수정하기</a>
+			            <a class="btn btn-danger" onclick="confirmDelete();">삭제하기</a>
+			        </c:if>
             
             <form action="/att/board/list/update" method="post" id="postForm">
-            	<input type="hidden" name="boardType" value="${param.boardType}">
+            	<input type="hidden" name="boardType" value="${board.boardType}">
             	<input type="hidden" name="boardNo" value="${ board.boardNo }" />
             	<input type="hidden" name="changeName" value="${ board.changeName }" />
             	<input type="hidden" name="boardWriter" value="${ board.boardWriter }" />
@@ -104,6 +103,9 @@
             	 -->
             </form>
 		
+		
+		
+		
             <script>
             	function postSubmit(num) {
             		const boardNo = $('input[name="boardNo"]').val(); 
@@ -111,10 +113,20 @@
 				
             		if(num == 1){
             			$('#postForm').attr('action', '/att/board/list/update-form').submit();
-            		} else { 
-            			$('#postForm').attr('action', '/att/board/list/delete').submit();
-            		}
+            		} 
 				}
+            	
+            	 function confirmDelete() {
+            	        // 삭제 확인 메시지
+            	        if (confirm("삭제하시겠습니까?")) {
+            	            $('#postForm').attr('action', '/att/board/list/delete').submit();
+            	        } else {
+            	            // 취소 시 아무 동작도 하지 않음
+            	            return false;
+            	        }
+            	    }
+            	
+            	
             </script>
             
          
@@ -124,18 +136,26 @@
             <table id="CommentArea" class="table" align="center">
                 <thead>
                 
-                	
-                    
-                    <tr>
-					    <th colspan="2">
-					        <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-					    </th>
-					    <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
+                	<!-- 비회원 노출 영역 -->
+				<c:choose>
+					<c:when test="${ empty sessionScope.loginUser }">
+					<tr>
+						<th colspan="2">
+							<textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
+						</th>
+						<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th> 
 					</tr>
-                    
-                    
-                    
-                    
+					</c:when>
+						<c:otherwise>
+					<tr>
+						<th colspan="2">
+							<textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+						</th>
+					<th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addComment();">등록하기</button></th> 
+					</tr>
+					</c:otherwise>
+				</c:choose>
+
                     
                     <tr>
                         <td colspan="3">댓글(<span id="rcount">0</span>)</td>
@@ -252,11 +272,14 @@
    		    }
    		}
     	
-    	
-    	
-    </script>
     
-    
+	    // 세션의 alertMsg 출력 후 제거
+	    <c:if test="${not empty sessionScope.alertMsg}">
+	        alert("${sessionScope.alertMsg}");
+	        <c:set var="alertMsg" value="" scope="session"/>
+	    </c:if>
+	</script>
+	
     <jsp:include page="../common/include/footer.jsp" />
 </body>
 </html>
