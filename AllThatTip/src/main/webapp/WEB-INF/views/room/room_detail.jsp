@@ -238,6 +238,7 @@
 		        		</c:if>
 			        </c:forEach>
 		        </div>
+
 		        <c:if test="${ not empty sessionScope.loginUser.bizNo }">
 			        <button onclick="updateRoom(${ room.roomNo });">정보 수정</button> <button class="btn-open-modal">숙소 삭제</button> <br><br>
 	       		</c:if>
@@ -323,7 +324,7 @@
     			selected.parentElement.classList.add('selected');
     		}
     	}
-		
+
 	</script>
 	
 </body>

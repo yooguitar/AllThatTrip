@@ -162,6 +162,50 @@
 	       RES_NO ASC
 </select>
 
+<select id="findRoom" parameterType="room" resultType="hashmap">
+	SELECT
+           R.ROOM_NAME,
+           R.ROOM_PRICE,
+           I.CHANGE_NAME
+      FROM  
+           ROOMS R, ROOM_IMG I
+     WHERE
+           I.ROOM_NO = ${roomNo}
+       AND
+           R.ROOM_NO = ${roomNo}
+       AND
+           ROWNUM = 1
+</select>
+
+<insert id="saveCart" parameterType="HashMap">
+	INSERT
+	  INTO
+	       CART
+	       (
+	       ROOM_NAME,
+	       ROOM_PRICE,
+	       CHANGE_NAME
+	       )   
+	VALUES
+	       (
+	       #{ROOM_NAME},
+	       #{ROOM_PRICE},
+	       #{CHANGE_NAME}
+	       )   
+</insert>
+
+<select id="findCart" resultType="HashMap">
+	SELECT
+		   ROOM_NAME,
+		   ROOM_PRICE,
+		   CHANGE_NAME
+	  FROM
+	       CART
+</select>
+
+<update id="deleteCart">
+	DELETE FROM CART
+</update>
 
 <update id="increaseLoginCount" parameterType="member">
 	UPDATE
@@ -181,6 +225,15 @@
 	 	   USER_ID = #{userId}
 </update>
 
+<update id="loginFullCount" parameterType="member">
+	UPDATE
+		   MEMBER
+	   SET
+	   	   STATUS = 'N'
+	 WHERE
+	 	   USER_ID = #{userId}
+</update>
+
 <select id="countCheck" parameterType="member" resultType="member">
 	SELECT
 	       LOGIN_COUNT loginCount
@@ -189,15 +242,5 @@
 	 WHERE
 	 	   USER_ID = #{userId}
 </select>
-
-
-
-
-
-
-
-
-
-
 
 </mapper> 

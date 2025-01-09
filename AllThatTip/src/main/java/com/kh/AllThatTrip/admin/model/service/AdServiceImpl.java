@@ -295,6 +295,81 @@ public class AdServiceImpl implements AdService{
 		return mapper.boardFindAll();
 	}
 
+	@Override
+	public List<Board> selectBoardWriter(String boardWriter) {
+		return mapper.selectBoardWriter(boardWriter);
+	}
+
+	@Override
+	public List<Board> selectCountMax() {
+		return mapper.selectCountMax();
+	}
+
+	@Override
+	public List<Board> selectCountMin() {
+		return mapper.selectCountMin();
+	}
+
+	@Override
+	public List<Board> selectNewBoard() {
+		return mapper.selectNewBoard();
+	}
+
+	@Override
+	public List<Board> selectOldBoard() {
+		return mapper.selectOldBoard();
+	}
+
+	@Override
+	public List<Board> selectDeleteBoard() {
+		return mapper.selectDeleteBoard();
+	}
+
+	@Override
+	public List<Board> selectBoard() {
+		return mapper.selectBoard();
+	}
+
+	@Override
+	public List<Board> select40Board() {
+		return mapper.select40Board();
+	}
+
+	@Override
+	public List<Board> select30Board() {
+		return mapper.select30Board();
+	}
+
+	@Override
+	public List<Board> select20Board() {
+		return mapper.select20Board();
+	}
+
+	@Override
+	public List<Board> select10Board() {
+		return mapper.select10Board();
+	}
+
+	@Override
+	public List<Board> select50Board() {
+		return mapper.select50Board();
+	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return mapper.deleteBoard(boardNo);
+	}
+
+	@Override
+	public int unDeleteBoard(int boardNo) {
+		return mapper.unDeleteBoard(boardNo);
+	}
+
+	@Override
+	public List<Board> selectBoardNo(int boardNo) {
+		return mapper.selectBoardNo(boardNo);
+	}
+
 	
 	
 	

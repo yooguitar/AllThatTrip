@@ -86,13 +86,8 @@
     <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="/att/admin/admin_notice">공지사항</a>
-  <a href="/att/adPad/controller">회원 조회</a>
-  <a href="#">판매자 조회</a>
-  <a href="#">게시글 조회</a>
-  <a href="#">신고 목록 조회</a>
+  <a href="/att/adPad/controller">컨트롤 패드</a>
   <hr>
-  <a href="#">관리자 권한</a>
-  <a href="#">맛집 탐방</a>
   <hr>
   <a href="/att">메인 화면</a>
 

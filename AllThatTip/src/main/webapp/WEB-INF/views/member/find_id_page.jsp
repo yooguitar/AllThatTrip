@@ -40,7 +40,8 @@
             width: 500px;
             height: 520px;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 150px;
+            margin-bottom: 100px;
         }
         .title-join-biz{
             text-align: center;
@@ -49,7 +50,7 @@
     </style>
 </head>
 <body>
-	<!--<jsp:include page="/WEB-INF/views/common/include/header.jsp" /> -->
+	<jsp:include page="/WEB-INF/views/common/include/header.jsp" />
 	
 	<!-- 
 	<c:if test="${ sessionScope.loginCount ne null};">
@@ -108,7 +109,7 @@
     <br>
    
     
-    <!-- <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />-->
+    <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
     
 </body>
 

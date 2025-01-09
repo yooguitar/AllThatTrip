@@ -5,10 +5,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>게시판 리스트</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    
+    
+    
     <style>
         .content {
             width:1200px;
@@ -38,6 +42,23 @@
         .select {width:20%;}
         .text {width:53%;}
         .searchBtn {width:20%;}
+        
+        .write-button {
+        display: block;
+        margin: 0 auto;
+        padding: 7px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #326044;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+	    }
+	
+	    .write-button:hover {
+	        background-color: #444;
+	    }
     </style>
 </head>
 <body>
@@ -48,7 +69,7 @@
 		<h2>공지사항</h2>
 		<br>
 		<c:if test="${not empty sessionScope.loginUser and board.boardType == 10}">
-			<a class="btn btn-secondary" style="float:right;" href="/att/board/insertForm?boardType=10">글쓰기</a>
+			<a class="write-button style=" style="float:right;"  href="/att/board/insertForm?boardType=10">글쓰기</a>
 		</c:if>
 		
         
@@ -156,7 +177,7 @@
                 <div class="text">
                     <input type="text" class="form-control" name="keyword" id="keyword" />
                 </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                <button type="submit" class="write-button">검색</button>
             </form>
             <br><br>
         </div>
@@ -172,6 +193,10 @@
 			// console.log("boardNo:", num, "boardType:", boardType); 
 			window.location.href = '/att/board/list/'+num+'?boardType=' + boardType;
 		}
+		
+		
+       
+  
 			
 	</script>
 	
@@ -282,7 +307,7 @@
 	            } else {
 	                // 검색 결과가 없을때
 	                tableBody.innerHTML = `<tr>
-	                       					 <td colspan="5">검색 결과가 없습니다.</td>
+	                       					 <td colspan="5">검색 결과가 없습니다.</td>//
 	                   						</tr>`;
 	            }
 	        },
@@ -293,7 +318,13 @@
 	} */
  	</script>
     
-    
+    <script>
+	    // 세션의 alertMsg 출력 후 제거
+	    <c:if test="${not empty sessionScope.alertMsg}">
+	        alert("${sessionScope.alertMsg}");
+	        <c:set var="alertMsg" value="" scope="session"/>
+	    </c:if>
+	</script>
     
     
 	<jsp:include page="../common/include/footer.jsp" />

@@ -19,8 +19,8 @@
         #wrap{
             width: 1000px;
             margin: auto;
-            margin-top: 50px;
-            margin-bottom: 100px;
+            margin-top: 150px;
+   
         }
         #cart-div-1{
             width: 1000px;
@@ -45,6 +45,7 @@
       </style>
 </head>
 <body>
+    <jsp:include page="/WEB-INF/views/common/include/header.jsp" />
     <div id="wrap">
         <div id="cart-div-1">
             <h1 style="margin-bottom: 10px;">예약 내역 조회</h1>
@@ -64,7 +65,7 @@
                 </c:when>
                 <c:otherwise>
                     <h5 style="margin-left: 350px;">
-                        '<span style="font-weight: 800;">${ sessionScope.loginUser.userName }</span>'님의 예약정보 입니다.
+                        '<span style="font-weight: 800; text-decoration: underline;">${ sessionScope.loginUser.userName }</span>'님의 예약정보 입니다.
                     </h5>
                     <!--찜 내역이 있을 경우 div 반복-->
                     <c:forEach var="rsvs" items="${ sessionScope.findRsvResult }">
@@ -91,11 +92,11 @@
         </div>
 
     </div>
+    <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
+</body>
     <script>
         function cancelBtn(){
             location.href = "cancelRsvPage.me";
         }
     </script>
-    
-</body>
 </html>
