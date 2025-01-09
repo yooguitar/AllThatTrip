@@ -182,6 +182,44 @@ table {
 	font-size : 10px;
 	color : white;
 }
+  .modal{
+            position:absolute;
+            display:none;
+            
+            justify-content: center;
+            top:0;
+            left:0;
+
+            width:100%;
+            height:100%;
+
+            
+
+            background-color: rgba(0,0,0,0.4);
+        }
+.modal_body{
+            position:absolute;
+            top:50%; 
+        
+
+            width:400px;  
+            height:600px; 
+
+            padding:40px;  
+
+            text-align: center;
+
+            background-color: rgb(255,255,255); 
+            border-radius:10px; 
+            box-shadow:0 2px 3px 0 rgba(34,36,38,0.15); 
+
+            transform:translateY(-50%);
+        }
+      #member > tr:hover {
+   		 background-color:  #326044;
+   		 color : white;
+   		 cursor : pointer;
+   		 }
 </style>
 
 </head>
@@ -211,6 +249,20 @@ table {
 					</tbody>
 				</table>
 			</div>
+				<div class="modal">
+			        <div class="modal_body">
+				        <h2>모달창 제목</h2>
+				        <p id="userNo"></p>
+				        <p id="userName"></p>
+				        <p id="userId"></p>
+				        <p id="email"></p>
+				        <p id="phone"></p>
+				        <p id="enrollDate"></p>
+				        <p id="spam"></p>
+				        <p id="status"></p>
+				        <p id="loginCount"></p>
+			        </div>
+		   	    </div>
 			<div class="control_box">
 				<div class="control_in">
 		            <label class="label-text"> 유저 ID :</label>
@@ -257,7 +309,7 @@ table {
 					</tbody>
 				</table>
 			</div>
-
+	
 			<div class="control_box">
 				 <div class="control_in">
 		            <label class="label-text"> 유저 ID :</label>
@@ -288,24 +340,6 @@ table {
 			</div>
 		</div>
 	</div>
-
-	
-	<div class="admin_pages">
-		<div id="admin_con">
-			<div class="panelist">
-			</div>
-			<div class="panel"></div>
-			<div class="control_box">
-				  
-			</div>
-		</div>
-
-		<div id="admin_con">
-			<div class="panel"></div>
-
-			<div class="control_box"></div>
-		</div>
-	</div>
 	
 	<jsp:include page="../common/include/footer.jsp" />
 	
@@ -332,7 +366,7 @@ table {
 				console.log(replies);
 				
 				const resultStr = replies.map(e => `
-													<tr>
+													<tr class="member-row" data-userno="${e.userNo}" data-username="${e.userName}" data-userid="${e.userId}" data-email="${e.email}" data-phone="${e.phone}" data-enrolldate="${e.enrollDate}" data-spam="${e.spam}" data-status="${e.status}" data-logincount="${e.loginCount}">
 													<td>\${e.userNo}</td>
 													<td>\${e.userName}</td>
 													<td>\${e.userId}</td>
@@ -346,11 +380,54 @@ table {
 											       `
 							    				).join('');
 				$('#member').html(resultStr);
-			    			
+			    
+				document.querySelectorAll('.member-row').forEach(row => {
+				row.addEventListener("click", () => {
+					const modal = document.querySelector('.modal');
+					modal.style.display = "flex";
+					
+					
+				});
+				});
+				const modal = document.querySelector('.modal');
+				modal.addEventListener("click", e => {
+					const evTarget = e.target;
+					if (evTarget.classList.contains("modal")) {
+						modal.style.display = "none";
+					}	
+			   });
 			}
-		
 		});
+	}	
+		
+	function getUserDetails(userId) {
+	    $.ajax({
+	        url: '/att/adPad/memberFindById/${userId}',
+	        type: 'get',
+	        success: function (data) {
+	            const user = data.user;
+	            document.getElementById('userNo').textContent = `유저번호: ${user.userNo}`;
+	            document.getElementById('userName').textContent = `실명: ${user.userName}`;
+	            document.getElementById('userId').textContent = `아이디: ${user.userId}`;
+	            document.getElementById('email').textContent = `이메일: ${user.email}`;
+	            document.getElementById('phone').textContent = `전화번호: ${user.phone}`;
+	            document.getElementById('enrollDate').textContent = `가입일자: ${user.enrollDate}`;
+	            document.getElementById('spam').textContent = `스팸여부: ${user.spam}`;
+	            document.getElementById('status').textContent = `탈퇴여부: ${user.status}`;
+	            document.getElementById('loginCount').textContent = `로그인시도횟수: ${user.loginCount}`;
+
+	            const modal = document.querySelector('.modal');
+	            modal.style.display = "flex";
+	        },
+	        error: function () {
+	            console.error('유저 정보를 가져오는 데 실패했습니다.');
+	        }
+	    });
 	}
+	
+			
+		
+	
 	
 	function selectMemberId(){
 		
@@ -1203,5 +1280,8 @@ function selectBoardNo(){
 	});
 }	
 </script>	
+
+
+
 </body>
 </html>
