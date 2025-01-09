@@ -124,7 +124,9 @@
 		            <img src="/att${ camp.changeName }" alt="대표 이미지">
        			</div>
 	        </div>
-	        <button onclick="updateCamp(${camp.campNo});">정보 수정</button> <button class="btn-open-modal">캠핑장 삭제</button>
+	        <c:if test="${ not empty sessionScope.loginUser.bizNo }">
+           		<button onclick="updateCamp(${camp.campNo});">정보 수정</button> <button class="btn-open-modal">캠핑장 삭제</button>
+	        </c:if>
 	        <br><br>
 		</fieldset>
 	</div>
@@ -147,7 +149,9 @@
 					</div>
 				</c:forEach>
 			</div>
-			<button onclick="insertRoom(${camp.campNo});">숙소 등록</button>
+			<c:if test="${ not empty sessionScope.loginUser.bizNo }">
+				<button onclick="insertRoom(${camp.campNo});">숙소 등록</button>
+	        </c:if>
 		</fieldset>
 	</div>
 	
@@ -184,7 +188,7 @@
     </div>
     
     <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
-
+	<button style="display:none;" class="btn-open-modal">숙소 삭제</button>
 	<script>
 		const modal = document.querySelector('.modal');
 	    const btnOpenModal = document.querySelector('.btn-open-modal');

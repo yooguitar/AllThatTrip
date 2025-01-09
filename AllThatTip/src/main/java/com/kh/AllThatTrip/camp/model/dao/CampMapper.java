@@ -3,6 +3,7 @@ package com.kh.AllThatTrip.camp.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.kh.AllThatTrip.camp.model.vo.BizMember;
 import com.kh.AllThatTrip.camp.model.vo.Camp;
@@ -26,5 +27,11 @@ public interface CampMapper {
 	BizMember bizLogin(Member member);
 
 	List<Camp> recentList();
+
+	List<Camp> searchCamp(String keyword);
+
+	List<Camp> searchCampsByAddr(String addr, RowBounds rowBounds);
+
+	int countList(String addr);
 	
 }

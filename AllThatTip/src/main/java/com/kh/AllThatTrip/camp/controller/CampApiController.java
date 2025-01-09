@@ -1,6 +1,7 @@
 package com.kh.AllThatTrip.camp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,19 @@ public class CampApiController {
 											.message("캠핑장 조회에 성공했습니다.")
 											.status(HttpStatus.OK.toString())
 											.data(list)
+											.build();
+		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("searchAddr")
+	public ResponseEntity<ResponseData> ajaxsearchCampsByAddr(String addr, int page){
+		Map<String, Object> responseData = campService.searchCampsByAddr(addr, page);
+		ResponseData response = ResponseData.builder()
+											.message("캠핑장 조회에 성공했습니다.")
+											.status(HttpStatus.OK.toString())
+											.data(responseData.get("campList"))
+											.data2(responseData.get("count"))
+											.data3(responseData.get("pi"))
 											.build();
 		return new ResponseEntity<ResponseData>(response, HttpStatus.OK);
 	}

@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,8 @@ import com.kh.AllThatTrip.camp.model.vo.BizMember;
 import com.kh.AllThatTrip.camp.model.vo.Camp;
 import com.kh.AllThatTrip.camp.model.vo.Room;
 import com.kh.AllThatTrip.camp.model.vo.RoomImg;
+import com.kh.AllThatTrip.common.model.template.Pagination;
+import com.kh.AllThatTrip.common.model.vo.PageInfo;
 import com.kh.AllThatTrip.exception.LoginFailedException;
 import com.kh.AllThatTrip.member.model.service.PasswordEncryptor;
 import com.kh.AllThatTrip.member.model.vo.Member;
@@ -146,8 +149,32 @@ public class CampServiceImpl implements CampService {
 	}
 
 	@Override
+	public Map<String, Object> searchCamp(String keyword) {
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		List<Camp> campList = mapper.searchCamp(keyword);
+		responseData.put("campList", campList);
+		return responseData;
+	}
+	
+	@Override
 	public List<Camp> recentList() {
 		return mapper.recentList();
+	}
+
+	@Override
+	public Map<String, Object> searchCampsByAddr(String addr, int page) {
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		int totalCount = mapper.countList(addr);
+		// log.info("{}", totalCount);
+		responseData.put("count", totalCount);
+		PageInfo pi = Pagination.getPageInfo(totalCount, page, 6, 10);
+		responseData.put("pi", pi);
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Camp> campList = mapper.searchCampsByAddr(addr, rowBounds);
+		// log.info("{}", campList);
+		responseData.put("campList", campList);
+		return responseData;
 	}
 
 }

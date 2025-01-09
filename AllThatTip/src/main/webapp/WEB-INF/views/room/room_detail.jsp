@@ -238,7 +238,9 @@
 		        		</c:if>
 			        </c:forEach>
 		        </div>
-		        <button onclick="updateRoom(${ room.roomNo });">정보 수정</button> <button class="btn-open-modal">숙소 삭제</button> <br><br>
+		        <c:if test="${ not empty sessionScope.loginUser.bizNo }">
+			        <button onclick="updateRoom(${ room.roomNo });">정보 수정</button> <button class="btn-open-modal">숙소 삭제</button> <br><br>
+	       		</c:if>
 		</fieldset>
 	</div>
 	
@@ -274,6 +276,7 @@
     </div>
     <jsp:include page="/WEB-INF/views/common/include/footer.jsp" />
 
+	<button style="display:none;" class="btn-open-modal">숙소 삭제</button>
 	<script>
 		const modal = document.querySelector('.modal');
 	    const btnOpenModal = document.querySelector('.btn-open-modal');

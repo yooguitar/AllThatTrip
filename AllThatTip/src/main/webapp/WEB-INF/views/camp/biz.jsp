@@ -22,9 +22,6 @@
 		
 		<a href="/att/camps/biz_list" style="color:black;"> camp 리스트 </a> <br><br>
 		
-		<a href="/att/rooms/insert_form" style="color:black;"> room 등록 </a> <br><br>
-		
-		<a href="/att/rooms/list" style="color:black;"> room 리스트 </a> <br><br>
 	</div>
 	
 	<jsp:include page="/WEB-INF/views/common/include/footer.jsp" />		

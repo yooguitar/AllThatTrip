@@ -38,13 +38,13 @@
         <ul id="navbar">
           <li><a href="/att/camps/list">Camp</a>
             <ul>
-              <li><a class="aTag" style=color:#ebebeb; href="#">오토캠핑장</a></li>
+              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/1">오토캠핑장</a></li>
               
-              <li><a class="aTag" style = color:#ebebeb; href="#">글램핑</a></li>
+              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/2">글램핑</a></li>
               
-              <li><a class="aTag" style = color:#ebebeb; href="#">카라반</a></li>
+              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/3">카라반</a></li>
 
-              <li><a class="aTag" style = color:#ebebeb; href="#">펜션</a></li>
+              <li><a class="aTag" style=color:#ebebeb; href="/att/rooms/room/4">펜션</a></li>
               
               <c:choose>
               	<c:when test="${ empty sessionScope.loginUser.bizNo }">

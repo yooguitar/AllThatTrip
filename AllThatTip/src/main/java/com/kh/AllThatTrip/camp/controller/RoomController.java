@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,6 +72,13 @@ public class RoomController {
 	public ModelAndView deleteRoom(Room room, String check) {
 		roomService.deleteRoom(room, check);
 		return mv.setViewNameAndData("redirect:/rooms/list", null);
+	}
+	
+	@GetMapping("room/{id}")
+	public ModelAndView selectRoomListByRoomType(@PathVariable(name="id") Long id) {
+		Map<String, Object> responseData = roomService.selectRoomListByRoomType(id);
+		return mv.setViewNameAndData("room/room_list", responseData);
+		
 	}
 	
 }
