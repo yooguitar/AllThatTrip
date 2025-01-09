@@ -100,6 +100,14 @@ public class MemberController {
 		memberService.findRsv(loginUser, session);
 		return "member/find_rsv_page";
 	}
+	/**
+	 * header에서 장바구니로 바로 이동한 경우(Get요청)
+	 * 1. CART DB의 데이터를 조회하는 메소드 호출, 데이터가 없는 경우 데이터 없음 div 표시
+	 * 상품(캠핑정보)페이지에서 장바구니 담기를 선택한 경우(Post요청)
+	 * 1. 상품 페이지에서 form태그 요청을 통해 상품 식별정보를 받아온 뒤 DB 조회 수행
+	 * 2. join된 컬럼값을 갖고 있기 때문에 object에 들고 다니기 X
+	 * 3. Map에 담아서 CART 테이블에 INSERT 수행, 조회 시에도 MAP으로 꺼내서 사용
+	 */
 	// 장바구니 조회
 	@GetMapping("cartPage.me")
 	public String cartPage(HttpSession session) {

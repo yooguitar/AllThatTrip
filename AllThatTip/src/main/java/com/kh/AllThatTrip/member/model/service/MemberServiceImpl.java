@@ -120,7 +120,10 @@ public class MemberServiceImpl implements MemberService {
 	public void loginFullCount(Member member) {
 		mapper.loginFullCount(member);
 	}
-	/* 찜, 예약, 장바구니 관련 */
+	/**
+	 * 예약 / 장바구니
+	 * 
+	 */
 	@Override
 	public void findRsv(Member member, HttpSession session) {
 		session.removeAttribute("findRsvResult");
