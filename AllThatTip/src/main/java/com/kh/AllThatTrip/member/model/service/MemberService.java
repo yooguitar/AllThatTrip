@@ -22,7 +22,7 @@ public interface MemberService {
 	
 	void findPwd(Member member);
 	
-	Member countCheck(Member member);
+	void countCheck(Member member);
 	
 	void increaseLoginCount(Member member);
 	
