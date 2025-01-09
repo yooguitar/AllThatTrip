@@ -31,7 +31,7 @@
       <div class="navbar__logo">
 
 
-        <a class=aTag href="#" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
+        <a class=aTag href="/att" id="h-logo"><img src="/att/resources/img/logo/ATTP.png"></a>
 
       </div>
       <div id=navi>

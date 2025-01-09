@@ -247,9 +247,9 @@
                                     (주말, 공휴일 제외)
                                 </p>
                                 <div class="menu-section">
-                                    <a href="notice.html" class="menu-btn">공지사항</a>
-                                    <a href="faq.html" class="menu-btn">FAQ</a>
-                                    <a href="qna.html" class="menu-btn">Q&A</a>
+                                    <a href="/att/board/list?boardType=10" class="menu-btn">공지사항</a>
+                                    <a href="/att/board/list?boardType=20" class="menu-btn">FAQ</a>
+                                    <a href="/att/board/list?boardType=30" class="menu-btn">Q&A</a>
 
                                     
                                 </div>
